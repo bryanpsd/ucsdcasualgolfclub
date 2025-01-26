@@ -1,11 +1,22 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import { contentfulClient } from '../lib/contentful';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import type { SimplePage } from '../lib/contentful';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const entries = await contentfulClient.getEntries<SimplePage>({
+  content_type: 'simplePage',
+  'fields.title': 'Home',
+});
 ---
 
 <Layout>
-	<Welcome />
+  {
+    entries.items.map((item) => (
+      <section>
+        <h2>{item.fields.title}</h2>
+        <article set:html={documentToHtmlString(item.fields.content)} />
+      </section>
+    ))
+  }
 </Layout>
