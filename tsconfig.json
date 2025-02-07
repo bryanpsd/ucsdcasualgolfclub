@@ -8,6 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "exactOptionalPropertyTypes": false,
     "baseUrl": "src",
+    "noEmit": true,
     "paths": {
       "~*": ["*"]
     }

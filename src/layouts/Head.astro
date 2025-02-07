@@ -1,0 +1,29 @@
+---
+/**
+ * This is the base Layouts that all other layouts should be built from
+ * It's purpose is to manage global layout props (i.e. page title), global data providers, as well
+ * as global style imports.
+ */
+
+import '~styles/reset.css';
+import '~styles/normalize.css';
+import '~styles/globals.css';
+import '~styles/theme.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content={description || 'Best Buy Health'} />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{title}</title>
+</head>

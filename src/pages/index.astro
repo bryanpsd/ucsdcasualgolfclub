@@ -2,11 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import { contentfulClient } from '../lib/contentful';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-import type { SimplePage } from '../lib/contentful';
+import type { TypeSimplePageSkeleton } from '../types/contentful';
 
-const entries = await contentfulClient.getEntries<SimplePage>({
+const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
   content_type: 'simplePage',
-  'fields.title': 'Home',
 });
 ---
 
@@ -15,7 +14,11 @@ const entries = await contentfulClient.getEntries<SimplePage>({
     entries.items.map((item) => (
       <section>
         <h2>{item.fields.title}</h2>
-        <article set:html={documentToHtmlString(item.fields.content)} />
+        <article
+          set:html={
+            item.fields.content ? documentToHtmlString(item.fields.content) : ''
+          }
+        />
       </section>
     ))
   }

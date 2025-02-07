@@ -1,0 +1,16 @@
+---
+import { NavBar } from '~components/NavBar';
+import { brand, brandLink, header } from './Header.css';
+import { Image } from 'astro:assets';
+import logo from '~assets/brand-logo.png';
+---
+
+<header class={header}>
+  <div class={brand}>
+    <a class={brandLink} href="/">
+      <Image src={logo} alt="UCSD Casual Golf Club" height={30} width={30} />
+      <h1>UCSD Casual Golf Club</h1>
+    </a>
+  </div>
+  <NavBar />
+</header>
