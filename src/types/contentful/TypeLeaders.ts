@@ -2,7 +2,7 @@ import type { ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleC
 
 export interface TypeLeadersFields {
     playerName?: EntryFieldTypes.Symbol;
-    index?: EntryFieldTypes.Symbol;
+    handicapIndex?: EntryFieldTypes.Number;
     gross?: EntryFieldTypes.Integer;
     net?: EntryFieldTypes.Number;
     flight?: EntryFieldTypes.Symbol<"1st Flight" | "2nd Flight">;
