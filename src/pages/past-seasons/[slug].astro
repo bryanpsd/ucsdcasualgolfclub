@@ -1,0 +1,21 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+  // Generate dynamic pages for past seasons
+  const getYear = new Date().getFullYear() - 1;
+  const pastSeasonsLinks = Array.from({ length: getYear - 2019 }, (_, i) => {
+    const year = getYear - i;
+    return {
+      params: {
+        slug: year.toString(),
+      },
+    };
+  });
+  return pastSeasonsLinks;
+}
+
+const { slug } = Astro.params;
+---
+
+<Layout> {slug} </Layout>

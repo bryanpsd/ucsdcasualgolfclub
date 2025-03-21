@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import logo from '~assets/brand-logo.png';
+import { MainNav } from './components/MainNav';
+
+import { menuItems } from './utils/headerItems';
+import {
+  headerWrapper,
+  header,
+  logoWrapper,
+  logoLink,
+  mainContentJumpLink,
+} from './Header.css';
+import { MobileNav } from './components/MobileNav/MobileNav';
+
+const { pathname } = Astro.url;
+const { hasSidebar = false } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+---
+
+<a class={`sr-only ${mainContentJumpLink}`} href="#main">Jump to main content</a
+>
+<header class={headerWrapper}>
+  <div class={header}>
+    <div class={logoWrapper}>
+      <a class={logoLink} href="/">
+        <Image src={logo} alt="UCSD Casual Golf Club" height={30} width={30} />
+        UCSD Casual Golf Club
+      </a>
+    </div>
+    <MainNav items={menuItems} currentPath={pathname} client:load />
+    <MobileNav items={menuItems} currentPath={pathname} client:load />
+  </div>
+</header>

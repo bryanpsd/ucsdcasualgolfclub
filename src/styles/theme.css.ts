@@ -1,25 +1,28 @@
 import { createGlobalTheme } from '@vanilla-extract/css';
-
+import { breakpoints } from '../styles/designTokens/breakpoints';
+import { boxShadow } from '../styles/designTokens/shadows';
+import { color } from '../styles/designTokens/colors';
+import { space } from '../styles/designTokens/spacing';
+import { duration } from '../styles/designTokens/duration';
+import { border } from '../styles/designTokens/borders';
 import {
-  borderRadius,
-  borderWidth,
-  fontFamily,
   fontSize,
   fontWeight,
   lineHeight,
-  palette,
-  shadow,
-  spacing,
-} from './designTokens';
+  fontFamily,
+} from '../styles/designTokens/typography';
 
-export const theme = createGlobalTheme(':root', {
-  borderRadius,
-  borderWidth,
-  palette,
+import '../styles/designTokens/globals.css';
+
+export const vars = createGlobalTheme(':root', {
+  color,
   fontFamily,
   fontSize,
-  fontWeight,
   lineHeight,
-  shadow,
-  spacing,
+  fontWeight,
+  space,
+  border,
+  boxShadow,
+  breakpoints,
+  duration,
 });

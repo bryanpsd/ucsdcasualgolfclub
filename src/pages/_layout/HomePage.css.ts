@@ -1,0 +1,51 @@
+import { style } from '@vanilla-extract/css';
+import { tokens } from '../../styles/designTokens.css';
+import { contentPadding, pageMaxWidth } from '../../styles/common.css';
+
+export const homeWrapper = style([
+  tokens({
+    display: 'flex',
+    flexDirection: 'column',
+    width: 'col-12',
+  }),
+]);
+
+export const homeHero = style([
+  tokens({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }),
+  {
+    backgroundImage: 'url(../../assets/admiral-baker-south-bg.jpg)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    height: '300px',
+  },
+]);
+
+export const homeColWrapper = style([
+  tokens({
+    display: 'flex',
+    flexDirection: { xs: 'column', md: 'row' },
+    justifyContent: 'center',
+    gap: 24,
+    paddingY: 24,
+  }),
+  pageMaxWidth,
+  contentPadding,
+]);
+
+export const leftCol = style([
+  tokens({
+    display: 'flex',
+    width: { xs: 'col-12', 'md-min': 'col-8' },
+  }),
+]);
+
+export const rightCol = style([
+  tokens({
+    display: 'flex',
+    width: { xs: 'col-12', 'md-min': 'col-4' },
+  }),
+]);

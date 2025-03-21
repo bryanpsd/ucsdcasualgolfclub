@@ -1,0 +1,20 @@
+---
+import type { ReactNode } from 'react';
+import * as style from './UpcomingTournament.css';
+
+export type Props = {
+  title: string;
+  courseName: ReactNode;
+  date: ReactNode;
+  details?: ReactNode;
+};
+
+const { title, courseName, date, details } = Astro.props;
+---
+
+<div class={style.upcomingTournament}>
+  <h2>{title}</h2>
+  <p>{courseName}</p>
+  <p>{date}</p>
+  <p>{details}</p>
+</div>

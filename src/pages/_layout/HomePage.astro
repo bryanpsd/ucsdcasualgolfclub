@@ -1,0 +1,48 @@
+---
+import { actions } from 'astro:actions';
+import Layout from '../../layouts/Layout.astro';
+import { contentfulClient } from '../../lib/contentful';
+import type { TypeSimplePageSkeleton } from '../../types/contentful';
+import { UpcomingTournament } from '~components/UpcomingTournament';
+import { RichText } from '~components/RichText';
+
+import * as style from './HomePage.css';
+
+const courseData = await Astro.callAction(actions.getCourse, 'courseName');
+const courseName = courseData.data?.course;
+const date = '2022-01-01';
+console.log(courseName);
+
+const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
+  content_type: 'simplePage',
+  'fields.title': 'Home',
+});
+
+// if (!courseData.data || courseData.error) {
+//   return new Response(404);
+// }
+---
+
+<Layout>
+  <div class={style.homeWrapper}>
+    <section class={style.homeHero}>
+      <UpcomingTournament
+        title="Upcoming Tournament"
+        courseName={courseName}
+        date={date}
+      />
+    </section>
+    <section class={style.homeColWrapper}>
+      {
+        entries.items.map((item) => (
+          <div class={style.leftCol}>
+            {item.fields.content && (
+              <RichText richText={item.fields.content} client:load />
+            )}
+          </div>
+        ))
+      }
+      <div class={style.rightCol}>Leaderboard</div>
+    </section>
+  </div>
+</Layout>

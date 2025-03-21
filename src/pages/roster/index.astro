@@ -1,0 +1,39 @@
+---
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import Layout from '../../layouts/Layout.astro';
+import { contentfulClient } from '../../lib/contentful';
+import type { TypeLeadersSkeleton } from '../../types/contentful';
+
+import { subPageWrapper, heroWrapper } from '../../styles/common.css';
+import * as styles from './_style/roster.css';
+
+const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
+  content_type: 'leaders',
+});
+---
+
+<Layout>
+  <div class={subPageWrapper}>
+    <section class={heroWrapper}>
+      <ResponsiveHeadline size={4} as="h1">Roster</ResponsiveHeadline>
+    </section>
+    <table class={styles.table}>
+      <thead class={styles.thead}>
+        <tr>
+          <th class={styles.th}>Player Name</th>
+          <th class={styles.th}>Index</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          entries.items.map((item) => (
+            <tr class={styles.tr}>
+              <th class={styles.th}>{item.fields.playerName}</th>
+              <td class={styles.td}>{item.fields.index}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+</Layout>

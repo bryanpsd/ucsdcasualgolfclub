@@ -1,0 +1,25 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { contentfulClient } from '../../lib/contentful';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import type { TypeSimplePageSkeleton } from '../../types/contentful';
+
+const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
+  content_type: 'simplePage',
+});
+---
+
+<Layout>
+  {
+    entries.items.map((item) => (
+      <section>
+        <h2>{item.fields.title}</h2>
+        <article
+          set:html={
+            item.fields.content ? documentToHtmlString(item.fields.content) : ''
+          }
+        />
+      </section>
+    ))
+  }
+</Layout>

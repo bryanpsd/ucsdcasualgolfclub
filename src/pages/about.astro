@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { contentfulClient } from '../lib/contentful';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import type { TypeSimplePageSkeleton } from '../types/contentful';
+import { RichText } from '~components/RichText';
+import { heroWrapper, subPageWrapper } from '~styles/common.css';
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+
+const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
+  content_type: 'simplePage',
+  'fields.slug': 'about',
+});
+---
+
+<Layout>
+  <section class={heroWrapper}>
+    <ResponsiveHeadline size={4} as="h1">About</ResponsiveHeadline>
+  </section>
+  <div class={subPageWrapper}>
+    {
+      entries.items.map((item) => (
+        <div>
+          {item.fields.content && (
+            <RichText richText={item.fields.content} client:load />
+          )}
+        </div>
+      ))
+    }
+  </div>
+</Layout>

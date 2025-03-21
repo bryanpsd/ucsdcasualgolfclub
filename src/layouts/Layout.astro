@@ -1,13 +1,18 @@
 ---
-import Head from './Head.astro';
-import { Header } from '~components/Header';
+import { BaseHead } from './BaseHead';
+import { Header } from './Header';
+import { Footer } from './Footer';
+import * as style from '../styles/common.css';
 ---
 
 <!doctype html>
 <html lang="en">
-  <Head title="UCSD Casual Golf Club" />
+  <BaseHead title="UCSD Casual Golf Club" />
   <body>
     <Header />
-    <slot />
+    <main class={style.mainWrapper} id="main-content">
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>
