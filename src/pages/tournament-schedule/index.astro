@@ -1,24 +1,25 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { contentfulClient } from '../../lib/contentful';
-import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
-import type { TypeSimplePageSkeleton } from '../../types/contentful';
+import Layout from "../../layouts/Layout.astro";
+import { contentfulClient } from "../../lib/contentful";
+import {CourseCard}  from "../../components/Course/CourseCard";
+import type { TypeCourseSkeleton } from "../../types/contentful";
 
-const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-  content_type: 'simplePage',
+const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
+  content_type: "course",
+  order: ["fields.date"],
+  "fields.date[gte]": "2024-09-01T00:00:00Z",
+  limit: 12,
 });
+
 ---
 
 <Layout>
   {
     entries.items.map((item) => (
+      <CourseCard date={item.fields.date} price={item.fields.price} />
       <section>
-        <h2>{item.fields.title}</h2>
-        <article
-          set:html={
-            item.fields.content ? documentToHtmlString(item.fields.content) : ''
-          }
-        />
+        <h2>{item.fields.courseName}</h2>
+        <p>{item.fields.date}</p>
       </section>
     ))
   }
