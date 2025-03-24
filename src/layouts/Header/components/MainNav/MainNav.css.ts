@@ -61,6 +61,23 @@ export const mainNavContent = style([
     animationTimingFunction: 'ease',
     listStyle: 'none',
     boxShadow: `0px 4px 12px 0px rgba(0, 0, 0, 0.1)`,
+    zIndex: 500,
+  },
+]);
+
+export const mainNavSubItem = style([
+  tokens({
+    display: 'flex',
+    textDecoration: 'none',
+    padding: 8,
+  }),
+  {
+    color: color.brand.black,
+    selectors: {
+      '&:hover': {
+        backgroundColor: color.brand.yellow,
+      },
+    },
   },
 ]);
 

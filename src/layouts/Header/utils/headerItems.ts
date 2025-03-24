@@ -2,7 +2,7 @@ import type { MainNavProps } from '../components/MainNav';
 
 // Generate dynamic links for past seasons
 const getYear = new Date().getFullYear() - 1;
-const pastSeasonsLinks = Array.from({ length: getYear - 2019 }, (_, i) => {
+const pastSeasonsLinks = Array.from({ length: getYear - 2018 }, (_, i) => {
   const year = getYear - i;
   return {
     label: year.toString(),

@@ -1,6 +1,7 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { type RecipeVariants, recipe } from '@vanilla-extract/recipes';
 import { tokens } from '../../styles/designTokens.css';
+import { color } from '../../styles/designTokens/colors';
 
 export const baseButton = style([
   tokens({
@@ -11,9 +12,9 @@ export const baseButton = style([
     alignContent: 'center',
     verticalAlign: 'middle',
     alignItems: 'center',
-    borderStyle: 'solid',
     cursor: { hover: 'pointer', disabled: 'not-allowed' },
     fontFamily: 'base',
+    borderStyle: 'solid',
   }),
   {
     boxSizing: 'border-box',
@@ -21,6 +22,7 @@ export const baseButton = style([
     transitionDuration: '250ms',
     transitionTimingFunction: 'ease-in',
     outlineOffset: '.2rem',
+    backgroundColor: color.brand.navy,
   },
 ]);
 
@@ -28,18 +30,17 @@ export const button = recipe({
   base: [
     baseButton,
     tokens({
-      borderRadius: 'md',
-      borderWidth: 2,
       fontWeight: 'fontWeight500',
+      borderWidth: 1,
     }),
   ],
   variants: {
     size: {
       small: tokens({
-        fontSize: 'sizeFont16',
-        lineHeight: 'sizeLineHeight16',
-        gap: 16,
-        padding: 6,
+        fontSize: 'sizeFont4',
+        lineHeight: 'sizeLineHeight4',
+        gap: 4,
+        padding: 4,
       }),
       medium: tokens({
         fontSize: 'sizeFont16',
@@ -70,6 +71,39 @@ export const button = recipe({
     },
   },
   compoundVariants: [
+    // *******************************************************************
+    // Outlined (default)
+    // *******************************************************************
+    {
+      variants: {
+        color: 'primary',
+        variant: 'outlined',
+      },
+      style: tokens({
+        color: { default: 'yellow', hover: 'white', disabled: 'gray' },
+        borderColor: { default: 'navy', disabled: 'gray' },
+        backgroundColor: {
+          default: 'transparent',
+          hover: 'navy',
+          disabled: 'gray',
+        },
+      }),
+    },
+    {
+      variants: {
+        color: 'secondary',
+        variant: 'outlined',
+      },
+      style: tokens({
+        color: { default: 'yellow', hover: 'white', disabled: 'gray' },
+        borderColor: { default: 'yellow', disabled: 'gray' },
+        backgroundColor: {
+          default: 'transparent',
+          hover: 'navy',
+          disabled: 'gray',
+        },
+      }),
+    },
     // *******************************************************************
     // Text
     // *******************************************************************

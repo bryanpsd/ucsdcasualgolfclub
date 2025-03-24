@@ -42,6 +42,7 @@ export const color = {
   },
   transparent: 'transparent',
   backgroundDefault: '#ffffff',
+  backgroundPrimary: '#182B49',
   backgroundPaper: '#ffffff',
   backgroundSnackbar: '#2F3030',
   link: '#00629B',

@@ -1,5 +1,4 @@
 import * as NavMenu from '@radix-ui/react-navigation-menu';
-import Caret from '../../../../icons/caretDown.svg?react';
 
 import {
   arrow,
@@ -8,6 +7,7 @@ import {
   mainNavItem,
   mainNavTrigger,
   mainNavContent,
+  mainNavSubItem,
   viewportPosition,
 } from './MainNav.css';
 import { useState, type PointerEventHandler } from 'react';
@@ -61,7 +61,10 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
                     <ul>
                       {item.links?.map((subItem) => (
                         <li key={subItem.label}>
-                          <NavMenu.Link href={subItem.href}>
+                          <NavMenu.Link
+                            className={mainNavSubItem}
+                            href={subItem.href}
+                          >
                             {subItem.label}
                           </NavMenu.Link>
                         </li>

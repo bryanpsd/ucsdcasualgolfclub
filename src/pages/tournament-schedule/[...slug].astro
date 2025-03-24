@@ -1,0 +1,59 @@
+---
+import { contentfulClient } from '../../lib/contentful';
+import { heroWrapper, subPageWrapper } from '~styles/common.css';
+import Layout from '../../layouts/Layout.astro';
+import { format } from 'date-fns';
+import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse';
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import { MiniCard } from '~components/Course/MiniCard';
+import { Map } from '~components/Course/Map';
+
+import * as styles from './_style/tournament.css';
+import { RichText } from '~components/RichText';
+
+export async function getStaticPaths() {
+  const { items } = await contentfulClient.getEntries<TypeCourseSkeleton>({
+    content_type: 'course',
+  });
+  const pages = items.map((item) => ({
+    params: {
+      slug: `/${format(new Date((item.fields.date ?? '').toString()), 'yyyy')}/${item.fields.slug}`,
+    },
+    props: {
+      course: item.fields.course,
+      date: item.fields.date,
+      address: item.fields.address,
+      longitude: item.fields.address?.lon,
+      latitude: item.fields.address?.lat,
+      summary: item.fields.summary,
+    },
+  }));
+  return pages;
+}
+
+const { course, longitude, latitude, summary } = Astro.props;
+---
+
+<Layout>
+  <section class={heroWrapper}>
+    <ResponsiveHeadline size={4} as="h1">{course}</ResponsiveHeadline>
+  </section>
+  <section class={subPageWrapper}>
+    <div class={styles.tournamentWrapper}>
+      <div class={styles.tournamentLeftCol}>
+        {
+          longitude !== undefined && latitude !== undefined ? (
+            <Map longitude={longitude} latitude={latitude} />
+          ) : (
+            <p>Location data is unavailable.</p>
+          )
+        }
+        {summary && <RichText richText={summary} />}
+        <RichText richText={summary} />
+      </div>
+      <div class={styles.tournamentRightCol}>
+        <MiniCard title="Information" isCoursePage label="Course Website" />
+      </div>
+    </div>
+  </section>
+</Layout>

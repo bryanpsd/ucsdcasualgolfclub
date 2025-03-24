@@ -1,26 +1,43 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import { contentfulClient } from "../../lib/contentful";
-import {CourseCard}  from "../../components/Course/CourseCard";
-import type { TypeCourseSkeleton } from "../../types/contentful";
+import Layout from '../../layouts/Layout.astro';
+import { contentfulClient } from '../../lib/contentful';
+import { CourseCard } from '../../components/Course/CourseCard';
+import type { TypeCourseSkeleton } from '../../types/contentful';
+import { heroWrapper, subPageWrapper } from '~styles/common.css';
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
 
 const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-  content_type: "course",
-  order: ["fields.date"],
-  "fields.date[gte]": "2024-09-01T00:00:00Z",
+  content_type: 'course',
+  order: ['fields.date'],
+  'fields.date[gte]': '2024-11-08T00:00:00Z',
   limit: 12,
 });
-
 ---
 
 <Layout>
-  {
-    entries.items.map((item) => (
-      <CourseCard date={item.fields.date} price={item.fields.price} />
-      <section>
-        <h2>{item.fields.courseName}</h2>
-        <p>{item.fields.date}</p>
-      </section>
-    ))
-  }
+  <section class={heroWrapper}>
+    <ResponsiveHeadline size={4} as="h1">Tournament Schedule</ResponsiveHeadline
+    >
+  </section>
+  <div class={subPageWrapper}>
+    {
+      entries.items.map((item) => (
+        <CourseCard
+          client:load
+          date={item.fields.date}
+          notes={item.fields.notes}
+          course={item.fields.course}
+          price={item.fields.price}
+          players={item.fields.players}
+          slug={item.fields.slug}
+          amenities={item.fields.amenities}
+          results={
+            item.fields.results && 'fields' in item.fields.results
+              ? item.fields.results
+              : undefined
+          }
+        />
+      ))
+    }
+  </div>
 </Layout>

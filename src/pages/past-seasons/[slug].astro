@@ -1,10 +1,16 @@
 ---
+import { CourseCard } from '~components/Course/CourseCard';
+import { contentfulClient } from '../../lib/contentful';
+import { heroWrapper, subPageWrapper } from '~styles/common.css';
 import Layout from '../../layouts/Layout.astro';
+import { format } from 'date-fns';
+import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse';
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
 
 export function getStaticPaths() {
   // Generate dynamic pages for past seasons
   const getYear = new Date().getFullYear() - 1;
-  const pastSeasonsLinks = Array.from({ length: getYear - 2019 }, (_, i) => {
+  const pastSeasonsLinks = Array.from({ length: getYear - 2018 }, (_, i) => {
     const year = getYear - i;
     return {
       params: {
@@ -15,7 +21,39 @@ export function getStaticPaths() {
   return pastSeasonsLinks;
 }
 
+const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
+  content_type: 'course',
+  order: ['fields.date'],
+});
+
 const { slug } = Astro.params;
 ---
 
-<Layout> {slug} </Layout>
+<Layout>
+  <section class={heroWrapper}>
+    <ResponsiveHeadline size={4} as="h1">{slug}</ResponsiveHeadline>
+  </section>
+  <div class={subPageWrapper}>
+    {
+      entries.items.map((item) => {
+        const getYear = format(new Date(item.fields.date as string), 'yyyy');
+        if (getYear === slug) {
+          return (
+            <CourseCard
+              client:load
+              hideCourseInfo
+              date={item.fields.date}
+              course={item.fields.course}
+              slug={item.fields.slug}
+              results={
+                item.fields.results && 'fields' in item.fields.results
+                  ? item.fields.results
+                  : undefined
+              }
+            />
+          );
+        }
+      })
+    }
+  </div>
+</Layout>

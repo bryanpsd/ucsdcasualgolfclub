@@ -86,6 +86,7 @@ const colorProperties = defineProperties({
   properties: {
     color: {
       ...colors,
+      ...brand,
       ...foreground,
       currentColor: 'currentColor',
       inherit: 'inherit',
@@ -93,6 +94,7 @@ const colorProperties = defineProperties({
     },
     fill: {
       ...colors,
+      ...brand,
       ...foreground,
       currentColor: 'currentColor',
       inherit: 'inherit',
@@ -100,13 +102,14 @@ const colorProperties = defineProperties({
     },
     stroke: {
       ...colors,
+      ...brand,
       currentColor: 'currentColor',
       inherit: 'inherit',
       initial: 'initial',
     },
-    borderColor: { ...colors, ...outline },
-    background: { ...colors, ...surface },
-    backgroundColor: { ...colors, ...surface },
+    borderColor: { ...colors, ...outline, ...brand },
+    background: { ...colors, ...surface, ...brand },
+    backgroundColor: { ...colors, ...surface, ...brand },
   },
 });
 // *******************************************************************
@@ -303,6 +306,7 @@ const displayProperties = defineProperties({
     overflowY: ['hidden', 'visible', 'scroll', 'auto'],
     overflowX: ['hidden', 'visible', 'scroll', 'auto'],
     zIndex: {
+      subNav: 500,
       backToTopButton: 500,
       mobileStepper: 1000,
       speedDial: 1050,

@@ -1,0 +1,58 @@
+---
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import { Button } from '../../Button/Button';
+import type { TypeCourseSkeleton } from '../../../types/contentful';
+import { format } from 'date-fns';
+import * as style from './MiniCard.css';
+import { contentfulClient } from '~lib/contentful';
+
+const todayUTC = new Date();
+const utcDateString = todayUTC.toISOString();
+
+const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
+  content_type: 'course',
+  'fields.date[gte]':
+    utcDateString as `${number}-${number}-${number}T${number}:${number}:${number}Z`,
+  limit: 1,
+});
+
+const { title, isCoursePage, label } = Astro.props;
+---
+
+<div class={style.miniCardWrapper}>
+  <ResponsiveHeadline className={style.miniCardTitle} size={1} as="h2"
+    >{title}</ResponsiveHeadline
+  >
+  {
+    entries.items.map((item) => {
+      return (
+        <div class={style.miniCard}>
+          <ResponsiveHeadline className={style.miniCardCourse} size={1} as="h3">
+            {item.fields.course}
+          </ResponsiveHeadline>
+          <div class={style.dateTimeWrapper}>
+            <span>
+              {format(new Date(item.fields.date as string), 'E M/d/yy')}
+            </span>
+            @<span>{format(new Date(item.fields.date as string), 'h:mm')}</span>
+          </div>
+          <Button
+            variant="outlined"
+            color="secondary"
+            as="a"
+            size="small"
+            rel={isCoursePage ? 'noopener noreferrer' : ''}
+            target={isCoursePage ? '_blank' : '_self'}
+            href={
+              isCoursePage
+                ? item.fields.courseSite
+                : `/tournament-schedule/${format(new Date(item.fields.date as string), 'yyyy')}/${item.fields.slug}`
+            }
+          >
+            {label}
+          </Button>
+        </div>
+      );
+    })
+  }
+</div>

@@ -23,10 +23,9 @@ export const getCourse = defineAction({
         {
           content_type: 'course',
           'fields.course': course,
-          include: 10,
+          include: 1,
         }
       );
-
     if (courseData.errors || !courseData.items[0]?.fields) {
       throw new ActionError({
         code: 'INTERNAL_SERVER_ERROR',
