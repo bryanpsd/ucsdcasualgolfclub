@@ -32,6 +32,7 @@ export const menuItems: MainNavProps['items'] = {
     {
       label: 'Join the Club',
       href: 'https://membership.scga.org/start/join/?cid=885',
+      target: '_blank',
     },
   ],
 };

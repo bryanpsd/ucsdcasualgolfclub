@@ -16,6 +16,7 @@ import { MainNavItem } from '../MainNavItem/MainNavItem';
 type NavigationLink = {
   label: string;
   href?: string;
+  target?: string;
   links?: NavigationLink[];
 };
 
@@ -44,7 +45,12 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
           <NavMenu.Item className={mainNavItem} key={item.label}>
             {'href' in item ? (
               <NavMenu.Link asChild active={item.href === currentPath}>
-                <MainNavItem href={item.href} label={item.label} as="a" />
+                <MainNavItem
+                  target={item.target}
+                  href={item.href}
+                  label={item.label}
+                  as="a"
+                />
               </NavMenu.Link>
             ) : (
               <>
@@ -64,6 +70,7 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
                           <NavMenu.Link
                             className={mainNavSubItem}
                             href={subItem.href}
+                            active={subItem.href === currentPath}
                           >
                             {subItem.label}
                           </NavMenu.Link>

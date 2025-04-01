@@ -10,3 +10,22 @@ export const textBlock = style([
     marginX: 'auto',
   }),
 ]);
+
+export const seasonRecap = style([
+  tokens({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 16,
+    marginTop: 24,
+    marginBottom: 24,
+  }),
+]);
+
+export const seasonRecapList = style([
+  tokens({
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 16,
+    marginX: 'auto',
+  }),
+]);

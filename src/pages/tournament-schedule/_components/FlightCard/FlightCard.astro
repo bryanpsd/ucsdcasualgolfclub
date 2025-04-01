@@ -1,0 +1,18 @@
+---
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import * as style from './FlightCard.css';
+import type { TypeLeadersProps } from '../../../../types/contentful/TypeLeaders';
+const { title, flight } = Astro.props;
+---
+
+<div class={style.flightCardWrapper}>
+  <ResponsiveHeadline size={1} as="h2">{title}</ResponsiveHeadline>
+  {
+    flight.map((player: TypeLeadersProps) => (
+      <div>
+        <span>{player.playerName}</span>
+        <span>{player.handicapIndex}</span>
+      </div>
+    ))
+  }
+</div>

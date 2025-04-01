@@ -22,6 +22,9 @@ export const mainNavItem = style([
         color: color.brand.navy,
         backgroundColor: color.brand.yellow,
       },
+      '&[data-active]': {
+        textDecoration: 'underline',
+      },
     },
   },
 ]);

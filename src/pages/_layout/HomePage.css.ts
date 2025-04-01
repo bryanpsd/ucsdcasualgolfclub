@@ -46,6 +46,8 @@ export const leftCol = style([
 export const rightCol = style([
   tokens({
     display: 'flex',
+    flexDirection: 'column',
     width: { xs: 'col-12', 'md-min': 'col-4' },
+    gap: 24,
   }),
 ]);

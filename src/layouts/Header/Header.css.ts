@@ -2,6 +2,7 @@ import { style } from '@vanilla-extract/css';
 import { contentPadding, pageMaxWidth } from '../../styles/common.css';
 import { tokens } from '../../styles/designTokens.css';
 import { color } from '../../styles/designTokens/colors';
+import { fontSize } from '../../styles/designTokens/typography';
 
 export const headerWrapper = style([
   tokens({
@@ -12,6 +13,7 @@ export const headerWrapper = style([
   {
     height: 84,
     backgroundColor: color.brand.navy,
+    fontSize: fontSize.sizeFont4,
   },
 ]);
 
@@ -42,6 +44,9 @@ export const logoLink = style([
     textDecoration: 'none',
     fontFamily: 'base',
   }),
+  {
+    fontSize: fontSize.sizeFont5,
+  },
 ]);
 
 export const mainContentJumpLink = style({

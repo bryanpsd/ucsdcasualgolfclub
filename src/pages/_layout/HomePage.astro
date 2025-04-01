@@ -6,6 +6,7 @@ import { RichText } from '~components/RichText';
 
 import * as style from './HomePage.css';
 import { MiniCard } from '~components/Course/MiniCard';
+import { Leaderboard } from '~components/Leaderboard';
 
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
   content_type: 'simplePage',
@@ -25,14 +26,18 @@ const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
     <section class={style.homeColWrapper}>
       {
         entries.items.map((item) => (
-          <div class={style.leftCol}>
+          <section class={style.leftCol}>
             {item.fields.content && (
               <RichText richText={item.fields.content} client:load />
             )}
-          </div>
+          </section>
         ))
       }
-      <div class={style.rightCol}>Leaderboard</div>
+      <section class={style.rightCol}>
+        <Leaderboard gross />
+        <Leaderboard net firstFlight />
+        <Leaderboard net secondFlight />
+      </section>
     </section>
   </div>
 </Layout>

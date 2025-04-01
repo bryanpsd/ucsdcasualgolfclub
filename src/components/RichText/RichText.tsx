@@ -4,12 +4,19 @@ import type { Document } from '@contentful/rich-text-types';
 import { type TypographyProps, Typography } from '~components/Typography';
 import { TextBlockSection } from '../../components/TextBlockSection';
 import { List } from '../../components/TextBlockSection/List';
-import { textBlock, body } from './RichText.css';
+import { textBlock, body, seasonRecap, seasonRecapList } from './RichText.css';
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
 
-const BODY_TYPOGRAPHY_VARIANT: TypographyProps['variant'] = 'bodyLg';
+const BODY_TYPOGRAPHY_VARIANT: TypographyProps['variant'] = 'bodyMd';
 
 const options: Options = {
   renderNode: {
+    [BLOCKS.HEADING_2]: (node, children) => (
+      <ResponsiveHeadline size={2} as="h2">
+        {children}
+      </ResponsiveHeadline>
+    ),
+
     [BLOCKS.PARAGRAPH]: (_node, children) => (
       <Typography variant={BODY_TYPOGRAPHY_VARIANT} className={body}>
         {children}
@@ -29,6 +36,37 @@ const options: Options = {
     [BLOCKS.EMBEDDED_ASSET]: (node) => {
       const { url, fileName } = node.data.target.fields.file;
       return <img src={url} alt={fileName} />;
+    },
+    [BLOCKS.EMBEDDED_ENTRY]: (node) => {
+      if (node.data.target.sys.contentType.sys.id === 'seasonRecap') {
+        const { summary } = node.data.target.fields;
+        const { winners } = node.data.target.fields;
+        return (
+          <div className={seasonRecap}>
+            <RichText richText={summary} />
+            <ul className={seasonRecapList}>
+              {winners.map(
+                (winner: { fields: { title: string; file: any } }) => {
+                  const { title, file } = winner.fields;
+                  return (
+                    <li key={title}>
+                      <img
+                        src={file.url}
+                        alt={file.title}
+                        width={file.details.image.width}
+                        height={file.details.image.height}
+                      />
+                      <ResponsiveHeadline size={1} as="h3">
+                        {title}
+                      </ResponsiveHeadline>
+                    </li>
+                  );
+                }
+              )}
+            </ul>
+          </div>
+        );
+      }
     },
   },
 };

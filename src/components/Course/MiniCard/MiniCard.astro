@@ -16,7 +16,7 @@ const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
   limit: 1,
 });
 
-const { title, isCoursePage, label } = Astro.props;
+const { title, isCoursePage, label, course, date, courseWebsite } = Astro.props;
 ---
 
 <div class={style.miniCardWrapper}>
@@ -28,13 +28,22 @@ const { title, isCoursePage, label } = Astro.props;
       return (
         <div class={style.miniCard}>
           <ResponsiveHeadline className={style.miniCardCourse} size={1} as="h3">
-            {item.fields.course}
+            {isCoursePage ? course : item.fields.course}
           </ResponsiveHeadline>
           <div class={style.dateTimeWrapper}>
             <span>
-              {format(new Date(item.fields.date as string), 'E M/d/yy')}
+              {format(
+                new Date(courseWebsite ? date : (item.fields.date as string)),
+                'E M/d/yy'
+              )}
             </span>
-            @<span>{format(new Date(item.fields.date as string), 'h:mm')}</span>
+            @
+            <span>
+              {format(
+                new Date(courseWebsite ? date : (item.fields.date as string)),
+                'h:mm'
+              )}
+            </span>
           </div>
           <Button
             variant="outlined"
@@ -45,7 +54,9 @@ const { title, isCoursePage, label } = Astro.props;
             target={isCoursePage ? '_blank' : '_self'}
             href={
               isCoursePage
-                ? item.fields.courseSite
+                ? courseWebsite
+                  ? courseWebsite
+                  : item.fields.courseSite
                 : `/tournament-schedule/${format(new Date(item.fields.date as string), 'yyyy')}/${item.fields.slug}`
             }
           >

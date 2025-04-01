@@ -15,11 +15,16 @@ export const tournamentWrapper = style([
 export const tournamentLeftCol = style([
   tokens({
     width: 'col-8',
+    gap: 12,
+    display: 'flex',
+    flexDirection: 'column',
   }),
 ]);
 
 export const tournamentRightCol = style([
   tokens({
     width: 'col-4',
+    display: 'flex',
+    flexDirection: 'column',
   }),
 ]);

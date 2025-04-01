@@ -25,47 +25,47 @@ export type TypographyProps<
   }
 >;
 
-export const Typography = forwardRef(
-  <C extends ElementType = typeof defaultElement>(
-    {
-      as: asComponent,
-      align,
-      className,
-      color,
-      display,
-      noWrap = false,
-      variant = 'bodyMd',
-      children,
-      fontWeight,
-      decoration,
-      ...rest
-    }: TypographyProps<C>,
-    ref?: PolymorphicRef<C>
-  ) => {
-    const Component = asComponent ?? defaultElement;
+export const Typography = forwardRef(function TypographyComponent<
+  C extends ElementType = typeof defaultElement
+>(
+  {
+    as: asComponent,
+    align,
+    className,
+    color,
+    display,
+    noWrap = false,
+    variant = 'bodyMd',
+    children,
+    fontWeight,
+    decoration,
+    ...rest
+  }: TypographyProps<C>,
+  ref: PolymorphicRef<C>
+) {
+  const Component = asComponent ?? defaultElement;
 
-    return (
-      <Component
-        className={concatClasses([
-          className,
-          typography({
-            variant,
-            color,
-            display,
-            noWrap,
-            align,
-            fontWeight,
-            decoration,
-          }),
-        ])}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-      </Component>
-    );
-  }
-);
+  return (
+    <Component
+      className={concatClasses([
+        className,
+        typography({
+          variant,
+          color,
+          display,
+          noWrap,
+          align,
+          fontWeight,
+          decoration,
+        }),
+      ])}
+      ref={ref}
+      {...rest}
+    >
+      {children}
+    </Component>
+  );
+});
 
 // @ts-expect-error - Disabling error because forwardRef declaration in react-augment.d.ts
 // doesn't currently have the displayName property for React components

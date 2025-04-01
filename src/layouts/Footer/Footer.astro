@@ -1,40 +1,52 @@
 ---
+import { Typography } from '~components/Typography';
 import {
   footer,
-  footerNav,
+  footerContent,
   footerList,
   footerListItem,
   footerLink,
+  footerCopyright,
 } from './Footer.css';
+
+const currentDate = new Date();
+const year = currentDate.getFullYear();
 ---
 
 <footer class={footer}>
-  <nav class={footerNav}>
-    <ul class={footerList}>
-      <li class={footerListItem}>
-        <a class={footerLink} href="/tournament-schedule"
-          >Tournament Schedule</a>
-      </li>
+  <div class={footerContent}>
+    <nav>
+      <ul class={footerList}>
+        <li class={footerListItem}>
+          <a class={footerLink} href="/tournament-schedule"
+            >Tournament Schedule</a
+          >
+        </li>
 
-      <li class={footerListItem}>
-        <a class={footerLink} href="/roster">Roster</a>
-      </li>
-      <li class={footerListItem}>
-        <a class={footerLink} href="/about">About</a>
-      </li>
-      <li class={footerListItem}>
-        <a class={footerLink} href="#">Past Seasons</a>
-      </li>
-      <li class={footerListItem}>
-        <a
-          class={footerLink}
-          href="https://membership.scga.org/start/join/?cid=885"
-          target="_blank">Join the Club</a
-        >
-      </li>
-      <li class={footerListItem}>
-        <a class={footerLink} href="#">Instagram</a>
-      </li>
-    </ul>
-  </nav>
+        <li class={footerListItem}>
+          <a class={footerLink} href="/roster">Roster</a>
+        </li>
+        <li class={footerListItem}>
+          <a class={footerLink} href="/about">About</a>
+        </li>
+        <li class={footerListItem}>
+          <a class={footerLink} href="#">Past Seasons</a>
+        </li>
+        <li class={footerListItem}>
+          <a
+            class={footerLink}
+            href="https://membership.scga.org/start/join/?cid=885"
+            target="_blank">Join the Club</a
+          >
+        </li>
+        <li class={footerListItem}>
+          <a class={footerLink} href="#">Instagram</a>
+        </li>
+      </ul>
+    </nav>
+
+    <Typography className={footerCopyright}
+      >&copy;{year} UCSD Casual Golf Club</Typography
+    >
+  </div>
 </footer>

@@ -10,6 +10,7 @@ import { Map } from '~components/Course/Map';
 
 import * as styles from './_style/tournament.css';
 import { RichText } from '~components/RichText';
+import FlightCard from './_components/FlightCard/FlightCard.astro';
 
 export async function getStaticPaths() {
   const { items } = await contentfulClient.getEntries<TypeCourseSkeleton>({
@@ -26,12 +27,32 @@ export async function getStaticPaths() {
       longitude: item.fields.address?.lon,
       latitude: item.fields.address?.lat,
       summary: item.fields.summary,
+      courseWebsite: item.fields.courseSite,
+      firstFlight: item.fields.firstFlight?.map((player) => ({
+        playerName: 'fields' in player ? player.fields.playerName : undefined,
+        handicapIndex:
+          'fields' in player ? player.fields.handicapIndex : undefined,
+      })),
+      secondFlight: item.fields.secondFlight?.map((player) => ({
+        playerName: 'fields' in player ? player.fields.playerName : undefined,
+        handicapIndex:
+          'fields' in player ? player.fields.handicapIndex : undefined,
+      })),
     },
   }));
   return pages;
 }
 
-const { course, longitude, latitude, summary } = Astro.props;
+const {
+  course,
+  longitude,
+  latitude,
+  summary,
+  date,
+  courseWebsite,
+  firstFlight,
+  secondFlight,
+} = Astro.props;
 ---
 
 <Layout>
@@ -48,11 +69,28 @@ const { course, longitude, latitude, summary } = Astro.props;
             <p>Location data is unavailable.</p>
           )
         }
-        {summary && <RichText richText={summary} />}
-        <RichText richText={summary} />
+        {summary !== undefined && <RichText richText={summary} />}
+        {
+          firstFlight && (
+            <FlightCard title="First Flight" flight={firstFlight} />
+          )
+        }
+
+        {
+          secondFlight && (
+            <FlightCard title="First Flight" flight={secondFlight} />
+          )
+        }
       </div>
       <div class={styles.tournamentRightCol}>
-        <MiniCard title="Information" isCoursePage label="Course Website" />
+        <MiniCard
+          title="Information"
+          isCoursePage
+          label="Course Website"
+          course={course}
+          date={date}
+          courseWebsite={courseWebsite}
+        />
       </div>
     </div>
   </section>

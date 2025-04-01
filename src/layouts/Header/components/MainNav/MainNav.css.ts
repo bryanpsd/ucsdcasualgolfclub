@@ -36,7 +36,6 @@ export const mainNavItem = style([
 ]);
 
 export const mainNavTrigger = style({
-  all: 'unset',
   display: 'flex',
   paddingLeft: 16,
   paddingRight: 16,
@@ -76,6 +75,9 @@ export const mainNavSubItem = style([
     selectors: {
       '&:hover': {
         backgroundColor: color.brand.yellow,
+      },
+      '&[data-active]': {
+        textDecoration: 'underline',
       },
     },
   },

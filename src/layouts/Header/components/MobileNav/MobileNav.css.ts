@@ -1,11 +1,6 @@
 import { keyframes, style } from '@vanilla-extract/css';
 import { tokens } from '../../../../styles/designTokens.css';
 import { color } from '../../../../styles/designTokens/colors';
-import {
-  fontSize,
-  fontWeight,
-  lineHeight,
-} from '../../../../styles/designTokens/typography';
 
 export const mobileNavRoot = style([
   tokens({
