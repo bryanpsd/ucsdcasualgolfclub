@@ -5,8 +5,8 @@
  * as global style imports.
  */
 
-import '~styles/reset.css';
-import '~styles/theme.css';
+import "~styles/reset.css";
+import "~styles/theme.css";
 
 export interface Props {
   title: string;
@@ -18,10 +18,18 @@ const { title, description } = Astro.props;
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content={description || 'Best Buy Health'} />
+  <meta name="description" content={description || "Best Buy Health"} />
   <meta name="viewport" content="width=device-width" />
   <link rel="sitemap" href="/sitemap-index.xml" />
-  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" href="/ucsd-icon.png" />
+  <link rel="apple-touch-icon" sizes="57x57" href="/ucsd-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/ucsd-icon-72x72.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/ucsd-icon-96x96.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/ucsd-icon-144x144.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="/ucsd-icon-192x192.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/ucsd-icon-256x256.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="/ucsd-icon-384x384.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/ucsd-icon-512x512.png" />
   <meta name="generator" content={Astro.generator} />
   <title>{title}</title>
 </head>
