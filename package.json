@@ -11,7 +11,7 @@
     "cf-generate-types": "cf-content-types-generator src/contentful/export.json --v10 --typeguard --out src/types/contentful"
   },
   "dependencies": {
-    "@astrojs/react": "^4.1.6",
+    "@astrojs/react": "^4.2.3",
     "@contentful/rich-text-html-renderer": "^17.0.0",
     "@contentful/rich-text-react-renderer": "^16.0.1",
     "@radix-ui/react-dialog": "^1.1.6",
@@ -23,12 +23,13 @@
     "@vanilla-extract/css": "^1.17.0",
     "@vanilla-extract/recipes": "^0.5.5",
     "@vanilla-extract/sprinkles": "^1.6.3",
-    "astro": "^5.1.9",
+    "astro": "^5.6.1",
     "astro-icon": "^1.1.5",
     "contentful": "^11.4.4",
     "date-fns": "^4.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {
     "@svgr/plugin-svgo": "^8.1.0",

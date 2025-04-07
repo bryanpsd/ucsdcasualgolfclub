@@ -1,24 +1,24 @@
 ---
-import { actions } from "astro:actions";
-import { Image } from "astro:assets";
-import logo from "~assets/brand-logo.png";
-import { MainNav } from "./components/MainNav";
+import { actions } from 'astro:actions';
+import { Image } from 'astro:assets';
+import logo from '~/assets/brand-logo.png';
+import { MainNav } from './components/MainNav';
 
-import { menuItems } from "./utils/headerItems";
+import { menuItems } from './utils/headerItems';
 import {
   headerWrapper,
   header,
   logoWrapper,
   logoLink,
   mainContentJumpLink,
-} from "./Header.css";
-import { MobileNav } from "./components/MobileNav/MobileNav";
-import { Banner } from "./components/Banner";
-import { contentfulClient } from "~lib/contentful";
-import type { TypeBannerSkeleton } from "~types/contentful/TypeBanner";
+} from './Header.css';
+import { MobileNav } from './components/MobileNav/MobileNav';
+import { Banner } from './components/Banner';
+import { contentfulClient } from '~lib/contentful';
+import type { TypeBannerSkeleton } from '~types/contentful/TypeBanner';
 
 const entries = await contentfulClient.getEntries<TypeBannerSkeleton>({
-  content_type: "banner",
+  content_type: 'banner',
 });
 
 const banners = await Astro.callAction(actions.getHeaderBanners, null);

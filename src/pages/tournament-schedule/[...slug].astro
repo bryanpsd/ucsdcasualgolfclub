@@ -1,16 +1,16 @@
 ---
 import { contentfulClient } from '../../lib/contentful';
-import { heroWrapper, subPageWrapper } from '~styles/common.css';
+import { subPageWrapper } from '~styles/common.css';
 import Layout from '../../layouts/Layout.astro';
 import { format } from 'date-fns';
 import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse';
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
 import { MiniCard } from '~components/Course/MiniCard';
 import { Map } from '~components/Course/Map';
 
 import * as styles from './_style/tournament.css';
 import { RichText } from '~components/RichText';
 import FlightCard from './_components/FlightCard/FlightCard.astro';
+import { Hero } from '~components/Hero';
 
 export async function getStaticPaths() {
   const { items } = await contentfulClient.getEntries<TypeCourseSkeleton>({
@@ -28,6 +28,11 @@ export async function getStaticPaths() {
       latitude: item.fields.address?.lat,
       summary: item.fields.summary,
       courseWebsite: item.fields.courseSite,
+      courseImage:
+        item.fields.courseImage && 'fields' in item.fields.courseImage
+          ? (item.fields.courseImage.fields.file?.url ?? '')
+          : undefined,
+      results: item.fields.results,
       firstFlight: item.fields.firstFlight?.map((player) => ({
         playerName: 'fields' in player ? player.fields.playerName : undefined,
         handicapIndex:
@@ -45,6 +50,7 @@ export async function getStaticPaths() {
 
 const {
   course,
+  courseImage,
   longitude,
   latitude,
   summary,
@@ -52,13 +58,12 @@ const {
   courseWebsite,
   firstFlight,
   secondFlight,
+  results,
 } = Astro.props;
 ---
 
 <Layout>
-  <section class={heroWrapper}>
-    <ResponsiveHeadline size={4} as="h1">{course}</ResponsiveHeadline>
-  </section>
+  <Hero course={course} courseImage={courseImage} />
   <section class={subPageWrapper}>
     <div class={styles.tournamentWrapper}>
       <div class={styles.tournamentLeftCol}>
@@ -89,6 +94,7 @@ const {
           label="Course Website"
           course={course}
           date={date}
+          results={results}
           courseWebsite={courseWebsite}
         />
       </div>

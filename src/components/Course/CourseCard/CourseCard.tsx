@@ -34,6 +34,8 @@ export const CourseCard = (props: CourseCardProps) => {
         return <GolfBall height={30} width={30} aria-hidden="true" />;
       case 'Cart':
         return <Cart height={30} width={30} aria-hidden="true" />;
+      default:
+        return null;
     }
   };
   return (
@@ -84,7 +86,7 @@ export const CourseCard = (props: CourseCardProps) => {
           </div>
           <div className={styles.courseCardTime}>
             <Clock height={30} width={30} aria-hidden="true" />
-            {date && format(new Date(date), 'h:mm')}
+            {date && format(new Date(date), 'h:mmaaa')}
           </div>
           <ul className={styles.courseCardList}>
             <li

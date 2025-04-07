@@ -22,6 +22,16 @@ export const mainNavList = style([
   }),
 ]);
 
+export const mainNavTrigger = style({
+  display: 'flex',
+  paddingLeft: 16,
+  paddingRight: 16,
+  height: '100%',
+  cursor: 'pointer',
+  alignItems: 'center',
+  position: 'relative',
+});
+
 export const mainNavItem = style([
   tokens({
     display: 'flex',
@@ -32,18 +42,13 @@ export const mainNavItem = style([
     alignItems: 'center',
     border: 'none',
     borderLeft: `1px solid ${color.brand.black}`,
+    selectors: {
+      [`${mainNavTrigger} &`]: {
+        textDecoration: 'underline',
+      },
+    },
   },
 ]);
-
-export const mainNavTrigger = style({
-  display: 'flex',
-  paddingLeft: 16,
-  paddingRight: 16,
-  height: '100%',
-  cursor: 'pointer',
-  alignItems: 'center',
-  position: 'relative',
-});
 
 export const mainNavContent = style([
   {

@@ -1,0 +1,31 @@
+---
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import defaultBackgroundImage from '../../assets/admiral-baker-south-bg.jpg';
+import * as style from './Hero.css';
+
+const { course, courseImage } = Astro.props;
+---
+
+<section class={style.heroWrapper}>
+  <div class={style.heroColLeft}>
+    <ResponsiveHeadline
+      className={style.heroHeadline}
+      size={4}
+      as="h1"
+      color="inverse"
+    >
+      {course}</ResponsiveHeadline
+    >
+  </div>
+  <div class={style.heroColRight}>
+    <div
+      class={style.heroBackground}
+      style={{
+        backgroundImage: courseImage
+          ? `url('${courseImage}')`
+          : `url(${defaultBackgroundImage.src})`,
+      }}
+    >
+    </div>
+  </div>
+</section>

@@ -29,6 +29,7 @@ export interface TypeCourseFields {
   address?: EntryFieldTypes.Location;
   results?: EntryFieldTypes.AssetLink;
   winners?: EntryFieldTypes.RichText;
+  courseImage?: EntryFieldTypes.AssetLink;
 }
 
 export type TypeCourseSkeleton = EntrySkeletonType<TypeCourseFields, 'course'>;

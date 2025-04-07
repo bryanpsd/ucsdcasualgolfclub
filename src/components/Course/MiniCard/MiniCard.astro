@@ -13,10 +13,12 @@ const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
   content_type: 'course',
   'fields.date[gte]':
     utcDateString as `${number}-${number}-${number}T${number}:${number}:${number}Z`,
+
   limit: 1,
 });
 
-const { title, isCoursePage, label, course, date, courseWebsite } = Astro.props;
+const { title, isCoursePage, label, course, date, courseWebsite, results } =
+  Astro.props;
 ---
 
 <div class={style.miniCardWrapper}>
@@ -33,35 +35,54 @@ const { title, isCoursePage, label, course, date, courseWebsite } = Astro.props;
           <div class={style.dateTimeWrapper}>
             <span>
               {format(
-                new Date(courseWebsite ? date : (item.fields.date as string)),
+                new Date(isCoursePage ? date : (item.fields.date as string)),
                 'E M/d/yy'
               )}
             </span>
             @
             <span>
               {format(
-                new Date(courseWebsite ? date : (item.fields.date as string)),
-                'h:mm'
+                new Date(isCoursePage ? date : (item.fields.date as string)),
+                'h:mmaaa'
               )}
             </span>
           </div>
-          <Button
-            variant="outlined"
-            color="secondary"
-            as="a"
-            size="small"
-            rel={isCoursePage ? 'noopener noreferrer' : ''}
-            target={isCoursePage ? '_blank' : '_self'}
-            href={
-              isCoursePage
-                ? courseWebsite
+          {results ? (
+            <Button
+              as="a"
+              color="primary"
+              color="secondary"
+              variant="outlined"
+              size="small"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={
+                typeof results === 'object' && results?.fields?.file?.url
+                  ? results.fields.file.url
+                  : undefined
+              }
+            >
+              Results
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              color="secondary"
+              as="a"
+              size="small"
+              rel={isCoursePage ? 'noopener noreferrer' : ''}
+              target={isCoursePage ? '_blank' : '_self'}
+              href={
+                isCoursePage
                   ? courseWebsite
-                  : item.fields.courseSite
-                : `/tournament-schedule/${format(new Date(item.fields.date as string), 'yyyy')}/${item.fields.slug}`
-            }
-          >
-            {label}
-          </Button>
+                    ? courseWebsite
+                    : item.fields.courseSite
+                  : `/tournament-schedule/${format(new Date(item.fields.date as string), 'yyyy')}/${item.fields.slug}`
+              }
+            >
+              {label}
+            </Button>
+          )}
         </div>
       );
     })

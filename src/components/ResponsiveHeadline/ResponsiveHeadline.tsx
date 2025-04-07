@@ -1,6 +1,6 @@
 import type { ElementType } from 'react';
 import type { PolymorphicComponentProp } from 'types/PolymorphicComponent';
-import { concatClasses } from 'utils/concatClasses';
+import { concatClasses } from '~utils/concatClasses';
 import { responsiveHeadline } from './ResponsiveHeadline.css';
 
 const defaultElement: ElementType = 'p';
