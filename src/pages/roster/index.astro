@@ -14,10 +14,10 @@ const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
 ---
 
 <Layout>
+  <section class={heroWrapper}>
+    <ResponsiveHeadline size={4} as="h1">Roster</ResponsiveHeadline>
+  </section>
   <div class={subPageWrapper}>
-    <section class={heroWrapper}>
-      <ResponsiveHeadline size={4} as="h1">Roster</ResponsiveHeadline>
-    </section>
     <table class={styles.table}>
       <thead class={styles.thead}>
         <tr>

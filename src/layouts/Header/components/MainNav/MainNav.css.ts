@@ -42,11 +42,6 @@ export const mainNavItem = style([
     alignItems: 'center',
     border: 'none',
     borderLeft: `1px solid ${color.brand.black}`,
-    selectors: {
-      [`${mainNavTrigger} &`]: {
-        textDecoration: 'underline',
-      },
-    },
   },
 ]);
 

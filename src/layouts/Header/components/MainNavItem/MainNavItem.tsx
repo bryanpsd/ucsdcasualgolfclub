@@ -17,6 +17,7 @@ type MainNavItemProps<Element extends ElementType> =
       icon?: ReactNode;
       hideLabelBelowDesktop?: boolean;
       hideCaret?: boolean;
+      isActive?: boolean;
     }
   >;
 

@@ -1,7 +1,6 @@
 import * as NavMenu from '@radix-ui/react-navigation-menu';
 
 import {
-  arrow,
   mainNavRoot,
   mainNavList,
   mainNavItem,
@@ -34,6 +33,7 @@ const disableHoverInteraction: PointerEventHandler<HTMLElement> = (e) => {
 
 export const MainNav = ({ items, currentPath }: MainNavProps) => {
   const [active, setActive] = useState('');
+  console.log(currentPath);
   return (
     <NavMenu.Root
       className={mainNavRoot}
@@ -44,7 +44,10 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
         {items.menuItems.map((item) => (
           <NavMenu.Item className={mainNavItem} key={item.label}>
             {'href' in item ? (
-              <NavMenu.Link asChild active={item.href === currentPath}>
+              <NavMenu.Link
+                asChild
+                active={!!(item.href && currentPath.startsWith(item.href))}
+              >
                 <MainNavItem
                   target={item.target}
                   href={item.href}
@@ -59,6 +62,11 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
                   onPointerMove={disableHoverInteraction}
                   onPointerLeave={disableHoverInteraction}
                   asChild
+                  style={{
+                    textDecoration: currentPath.startsWith('/past-seasons')
+                      ? 'underline'
+                      : 'none',
+                  }}
                 >
                   <MainNavItem label={item.label} />
                 </NavMenu.Trigger>
