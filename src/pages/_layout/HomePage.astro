@@ -1,16 +1,16 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { contentfulClient } from '../../lib/contentful';
-import type { TypeSimplePageSkeleton } from '../../types/contentful';
-import { RichText } from '~components/RichText';
+import Layout from "../../layouts/Layout.astro";
+import { contentfulClient } from "../../lib/contentful";
+import type { TypeSimplePageSkeleton } from "../../types/contentful";
+import { RichText } from "~components/RichText";
 
-import * as style from './HomePage.css';
-import { MiniCard } from '~components/Course/MiniCard';
-import { Leaderboard } from '~components/Leaderboard';
+import * as style from "./HomePage.css";
+import { MiniCard } from "~components/Course/MiniCard";
+import { Leaderboard } from "~components/Leaderboard";
 
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-  content_type: 'simplePage',
-  'fields.title': 'Home',
+  content_type: "simplePage",
+  "fields.title": "Home",
 });
 
 // if (!courseData.data || courseData.error) {
@@ -18,7 +18,10 @@ const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
 // }
 ---
 
-<Layout>
+<Layout
+  title="Home | UCSD Casual Golf CLub"
+  description="The homepage for the UCSD Casual Golf Club"
+>
   <div class={style.homeWrapper}>
     <section class={style.homeHero}>
       <MiniCard title="Upcoming Tournament" label="Details" />

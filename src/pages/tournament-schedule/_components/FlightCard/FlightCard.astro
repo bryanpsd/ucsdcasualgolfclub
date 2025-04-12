@@ -1,18 +1,16 @@
 ---
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
-import * as style from './FlightCard.css';
-import type { TypeLeadersProps } from '../../../../types/contentful/TypeLeaders';
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+
+import type { TypeLeadersProps } from "../../../../types/contentful/TypeLeaders";
+import { Table } from "~components/Table";
 const { title, flight } = Astro.props;
 ---
 
-<div class={style.flightCardWrapper}>
-  <ResponsiveHeadline size={1} as="h2">{title}</ResponsiveHeadline>
-  {
-    flight.map((player: TypeLeadersProps) => (
-      <div>
-        <span>{player.playerName}</span>
-        <span>{player.handicapIndex}</span>
-      </div>
-    ))
-  }
-</div>
+<ResponsiveHeadline size={1} as="h2">{title}</ResponsiveHeadline>
+<Table
+  thead={["Player", "Index"]}
+  tbody={flight.map((th: TypeLeadersProps, td: TypeLeadersProps) => [
+    th.playerName,
+    td.handicapIndex,
+  ])}
+/>

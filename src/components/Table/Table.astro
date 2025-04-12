@@ -1,0 +1,48 @@
+---
+import * as styles from "./Table.css";
+
+type Props = {
+  thead: string[];
+  tbody: string[];
+  tfoot?: string[];
+};
+
+const { thead, tbody, tfoot } = Astro.props;
+---
+
+<table class={styles.table}>
+  {
+    thead && (
+      <thead class={styles.thead}>
+        <tr>
+          {thead.map((header) => (
+            <th class={styles.th}>{header}</th>
+          ))}
+        </tr>
+      </thead>
+    )
+  }
+  <tbody>
+    {
+      tbody.map((th, td) => (
+        <tr class={styles.tr}>
+          <th scope="row" class={styles.th}>
+            {th}
+          </th>
+          <td class={styles.td}>{td}</td>
+        </tr>
+      ))
+    }
+    {
+      tfoot && (
+        <tfoot class={styles.tfoot}>
+          <tr>
+            {tfoot.map((footer) => (
+              <th class={styles.th}>{footer}</th>
+            ))}
+          </tr>
+        </tfoot>
+      )
+    }
+  </tbody>
+</table>

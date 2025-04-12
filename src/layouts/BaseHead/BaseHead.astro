@@ -5,20 +5,20 @@
  * as global style imports.
  */
 
-import '~/styles/reset.css';
-import '~/styles/theme.css';
+import "~/styles/reset.css";
+import "~/styles/theme.css";
 
 export interface Props {
   title: string;
   description?: string;
 }
 
-const { title, description } = Astro.props;
+const { title = "UCSD Casual Golf CLub", description = "" } = Astro.props;
 ---
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content={description || 'Best Buy Health'} />
+  <meta name="description" content={description || "Best Buy Health"} />
   <meta name="viewport" content="width=device-width" />
   <link rel="sitemap" href="/sitemap-index.xml" />
   <link rel="icon" type="image/png" href="/ucsd-icon.png" />

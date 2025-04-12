@@ -1,19 +1,19 @@
 ---
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
-import Layout from '../../layouts/Layout.astro';
-import { contentfulClient } from '../../lib/contentful';
-import type { TypeLeadersSkeleton } from '../../types/contentful';
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import Layout from "../../layouts/Layout.astro";
+import { contentfulClient } from "../../lib/contentful";
+import type { TypeLeadersSkeleton } from "../../types/contentful";
 
-import { subPageWrapper, heroWrapper } from '../../styles/common.css';
-import * as styles from '../../styles/common.css';
+import { subPageWrapper, heroWrapper } from "../../styles/common.css";
+import * as styles from "../../styles/common.css";
 
 const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
-  content_type: 'leaders',
-  order: ['fields.handicapIndex'],
+  content_type: "leaders",
+  order: ["fields.handicapIndex"],
 });
 ---
 
-<Layout>
+<Layout title="Roster" description="Roster">
   <section class={heroWrapper}>
     <ResponsiveHeadline size={4} as="h1">Roster</ResponsiveHeadline>
   </section>
@@ -28,14 +28,14 @@ const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
       <tbody>
         {
           entries.items.map((item) => {
-            return item.fields.guest?.includes('Yes') ? null : (
+            return item.fields.guest?.includes("Yes") ? null : (
               <tr class={styles.tr}>
                 <th scope="row" class={styles.th}>
                   {item.fields.playerName}
                 </th>
                 <td class={styles.td}>
                   {item.fields.handicapIndex === undefined
-                    ? 'NH'
+                    ? "NH"
                     : item.fields.handicapIndex}
                 </td>
               </tr>

@@ -1,13 +1,15 @@
 ---
-import { BaseHead } from './BaseHead';
-import { Header } from './Header';
-import { Footer } from './Footer';
-import * as style from '../styles/common.css';
+import { BaseHead } from "./BaseHead";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
+import * as style from "../styles/common.css";
+
+const { title, description, lang = "en-US" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
-  <BaseHead title="UCSD Casual Golf Club" />
+<html lang={lang}>
+  <BaseHead title={title} description={description} />
   <body>
     <Header />
     <main class={style.mainWrapper} id="main-content">
