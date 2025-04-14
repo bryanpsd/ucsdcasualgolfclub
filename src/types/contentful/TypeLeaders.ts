@@ -5,6 +5,7 @@ import type {
   EntrySkeletonType,
   LocaleCode,
 } from 'contentful';
+import type { TypeResultsSkeleton } from './TypeResults';
 
 export interface TypeLeadersFields {
   playerName?: EntryFieldTypes.Symbol;
@@ -14,6 +15,9 @@ export interface TypeLeadersFields {
   flight?: EntryFieldTypes.Symbol<'1st Flight' | '2nd Flight'>;
   roundsCheck?: EntryFieldTypes.Boolean;
   guest?: EntryFieldTypes.Array<EntryFieldTypes.Symbol<'Yes'>>;
+  results?: EntryFieldTypes.Array<
+    EntryFieldTypes.EntryLink<TypeResultsSkeleton>
+  >;
 }
 
 export type TypeLeadersSkeleton = EntrySkeletonType<

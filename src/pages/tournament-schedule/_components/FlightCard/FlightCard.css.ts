@@ -7,5 +7,6 @@ export const flightCardWrapper = style([
     flexDirection: 'column',
     gap: 12,
     width: 'col-12',
+    overflowX: 'auto',
   }),
 ]);

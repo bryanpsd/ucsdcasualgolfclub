@@ -1,16 +1,83 @@
 ---
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import { Table } from '~components/Table';
 
-import type { TypeLeadersProps } from "../../../../types/contentful/TypeLeaders";
-import { Table } from "~components/Table";
-const { title, flight } = Astro.props;
+import type { TypeResultsProps } from '~types/contentful/TypeResults';
+import type { TypeLeadersProps } from '~types/contentful/TypeLeaders';
+
+import * as styles from './FlightCard.css';
+
+export type Props = {
+  title: string;
+  course: string;
+  flight: Array<{
+    playerName?: TypeLeadersProps['playerName'];
+    guest?: TypeLeadersProps['guest'];
+    handicapIndex?: TypeLeadersProps['handicapIndex'];
+    results?: Array<{
+      gross?: TypeResultsProps['gross'];
+      courseHandicap?: TypeResultsProps['courseHandicap'];
+      net?: TypeResultsProps['net'];
+      course?: TypeResultsProps['course'];
+      longDrive?: TypeResultsProps['longDrive'];
+      putts?: TypeResultsProps['putts'];
+      closestTo?: TypeResultsProps['closestTo'];
+    }>;
+  }>;
+};
+
+const { title, flight, course } = Astro.props;
+
+// Check if any player has results
+const hasResults = flight.some((player) => player.results !== undefined);
+
+// Dynamically construct table headers
+const tableHeaders = [
+  'Player',
+  'Index',
+  ...(hasResults
+    ? ['Gross', 'Course Handicap', 'Net', 'Putts', 'Closest To', 'Long Drive']
+    : []),
+];
 ---
 
-<ResponsiveHeadline size={1} as="h2">{title}</ResponsiveHeadline>
-<Table
-  thead={["Player", "Index"]}
-  tbody={flight.map((th: TypeLeadersProps, td: TypeLeadersProps) => [
-    th.playerName,
-    td.handicapIndex,
-  ])}
-/>
+{
+  course && (
+    <div class={styles.flightCardWrapper}>
+      <ResponsiveHeadline size={1} as="h2">
+        {title}
+      </ResponsiveHeadline>
+      <div style="overflow-x: auto;">
+        <Table
+          thead={tableHeaders}
+          tbody={flight.map((player) => [
+            player.guest?.includes('Yes')
+              ? `${player.playerName} (Guest)`
+              : player.playerName || 'Unknown',
+            player.handicapIndex !== undefined
+              ? String(player.handicapIndex)
+              : 'NH',
+            player.results !== undefined
+              ? player.results?.map((result) => [result.gross])[0]
+              : null,
+            player.results !== undefined
+              ? player.results?.map((result) => [result.courseHandicap])[0]
+              : null,
+            player.results !== undefined
+              ? player.results?.map((result) => [result.net])[0]
+              : null,
+            player.results !== undefined
+              ? player.results?.map((result) => [result.putts])[0]
+              : null,
+            player.results !== undefined
+              ? player.results?.map((result) => [result.closestTo])[0]
+              : null,
+            player.results !== undefined
+              ? player.results?.map((result) => [result.longDrive])[0]
+              : null,
+          ])}
+        />
+      </div>
+    </div>
+  )
+}

@@ -6,8 +6,13 @@ import { Sheet } from '~components/Sheet/Sheet';
 import { MainNavItem } from './../MainNavItem/MainNavItem';
 
 import { disableHover } from '~layouts/Header/utils/disableHover';
+import type { MainNavProps } from '../MainNav';
 
-type MobileNavProps = MainNavProps & {};
+type MobileNavProps = MainNavProps & {
+  items: {
+    label: string;
+  };
+};
 
 type NavigationItem = MainNavProps['items']['menuItems'][number];
 
@@ -63,13 +68,18 @@ function NavItem({ item }: { item: NavigationItem }) {
         </NavMenu.Link>
       ) : (
         <>
-          <NavMenu.Trigger {...disableHover} asChild value={item.label}>
+          <NavMenu.Trigger
+            {...disableHover}
+            asChild
+            value={item.label}
+            className={styles.trigger}
+          >
             <MainNavItem className={styles.mobileNavItem} label={item.label} />
           </NavMenu.Trigger>
 
           <NavMenu.Content {...disableHover} asChild>
             <ul>
-              {item.links.map((l, i) => {
+              {item.links?.map((l, i) => {
                 return (
                   <li key={l.label + i}>
                     <NavMenu.Link asChild>

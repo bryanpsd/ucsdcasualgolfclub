@@ -5,7 +5,7 @@ import { color } from '../../../../styles/designTokens/colors';
 export const mobileNavRoot = style([
   tokens({
     height: 'col-12',
-    display: { 'md-min': 'none', 'md-max': 'flex' },
+    display: { 'xl-min': 'none', 'xl-max': 'flex' },
   }),
   {
     justifyContent: 'space-between',
@@ -51,21 +51,21 @@ export const mobileNavItem = style([
   },
 ]);
 
-export const menuIcon = style([
-  tokens({}),
-  {
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '0 1rem',
-    fill: color.navigationText,
-  },
-]);
+export const menuIcon = style({
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '0 1rem',
+  fill: color.navigationText,
+});
 
 export const trigger = style([
   tokens({
     width: 'col-12',
     justifyContent: 'space-between',
   }),
+  {
+    color: color.brand.navy,
+  },
 ]);
 
 const open = keyframes({

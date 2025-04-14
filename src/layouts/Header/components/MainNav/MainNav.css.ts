@@ -5,7 +5,7 @@ import { color } from '../../../../styles/designTokens/colors';
 export const mainNavRoot = style([
   tokens({
     height: 'col-12',
-    display: { 'md-max': 'none', 'md-min': 'flex' },
+    display: { 'xl-max': 'none', 'xl-min': 'flex' },
   }),
   {
     justifyContent: 'flex-end',

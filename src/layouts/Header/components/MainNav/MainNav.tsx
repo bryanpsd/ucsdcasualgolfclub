@@ -33,7 +33,6 @@ const disableHoverInteraction: PointerEventHandler<HTMLElement> = (e) => {
 
 export const MainNav = ({ items, currentPath }: MainNavProps) => {
   const [active, setActive] = useState('');
-  console.log(currentPath);
   return (
     <NavMenu.Root
       className={mainNavRoot}

@@ -1,27 +1,34 @@
 ---
-import { contentfulClient } from "../../lib/contentful";
-import { subPageWrapper } from "~styles/common.css";
-import Layout from "../../layouts/Layout.astro";
-import { format } from "date-fns";
-import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse";
-import { MiniCard } from "~components/Course/MiniCard";
-import { Map } from "~components/Course/Map";
+import { contentfulClient } from '../../lib/contentful';
+import { subPageWrapper } from '~styles/common.css';
+import Layout from '../../layouts/Layout.astro';
+import { closestTo, format } from 'date-fns';
+import type {
+  TypeCourseSkeleton,
+  TypeCourseProps,
+} from '~types/contentful/TypeCourse';
+import { MiniCard } from '~components/Course/MiniCard';
+import { Map } from '~components/Course/Map';
 
-import * as styles from "./_style/tournament.css";
-import { RichText } from "~components/RichText";
-import FlightCard from "./_components/FlightCard/FlightCard.astro";
-import { Hero } from "~components/Hero";
-import { Table } from "~components/Table";
+import * as styles from './_style/tournament.css';
+import { RichText } from '~components/RichText';
+import FlightCard from './_components/FlightCard/FlightCard.astro';
+import { Hero } from '~components/Hero';
+import type { Entry } from 'contentful';
+import type { TypeResultsProps } from '~types/contentful/TypeResults';
+import { Results } from '~components/Results';
 
 export async function getStaticPaths() {
-  const { items } = await contentfulClient.getEntries<TypeCourseSkeleton>({
-    content_type: "course",
+  const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
+    content_type: 'course',
+    include: 10,
   });
-  const pages = items.map((item) => ({
+  const pages = entries.items.map((item) => ({
     params: {
-      slug: `/${format(new Date((item.fields.date ?? "").toString()), "yyyy")}/${item.fields.slug}`,
+      slug: `/${format(new Date((item.fields.date ?? '').toString()), 'yyyy')}/${item.fields.slug}`,
     },
     props: {
+      ...item.fields,
       course: item.fields.course,
       date: item.fields.date,
       address: item.fields.address,
@@ -30,22 +37,41 @@ export async function getStaticPaths() {
       summary: item.fields.summary,
       courseWebsite: item.fields.courseSite,
       courseImage:
-        item.fields.courseImage && "fields" in item.fields.courseImage
-          ? (item.fields.courseImage.fields.file?.url ?? "")
+        item.fields.courseImage && 'fields' in item.fields.courseImage
+          ? (item.fields.courseImage.fields.file?.url ?? '')
           : undefined,
       results: item.fields.results,
-      firstFlight: item.fields.firstFlight?.map((player) => ({
-        playerName: "fields" in player ? player.fields.playerName : undefined,
-        handicapIndex:
-          "fields" in player ? player.fields.handicapIndex : undefined,
-      })),
-      secondFlight: item.fields.secondFlight?.map((player) => ({
-        playerName: "fields" in player ? player.fields.playerName : undefined,
-        handicapIndex:
-          "fields" in player ? player.fields.handicapIndex : undefined,
-      })),
+      firstFlight: item.fields.firstFlight?.map((player) => {
+        if (player && 'fields' in player) {
+          return {
+            ...player.fields,
+            results: player.fields.results?.map((result) => {
+              if (result && 'fields' in result) {
+                return {
+                  ...result.fields,
+                };
+              }
+            }),
+          };
+        }
+      }),
+      secondFlight: item.fields.secondFlight?.map((player) => {
+        if (player && 'fields' in player) {
+          return {
+            ...player.fields,
+            results: player.fields.results?.map((result) => {
+              if (result && 'fields' in result) {
+                return {
+                  ...result.fields,
+                };
+              }
+            }),
+          };
+        }
+      }),
     },
   }));
+
   return pages;
 }
 
@@ -76,17 +102,63 @@ const {
           )
         }
         {summary !== undefined && <RichText richText={summary} />}
-        {
-          firstFlight && (
-            <FlightCard title="First Flight" flight={firstFlight} />
-          )
-        }
 
         {
+          firstFlight && (
+            <FlightCard
+              course={course ?? ''}
+              title="First Flight"
+              flight={firstFlight.map((player) => ({
+                playerName: player?.playerName,
+                guest: player?.guest ? [player.guest[0]] : undefined,
+                handicapIndex: player?.handicapIndex,
+                results: player?.results?.map((result) => ({
+                  title: result?.title,
+                  gross: result?.gross,
+                  courseHandicap: result?.courseHandicap,
+                  net: result?.net,
+                  course: result?.course as
+                    | Entry<
+                        TypeCourseSkeleton,
+                        'WITHOUT_UNRESOLVABLE_LINKS',
+                        'en-US'
+                      >
+                    | undefined,
+                  longDrive: result?.longDrive,
+                  putts: result?.putts,
+                  closestTo: result?.closestTo,
+                })),
+              }))}
+            />
+          )
+        }
+        {
           secondFlight && (
-            <div>
-              <FlightCard title="First Flight" flight={secondFlight} />
-            </div>
+            <FlightCard
+              course={course ?? ''}
+              title="Second Flight"
+              flight={secondFlight.map((player) => ({
+                playerName: player?.playerName,
+                guest: player?.guest ? [player.guest[0]] : undefined,
+                handicapIndex: player?.handicapIndex,
+                results: player?.results?.map((result) => ({
+                  title: result?.title,
+                  gross: result?.gross,
+                  courseHandicap: result?.courseHandicap,
+                  net: result?.net,
+                  course: result?.course as
+                    | Entry<
+                        TypeCourseSkeleton,
+                        'WITHOUT_UNRESOLVABLE_LINKS',
+                        'en-US'
+                      >
+                    | undefined,
+                  longDrive: result?.longDrive,
+                  putts: result?.putts,
+                  closestTo: result?.closestTo,
+                })),
+              }))}
+            />
           )
         }
       </div>

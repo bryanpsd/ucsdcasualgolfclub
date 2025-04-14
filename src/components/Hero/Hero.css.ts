@@ -5,7 +5,7 @@ import { color } from '../../styles/designTokens/colors';
 export const heroWrapper = style([
   tokens({
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: { 'xs-min': 'column', 'md-min': 'row' },
     alignItems: 'center',
     justifyContent: 'center',
     width: 'col-12',
@@ -40,7 +40,9 @@ export const heroColLeft = style([
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 'col-6',
+    width: { 'xs-min': 'col-12', 'md-min': 'col-6' },
+    paddingX: { 'xs-min': 16, 'md-min': 24, 'lg-min': 48 },
+    paddingY: 24,
   }),
 ]);
 
@@ -50,6 +52,6 @@ export const heroColRight = style([
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 'col-6',
+    width: { 'xs-min': 'col-12', 'md-min': 'col-6' },
   }),
 ]);

@@ -1,13 +1,19 @@
 ---
-import * as styles from "./Table.css";
+import * as styles from './Table.css';
 
 type Props = {
   thead: string[];
-  tbody: string[];
+  colSpan?: number;
+  tbody: (
+    | string
+    | (number | undefined)[]
+    | ('F' | 'M' | undefined)[]
+    | null
+  )[][];
   tfoot?: string[];
 };
 
-const { thead, tbody, tfoot } = Astro.props;
+const { thead, tbody, tfoot, colSpan = 0 } = Astro.props;
 ---
 
 <table class={styles.table}>
@@ -16,7 +22,9 @@ const { thead, tbody, tfoot } = Astro.props;
       <thead class={styles.thead}>
         <tr>
           {thead.map((header) => (
-            <th class={styles.th}>{header}</th>
+            <th colspan={colSpan} class={styles.th}>
+              {header}
+            </th>
           ))}
         </tr>
       </thead>
@@ -24,12 +32,17 @@ const { thead, tbody, tfoot } = Astro.props;
   }
   <tbody>
     {
-      tbody.map((th, td) => (
+      tbody.map((row) => (
         <tr class={styles.tr}>
-          <th scope="row" class={styles.th}>
-            {th}
-          </th>
-          <td class={styles.td}>{td}</td>
+          {row.map((cell, index) =>
+            index === 0 ? (
+              <th scope="row" class={styles.th}>
+                {cell}
+              </th>
+            ) : (
+              cell !== null && <td class={styles.td}>{cell}</td>
+            )
+          )}
         </tr>
       ))
     }
@@ -38,7 +51,9 @@ const { thead, tbody, tfoot } = Astro.props;
         <tfoot class={styles.tfoot}>
           <tr>
             {tfoot.map((footer) => (
-              <th class={styles.th}>{footer}</th>
+              <th colspan={colSpan} class={styles.th}>
+                {footer}
+              </th>
             ))}
           </tr>
         </tfoot>

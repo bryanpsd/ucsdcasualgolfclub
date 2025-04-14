@@ -1,6 +1,9 @@
-import { getCourse } from '~/actions/course';
-import { getHeaderBanners } from '~/actions/banners';
+import { getCourse } from './course';
+import { getHeaderBanners } from './banners';
+import { getResults } from './results';
 
 export const server = {
   getHeaderBanners,
+  getCourse,
+  getResults,
 };

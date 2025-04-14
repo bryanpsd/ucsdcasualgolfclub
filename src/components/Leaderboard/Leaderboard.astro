@@ -2,7 +2,7 @@
 import { contentfulClient } from '~lib/contentful';
 import type { TypeLeadersSkeleton } from '../../types/contentful';
 import { format } from 'date-fns';
-import * as styles from '../../styles/common.css';
+import { Table } from '~components/Table';
 
 const { gross, net, firstFlight, secondFlight } = Astro.props;
 
@@ -17,82 +17,35 @@ const lastUpdatedDate =
   new Date().toISOString();
 ---
 
-<table class={styles.table}>
-  <thead class={styles.thead}>
-    <tr>
-      {
-        gross && (
-          <th colspan="2" class={styles.th}>
-            Gross Leaders
-          </th>
-        )
+<Table
+  thead={gross
+    ? ['Gross Leaders']
+    : net && firstFlight
+      ? ['Net Leaders 1st Flight']
+      : ['Net Leaders 2nd Flight']}
+  colSpan={2}
+  tbody={entries.items
+    .map((item) => {
+      if (gross && item.fields.roundsCheck && item.fields.gross !== undefined) {
+        return [item.fields.playerName, item.fields.gross];
+      } else if (
+        firstFlight &&
+        net &&
+        item.fields.net !== undefined &&
+        item.fields.roundsCheck &&
+        item.fields.flight === '1st Flight'
+      ) {
+        return [item.fields.playerName, item.fields.net];
+      } else if (
+        secondFlight &&
+        net &&
+        item.fields.net !== undefined &&
+        item.fields.roundsCheck &&
+        item.fields.flight === '2nd Flight'
+      ) {
+        return [item.fields.playerName, item.fields.net];
       }
-      {
-        net && (
-          <th colspan="2" class={styles.th}>
-            Net Leaders {firstFlight ? '"1st Flight"' : '"2nd Flight"'}
-          </th>
-        )
-      }
-    </tr>
-  </thead>
-  <tbody>
-    {
-      entries.items.map((item) => {
-        {
-          if (
-            gross &&
-            item.fields.roundsCheck &&
-            item.fields.gross !== undefined
-          ) {
-            return (
-              <tr class={styles.tr}>
-                <th scope="row" class={styles.th}>
-                  {item.fields.playerName}
-                </th>
-                <td class={styles.td}>{item.fields.gross}</td>
-              </tr>
-            );
-          } else if (
-            firstFlight &&
-            net &&
-            item.fields.net !== undefined &&
-            item.fields.roundsCheck &&
-            item.fields.flight === '1st Flight'
-          ) {
-            return (
-              <tr class={styles.tr}>
-                <th scope="row" class={styles.th}>
-                  {item.fields.playerName}
-                </th>
-                <td class={styles.td}>{item.fields.net}</td>
-              </tr>
-            );
-          } else if (
-            secondFlight &&
-            net &&
-            item.fields.net !== undefined &&
-            item.fields.roundsCheck &&
-            item.fields.flight === '2nd Flight'
-          ) {
-            return (
-              <tr class={styles.tr}>
-                <th scope="row" class={styles.th}>
-                  {item.fields.playerName}
-                </th>
-                <td class={styles.td}>{item.fields.net}</td>
-              </tr>
-            );
-          }
-        }
-      })
-    }
-  </tbody>
-  <tfoot class={styles.tfoot}>
-    <tr>
-      <th colspan="2" class={styles.th}>
-        last updated {format(new Date(lastUpdatedDate), 'M/d/yy')}
-      </th>
-    </tr>
-  </tfoot>
-</table>
+    })
+    .filter((row) => row !== undefined) as string[][]}
+  tfoot={[`last updated ${format(new Date(lastUpdatedDate), 'M/d/yy')}`]}
+/>

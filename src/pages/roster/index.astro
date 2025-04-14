@@ -1,15 +1,16 @@
 ---
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
-import Layout from "../../layouts/Layout.astro";
-import { contentfulClient } from "../../lib/contentful";
-import type { TypeLeadersSkeleton } from "../../types/contentful";
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import Layout from '../../layouts/Layout.astro';
+import { contentfulClient } from '../../lib/contentful';
+import type { TypeLeadersSkeleton } from '../../types/contentful';
 
-import { subPageWrapper, heroWrapper } from "../../styles/common.css";
-import * as styles from "../../styles/common.css";
+import { subPageWrapper, heroWrapper } from '../../styles/common.css';
+
+import { Table } from '~components/Table';
 
 const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
-  content_type: "leaders",
-  order: ["fields.handicapIndex"],
+  content_type: 'leaders',
+  order: ['fields.handicapIndex'],
 });
 ---
 
@@ -18,31 +19,20 @@ const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
     <ResponsiveHeadline size={4} as="h1">Roster</ResponsiveHeadline>
   </section>
   <div class={subPageWrapper}>
-    <table class={styles.table}>
-      <thead class={styles.thead}>
-        <tr>
-          <th class={styles.th}>Player Name</th>
-          <th class={styles.th}>Index</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          entries.items.map((item) => {
-            return item.fields.guest?.includes("Yes") ? null : (
-              <tr class={styles.tr}>
-                <th scope="row" class={styles.th}>
-                  {item.fields.playerName}
-                </th>
-                <td class={styles.td}>
-                  {item.fields.handicapIndex === undefined
-                    ? "NH"
-                    : item.fields.handicapIndex}
-                </td>
-              </tr>
-            );
-          })
-        }
-      </tbody>
-    </table>
+    <Table
+      thead={['Player', 'Index']}
+      tbody={entries.items
+        .map((item) => {
+          return item.fields.guest?.includes('Yes')
+            ? null
+            : [
+                item.fields.playerName,
+                item.fields.handicapIndex === undefined
+                  ? 'NH'
+                  : String(item.fields.handicapIndex),
+              ];
+        })
+        .filter((row) => row !== null) as string[][]}
+    />
   </div>
 </Layout>

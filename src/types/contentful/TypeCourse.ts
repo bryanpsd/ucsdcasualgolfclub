@@ -6,6 +6,7 @@ import type {
   LocaleCode,
 } from 'contentful';
 import type { TypeLeadersSkeleton } from './TypeLeaders';
+import type { TypeResultsSkeleton } from './TypeResults';
 
 export interface TypeCourseFields {
   courseName?: EntryFieldTypes.Symbol;
@@ -28,7 +29,6 @@ export interface TypeCourseFields {
   >;
   address?: EntryFieldTypes.Location;
   results?: EntryFieldTypes.AssetLink;
-  winners?: EntryFieldTypes.RichText;
   courseImage?: EntryFieldTypes.AssetLink;
 }
 

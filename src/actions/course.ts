@@ -7,33 +7,24 @@ import type {
 
 import { contentfulClient } from '../lib/contentful';
 
-const courseMapper = (course?: TypeCourseProps) => {
-  if (!course) return null;
-
+const courseMapper = (fields?: TypeCourseProps) => {
+  if (!fields) return null;
   return {
-    ...course,
-  } as const;
+    ...fields,
+    courseImage: fields.courseImage?.fields?.file?.url,
+  };
 };
 
 export const getCourse = defineAction({
-  input: z.string(),
-  handler: async (course) => {
+  handler: async () => {
     const courseData =
       await contentfulClient.withoutUnresolvableLinks.getEntries<TypeCourseSkeleton>(
         {
           content_type: 'course',
-          'fields.course': course,
-          include: 1,
+          include: 10,
         }
       );
-    if (courseData.errors || !courseData.items[0]?.fields) {
-      throw new ActionError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message:
-          'Unable to fetch content: ' + JSON.stringify(courseData.errors),
-      });
-    }
 
-    return courseMapper(courseData.items[0].fields);
+    return courseMapper(courseData.items[0]?.fields);
   },
 });

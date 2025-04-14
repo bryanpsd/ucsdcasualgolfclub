@@ -1,19 +1,19 @@
 ---
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
-import { Button } from "../../Button/Button";
-import type { TypeCourseSkeleton } from "../../../types/contentful";
-import { format } from "date-fns";
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import { Button } from '../../Button/Button';
+import type { TypeCourseSkeleton } from '../../../types/contentful';
+import { format } from 'date-fns';
 
-import PdfIcon from "../../../icons/pdf.svg?react";
-import * as style from "./MiniCard.css";
-import { contentfulClient } from "~lib/contentful";
+import PdfIcon from '../../../icons/pdf.svg?react';
+import * as style from './MiniCard.css';
+import { contentfulClient } from '~lib/contentful';
 
 const todayUTC = new Date();
 const utcDateString = todayUTC.toISOString();
 
 const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-  content_type: "course",
-  "fields.date[gte]":
+  content_type: 'course',
+  'fields.date[gte]':
     utcDateString as `${number}-${number}-${number}T${number}:${number}:${number}Z`,
 
   limit: 1,
@@ -38,14 +38,14 @@ const { title, isCoursePage, label, course, date, courseWebsite, results } =
             <span>
               {format(
                 new Date(isCoursePage ? date : (item.fields.date as string)),
-                "E M/d/yy"
+                'E M/d/yy'
               )}
             </span>
             @
             <span>
               {format(
                 new Date(isCoursePage ? date : (item.fields.date as string)),
-                "h:mmaaa"
+                'h:mmaaa'
               )}
             </span>
           </div>
@@ -58,7 +58,7 @@ const { title, isCoursePage, label, course, date, courseWebsite, results } =
               target="_blank"
               rel="noopener noreferrer"
               href={
-                typeof results === "object" && results?.fields?.file?.url
+                typeof results === 'object' && results?.fields?.file?.url
                   ? results.fields.file.url
                   : undefined
               }
@@ -71,14 +71,14 @@ const { title, isCoursePage, label, course, date, courseWebsite, results } =
               color="secondary"
               as="a"
               size="small"
-              rel={isCoursePage ? "noopener noreferrer" : ""}
-              target={isCoursePage ? "_blank" : "_self"}
+              rel={isCoursePage ? 'noopener noreferrer' : ''}
+              target={isCoursePage ? '_blank' : '_self'}
               href={
                 isCoursePage
                   ? courseWebsite
                     ? courseWebsite
                     : item.fields.courseSite
-                  : `/tournament-schedule/${format(new Date(item.fields.date as string), "yyyy")}/${item.fields.slug}`
+                  : `/tournament-schedule/${format(new Date(item.fields.date as string), 'yyyy')}/${item.fields.slug}`
               }
             >
               {label}
