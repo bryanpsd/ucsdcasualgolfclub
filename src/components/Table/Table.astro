@@ -1,15 +1,10 @@
 ---
-import * as styles from './Table.css';
+import * as styles from "./Table.css";
 
 type Props = {
   thead: string[];
   colSpan?: number;
-  tbody: (
-    | string
-    | (number | undefined)[]
-    | ('F' | 'M' | undefined)[]
-    | null
-  )[][];
+  tbody: (string | number | null)[][];
   tfoot?: string[];
 };
 

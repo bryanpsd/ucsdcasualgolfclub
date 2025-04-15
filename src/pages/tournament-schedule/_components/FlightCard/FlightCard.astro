@@ -1,48 +1,55 @@
 ---
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
-import { Table } from '~components/Table';
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { Table } from "~components/Table";
 
-import type { TypeResultsProps } from '~types/contentful/TypeResults';
-import type { TypeLeadersProps } from '~types/contentful/TypeLeaders';
+import type { TypeResultsProps } from "~types/contentful/TypeResults";
+import type { TypeLeadersProps } from "~types/contentful/TypeLeaders";
 
-import * as styles from './FlightCard.css';
+import * as styles from "./FlightCard.css";
 
 export type Props = {
   title: string;
-  course: string;
+  currentCourse: string | undefined;
   flight: Array<{
-    playerName?: TypeLeadersProps['playerName'];
-    guest?: TypeLeadersProps['guest'];
-    handicapIndex?: TypeLeadersProps['handicapIndex'];
+    playerName?: TypeLeadersProps["playerName"];
+    guest?: TypeLeadersProps["guest"];
+    handicapIndex?: TypeLeadersProps["handicapIndex"];
     results?: Array<{
-      gross?: TypeResultsProps['gross'];
-      courseHandicap?: TypeResultsProps['courseHandicap'];
-      net?: TypeResultsProps['net'];
-      course?: TypeResultsProps['course'];
-      longDrive?: TypeResultsProps['longDrive'];
-      putts?: TypeResultsProps['putts'];
-      closestTo?: TypeResultsProps['closestTo'];
+      gross?: TypeResultsProps["gross"];
+      courseHandicap?: TypeResultsProps["courseHandicap"];
+      net?: TypeResultsProps["net"];
+      course?: TypeResultsProps["course"];
+      longDrive?: TypeResultsProps["longDrive"];
+      putts?: TypeResultsProps["putts"];
+      closestTo?: TypeResultsProps["closestTo"];
     }>;
   }>;
 };
 
-const { title, flight, course } = Astro.props;
+const { title, flight, currentCourse } = Astro.props;
 
 // Check if any player has results
 const hasResults = flight.some((player) => player.results !== undefined);
 
 // Dynamically construct table headers
 const tableHeaders = [
-  'Player',
-  'Index',
+  "Player",
+  "Index",
   ...(hasResults
-    ? ['Gross', 'Course Handicap', 'Net', 'Putts', 'Closest To', 'Long Drive']
+    ? ["Gross", "Course Handicap", "Net", "Putts", "Closest To", "Long Drive"]
     : []),
 ];
+
+const filteredResults = flight.map((player) => ({
+  ...player,
+  results: player.results?.filter(
+    (result) => result.course?.fields.course === currentCourse
+  ),
+}));
 ---
 
 {
-  course && (
+  filteredResults.some((player) => (player.results?.length ?? 0) > 0) ? (
     <div class={styles.flightCardWrapper}>
       <ResponsiveHeadline size={1} as="h2">
         {title}
@@ -50,32 +57,53 @@ const tableHeaders = [
       <div style="overflow-x: auto;">
         <Table
           thead={tableHeaders}
-          tbody={flight.map((player) => [
-            player.guest?.includes('Yes')
-              ? `${player.playerName} (Guest)`
-              : player.playerName || 'Unknown',
-            player.handicapIndex !== undefined
-              ? String(player.handicapIndex)
-              : 'NH',
-            player.results !== undefined
-              ? player.results?.map((result) => [result.gross])[0]
-              : null,
-            player.results !== undefined
-              ? player.results?.map((result) => [result.courseHandicap])[0]
-              : null,
-            player.results !== undefined
-              ? player.results?.map((result) => [result.net])[0]
-              : null,
-            player.results !== undefined
-              ? player.results?.map((result) => [result.putts])[0]
-              : null,
-            player.results !== undefined
-              ? player.results?.map((result) => [result.closestTo])[0]
-              : null,
-            player.results !== undefined
-              ? player.results?.map((result) => [result.longDrive])[0]
-              : null,
-          ])}
+          tbody={filteredResults.map((player) => {
+            if (!player.results || player.results.length === 0) {
+              // Handle case where results are null or empty
+              return [
+                player.guest?.includes("Yes")
+                  ? `${player.playerName} (Guest)`
+                  : player.playerName || "Unknown",
+                player.handicapIndex !== undefined
+                  ? String(player.handicapIndex)
+                  : "NH",
+              ];
+            }
+
+            // Handle case where results exist
+            return [
+              player.guest?.includes("Yes")
+                ? `${player.playerName} (Guest)`
+                : player.playerName || "Unknown",
+              player.handicapIndex !== undefined
+                ? String(player.handicapIndex)
+                : "NH",
+              player.results?.[0]?.gross || null,
+              player.results?.[0]?.courseHandicap || null,
+              player.results?.[0]?.net || null,
+              player.results?.[0]?.putts || null,
+              player.results?.[0]?.closestTo || null,
+              player.results?.[0]?.longDrive || null,
+            ];
+          })}
+        />
+      </div>
+    </div>
+  ) : (
+    <div class={styles.flightCardWrapper}>
+      <div style="overflow-x: auto;">
+        <Table
+          thead={["Player", "Index"]}
+          tbody={flight.map((player) => {
+            return [
+              player.guest?.includes("Yes")
+                ? `${player.playerName} (Guest)`
+                : player.playerName || "Unknown",
+              player.handicapIndex !== undefined
+                ? String(player.handicapIndex)
+                : "NH",
+            ];
+          })}
         />
       </div>
     </div>

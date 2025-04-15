@@ -1,15 +1,16 @@
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
-import { Button } from '../../Button/Button';
-import type { TypeCourseProps } from '../../../types/contentful';
-import { format } from 'date-fns';
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { Button } from "../../Button/Button";
+import type { TypeCourseProps } from "../../../types/contentful";
+import { format } from "date-fns";
 
-import * as styles from './CourseCard.css';
-import { Typography } from '~components/Typography';
-import Clock from '../../../icons/clock.svg?react';
-import Players from '../../../icons/players.svg?react';
-import GolfBall from '../../../icons/golf_ball.svg?react';
-import Cart from '../../../icons/golf_cart.svg?react';
-import { concatClasses } from '~utils/concatClasses';
+import * as styles from "./CourseCard.css";
+import { Typography } from "~components/Typography";
+import Clock from "../../../icons/clock.svg?react";
+import Players from "../../../icons/players.svg?react";
+import GolfBall from "../../../icons/golf_ball.svg?react";
+import Cart from "../../../icons/golf_cart.svg?react";
+import { concatClasses } from "~utils/concatClasses";
+import { CourseInfo } from "../CourseInfo/CourseInfo";
 
 interface CourseCardProps extends TypeCourseProps {
   hideCourseInfo?: boolean;
@@ -28,32 +29,22 @@ export const CourseCard = (props: CourseCardProps) => {
     hideCourseInfo,
   } = props;
   const isWednesday = date && new Date(date).getDay() === 3;
-  const amenityIcon = (amenity: string) => {
-    switch (amenity) {
-      case 'Balls':
-        return <GolfBall height={30} width={30} aria-hidden="true" />;
-      case 'Cart':
-        return <Cart height={30} width={30} aria-hidden="true" />;
-      default:
-        return null;
-    }
-  };
   return (
     <section className={styles.courseCardWrapper}>
       {date && (
         <div
           className={styles.dateWrapper({
-            variant: isWednesday ? 'secondary' : 'default',
+            variant: isWednesday ? "secondary" : "default",
           })}
         >
           <Typography color="inverse">
-            {date && format(new Date(date), 'MMM')}
+            {date && format(new Date(date), "MMM")}
           </Typography>
           <Typography color="inverse" variant="headlineLg">
-            {date && format(new Date(date), 'd')}
+            {date && format(new Date(date), "d")}
           </Typography>
           <Typography color="inverse">
-            {date && format(new Date(date), 'E')}
+            {date && format(new Date(date), "E")}
           </Typography>
         </div>
       )}
@@ -86,28 +77,13 @@ export const CourseCard = (props: CourseCardProps) => {
           </div>
           <div className={styles.courseCardTime}>
             <Clock height={30} width={30} aria-hidden="true" />
-            {date && format(new Date(date), 'h:mmaaa')}
+            {date && format(new Date(date), "h:mmaaa")}
           </div>
-          <ul className={styles.courseCardList}>
-            <li
-              className={concatClasses([
-                styles.courseCardListItem,
-                styles.coursePrice,
-              ])}
-            >
-              ${price}
-            </li>
-            <li className={styles.courseCardListItem}>
-              <Players height={30} width={30} />
-              {players}
-            </li>
-            {amenities?.map((amenity) => (
-              <li key={amenity} className={styles.courseCardListItem}>
-                {amenityIcon(amenity)}
-                <span className="sr-only">{amenity}</span>
-              </li>
-            ))}
-          </ul>
+          <CourseInfo
+            amenities={amenities}
+            price={price ? parseFloat(price) : 0}
+            players={players ? parseInt(players, 10) : 0}
+          />
         </div>
       )}
 
@@ -119,8 +95,8 @@ export const CourseCard = (props: CourseCardProps) => {
             size="small"
             variant="outlined"
             href={`/tournament-schedule/${format(
-              new Date((date ?? '').toString()),
-              'yyyy'
+              new Date((date ?? "").toString()),
+              "yyyy"
             )}/${slug}`}
           >
             Details
@@ -134,7 +110,7 @@ export const CourseCard = (props: CourseCardProps) => {
               target="_blank"
               rel="noopener noreferrer"
               href={
-                typeof results === 'object' && results?.fields?.file?.url
+                typeof results === "object" && results?.fields?.file?.url
                   ? results.fields.file.url
                   : undefined
               }

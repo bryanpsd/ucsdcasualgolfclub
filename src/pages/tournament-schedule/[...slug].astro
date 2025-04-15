@@ -1,31 +1,29 @@
 ---
-import { contentfulClient } from '../../lib/contentful';
-import { subPageWrapper } from '~styles/common.css';
-import Layout from '../../layouts/Layout.astro';
-import { closestTo, format } from 'date-fns';
+import { contentfulClient } from "../../lib/contentful";
+import { subPageWrapper } from "~styles/common.css";
+import Layout from "../../layouts/Layout.astro";
+import { closestTo, format } from "date-fns";
 import type {
   TypeCourseSkeleton,
   TypeCourseProps,
-} from '~types/contentful/TypeCourse';
-import { MiniCard } from '~components/Course/MiniCard';
-import { Map } from '~components/Course/Map';
+} from "~types/contentful/TypeCourse";
+import { MiniCard } from "~components/Course/MiniCard";
+import { Map } from "~components/Course/Map";
 
-import * as styles from './_style/tournament.css';
-import { RichText } from '~components/RichText';
-import FlightCard from './_components/FlightCard/FlightCard.astro';
-import { Hero } from '~components/Hero';
-import type { Entry } from 'contentful';
-import type { TypeResultsProps } from '~types/contentful/TypeResults';
-import { Results } from '~components/Results';
+import * as styles from "./_style/tournament.css";
+import { RichText } from "~components/RichText";
+import FlightCard from "./_components/FlightCard/FlightCard.astro";
+import { Hero } from "~components/Hero";
+import type { Entry } from "contentful";
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-    content_type: 'course',
+    content_type: "course",
     include: 10,
   });
   const pages = entries.items.map((item) => ({
     params: {
-      slug: `/${format(new Date((item.fields.date ?? '').toString()), 'yyyy')}/${item.fields.slug}`,
+      slug: `/${format(new Date((item.fields.date ?? "").toString()), "yyyy")}/${item.fields.slug}`,
     },
     props: {
       ...item.fields,
@@ -37,16 +35,16 @@ export async function getStaticPaths() {
       summary: item.fields.summary,
       courseWebsite: item.fields.courseSite,
       courseImage:
-        item.fields.courseImage && 'fields' in item.fields.courseImage
-          ? (item.fields.courseImage.fields.file?.url ?? '')
+        item.fields.courseImage && "fields" in item.fields.courseImage
+          ? (item.fields.courseImage.fields.file?.url ?? "")
           : undefined,
       results: item.fields.results,
       firstFlight: item.fields.firstFlight?.map((player) => {
-        if (player && 'fields' in player) {
+        if (player && "fields" in player) {
           return {
             ...player.fields,
             results: player.fields.results?.map((result) => {
-              if (result && 'fields' in result) {
+              if (result && "fields" in result) {
                 return {
                   ...result.fields,
                 };
@@ -56,11 +54,11 @@ export async function getStaticPaths() {
         }
       }),
       secondFlight: item.fields.secondFlight?.map((player) => {
-        if (player && 'fields' in player) {
+        if (player && "fields" in player) {
           return {
             ...player.fields,
             results: player.fields.results?.map((result) => {
-              if (result && 'fields' in result) {
+              if (result && "fields" in result) {
                 return {
                   ...result.fields,
                 };
@@ -106,7 +104,7 @@ const {
         {
           firstFlight && (
             <FlightCard
-              course={course ?? ''}
+              currentCourse={course ?? ""}
               title="First Flight"
               flight={firstFlight.map((player) => ({
                 playerName: player?.playerName,
@@ -120,8 +118,8 @@ const {
                   course: result?.course as
                     | Entry<
                         TypeCourseSkeleton,
-                        'WITHOUT_UNRESOLVABLE_LINKS',
-                        'en-US'
+                        "WITHOUT_UNRESOLVABLE_LINKS",
+                        "en-US"
                       >
                     | undefined,
                   longDrive: result?.longDrive,
@@ -135,7 +133,7 @@ const {
         {
           secondFlight && (
             <FlightCard
-              course={course ?? ''}
+              currentCourse={course}
               title="Second Flight"
               flight={secondFlight.map((player) => ({
                 playerName: player?.playerName,
@@ -149,8 +147,8 @@ const {
                   course: result?.course as
                     | Entry<
                         TypeCourseSkeleton,
-                        'WITHOUT_UNRESOLVABLE_LINKS',
-                        'en-US'
+                        "WITHOUT_UNRESOLVABLE_LINKS",
+                        "en-US"
                       >
                     | undefined,
                   longDrive: result?.longDrive,
