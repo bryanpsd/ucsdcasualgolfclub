@@ -22,12 +22,7 @@ const amenityIcon = (amenity: string) => {
 };
 
 export const CourseInfo = (props: Props) => {
-  const {
-    price,
-    players,
-
-    amenities,
-  } = props;
+  const { price, players, amenities } = props;
 
   return (
     <ul className={styles.courseCardList}>

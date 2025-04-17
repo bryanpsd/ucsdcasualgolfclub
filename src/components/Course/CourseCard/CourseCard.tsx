@@ -94,7 +94,7 @@ export const CourseCard = (props: CourseCardProps) => {
             color="primary"
             size="small"
             variant="outlined"
-            href={`/tournament-schedule/${format(
+            href={`/tournament/${format(
               new Date((date ?? "").toString()),
               "yyyy"
             )}/${slug}`}
