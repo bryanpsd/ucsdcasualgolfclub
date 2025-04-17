@@ -1,38 +1,38 @@
-import type { MainNavProps } from '../components/MainNav';
+import type { MainNavProps } from "../components/MainNav";
 
-// Generate dynamic links for past seasons
+// Generate dynamic links for Seasons
 const getYear = new Date().getFullYear() - 1;
 const pastSeasonsLinks = Array.from({ length: getYear - 2018 }, (_, i) => {
   const year = getYear - i;
   return {
     label: year.toString(),
-    href: `/past-seasons/${year}`,
+    href: `/seasons/${year}`,
   };
 });
 
-export const menuItems: MainNavProps['items'] = {
-  label: 'Main',
+export const menuItems: MainNavProps["items"] = {
+  label: "Main",
   menuItems: [
     {
-      label: 'Tournament Schedule',
-      href: '/tournament-schedule',
+      label: "Tournaments",
+      href: "/tournaments",
     },
     {
-      label: 'Roster',
-      href: '/roster',
+      label: "Roster",
+      href: "/roster",
     },
     {
-      label: 'Past Seasons',
+      label: "Seasons",
       links: pastSeasonsLinks,
     },
     {
-      label: 'About',
-      href: '/about',
+      label: "About",
+      href: "/about",
     },
     {
-      label: 'Join the Club',
-      href: 'https://membership.scga.org/start/join/?cid=885',
-      target: '_blank',
+      label: "Join the Club",
+      href: "https://membership.scga.org/start/join/?cid=885",
+      target: "_blank",
     },
   ],
 };

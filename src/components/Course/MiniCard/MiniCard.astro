@@ -1,29 +1,28 @@
 ---
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
-import { Button } from '../../Button/Button';
-import type { TypeCourseSkeleton } from '../../../types/contentful';
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { Button } from "../../Button/Button";
+import type { TypeCourseSkeleton } from "../../../types/contentful";
 
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
-import * as style from './MiniCard.css';
-import { contentfulClient } from '~lib/contentful';
-import { CourseInfo } from '../CourseInfo';
+import * as style from "./MiniCard.css";
+import { contentfulClient } from "~lib/contentful";
+import { CourseInfo } from "../CourseInfo";
 
 // const todayUTC = new Date();
 // const utcDateString = todayUTC.toISOString();
 
 const {
   title,
-  isCoursePage,
-  label,
   course,
   amenities,
-  courseWebsite,
-  results,
-  tournaments,
   price,
   players,
   date,
+  isCoursePage,
+  courseWebsite,
+  label,
+  slug,
 } = Astro.props;
 
 const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null;
@@ -41,19 +40,34 @@ const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null;
       {
         validDate ? (
           <>
-            <span>{format(date, 'E M/d/yy')}</span>@
-            <span>{format(date, 'h:mmaaa')}</span>
+            <span>{format(date, "E M/d/yy")}</span>@
+            <span>{format(date, "h:mmaaa")}</span>
           </>
         ) : (
           <span>Date not available</span>
         )
       }
     </div>
+
+    <CourseInfo
+      client:load
+      amenities={amenities}
+      price={price}
+      players={players}
+      isMiniCard
+    />
+    <Button
+      variant="outlined"
+      color="secondary"
+      as="a"
+      size="small"
+      rel={isCoursePage ? "noopener noreferrer" : ""}
+      target={isCoursePage ? "_blank" : "_self"}
+      href={isCoursePage
+        ? courseWebsite
+        : `/tournaments/${format(new Date(date as string), "yyyy")}/${slug}`}
+    >
+      {label}
+    </Button>
   </div>
-  <CourseInfo
-    client:load
-    amenities={amenities}
-    price={price}
-    players={players}
-  />
 </div>

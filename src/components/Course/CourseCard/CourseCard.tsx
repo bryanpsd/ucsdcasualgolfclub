@@ -14,21 +14,30 @@ import { CourseInfo } from "../CourseInfo/CourseInfo";
 
 interface CourseCardProps extends TypeCourseProps {
   hideCourseInfo?: boolean;
+  date?: string;
+  players?: number;
+  price?: number;
+  amenities?: string[];
+  results?: string | null | undefined;
+  clubChampionship?: boolean;
 }
 
 export const CourseCard = (props: CourseCardProps) => {
   const {
-    date,
-    notes,
     course,
-    price,
-    players,
     slug,
-    results,
-    amenities,
     hideCourseInfo,
+    tournaments,
+    players,
+    price,
+    amenities,
+    date,
+    results,
+    clubChampionship,
   } = props;
+
   const isWednesday = date && new Date(date).getDay() === 3;
+
   return (
     <section className={styles.courseCardWrapper}>
       {date && (
@@ -37,15 +46,11 @@ export const CourseCard = (props: CourseCardProps) => {
             variant: isWednesday ? "secondary" : "default",
           })}
         >
-          <Typography color="inverse">
-            {date && format(new Date(date), "MMM")}
-          </Typography>
+          <Typography color="inverse">{format(date, "MMM")}</Typography>
           <Typography color="inverse" variant="headlineLg">
-            {date && format(new Date(date), "d")}
+            {format(date, "d")}
           </Typography>
-          <Typography color="inverse">
-            {date && format(new Date(date), "E")}
-          </Typography>
+          <Typography color="inverse">{format(date, "E")}</Typography>
         </div>
       )}
       {hideCourseInfo ? (
@@ -53,9 +58,9 @@ export const CourseCard = (props: CourseCardProps) => {
           <ResponsiveHeadline size={2} as="h2">
             {course}
           </ResponsiveHeadline>
-          {notes && (
+          {clubChampionship && (
             <ResponsiveHeadline className={styles.courseNote} size={1} as="h2">
-              {notes}
+              Club Championship
             </ResponsiveHeadline>
           )}
         </div>
@@ -65,43 +70,43 @@ export const CourseCard = (props: CourseCardProps) => {
             <ResponsiveHeadline size={1} as="h2">
               {course}
             </ResponsiveHeadline>
-            {notes && (
+            {clubChampionship && (
               <ResponsiveHeadline
                 className={styles.courseNote}
                 size={1}
                 as="h2"
               >
-                {notes}
+                Club Championship
               </ResponsiveHeadline>
             )}
           </div>
           <div className={styles.courseCardTime}>
             <Clock height={30} width={30} aria-hidden="true" />
-            {date && format(new Date(date), "h:mmaaa")}
+            {date && format(date, "h:mmaaa")}
           </div>
           <CourseInfo
             amenities={amenities}
-            price={price ? parseFloat(price) : 0}
-            players={players ? parseInt(players, 10) : 0}
+            isMiniCard={false}
+            price={price}
+            players={players}
           />
         </div>
       )}
 
       <div className={styles.courseCardButtons}>
         <div className={styles.courseCardButtonsWrapper}>
-          <Button
-            as="a"
-            color="primary"
-            size="small"
-            variant="outlined"
-            href={`/tournament/${format(
-              new Date((date ?? "").toString()),
-              "yyyy"
-            )}/${slug}`}
-          >
-            Details
-          </Button>
-          {results && (
+          {date && (
+            <Button
+              as="a"
+              color="primary"
+              size="small"
+              variant="outlined"
+              href={`/tournaments/${format(date, "yyyy")}/${slug}`}
+            >
+              Details
+            </Button>
+          )}
+          {results && results !== null && results !== undefined && (
             <Button
               as="a"
               color="primary"
@@ -109,11 +114,7 @@ export const CourseCard = (props: CourseCardProps) => {
               variant="outlined"
               target="_blank"
               rel="noopener noreferrer"
-              href={
-                typeof results === "object" && results?.fields?.file?.url
-                  ? results.fields.file.url
-                  : undefined
-              }
+              href={results} // Use the results file URL
             >
               Results
             </Button>

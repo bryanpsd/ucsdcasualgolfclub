@@ -13196,10 +13196,10 @@
           "en-US": "2025 Tournament Schedule"
         },
         "slug": {
-          "en-US": "tournament-schedule"
+          "en-US": "tournaments"
         },
         "class": {
-          "en-US": "tournament-schedule-page"
+          "en-US": "tournaments-page"
         },
         "content": {
           "en-US": {
@@ -21595,7 +21595,7 @@
                   },
                   {
                     "data": {
-                      "uri": "/tournament-schedule/"
+                      "uri": "/tournaments/"
                     },
                     "content": [
                       {

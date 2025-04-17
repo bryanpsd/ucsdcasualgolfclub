@@ -1,21 +1,63 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { contentfulClient } from "../../lib/contentful";
-import type { TypeSimplePageSkeleton } from "../../types/contentful";
+import type {
+  TypeCourseSkeleton,
+  TypeSimplePageSkeleton,
+} from "../../types/contentful";
 import { RichText } from "~components/RichText";
 
 import * as style from "./HomePage.css";
 import { MiniCard } from "~components/Course/MiniCard";
 import { Leaderboard } from "~components/Leaderboard";
+import type { TypeTournamentSkeleton } from "~types/contentful/TypeTournament";
+import type { Entry } from "contentful";
 
+// Fetch simplePage entries
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
   content_type: "simplePage",
   "fields.title": "Home",
 });
 
-// if (!courseData.data || courseData.error) {
-//   return new Response(404);
-// }
+// Fetch course and tournament data
+const courseEntries = await contentfulClient.getEntries<TypeCourseSkeleton>({
+  content_type: "course",
+});
+
+// Find the first upcoming tournament date
+const upcomingTournament = courseEntries.items
+  .flatMap((course) => course.fields.tournaments ?? []) // Flatten all tournaments
+  .filter(
+    (
+      tournament
+    ): tournament is Entry<TypeTournamentSkeleton, undefined, string> =>
+      tournament &&
+      "fields" in tournament &&
+      tournament.fields.date &&
+      new Date(tournament.fields.date) > new Date() // Filter for future dates
+  )
+  .sort(
+    (a, b) =>
+      new Date(a.fields.date).getTime() - new Date(b.fields.date).getTime() // Sort by date ascending
+  )[0]; // Get the earliest upcoming tournament
+
+// Extract relevant data
+const tournamentDate = upcomingTournament?.fields.date ?? "TBD";
+const tournamentPrice = upcomingTournament?.fields.price ?? "N/A";
+const tournamentPlayers = upcomingTournament?.fields.players ?? "N/A";
+const tournamentAmenities = upcomingTournament?.fields.amenities ?? [];
+const courseName =
+  courseEntries.items.find((course) =>
+    course.fields.tournaments?.some(
+      (tournament) => tournament === upcomingTournament
+    )
+  )?.fields.course ?? "Unknown Course";
+
+const courseSlug = courseEntries.items.find((course) =>
+  course.fields.tournaments?.some(
+    (tournament) => tournament === upcomingTournament
+  )
+)?.fields.slug;
 ---
 
 <Layout
@@ -24,7 +66,17 @@ const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
 >
   <div class={style.homeWrapper}>
     <section class={style.homeHero}>
-      <MiniCard title="Upcoming Tournament" label="Details" />
+      <MiniCard
+        title={"Upcoming Tournament"}
+        date={tournamentDate}
+        price={tournamentPrice}
+        players={tournamentPlayers}
+        amenities={tournamentAmenities}
+        course={courseName}
+        isCoursePage={false}
+        slug={courseSlug}
+        label="Details"
+      />
     </section>
     <section class={style.homeColWrapper}>
       {

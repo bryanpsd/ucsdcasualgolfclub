@@ -1,0 +1,70 @@
+---
+import { CourseCard } from "~components/Course/CourseCard";
+import { contentfulClient } from "../../lib/contentful";
+import { heroWrapper, subPageWrapper } from "~styles/common.css";
+import Layout from "../../layouts/Layout.astro";
+import { format } from "date-fns";
+import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse";
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+
+export function getStaticPaths() {
+  // Generate dynamic pages for Seasons
+  const getYear = new Date().getFullYear() - 1;
+  const pastSeasonsLinks = Array.from({ length: getYear - 2018 }, (_, i) => {
+    const year = getYear - i;
+    return {
+      params: {
+        slug: year.toString(),
+      },
+    };
+  });
+  return pastSeasonsLinks;
+}
+
+const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
+  content_type: "course",
+});
+
+const { slug } = Astro.params;
+---
+
+<Layout>
+  <section class={heroWrapper}>
+    <ResponsiveHeadline size={4} as="h1">{slug}</ResponsiveHeadline>
+  </section>
+  <div class={subPageWrapper}>
+    {
+      entries.items.map((item) => {
+        // Safely extract the year from the first tournament's date
+        const getYear = item.fields.tournaments?.[0]?.fields?.date
+          ? format(new Date(item.fields.tournaments[0].fields.date), "yyyy")
+          : null;
+
+        if (getYear === slug && item.fields.tournaments) {
+          return item.fields.tournaments.map((tournament) => {
+            if ("fields" in tournament && tournament.fields.date) {
+              return (
+                <CourseCard
+                  client:load
+                  hideCourseInfo
+                  date={tournament.fields.date}
+                  clubChampionship={tournament.fields.clubChampionship ?? false}
+                  course={item.fields.course}
+                  slug={item.fields.slug}
+                  results={
+                    tournament.fields.results &&
+                    "fields" in tournament.fields.results
+                      ? tournament.fields.results.fields.file?.url
+                      : undefined
+                  }
+                />
+              );
+            }
+            return null;
+          });
+        }
+        return null;
+      })
+    }
+  </div>
+</Layout>

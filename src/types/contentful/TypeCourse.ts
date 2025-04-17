@@ -12,25 +12,10 @@ export interface TypeCourseFields {
   courseName?: EntryFieldTypes.Symbol;
   course?: EntryFieldTypes.Symbol;
   slug?: EntryFieldTypes.Symbol;
-  date?: EntryFieldTypes.Date;
-  price?: EntryFieldTypes.Symbol;
-  players?: EntryFieldTypes.Symbol;
-  numberOfPlayers?: EntryFieldTypes.Integer;
-  type?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
-  amenities?: EntryFieldTypes.Array<EntryFieldTypes.Symbol<"Balls" | "Cart">>;
   courseSite?: EntryFieldTypes.Symbol;
-  summary?: EntryFieldTypes.RichText;
-  notes?: EntryFieldTypes.Symbol;
-  isSpecial?: EntryFieldTypes.Boolean;
-  firstFlight?: EntryFieldTypes.Array<
-    EntryFieldTypes.EntryLink<TypeLeadersSkeleton>
-  >;
-  secondFlight?: EntryFieldTypes.Array<
-    EntryFieldTypes.EntryLink<TypeLeadersSkeleton>
-  >;
-  address?: EntryFieldTypes.Location;
-  results?: EntryFieldTypes.AssetLink;
   courseImage?: EntryFieldTypes.AssetLink;
+  summary?: EntryFieldTypes.RichText;
+  address?: EntryFieldTypes.Location;
   tournaments?: EntryFieldTypes.Array<
     EntryFieldTypes.EntryLink<TypeTournamentSkeleton>
   >;
