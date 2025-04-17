@@ -1,31 +1,33 @@
 ---
-import { contentfulClient } from "../../lib/contentful";
-import { subPageWrapper } from "~styles/common.css";
-import Layout from "../../layouts/Layout.astro";
-import { closestTo, format } from "date-fns";
+import { contentfulClient } from '../../lib/contentful';
+import { subPageWrapper } from '~styles/common.css';
+import Layout from '../../layouts/Layout.astro';
+import { format } from 'date-fns';
 import type {
   TypeCourseSkeleton,
   TypeCourseProps,
-} from "~types/contentful/TypeCourse";
-import { MiniCard } from "~components/Course/MiniCard";
-import { Map } from "~components/Course/Map";
+} from '~types/contentful/TypeCourse';
+import { MiniCard } from '~components/Course/MiniCard';
+import { Map } from '~components/Course/Map';
 
-import * as styles from "./_style/tournament.css";
-import { RichText } from "~components/RichText";
-import FlightCard from "./_components/FlightCard/FlightCard.astro";
-import { Hero } from "~components/Hero";
+import * as styles from './_style/tournament.css';
+import { RichText } from '~components/RichText';
+import FlightCard from './_components/FlightCard/FlightCard.astro';
+import { Hero } from '~components/Hero';
+import { date } from 'astro:schema';
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-    content_type: "course",
-    include: 10,
+    content_type: 'course',
+    include: 1,
   });
 
   const pages = entries.items
     .flatMap((item) => {
       return item.fields.tournaments?.map((tournament) => {
-        if (tournament && "fields" in tournament && tournament.fields.date) {
+        if (tournament && 'fields' in tournament && tournament.fields.date) {
           const year = new Date(tournament.fields.date).getFullYear(); // Extract year from tournament date
+
           return {
             params: {
               slugs: `/${year}/${item.fields.slug}`, // Combine "tournament", year, and course slug
@@ -36,41 +38,29 @@ export async function getStaticPaths() {
               summary: item.fields.summary,
               courseWebsite: item.fields.courseSite,
               courseImage:
-                item.fields.courseImage && "fields" in item.fields.courseImage
-                  ? (item.fields.courseImage.fields.file?.url ?? "")
+                item.fields.courseImage && 'fields' in item.fields.courseImage
+                  ? (item.fields.courseImage.fields.file?.url ?? '')
                   : undefined,
-              tournaments: item.fields.tournaments?.map((tournament) => {
-                if (tournament && "fields" in tournament) {
-                  return {
-                    ...(typeof tournament.fields === "object" &&
-                    tournament.fields !== null
-                      ? tournament.fields
-                      : {}),
-                    results: (tournament.fields as Record<string, any>).results,
-                    players: tournament.fields.players,
-                    date: format(
-                      new Date(tournament.fields.date),
-                      "dd/MM/yyyy"
-                    ),
-                  };
-                }
-                return null;
-              }),
+              tournament: {
+                price: tournament.fields.price ?? 'N/A', // Include price
+                date: tournament.fields.date ?? 'N/A', // Include date
+              },
             },
           };
         }
+
         return null;
       });
     })
     .filter(Boolean); // Remove null values
-
-  console.log("Generated Paths:", pages); // Log all generated paths for debugging
 
   return pages; // Return an array of paths
 }
 
 const { course, courseImage, summary, address, tournaments, courseWebsite } =
   Astro.props;
+
+console.log(tournaments);
 ---
 
 <Layout>
@@ -88,13 +78,17 @@ const { course, courseImage, summary, address, tournaments, courseWebsite } =
         {summary !== undefined && <RichText richText={summary} />}
       </div>
       <div class={styles.tournamentRightCol}>
-        <MiniCard
-          title="Information"
-          isCoursePage
-          label="Course Website"
-          course={course}
-          date={tournaments}
-        />
+        {
+          tournaments?.map((tournament) => (
+            <MiniCard
+              title="Information"
+              isCoursePage
+              label="Course Website"
+              course={course}
+              price={'fields' in tournament ? tournament.fields.price : 'N/A'}
+            />
+          ))
+        }
       </div>
     </div>
   </section>

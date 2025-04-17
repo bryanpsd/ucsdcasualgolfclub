@@ -1,16 +1,16 @@
 ---
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
-import { Button } from "../../Button/Button";
-import type { TypeCourseSkeleton } from "../../../types/contentful";
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import { Button } from '../../Button/Button';
+import type { TypeCourseSkeleton } from '../../../types/contentful';
 
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
-import * as style from "./MiniCard.css";
-import { contentfulClient } from "~lib/contentful";
-import { CourseInfo } from "../CourseInfo";
+import * as style from './MiniCard.css';
+import { contentfulClient } from '~lib/contentful';
+import { CourseInfo } from '../CourseInfo';
 
-const todayUTC = new Date();
-const utcDateString = todayUTC.toISOString();
+// const todayUTC = new Date();
+// const utcDateString = todayUTC.toISOString();
 
 const {
   title,
@@ -23,7 +23,10 @@ const {
   tournaments,
   price,
   players,
+  date,
 } = Astro.props;
+
+const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null;
 ---
 
 <div class={style.miniCardWrapper}>
@@ -34,6 +37,18 @@ const {
     <ResponsiveHeadline className={style.miniCardCourse} size={1} as="h3">
       {course}
     </ResponsiveHeadline>
+    <div class={style.dateTimeWrapper}>
+      {
+        validDate ? (
+          <>
+            <span>{format(date, 'E M/d/yy')}</span>@
+            <span>{format(date, 'h:mmaaa')}</span>
+          </>
+        ) : (
+          <span>Date not available</span>
+        )
+      }
+    </div>
   </div>
   <CourseInfo
     client:load
