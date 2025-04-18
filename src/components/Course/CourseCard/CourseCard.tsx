@@ -1,16 +1,13 @@
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
-import { Button } from "../../Button/Button";
-import type { TypeCourseProps } from "../../../types/contentful";
-import { format } from "date-fns";
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import { Button } from '../../Button/Button';
+import type { TypeCourseProps } from '../../../types/contentful';
+import { format } from 'date-fns';
 
-import * as styles from "./CourseCard.css";
-import { Typography } from "~components/Typography";
-import Clock from "../../../icons/clock.svg?react";
-import Players from "../../../icons/players.svg?react";
-import GolfBall from "../../../icons/golf_ball.svg?react";
-import Cart from "../../../icons/golf_cart.svg?react";
-import { concatClasses } from "~utils/concatClasses";
-import { CourseInfo } from "../CourseInfo/CourseInfo";
+import { Typography } from '~components/Typography';
+import Clock from '../../../icons/clock.svg?react';
+import { CourseInfo } from '../CourseInfo/CourseInfo';
+
+import * as styles from './CourseCard.css';
 
 interface CourseCardProps extends TypeCourseProps {
   hideCourseInfo?: boolean;
@@ -43,14 +40,14 @@ export const CourseCard = (props: CourseCardProps) => {
       {date && (
         <div
           className={styles.dateWrapper({
-            variant: isWednesday ? "secondary" : "default",
+            variant: isWednesday ? 'secondary' : 'default',
           })}
         >
-          <Typography color="inverse">{format(date, "MMM")}</Typography>
+          <Typography color="inverse">{format(date, 'MMM')}</Typography>
           <Typography color="inverse" variant="headlineLg">
-            {format(date, "d")}
+            {format(date, 'd')}
           </Typography>
-          <Typography color="inverse">{format(date, "E")}</Typography>
+          <Typography color="inverse">{format(date, 'E')}</Typography>
         </div>
       )}
       {hideCourseInfo ? (
@@ -82,13 +79,13 @@ export const CourseCard = (props: CourseCardProps) => {
           </div>
           <div className={styles.courseCardTime}>
             <Clock height={30} width={30} aria-hidden="true" />
-            {date && format(date, "h:mmaaa")}
+            {date && format(date, 'h:mmaaa')}
           </div>
           <CourseInfo
             amenities={amenities}
             isMiniCard={false}
-            price={price}
-            players={players}
+            price={price ?? 0}
+            players={players ?? 0}
           />
         </div>
       )}
@@ -101,7 +98,7 @@ export const CourseCard = (props: CourseCardProps) => {
               color="primary"
               size="small"
               variant="outlined"
-              href={`/tournaments/${format(date, "yyyy")}/${slug}`}
+              href={`/tournaments/${format(date, 'yyyy')}/${slug}`}
             >
               Details
             </Button>

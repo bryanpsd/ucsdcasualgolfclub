@@ -4,7 +4,13 @@ import type { Document } from '@contentful/rich-text-types';
 import { type TypographyProps, Typography } from '~components/Typography';
 import { TextBlockSection } from '../../components/TextBlockSection';
 import { List } from '../../components/TextBlockSection/List';
-import { textBlock, body, seasonRecap, seasonRecapList } from './RichText.css';
+import {
+  textBlock,
+  body,
+  seasonRecap,
+  seasonRecapList,
+  image,
+} from './RichText.css';
 import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
 
 const BODY_TYPOGRAPHY_VARIANT: TypographyProps['variant'] = 'bodyMd';
@@ -35,7 +41,7 @@ const options: Options = {
 
     [BLOCKS.EMBEDDED_ASSET]: (node) => {
       const { url, fileName } = node.data.target.fields.file;
-      return <img src={url} alt={fileName} />;
+      return <img className={image} src={url} alt={fileName} />;
     },
     [BLOCKS.EMBEDDED_ENTRY]: (node) => {
       if (node.data.target.sys.contentType.sys.id === 'seasonRecap') {
@@ -51,6 +57,7 @@ const options: Options = {
                   return (
                     <li key={title}>
                       <img
+                        className={image}
                         src={file.url}
                         alt={file.title}
                         width={file.details.image.width}

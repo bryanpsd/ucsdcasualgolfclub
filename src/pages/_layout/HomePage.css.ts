@@ -27,7 +27,7 @@ export const homeHero = style([
 export const homeColWrapper = style([
   tokens({
     display: 'flex',
-    flexDirection: { xs: 'column', md: 'row' },
+    flexDirection: { 'xs-min': 'column', 'lg-min': 'row' },
     justifyContent: 'center',
     gap: 24,
     paddingY: 24,
@@ -39,7 +39,7 @@ export const homeColWrapper = style([
 export const leftCol = style([
   tokens({
     display: 'flex',
-    width: { xs: 'col-12', 'md-min': 'col-8' },
+    width: { 'xs-min': 'col-12', 'lg-min': 'col-8' },
   }),
 ]);
 
@@ -47,7 +47,7 @@ export const rightCol = style([
   tokens({
     display: 'flex',
     flexDirection: 'column',
-    width: { xs: 'col-12', 'md-min': 'col-4' },
+    width: { 'xs-min': 'col-12', 'lg-min': 'col-4' },
     gap: 24,
   }),
 ]);

@@ -24,8 +24,14 @@ export const seasonRecap = style([
 export const seasonRecapList = style([
   tokens({
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: { 'xs-min': 'column', 'md-min': 'row' },
     gap: 16,
     marginX: 'auto',
+  }),
+]);
+
+export const image = style([
+  tokens({
+    width: 'col-12',
   }),
 ]);

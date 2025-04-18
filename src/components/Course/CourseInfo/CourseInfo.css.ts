@@ -1,39 +1,39 @@
-import { style } from "@vanilla-extract/css";
-import { tokens } from "../../../styles/designTokens.css";
-import { color } from "../../../styles/designTokens/colors";
-import { recipe } from "@vanilla-extract/recipes";
+import { style } from '@vanilla-extract/css';
+import { tokens } from '../../../styles/designTokens.css';
+import { color } from '../../../styles/designTokens/colors';
+import { recipe } from '@vanilla-extract/recipes';
 
 export const courseCardInfo = style([
   tokens({
-    display: "flex",
-    flexDirection: "column",
-    alignItems: { "xs-min": "center", "md-min": "flex-start" },
-    justifyContent: { "xs-min": "center", "md-min": "flex-start" },
-    width: { "xs-min": "col-12", "md-min": "col-5" },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: { 'xs-min': 'center', 'md-min': 'flex-start' },
+    justifyContent: { 'xs-min': 'center', 'md-min': 'flex-start' },
+    width: { 'xs-min': 'col-12', 'md-min': 'col-5' },
     gap: 8,
   }),
 ]);
 
 export const courseCardList = style([
   tokens({
-    display: "flex",
+    display: 'flex',
   }),
 ]);
 
 export const courseCardListItem = recipe({
   base: [
     tokens({
-      display: "flex",
+      display: 'flex',
       paddingX: 4,
-      alignItems: "center",
+      alignItems: 'center',
     }),
     {
       selectors: {
-        "&:first-child": {
+        '&:first-child': {
           paddingLeft: 0,
         },
-        "&:last-child": {
-          borderRight: "none",
+        '&:last-child': {
+          borderRight: 'none',
         },
       },
     },
@@ -51,8 +51,17 @@ export const courseCardListItem = recipe({
   },
 });
 
-export const coursePrice = style({
-  color: color.outline.success,
+export const coursePrice = recipe({
+  variants: {
+    variant: {
+      default: {
+        color: color.outline.success,
+      },
+      secondary: {
+        color: color.brand.white,
+      },
+    },
+  },
 });
 
 export const icons = recipe({

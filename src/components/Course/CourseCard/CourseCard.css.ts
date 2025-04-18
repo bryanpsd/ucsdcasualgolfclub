@@ -6,7 +6,7 @@ import { recipe } from '@vanilla-extract/recipes';
 export const courseCardWrapper = style([
   tokens({
     display: 'flex',
-    flexDirection: { xs: 'column', md: 'row' },
+    flexDirection: { 'xs-min': 'column', 'md-min': 'row' },
     width: 'col-12',
     paddingY: 10,
     gap: 10,
@@ -45,7 +45,7 @@ export const courseCardInfo = style([
     flexDirection: 'column',
     alignItems: { 'xs-min': 'center', 'md-min': 'flex-start' },
     justifyContent: { 'xs-min': 'center', 'md-min': 'flex-start' },
-    width: { 'xs-min': 'col-12', 'md-min': 'col-5' },
+    width: { 'xs-min': 'col-12', 'md-min': 'col-4' },
     gap: 8,
   }),
   {},
@@ -57,7 +57,7 @@ export const courseCardNameWrapper = style([
     flexDirection: 'column',
     alignItems: { 'xs-min': 'center', 'md-min': 'flex-start' },
     justifyContent: 'center',
-    width: { 'xs-min': 'col-12', 'md-min': 'col-5' },
+    width: { 'xs-min': 'col-12', 'md-min': 'col-4' },
   }),
 ]);
 
@@ -98,8 +98,8 @@ export const courseCardButtons = style([
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    width: { 'xs-min': 'col-12', 'md-min': 'col-5' },
+    justifyContent: { 'xs-min': 'center', 'md-min': 'flex-end' },
+    width: { 'xs-min': 'col-12', 'md-min': 'col-6' },
   }),
 ]);
 
