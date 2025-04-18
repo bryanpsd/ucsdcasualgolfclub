@@ -1,39 +1,58 @@
-import { style } from '@vanilla-extract/css';
-import { tokens } from '../../../styles/designTokens.css';
-import { color } from '../../../styles/designTokens/colors';
-import { recipe } from '@vanilla-extract/recipes';
+import { style } from "@vanilla-extract/css";
+import { tokens } from "../../../styles/designTokens.css";
+import { color } from "../../../styles/designTokens/colors";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const courseCardInfo = style([
   tokens({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: { 'xs-min': 'center', 'md-min': 'flex-start' },
-    justifyContent: { 'xs-min': 'center', 'md-min': 'flex-start' },
-    width: { 'xs-min': 'col-12', 'md-min': 'col-5' },
+    display: "flex",
+    flexDirection: "column",
+    alignItems: { "xs-min": "center", "md-min": "flex-start" },
+    justifyContent: { "xs-min": "center", "md-min": "flex-start" },
+    width: { "xs-min": "col-12", "md-min": "col-6" },
     gap: 8,
   }),
 ]);
 
+export const courseCardInfoWrapper = recipe({
+  base: [
+    tokens({
+      display: "flex",
+      flexDirection: "column",
+
+      gap: 8,
+    }),
+  ],
+  variants: {
+    variant: {
+      default: {},
+      secondary: {
+        alignItems: "center",
+      },
+    },
+  },
+});
+
 export const courseCardList = style([
   tokens({
-    display: 'flex',
+    display: "flex",
   }),
 ]);
 
 export const courseCardListItem = recipe({
   base: [
     tokens({
-      display: 'flex',
+      display: "flex",
       paddingX: 4,
-      alignItems: 'center',
+      alignItems: "center",
     }),
     {
       selectors: {
-        '&:first-child': {
+        "&:first-child": {
           paddingLeft: 0,
         },
-        '&:last-child': {
-          borderRight: 'none',
+        "&:last-child": {
+          borderRight: "none",
         },
       },
     },
@@ -76,3 +95,30 @@ export const icons = recipe({
     },
   },
 });
+
+export const courseCardCourseInformationList = recipe({
+  base: [
+    tokens({
+      display: "flex",
+      flexDirection: "column",
+      gap: 4,
+    }),
+  ],
+  variants: {
+    variant: {
+      default: {
+        color: color.brand.black,
+      },
+      secondary: {
+        color: color.brand.white,
+        alignItems: "center",
+      },
+    },
+  },
+});
+
+export const courseCardCourseInformationListItem = style([
+  tokens({
+    display: "flex",
+  }),
+]);

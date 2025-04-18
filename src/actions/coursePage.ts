@@ -20,8 +20,6 @@ const mapContentfulFields = (fields?: TypeCourseProps) => {
     })
     .filter(Boolean)[0]; // Get the first valid year
 
-  console.log("Tournament Year:", tournamentYear); // Log the tournament year
-
   const slugWithYear = tournamentYear
     ? `/${tournamentYear}/${fields.slug}`
     : `/${fields.slug}`; // Combine year and slug
@@ -49,8 +47,6 @@ export const getCoursePage = defineAction({
     }
 
     const mappedFields = mapContentfulFields(pageData.items[0]?.fields);
-
-    console.log("Mapped Fields with Slug:", mappedFields?.slug); // Log the generated slug
 
     return {
       error: false,

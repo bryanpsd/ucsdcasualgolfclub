@@ -3,10 +3,7 @@ import { contentfulClient } from "../../lib/contentful";
 import { subPageWrapper } from "~styles/common.css";
 import Layout from "../../layouts/Layout.astro";
 import { format } from "date-fns";
-import type {
-  TypeCourseSkeleton,
-  TypeCourseProps,
-} from "~types/contentful/TypeCourse";
+import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse";
 import { MiniCard } from "~components/Course/MiniCard";
 import { Map } from "~components/Course/Map";
 
@@ -18,18 +15,18 @@ import { Hero } from "~components/Hero";
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
     content_type: "course",
-    include: 3, // Ensure linked entries like firstFlight are resolved
+    include: 3,
   });
 
   const pages = entries.items
     .flatMap((item) => {
       return item.fields.tournaments?.map((tournament) => {
         if (tournament && "fields" in tournament && tournament.fields.date) {
-          const year = new Date(tournament.fields.date).getFullYear(); // Extract year from tournament date
+          const year = new Date(tournament.fields.date).getFullYear();
 
           return {
             params: {
-              slugs: `/${year}/${item.fields.slug}`, // Combine "tournament", year, and course slug
+              slugs: `/${year}/${item.fields.slug}`,
             },
             props: {
               ...item.fields,
@@ -42,10 +39,15 @@ export async function getStaticPaths() {
                   : undefined,
               tournaments: [
                 {
-                  price: tournament.fields.price ?? "N/A", // Include price
-                  date: tournament.fields.date ?? "N/A", // Include date
-                  players: tournament.fields.players ?? "N/A", // Include players
-                  amenities: tournament.fields.amenities ?? [], // Include amenities
+                  price: tournament.fields.price ?? "N/A",
+                  prices: tournament.fields.prices ?? [],
+                  date: tournament.fields.date ?? "N/A",
+                  players: tournament.fields.players ?? "N/A",
+                  amenities: tournament.fields.amenities ?? [],
+                  results: tournament.fields.results ?? [],
+                  coursePar: tournament.fields.coursePar,
+                  mensTees: tournament.fields.mensTees,
+                  womensTees: tournament.fields.womensTees,
                   firstFlight:
                     tournament.fields.firstFlight
                       ?.map((player) => {
@@ -109,9 +111,9 @@ export async function getStaticPaths() {
         return null;
       });
     })
-    .filter(Boolean); // Remove null values
+    .filter(Boolean);
 
-  return pages; // Return an array of paths
+  return pages;
 }
 
 const {
@@ -123,7 +125,17 @@ const {
   courseWebsite,
 } = Astro.props;
 
-console.log(tournaments[0]);
+const allFlights = [
+  ...(tournaments[0]?.firstFlight || []),
+  ...(tournaments[0]?.secondFlight || []),
+];
+
+// Find the lowest gross score across all flights
+const lowestGrossOverall = Math.min(
+  ...allFlights
+    .flatMap((player) => player?.results?.map((result) => result?.gross) || [])
+    .filter((gross) => gross !== undefined && gross !== null)
+);
 ---
 
 <Layout>
@@ -144,6 +156,7 @@ console.log(tournaments[0]);
             <FlightCard
               title="First Flight"
               currentCourse={course}
+              lowestGrossOverall={lowestGrossOverall}
               flight={tournaments[0]?.firstFlight?.map((player) => ({
                 playerName: player?.playerName,
                 handicapIndex: player?.handicapIndex,
@@ -166,6 +179,7 @@ console.log(tournaments[0]);
             <FlightCard
               title="Second Flight"
               currentCourse={course}
+              lowestGrossOverall={lowestGrossOverall}
               flight={tournaments[0]?.secondFlight?.map((player) => ({
                 playerName: player?.playerName,
                 handicapIndex: player?.handicapIndex,
@@ -191,10 +205,14 @@ console.log(tournaments[0]);
           label="Course Website"
           course={course}
           courseWebsite={courseWebsite}
-          price={tournaments[0]?.price}
+          prices={tournaments[0]?.prices}
           date={tournaments[0]?.date}
           players={tournaments[0]?.players}
           amenities={tournaments[0]?.amenities}
+          results={tournaments[0]?.results}
+          coursePar={tournaments[0]?.coursePar}
+          mensTees={tournaments[0]?.mensTees}
+          womensTees={tournaments[0]?.womensTees}
         />
       </div>
     </div>

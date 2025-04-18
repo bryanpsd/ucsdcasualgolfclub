@@ -1,22 +1,28 @@
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
-import { Button } from '../../Button/Button';
-import type { TypeCourseProps } from '../../../types/contentful';
-import { format } from 'date-fns';
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { Button } from "../../Button/Button";
+import type { TypeCourseProps } from "../../../types/contentful";
+import { format } from "date-fns";
 
-import { Typography } from '~components/Typography';
-import Clock from '../../../icons/clock.svg?react';
-import { CourseInfo } from '../CourseInfo/CourseInfo';
+import { Typography } from "~components/Typography";
+import Clock from "../../../icons/clock.svg?react";
+import Pdf from "../../../icons/pdf.svg?react";
+import Cart from "../../../icons/golf_cart.svg?react";
+import { CourseInfo } from "../CourseInfo/CourseInfo";
 
-import * as styles from './CourseCard.css';
+import * as styles from "./CourseCard.css";
 
 interface CourseCardProps extends TypeCourseProps {
   hideCourseInfo?: boolean;
   date?: string;
   players?: number;
   price?: number;
+  prices?: string[];
   amenities?: string[];
   results?: string | null | undefined;
   clubChampionship?: boolean;
+  coursePar?: number;
+  mensTees?: string;
+  womensTees?: string;
 }
 
 export const CourseCard = (props: CourseCardProps) => {
@@ -24,9 +30,12 @@ export const CourseCard = (props: CourseCardProps) => {
     course,
     slug,
     hideCourseInfo,
-    tournaments,
+    coursePar,
+    mensTees,
+    womensTees,
     players,
     price,
+    prices,
     amenities,
     date,
     results,
@@ -40,19 +49,19 @@ export const CourseCard = (props: CourseCardProps) => {
       {date && (
         <div
           className={styles.dateWrapper({
-            variant: isWednesday ? 'secondary' : 'default',
+            variant: isWednesday ? "secondary" : "default",
           })}
         >
-          <Typography color="inverse">{format(date, 'MMM')}</Typography>
+          <Typography color="inverse">{format(date, "MMM")}</Typography>
           <Typography color="inverse" variant="headlineLg">
-            {format(date, 'd')}
+            {format(date, "d")}
           </Typography>
-          <Typography color="inverse">{format(date, 'E')}</Typography>
+          <Typography color="inverse">{format(date, "E")}</Typography>
         </div>
       )}
       {hideCourseInfo ? (
         <div className={styles.courseCardNameWrapper}>
-          <ResponsiveHeadline size={2} as="h2">
+          <ResponsiveHeadline size={1} as="h2">
             {course}
           </ResponsiveHeadline>
           {clubChampionship && (
@@ -79,13 +88,17 @@ export const CourseCard = (props: CourseCardProps) => {
           </div>
           <div className={styles.courseCardTime}>
             <Clock height={30} width={30} aria-hidden="true" />
-            {date && format(date, 'h:mmaaa')}
+            {date && format(date, "h:mmaaa")}
           </div>
           <CourseInfo
             amenities={amenities}
             isMiniCard={false}
             price={price ?? 0}
+            prices={prices}
             players={players ?? 0}
+            coursePar={coursePar}
+            mensTees={mensTees}
+            womensTees={womensTees}
           />
         </div>
       )}
@@ -98,7 +111,7 @@ export const CourseCard = (props: CourseCardProps) => {
               color="primary"
               size="small"
               variant="outlined"
-              href={`/tournaments/${format(date, 'yyyy')}/${slug}`}
+              href={`/tournaments/${format(date, "yyyy")}/${slug}`}
             >
               Details
             </Button>
@@ -106,6 +119,14 @@ export const CourseCard = (props: CourseCardProps) => {
           {results && results !== null && results !== undefined && (
             <Button
               as="a"
+              startIcon={
+                <Pdf
+                  className={styles.pdfIcon}
+                  height={20}
+                  width={20}
+                  aria-hidden="true"
+                />
+              }
               color="primary"
               size="small"
               variant="outlined"

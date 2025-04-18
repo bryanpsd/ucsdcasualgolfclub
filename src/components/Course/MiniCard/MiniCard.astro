@@ -15,14 +15,19 @@ import { CourseInfo } from "../CourseInfo";
 const {
   title,
   course,
+  coursePar,
+  mensTees,
+  womensTees,
   amenities,
   price,
+  prices,
   players,
   date,
   isCoursePage,
   courseWebsite,
   label,
   slug,
+  results,
 } = Astro.props;
 
 const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null;
@@ -53,21 +58,48 @@ const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null;
       client:load
       amenities={amenities}
       price={price}
+      prices={prices}
       players={players}
       isMiniCard
+      coursePar={coursePar}
+      mensTees={mensTees}
+      womensTees={womensTees}
     />
-    <Button
-      variant="outlined"
-      color="secondary"
-      as="a"
-      size="small"
-      rel={isCoursePage ? "noopener noreferrer" : ""}
-      target={isCoursePage ? "_blank" : "_self"}
-      href={isCoursePage
-        ? courseWebsite
-        : `/tournaments/${format(new Date(date as string), "yyyy")}/${slug}`}
-    >
-      {label}
-    </Button>
+    {
+      results ? (
+        <Button
+          as="a"
+          color="primary"
+          color="secondary"
+          variant="outlined"
+          size="small"
+          target="_blank"
+          rel="noopener noreferrer"
+          href={
+            typeof results === "object" && results?.fields?.file?.url
+              ? results.fields.file.url
+              : undefined
+          }
+        >
+          Results
+        </Button>
+      ) : (
+        <Button
+          variant="outlined"
+          color="secondary"
+          as="a"
+          size="small"
+          rel={isCoursePage ? "noopener noreferrer" : ""}
+          target={isCoursePage ? "_blank" : "_self"}
+          href={
+            isCoursePage
+              ? courseWebsite
+              : `/tournaments/${format(new Date(date as string), "yyyy")}/${slug}`
+          }
+        >
+          {label}
+        </Button>
+      )
+    }
   </div>
 </div>

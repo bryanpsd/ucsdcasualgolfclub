@@ -1,13 +1,13 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { contentfulClient } from '../../lib/contentful';
-import { CourseCard } from '../../components/Course/CourseCard';
-import type { TypeCourseSkeleton } from '../../types/contentful';
-import { heroWrapper, subPageWrapper } from '~styles/common.css';
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import Layout from "../../layouts/Layout.astro";
+import { contentfulClient } from "../../lib/contentful";
+import { CourseCard } from "../../components/Course/CourseCard";
+import type { TypeCourseSkeleton } from "../../types/contentful";
+import { heroWrapper, subPageWrapper } from "~styles/common.css";
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
 
 const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-  content_type: 'course',
+  content_type: "course",
 });
 
 const getTournaments = entries.items
@@ -15,21 +15,24 @@ const getTournaments = entries.items
     return item.fields.tournaments?.map((tournament) => {
       if (
         tournament &&
-        'fields' in tournament &&
+        "fields" in tournament &&
         tournament.fields.date &&
-        new Date(tournament.fields.date) > new Date('2024-12-05')
+        new Date(tournament.fields.date) > new Date("2024-12-05")
       ) {
         return {
           ...item.fields,
           tournaments: [
             {
-              price: tournament.fields.price ?? 'N/A', // Include price
-              date: tournament.fields.date ?? 'N/A', // Include date
-              players: tournament.fields.players ?? 'N/A', // Include players
+              price: tournament.fields.price ?? "N/A", // Include price
+              date: tournament.fields.date ?? "N/A", // Include date
+              players: tournament.fields.players ?? "N/A", // Include players
               amenities: tournament.fields.amenities ?? [], // Include amenities
+              coursePar: tournament.fields.coursePar, // Include par
+              mensTees: tournament.fields.mensTees, // Include par
+              womensTees: tournament.fields.womensTees, // Include par
               results:
                 tournament.fields.results &&
-                'fields' in tournament.fields.results
+                "fields" in tournament.fields.results
                   ? (tournament.fields.results.fields.file?.url ?? null)
                   : null, // Include results media URL
               clubChampionship: tournament.fields.clubChampionship ?? false,
@@ -69,6 +72,9 @@ const getCurrentYear = new Date().getFullYear();
           slug={item?.slug}
           amenities={item?.tournaments[0].amenities}
           results={item?.tournaments[0].results}
+          mensTees={item?.tournaments[0].mensTees}
+          womensTees={item?.tournaments[0].womensTees}
+          coursePar={item?.tournaments[0].coursePar}
         />
       ))
     }

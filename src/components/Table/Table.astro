@@ -4,7 +4,15 @@ import * as styles from "./Table.css";
 type Props = {
   thead: string[];
   colSpan?: number;
-  tbody: (string | number | null)[][];
+  tbody: Array<
+    Array<
+      | string
+      | {
+          value: string;
+          className?: string;
+        }
+    >
+  >;
   tfoot?: string[];
 };
 
@@ -35,7 +43,13 @@ const { thead, tbody, tfoot, colSpan = 0 } = Astro.props;
                 {cell}
               </th>
             ) : (
-              cell !== null && <td class={styles.td}>{cell}</td>
+              cell !== null && (
+                <td
+                  class={`${styles.td} ${typeof cell === "object" && cell.className ? cell.className : ""}`}
+                >
+                  {typeof cell === "object" ? cell.value : cell}
+                </td>
+              )
             )
           )}
         </tr>

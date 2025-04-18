@@ -1,16 +1,16 @@
 ---
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
-import Layout from '../../layouts/Layout.astro';
-import { contentfulClient } from '../../lib/contentful';
-import type { TypeLeadersSkeleton } from '../../types/contentful';
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import Layout from "../../layouts/Layout.astro";
+import { contentfulClient } from "../../lib/contentful";
+import type { TypeLeadersSkeleton } from "../../types/contentful";
 
-import { subPageWrapper, heroWrapper } from '../../styles/common.css';
+import { subPageWrapper, heroWrapper } from "../../styles/common.css";
 
-import { Table } from '~components/Table';
+import { Table } from "~components/Table";
 
 const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
-  content_type: 'leaders',
-  order: ['fields.handicapIndex'],
+  content_type: "leaders",
+  order: ["fields.handicapIndex"],
 });
 ---
 
@@ -20,15 +20,16 @@ const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
   </section>
   <div class={subPageWrapper}>
     <Table
-      thead={['Player', 'Index']}
+      thead={["Player", "Index"]}
       tbody={entries.items
+        .filter((item) => item.fields.onCurrentRoster === true) // Filter players on the current roster
         .map((item) => {
-          return item.fields.guest?.includes('Yes')
+          return item.fields.guest?.includes("Yes")
             ? null
             : [
                 item.fields.playerName,
                 item.fields.handicapIndex === undefined
-                  ? 'NH'
+                  ? "NH"
                   : String(item.fields.handicapIndex),
               ];
         })
