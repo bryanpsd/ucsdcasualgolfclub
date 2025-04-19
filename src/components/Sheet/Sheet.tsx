@@ -1,11 +1,13 @@
+import type { ReactNode } from 'react';
 import * as Dialog from '@radix-ui/react-dialog';
+
 import CloseCancelIcon from '../../icons/close_cancel.svg?react';
 
-import * as styles from './Sheet.css';
-import type { ReactNode } from 'react';
 import { SvgIcon } from '~components/SvgIcon';
 import { Typography } from '~components/Typography';
 import { Button } from '~components/Button';
+
+import * as styles from './Sheet.css';
 
 export interface SheetProps
   extends Pick<Dialog.DialogProps, 'open' | 'onOpenChange'> {
@@ -39,7 +41,7 @@ export const Sheet = ({
           <Dialog.Title className="sr-only">{title}</Dialog.Title>
           <div className={styles.modalCloseContainer}>
             <Dialog.Close asChild>
-              <Button variant="text" size="small">
+              <Button color="default" variant="text" size="small">
                 <Typography>
                   <span className="sr-only">Close</span>
                   <SvgIcon>

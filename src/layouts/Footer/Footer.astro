@@ -1,49 +1,43 @@
 ---
-import { Typography } from "~components/Typography";
-import {
-  footer,
-  footerContent,
-  footerList,
-  footerListItem,
-  footerLink,
-  footerCopyright,
-} from "./Footer.css";
+import { Typography } from '~components/Typography';
+
+import * as styles from './Footer.css';
 
 const currentDate = new Date();
 const year = currentDate.getFullYear();
 ---
 
-<footer class={footer}>
-  <div class={footerContent}>
+<footer class={styles.footer}>
+  <div class={styles.footerContent}>
     <nav>
-      <ul class={footerList}>
-        <li class={footerListItem}>
-          <a class={footerLink} href="/tournaments">Tournaments</a>
+      <ul class={styles.footerList}>
+        <li class={styles.footerListItem}>
+          <a class={styles.footerLink} href="/tournaments">Tournaments</a>
         </li>
 
-        <li class={footerListItem}>
-          <a class={footerLink} href="/roster">Roster</a>
+        <li class={styles.footerListItem}>
+          <a class={styles.footerLink} href="/roster">Roster</a>
         </li>
-        <li class={footerListItem}>
-          <a class={footerLink} href="/about">About</a>
+        <li class={styles.footerListItem}>
+          <a class={styles.footerLink} href="/about">About</a>
         </li>
-        <li class={footerListItem}>
-          <a class={footerLink} href="#">Seasons</a>
+        <li class={styles.footerListItem}>
+          <a class={styles.footerLink} href="#">Seasons</a>
         </li>
-        <li class={footerListItem}>
+        <li class={styles.footerListItem}>
           <a
-            class={footerLink}
+            class={styles.footerLink}
             href="https://membership.scga.org/start/join/?cid=885"
             target="_blank">Join the Club</a
           >
         </li>
-        <li class={footerListItem}>
-          <a class={footerLink} href="#">Instagram</a>
+        <li class={styles.footerListItem}>
+          <a class={styles.footerLink} href="#">Instagram</a>
         </li>
       </ul>
     </nav>
 
-    <Typography className={footerCopyright}
+    <Typography className={styles.footerCopyright}
       >&copy;{year} UCSD Casual Golf Club</Typography
     >
   </div>

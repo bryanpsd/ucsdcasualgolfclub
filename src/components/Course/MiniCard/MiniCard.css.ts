@@ -1,13 +1,13 @@
-import { style } from "@vanilla-extract/css";
-import { tokens } from "../../../styles/designTokens.css";
-import { color } from "../../../styles/designTokens/colors";
+import { style } from '@vanilla-extract/css';
+import { tokens } from '../../../styles/designTokens.css';
+import { color } from '../../../styles/designTokens/colors';
 
 export const miniCardWrapper = style([
   tokens({
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   }),
   {
     backgroundColor: color.brand.navy,
@@ -29,11 +29,11 @@ export const miniCardCourse = style({
 
 export const miniCard = style([
   tokens({
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "col-12",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 'col-12',
     gap: 8,
     padding: 10,
   }),
@@ -44,11 +44,11 @@ export const miniCard = style([
 
 export const dateTimeWrapper = style([
   tokens({
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "col-12",
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 'col-12',
     gap: 2,
   }),
   {

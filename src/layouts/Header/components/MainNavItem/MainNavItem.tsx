@@ -5,9 +5,11 @@ import type {
   PolymorphicRef,
 } from '../../../../types/PolymorphicComponent';
 
-import * as styles from './MainNavItem.css';
-import { concatClasses } from '../../../../utils/concatClasses';
 import { Typography } from '~components/Typography';
+
+import { concatClasses } from '../../../../utils/concatClasses';
+
+import * as styles from './MainNavItem.css';
 
 type MainNavItemProps<Element extends ElementType> =
   PolymorphicComponentPropWithRef<

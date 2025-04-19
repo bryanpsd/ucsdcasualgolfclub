@@ -1,27 +1,28 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import { contentfulClient } from "../../lib/contentful";
+import Layout from '../../layouts/Layout.astro';
+import { contentfulClient } from '../../lib/contentful';
 import type {
   TypeCourseSkeleton,
   TypeSimplePageSkeleton,
-} from "../../types/contentful";
-import { RichText } from "~components/RichText";
+} from '../../types/contentful';
+import { RichText } from '~components/RichText';
 
-import * as style from "./HomePage.css";
-import { MiniCard } from "~components/Course/MiniCard";
-import { Leaderboard } from "~components/Leaderboard";
-import type { TypeTournamentSkeleton } from "~types/contentful/TypeTournament";
-import type { Entry } from "contentful";
+import { MiniCard } from '~components/Course/MiniCard';
+import { Leaderboard } from '~components/Leaderboard';
+import type { TypeTournamentSkeleton } from '~types/contentful/TypeTournament';
+import type { Entry } from 'contentful';
+
+import * as styles from './HomePage.css';
 
 // Fetch simplePage entries
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-  content_type: "simplePage",
-  "fields.title": "Home",
+  content_type: 'simplePage',
+  'fields.title': 'Home',
 });
 
 // Fetch course and tournament data
 const courseEntries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-  content_type: "course",
+  content_type: 'course',
 });
 
 // Find the first upcoming tournament date
@@ -32,7 +33,7 @@ const upcomingTournament = courseEntries.items
       tournament
     ): tournament is Entry<TypeTournamentSkeleton, undefined, string> =>
       tournament &&
-      "fields" in tournament &&
+      'fields' in tournament &&
       tournament.fields.date &&
       new Date(tournament.fields.date) > new Date() // Filter for future dates
   )
@@ -42,16 +43,16 @@ const upcomingTournament = courseEntries.items
   )[0]; // Get the earliest upcoming tournament
 
 // Extract relevant data
-const tournamentDate = upcomingTournament?.fields.date ?? "TBD";
-const tournamentPrice = upcomingTournament?.fields.price ?? "N/A";
-const tournamentPlayers = upcomingTournament?.fields.players ?? "N/A";
+const tournamentDate = upcomingTournament?.fields.date ?? 'TBD';
+const tournamentPrices = upcomingTournament?.fields.prices ?? [];
+const tournamentPlayers = upcomingTournament?.fields.players ?? 'N/A';
 const tournamentAmenities = upcomingTournament?.fields.amenities ?? [];
 const courseName =
   courseEntries.items.find((course) =>
     course.fields.tournaments?.some(
       (tournament) => tournament === upcomingTournament
     )
-  )?.fields.course ?? "Unknown Course";
+  )?.fields.course ?? 'Unknown Course';
 
 const courseSlug = courseEntries.items.find((course) =>
   course.fields.tournaments?.some(
@@ -64,12 +65,12 @@ const courseSlug = courseEntries.items.find((course) =>
   title="Home | UCSD Casual Golf CLub"
   description="The homepage for the UCSD Casual Golf Club"
 >
-  <div class={style.homeWrapper}>
-    <section class={style.homeHero}>
+  <div class={styles.homeWrapper}>
+    <section class={styles.homeHero}>
       <MiniCard
-        title={"Upcoming Tournament"}
+        title={'Upcoming Tournament'}
         date={tournamentDate}
-        price={tournamentPrice}
+        prices={tournamentPrices}
         players={tournamentPlayers}
         amenities={tournamentAmenities}
         course={courseName}
@@ -78,17 +79,17 @@ const courseSlug = courseEntries.items.find((course) =>
         label="Details"
       />
     </section>
-    <section class={style.homeColWrapper}>
+    <section class={styles.homeColWrapper}>
       {
         entries.items.map((item) => (
-          <section class={style.leftCol}>
+          <section class={styles.leftCol}>
             {item.fields.content && (
               <RichText richText={item.fields.content} client:load />
             )}
           </section>
         ))
       }
-      <section class={style.rightCol}>
+      <section class={styles.rightCol}>
         <Leaderboard gross />
         <Leaderboard net firstFlight />
         <Leaderboard net secondFlight />

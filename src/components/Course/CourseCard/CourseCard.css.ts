@@ -1,13 +1,13 @@
-import { style } from "@vanilla-extract/css";
-import { tokens } from "../../../styles/designTokens.css";
-import { color } from "../../../styles/designTokens/colors";
-import { recipe } from "@vanilla-extract/recipes";
+import { style } from '@vanilla-extract/css';
+import { tokens } from '../../../styles/designTokens.css';
+import { color } from '../../../styles/designTokens/colors';
+import { recipe } from '@vanilla-extract/recipes';
 
 export const courseCardWrapper = style([
   tokens({
-    display: "flex",
-    flexDirection: { "xs-min": "column", "md-min": "row" },
-    width: "col-12",
+    display: 'flex',
+    flexDirection: { 'xs-min': 'column', 'md-min': 'row' },
+    width: 'col-12',
     paddingY: 10,
     gap: 10,
   }),
@@ -19,11 +19,11 @@ export const courseCardWrapper = style([
 export const dateWrapper = recipe({
   base: [
     tokens({
-      display: "flex",
-      flexDirection: "column",
-      width: { "xs-min": "col-12", "md-min": "col-2" },
-      alignItems: "center",
-      justifyContent: "center",
+      display: 'flex',
+      flexDirection: 'column',
+      width: { 'xs-min': 'col-12', 'md-min': 'col-2' },
+      alignItems: 'center',
+      justifyContent: 'center',
       paddingY: 10,
     }),
   ],
@@ -41,11 +41,11 @@ export const dateWrapper = recipe({
 
 export const courseCardInfo = style([
   tokens({
-    display: "flex",
-    flexDirection: "column",
-    alignItems: { "xs-min": "center", "md-min": "flex-start" },
-    justifyContent: { "xs-min": "center", "md-min": "flex-start" },
-    width: { "xs-min": "col-12", "md-min": "col-5" },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: { 'xs-min': 'center', 'md-min': 'flex-start' },
+    justifyContent: { 'xs-min': 'center', 'md-min': 'flex-start' },
+    width: { 'xs-min': 'col-12', 'md-min': 'col-5' },
     gap: 8,
   }),
   {},
@@ -53,41 +53,41 @@ export const courseCardInfo = style([
 
 export const courseCardNameWrapper = style([
   tokens({
-    display: "flex",
-    flexDirection: "column",
-    alignItems: { "xs-min": "center", "md-min": "flex-start" },
-    justifyContent: "center",
-    width: { "xs-min": "col-12", "md-min": "col-4" },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: { 'xs-min': 'center', 'md-min': 'flex-start' },
+    justifyContent: 'center',
+    width: { 'xs-min': 'col-12', 'md-min': 'col-4' },
   }),
 ]);
 
 export const courseCardTime = style([
   tokens({
-    display: "flex",
-    alignItems: "center",
+    display: 'flex',
+    alignItems: 'center',
   }),
 ]);
 
 export const courseCardList = style([
   tokens({
-    display: "flex",
+    display: 'flex',
   }),
 ]);
 
 export const courseCardListItem = style([
   tokens({
-    display: "flex",
+    display: 'flex',
     paddingX: 4,
-    alignItems: "center",
+    alignItems: 'center',
   }),
   {
     borderRight: `1px solid ${color.brand.navy}`,
     selectors: {
-      "&:first-child": {
+      '&:first-child': {
         paddingLeft: 0,
       },
-      "&:last-child": {
-        borderRight: "none",
+      '&:last-child': {
+        borderRight: 'none',
       },
     },
   },
@@ -95,17 +95,17 @@ export const courseCardListItem = style([
 
 export const courseCardButtons = style([
   tokens({
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: { "xs-min": "center", "md-min": "flex-end" },
-    width: { "xs-min": "col-12", "md-min": "col-6" },
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: { 'xs-min': 'center', 'md-min': 'flex-end' },
+    width: { 'xs-min': 'col-12', 'md-min': 'col-6' },
   }),
 ]);
 
 export const courseCardButtonsWrapper = style([
   tokens({
-    display: "flex",
+    display: 'flex',
     gap: 8,
   }),
 ]);
@@ -116,8 +116,4 @@ export const courseNote = style({
 
 export const coursePrice = style({
   color: color.outline.success,
-});
-
-export const pdfIcon = style({
-  fill: color.outline.success,
 });

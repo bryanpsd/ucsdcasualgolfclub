@@ -7,30 +7,25 @@ import { menuItems } from './utils/headerItems';
 import { MobileNav } from './components/MobileNav/MobileNav';
 import { Banner } from './components/Banner';
 
-import {
-  headerWrapper,
-  header,
-  logoWrapper,
-  logoLink,
-  mainContentJumpLink,
-} from './Header.css';
+import * as styles from './Header.css';
 
 const banners = await Astro.callAction(actions.getHeaderBanners, null);
 
 const { pathname } = Astro.url;
 ---
 
-<a class={`sr-only ${mainContentJumpLink}`} href="#main">Jump to main content</a
+<a class={`sr-only ${styles.mainContentJumpLink}`} href="#main"
+  >Jump to main content</a
 >
 {
   banners.data && (
     <Banner banner={banners.data} currentPath={pathname} client:load />
   )
 }
-<header class={headerWrapper}>
-  <div class={header}>
-    <div class={logoWrapper}>
-      <a class={logoLink} href="/">
+<header class={styles.headerWrapper}>
+  <div class={styles.header}>
+    <div class={styles.logoWrapper}>
+      <a class={styles.logoLink} href="/">
         <Image src={logo} alt="UCSD Casual Golf Club" height={30} width={30} />
         UCSD Casual Golf Club
       </a>

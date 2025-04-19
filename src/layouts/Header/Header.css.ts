@@ -43,6 +43,7 @@ export const logoLink = style([
     color: 'navigationText',
     textDecoration: 'none',
     fontFamily: 'base',
+    gap: 4,
   }),
   {
     fontSize: fontSize.sizeFont5,

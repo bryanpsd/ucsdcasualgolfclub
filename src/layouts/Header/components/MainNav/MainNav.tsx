@@ -1,16 +1,9 @@
-import * as NavMenu from "@radix-ui/react-navigation-menu";
+import * as NavMenu from '@radix-ui/react-navigation-menu';
 
-import {
-  mainNavRoot,
-  mainNavList,
-  mainNavItem,
-  mainNavTrigger,
-  mainNavContent,
-  mainNavSubItem,
-  viewportPosition,
-} from "./MainNav.css";
-import { useState, type PointerEventHandler } from "react";
-import { MainNavItem } from "../MainNavItem/MainNavItem";
+import { useState, type PointerEventHandler } from 'react';
+import { MainNavItem } from '../MainNavItem/MainNavItem';
+
+import * as styles from './MainNav.css';
 
 type NavigationLink = {
   label: string;
@@ -32,17 +25,17 @@ const disableHoverInteraction: PointerEventHandler<HTMLElement> = (e) => {
 };
 
 export const MainNav = ({ items, currentPath }: MainNavProps) => {
-  const [active, setActive] = useState("");
+  const [active, setActive] = useState('');
   return (
     <NavMenu.Root
-      className={mainNavRoot}
+      className={styles.mainNavRoot}
       value={active}
       onValueChange={(val) => setActive(val)}
     >
-      <NavMenu.List className={mainNavList}>
+      <NavMenu.List className={styles.mainNavList}>
         {items.menuItems.map((item) => (
-          <NavMenu.Item className={mainNavItem} key={item.label}>
-            {"href" in item ? (
+          <NavMenu.Item className={styles.mainNavItem} key={item.label}>
+            {'href' in item ? (
               <NavMenu.Link
                 asChild
                 active={!!(item.href && currentPath.startsWith(item.href))}
@@ -57,24 +50,24 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
             ) : (
               <>
                 <NavMenu.Trigger
-                  className={mainNavTrigger}
+                  className={styles.mainNavTrigger}
                   onPointerMove={disableHoverInteraction}
                   onPointerLeave={disableHoverInteraction}
                   asChild
                   style={{
-                    textDecoration: currentPath.startsWith("/seasons")
-                      ? "underline"
-                      : "none",
+                    textDecoration: currentPath.startsWith('/seasons')
+                      ? 'underline'
+                      : 'none',
                   }}
                 >
                   <MainNavItem label={item.label} />
                 </NavMenu.Trigger>
                 <NavMenu.Content asChild>
-                  <ul className={mainNavContent}>
+                  <ul className={styles.mainNavContent}>
                     {item.links?.map((subItem) => (
                       <li key={subItem.label}>
                         <NavMenu.Link
-                          className={mainNavSubItem}
+                          className={styles.mainNavSubItem}
                           href={subItem.href}
                           active={subItem.href === currentPath}
                         >
@@ -89,7 +82,7 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
           </NavMenu.Item>
         ))}
       </NavMenu.List>
-      <div className={viewportPosition}>
+      <div className={styles.viewportPosition}>
         <NavMenu.Viewport />
       </div>
     </NavMenu.Root>

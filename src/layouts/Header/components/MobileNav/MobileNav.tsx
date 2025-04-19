@@ -1,12 +1,15 @@
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import * as NavMenu from '@radix-ui/react-navigation-menu';
+
+import { disableHover } from '~layouts/Header/utils/disableHover';
 import Menu from '../../../../icons/menu.svg?react';
-import * as styles from './MobileNav.css';
+
 import { Sheet } from '~components/Sheet/Sheet';
 import { MainNavItem } from './../MainNavItem/MainNavItem';
 
-import { disableHover } from '~layouts/Header/utils/disableHover';
 import type { MainNavProps } from '../MainNav';
+
+import * as styles from './MobileNav.css';
 
 type MobileNavProps = MainNavProps & {
   items: {

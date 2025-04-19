@@ -5,7 +5,8 @@ import { Link } from '~components/Link';
 import { TextBlockSection } from '~components/TextBlockSection';
 import { Typography } from '~components/Typography';
 import type { TypeBannerProps } from '~types/contentful/TypeBanner';
-import { bannerWrapper, bannerLink } from './Banner.css';
+
+import * as styles from './Banner.css';
 
 export type BannerProps = {
   banner: TypeBannerProps[];
@@ -21,7 +22,7 @@ const bannerOptions: Options = {
     ),
     [INLINES.HYPERLINK]: (node, children) => {
       return (
-        <Link className={bannerLink} href={node.data.uri} jumpLink>
+        <Link className={styles.bannerLink} href={node.data.uri} jumpLink>
           {children}
         </Link>
       );
@@ -36,7 +37,7 @@ export const Banner = ({ banner, currentPath }: BannerProps) => {
 
   return (
     currentBanner && (
-      <section className={bannerWrapper}>
+      <section className={styles.bannerWrapper}>
         <TextBlockSection
           text={currentBanner.body as Document}
           options={bannerOptions}

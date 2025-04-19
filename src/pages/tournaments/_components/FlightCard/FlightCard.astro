@@ -1,7 +1,7 @@
 ---
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
-import { Table } from "~components/Table";
-import * as styles from "./FlightCard.css";
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import { Table } from '~components/Table';
+import * as styles from './FlightCard.css';
 
 interface FlightCardProps {
   title: string;
@@ -33,10 +33,10 @@ const hasResultsForCurrentCourse = flight.some((player) =>
 );
 
 const tableHeaders = [
-  "Player",
-  "Index",
+  'Player',
+  'Index',
   ...(hasResultsForCurrentCourse
-    ? ["Gross", "Course Handicap", "Net", "Putts", "Closest To", "Long Drive"]
+    ? ['Gross', 'Course Handicap', 'Net', 'Putts', 'Closest To', 'Long Drive']
     : []),
 ];
 
@@ -78,41 +78,41 @@ const filteredResults = flight.map((player) => ({
 
         if (!player.results || player.results.length === 0) {
           return [
-            player.guest?.includes("Yes")
+            player.guest?.includes('Yes')
               ? `${player.playerName} (Guest)`
-              : player.playerName || "Unknown",
+              : player.playerName || 'Unknown',
             player.handicapIndex !== undefined
               ? String(player.handicapIndex)
-              : "NH",
+              : 'NH',
           ];
         } else {
           return [
-            player.guest?.includes("Yes")
+            player.guest?.includes('Yes')
               ? `${player.playerName} (Guest)`
-              : player.playerName || "Unknown",
+              : player.playerName || 'Unknown',
             player.handicapIndex !== undefined
               ? String(player.handicapIndex)
-              : "NH",
+              : 'NH',
             {
-              value: String(player.results?.[0]?.gross ?? ""),
+              value: String(player.results?.[0]?.gross ?? ''),
               className: isLowestGrossOverall ? styles.highlighted : undefined,
             },
-            String(player.results?.[0]?.courseHandicap ?? ""),
+            String(player.results?.[0]?.courseHandicap ?? ''),
 
             {
-              value: String(player.results?.[0]?.net ?? ""),
+              value: String(player.results?.[0]?.net ?? ''),
               className: isLowestNet ? styles.highlighted : undefined,
             },
             {
-              value: String(player.results?.[0]?.putts ?? ""),
+              value: String(player.results?.[0]?.putts ?? ''),
               className: isLowestPutts ? styles.highlighted : undefined,
             },
             {
-              value: String(player.results?.[0]?.closestTo ?? ""),
+              value: String(player.results?.[0]?.closestTo ?? ''),
               className: hasClosestTo ? styles.highlighted : undefined,
             },
             {
-              value: String(player.results?.[0]?.longDrive ?? ""),
+              value: String(player.results?.[0]?.longDrive ?? ''),
               className: hasLongDrive ? styles.highlighted : undefined,
             },
           ];

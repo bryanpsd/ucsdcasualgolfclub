@@ -26,5 +26,6 @@ export const tournamentRightCol = style([
     width: { 'xs-min': 'col-12', 'md-min': 'col-4' },
     display: 'flex',
     flexDirection: 'column',
+    gap: 12,
   }),
 ]);

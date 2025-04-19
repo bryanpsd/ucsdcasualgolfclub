@@ -1,14 +1,15 @@
 ---
-import { CourseCard } from "~components/Course/CourseCard";
-import { contentfulClient } from "../../lib/contentful";
-import { heroWrapper, subPageWrapper } from "~styles/common.css";
-import Layout from "../../layouts/Layout.astro";
-import { format } from "date-fns";
-import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse";
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { CourseCard } from '~components/Course/CourseCard';
+import { contentfulClient } from '../../lib/contentful';
+
+import Layout from '../../layouts/Layout.astro';
+
+import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse';
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+
+import * as styles from '~styles/common.css';
 
 export function getStaticPaths() {
-  // Generate dynamic pages for Seasons
   const getYear = new Date().getFullYear() - 1;
   const pastSeasonsLinks = Array.from({ length: getYear - 2018 }, (_, i) => {
     const year = getYear - i;
@@ -22,28 +23,27 @@ export function getStaticPaths() {
 }
 
 const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-  content_type: "course",
+  content_type: 'course',
 });
 
 const { slug } = Astro.params;
 ---
 
 <Layout>
-  <section class={heroWrapper}>
+  <section class={styles.heroWrapper}>
     <ResponsiveHeadline size={3} as="h1">{slug}</ResponsiveHeadline>
   </section>
-  <div class={subPageWrapper}>
+  <div class={styles.subPageWrapper}>
     {
       entries.items
         .flatMap((item) => {
-          // Map through tournaments and filter by year matching the slug
           return item.fields.tournaments
             ?.filter((tournament) => {
-              if ("fields" in tournament && tournament.fields.date) {
+              if ('fields' in tournament && tournament.fields.date) {
                 const tournamentYear = new Date(
                   tournament.fields.date
                 ).getFullYear();
-                return tournamentYear.toString() === slug; // Match the year with the slug
+                return tournamentYear.toString() === slug;
               }
               return false;
             })
@@ -53,27 +53,57 @@ const { slug } = Astro.params;
               slug: item.fields.slug,
             }));
         })
-        .filter(Boolean) // Remove null or undefined values
+        .filter(Boolean)
         .sort(
           (a, b) =>
-            new Date(a.tournament.fields.date) -
-            new Date(b.tournament.fields.date)
-        ) // Sort by date ascending
-        .map(({ tournament, course, slug }) => (
-          <CourseCard
-            client:load
-            hideCourseInfo
-            date={tournament.fields.date}
-            clubChampionship={tournament.fields.clubChampionship ?? false}
-            course={course}
-            slug={slug}
-            results={
-              tournament.fields.results && "fields" in tournament.fields.results
-                ? tournament.fields.results.fields.file?.url
-                : undefined
+            new Date(
+              a?.tournament && 'fields' in a.tournament
+                ? a.tournament.fields.date
+                : 0
+            ).getTime() -
+            new Date(
+              b?.tournament && 'fields' in b.tournament
+                ? b.tournament.fields.date
+                : 0
+            ).getTime()
+        )
+        .map((item, index, array) => {
+          if (item && item.tournament) {
+            if (
+              index === array.length - 1 &&
+              'fields' in (array[index - 1]?.tournament ?? {}) &&
+              array[index - 1]?.tournament.fields.clubChampionship === true
+            ) {
+              return null;
             }
-          />
-        ))
+
+            const { tournament, course, slug } = item;
+            return (
+              <CourseCard
+                client:load
+                hideCourseInfo
+                date={
+                  'fields' in tournament ? tournament.fields.date : undefined
+                }
+                clubChampionship={
+                  'fields' in tournament
+                    ? (tournament.fields.clubChampionship ?? false)
+                    : false
+                }
+                course={course}
+                slug={slug}
+                results={
+                  'fields' in tournament &&
+                  tournament.fields.results &&
+                  'fields' in tournament.fields.results
+                    ? tournament.fields.results.fields.file?.url
+                    : undefined
+                }
+              />
+            );
+          }
+          return null;
+        })
     }
   </div>
 </Layout>

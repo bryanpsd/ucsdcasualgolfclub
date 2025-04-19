@@ -4,6 +4,7 @@ import type { Document } from '@contentful/rich-text-types';
 import { type TypographyProps, Typography } from '~components/Typography';
 import { TextBlockSection } from '../../components/TextBlockSection';
 import { List } from '../../components/TextBlockSection/List';
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
 import {
   textBlock,
   body,
@@ -11,7 +12,6 @@ import {
   seasonRecapList,
   image,
 } from './RichText.css';
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
 
 const BODY_TYPOGRAPHY_VARIANT: TypographyProps['variant'] = 'bodyMd';
 

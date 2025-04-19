@@ -1,10 +1,10 @@
 ---
-import { BaseHead } from "./BaseHead";
-import { Header } from "./Header";
-import { Footer } from "./Footer";
-import * as style from "../styles/common.css";
+import { BaseHead } from './BaseHead';
+import { Header } from './Header';
+import { Footer } from './Footer';
+import * as styles from '../styles/common.css';
 
-const { title, description, lang = "en-US" } = Astro.props;
+const { title, description, lang = 'en-US' } = Astro.props;
 ---
 
 <!doctype html>
@@ -12,7 +12,7 @@ const { title, description, lang = "en-US" } = Astro.props;
   <BaseHead title={title} description={description} />
   <body>
     <Header />
-    <main class={style.mainWrapper} id="main-content">
+    <main class={styles.mainWrapper} id="main-content">
       <slot />
     </main>
     <Footer />

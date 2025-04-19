@@ -1,124 +1,41 @@
-import { style } from "@vanilla-extract/css";
-import { tokens } from "../../../styles/designTokens.css";
-import { color } from "../../../styles/designTokens/colors";
-import { recipe } from "@vanilla-extract/recipes";
+import { style } from '@vanilla-extract/css';
+import { tokens } from '../../../styles/designTokens.css';
+import { color } from '../../../styles/designTokens/colors';
 
 export const courseCardInfo = style([
   tokens({
-    display: "flex",
-    flexDirection: "column",
-    alignItems: { "xs-min": "center", "md-min": "flex-start" },
-    justifyContent: { "xs-min": "center", "md-min": "flex-start" },
-    width: { "xs-min": "col-12", "md-min": "col-6" },
-    gap: 8,
+    display: 'flex',
+    flexDirection: 'column',
   }),
+  {
+    backgroundColor: color.brand.navy,
+  },
 ]);
 
-export const courseCardInfoWrapper = recipe({
-  base: [
-    tokens({
-      display: "flex",
-      flexDirection: "column",
-
-      gap: 8,
-    }),
-  ],
-  variants: {
-    variant: {
-      default: {},
-      secondary: {
-        alignItems: "center",
-      },
-    },
-  },
+export const courseCardInfoTitle = style({
+  display: 'flex',
+  padding: 10,
+  color: color.brand.white,
+  alignItems: 'center',
+  justifyContent: 'center',
 });
 
-export const courseCardList = style([
+export const courseCardInfoListWrapper = style([
   tokens({
-    display: "flex",
+    padding: 10,
   }),
+  {
+    borderTop: `1px solid ${color.brand.black}`,
+  },
 ]);
 
-export const courseCardListItem = recipe({
-  base: [
-    tokens({
-      display: "flex",
-      paddingX: 4,
-      alignItems: "center",
-    }),
-    {
-      selectors: {
-        "&:first-child": {
-          paddingLeft: 0,
-        },
-        "&:last-child": {
-          borderRight: "none",
-        },
-      },
-    },
-  ],
-  variants: {
-    variant: {
-      default: {
-        borderRight: `1px solid ${color.brand.navy}`,
-      },
-      secondary: {
-        borderRight: `1px solid ${color.brand.white}`,
-        color: color.brand.white,
-      },
-    },
-  },
-});
-
-export const coursePrice = recipe({
-  variants: {
-    variant: {
-      default: {
-        color: color.outline.success,
-      },
-      secondary: {
-        color: color.brand.white,
-      },
-    },
-  },
-});
-
-export const icons = recipe({
-  variants: {
-    variant: {
-      default: {
-        fill: color.brand.navy,
-      },
-      secondary: {
-        fill: color.brand.white,
-      },
-    },
-  },
-});
-
-export const courseCardCourseInformationList = recipe({
-  base: [
-    tokens({
-      display: "flex",
-      flexDirection: "column",
-      gap: 4,
-    }),
-  ],
-  variants: {
-    variant: {
-      default: {
-        color: color.brand.black,
-      },
-      secondary: {
-        color: color.brand.white,
-        alignItems: "center",
-      },
-    },
-  },
-});
-
-export const courseCardCourseInformationListItem = style([
+export const courseCardInfoList = style([
   tokens({
-    display: "flex",
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 4,
   }),
+  {
+    color: color.brand.white,
+  },
 ]);

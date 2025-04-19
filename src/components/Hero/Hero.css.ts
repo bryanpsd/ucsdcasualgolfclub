@@ -9,6 +9,7 @@ export const heroWrapper = style([
     alignItems: 'center',
     justifyContent: 'center',
     width: 'col-12',
+    height: { 'xs-min': 'auto', 'lg-min': 150 },
   }),
   {
     backgroundColor: color.brand.blue,
@@ -26,11 +27,11 @@ export const heroBackground = style([
     alignItems: 'center',
     justifyContent: 'center',
     width: 'col-12',
+    height: { 'xs-min': 100, 'lg-min': 150 },
   }),
   {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    height: 200,
   },
 ]);
 
@@ -43,6 +44,7 @@ export const heroColLeft = style([
     width: { 'xs-min': 'col-12', 'md-min': 'col-6' },
     paddingX: { 'xs-min': 16, 'md-min': 24, 'lg-min': 48 },
     paddingY: 24,
+    height: { 'xs-min': 100, 'lg-min': 150 },
   }),
 ]);
 

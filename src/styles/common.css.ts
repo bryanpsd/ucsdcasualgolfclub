@@ -34,6 +34,15 @@ export const subPageWrapper = style([
   contentPadding,
 ]);
 
+export const centerContent = style([
+  tokens({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 12,
+  }),
+]);
+
 export const heroWrapper = style([
   tokens({
     marginY: 12,
