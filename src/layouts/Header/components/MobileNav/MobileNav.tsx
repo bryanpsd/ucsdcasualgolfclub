@@ -67,6 +67,7 @@ function NavItem({ item }: { item: NavigationItem }) {
             label={item.label}
             href={item.href}
             as="a"
+            target={item.target}
           />
         </NavMenu.Link>
       ) : (

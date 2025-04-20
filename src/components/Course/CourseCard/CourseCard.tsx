@@ -101,7 +101,7 @@ export const CourseCard = (props: CourseCardProps) => {
               as="a"
               color="primary"
               size="small"
-              variant="outlined"
+              variant="contained"
               href={`/tournaments/${format(date, 'yyyy')}/${slug}`}
             >
               Details
@@ -112,7 +112,7 @@ export const CourseCard = (props: CourseCardProps) => {
               as="a"
               color="primary"
               size="small"
-              variant="outlined"
+              variant="contained"
               target="_blank"
               rel="noopener noreferrer"
               href={results}

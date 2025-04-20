@@ -26,7 +26,13 @@ const { pathname } = Astro.url;
   <div class={styles.header}>
     <div class={styles.logoWrapper}>
       <a class={styles.logoLink} href="/">
-        <Image src={logo} alt="UCSD Casual Golf Club" height={30} width={30} />
+        <Image
+          src={logo}
+          alt="UCSD Casual Golf Club"
+          height={30}
+          width={30}
+          aria-hidden="true"
+        />
         UCSD Casual Golf Club
       </a>
     </div>

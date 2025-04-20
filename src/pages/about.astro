@@ -3,9 +3,8 @@ import { contentfulClient } from '../lib/contentful';
 import type { TypeSimplePageSkeleton } from '../types/contentful';
 
 import Layout from '../layouts/Layout.astro';
-
 import { RichText } from '~components/RichText';
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import { Hero } from '~components/Hero';
 
 import * as styles from '~styles/common.css';
 
@@ -16,9 +15,7 @@ const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
 ---
 
 <Layout>
-  <section class={styles.heroWrapper}>
-    <ResponsiveHeadline size={3} as="h1">About</ResponsiveHeadline>
-  </section>
+  <Hero title="About" />
   <div class={styles.subPageWrapper}>
     {
       entries.items.map((item) => (

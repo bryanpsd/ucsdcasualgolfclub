@@ -4,9 +4,9 @@ import type {
   EntryFieldTypes,
   EntrySkeletonType,
   LocaleCode,
-} from "contentful";
-import type { TypeLeadersSkeleton } from "./TypeLeaders";
-import type { TypeTournamentSkeleton } from "./TypeTournament";
+} from 'contentful';
+
+import type { TypeTournamentSkeleton } from './TypeTournament';
 
 export interface TypeCourseFields {
   courseName?: EntryFieldTypes.Symbol;
@@ -21,7 +21,7 @@ export interface TypeCourseFields {
   >;
 }
 
-export type TypeCourseSkeleton = EntrySkeletonType<TypeCourseFields, "course">;
+export type TypeCourseSkeleton = EntrySkeletonType<TypeCourseFields, 'course'>;
 export type TypeCourse<
   Modifiers extends ChainModifiers,
   Locales extends LocaleCode = LocaleCode
@@ -33,10 +33,10 @@ export function isTypeCourse<
 >(
   entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeCourse<Modifiers, Locales> {
-  return entry.sys.contentType.sys.id === "course";
+  return entry.sys.contentType.sys.id === 'course';
 }
 
 export type TypeCourseProps = TypeCourse<
-  "WITHOUT_UNRESOLVABLE_LINKS",
-  "en-US"
->["fields"];
+  'WITHOUT_UNRESOLVABLE_LINKS',
+  'en-US'
+>['fields'];

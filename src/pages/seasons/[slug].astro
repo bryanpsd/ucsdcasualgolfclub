@@ -1,11 +1,11 @@
 ---
 import { CourseCard } from '~components/Course/CourseCard';
 import { contentfulClient } from '../../lib/contentful';
+import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse';
 
 import Layout from '../../layouts/Layout.astro';
-
-import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse';
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import { Hero } from '~components/Hero';
+import SeasonRecap from './_components/SeasonRecap.astro';
 
 import * as styles from '~styles/common.css';
 
@@ -30,10 +30,9 @@ const { slug } = Astro.params;
 ---
 
 <Layout>
-  <section class={styles.heroWrapper}>
-    <ResponsiveHeadline size={3} as="h1">{slug}</ResponsiveHeadline>
-  </section>
+  <Hero title={`${slug} Season`} />
   <div class={styles.subPageWrapper}>
+    <SeasonRecap year={slug} />
     {
       entries.items
         .flatMap((item) => {

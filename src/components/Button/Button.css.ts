@@ -1,7 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css';
 import { type RecipeVariants, recipe } from '@vanilla-extract/recipes';
 import { tokens } from '../../styles/designTokens.css';
-import { color } from '../../styles/designTokens/colors';
 
 export const baseButton = style([
   tokens({
@@ -22,7 +21,6 @@ export const baseButton = style([
     transitionDuration: '250ms',
     transitionTimingFunction: 'ease-in',
     outlineOffset: '.2rem',
-    backgroundColor: color.brand.navy,
   },
 ]);
 
@@ -71,6 +69,21 @@ export const button = recipe({
     },
   },
   compoundVariants: [
+    // *******************************************************************
+    // Contained
+    // *******************************************************************
+    {
+      variants: {
+        color: 'primary',
+        variant: 'contained',
+      },
+      style: tokens({
+        color: { default: 'yellow', hover: 'white', disabled: 'gray' },
+        borderColor: { default: 'navy', hover: 'navy', disabled: 'gray' },
+        backgroundColor: { default: 'navy', hover: 'navy', disabled: 'gray' },
+      }),
+    },
+
     // *******************************************************************
     // Outlined (default)
     // *******************************************************************

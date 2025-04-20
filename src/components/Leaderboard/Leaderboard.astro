@@ -29,7 +29,12 @@ const lastUpdatedDate = entries.items.reduce((latest, item) => {
   colSpan={2}
   tbody={entries.items
     .map((item) => {
-      if (gross && item.fields.roundsCheck && item.fields.gross !== undefined) {
+      if (
+        gross &&
+        item.fields.roundsCheck &&
+        item.fields.onCurrentRoster &&
+        item.fields.gross !== undefined
+      ) {
         return [item.fields.playerName, item.fields.gross];
       } else if (
         firstFlight &&

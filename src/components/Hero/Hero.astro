@@ -5,7 +5,9 @@ import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
 
 import * as styles from './Hero.css';
 
-const { course, courseImage } = Astro.props;
+const { course, title, courseImage } = Astro.props;
+
+const headline = course || title;
 ---
 
 <section class={styles.heroWrapper}>
@@ -16,7 +18,7 @@ const { course, courseImage } = Astro.props;
       as="h1"
       color="inverse"
     >
-      {course}</ResponsiveHeadline
+      {headline}</ResponsiveHeadline
     >
   </div>
   <div class={styles.heroColRight}>

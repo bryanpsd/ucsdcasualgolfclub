@@ -3,9 +3,8 @@ import { contentfulClient } from '../../lib/contentful';
 import type { TypeLeadersSkeleton } from '../../types/contentful';
 
 import Layout from '../../layouts/Layout.astro';
-
+import { Hero } from '~components/Hero';
 import { Table } from '~components/Table';
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
 
 import * as styles from '../../styles/common.css';
 
@@ -16,9 +15,7 @@ const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
 ---
 
 <Layout title="Roster" description="Roster">
-  <section class={styles.heroWrapper}>
-    <ResponsiveHeadline size={3} as="h1">Roster</ResponsiveHeadline>
-  </section>
+  <Hero title="Roster" />
   <div class={styles.subPageWrapper}>
     <Table
       thead={['Player', 'Index']}
