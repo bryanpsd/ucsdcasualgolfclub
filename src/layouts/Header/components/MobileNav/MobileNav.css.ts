@@ -5,7 +5,7 @@ import { color } from '../../../../styles/designTokens/colors';
 export const mobileNavRoot = style([
   tokens({
     height: 'col-12',
-    display: { 'xl-min': 'none', 'xl-max': 'flex' },
+    display: { 'lg-min': 'none', 'lg-max': 'flex' },
   }),
   {
     justifyContent: 'space-between',

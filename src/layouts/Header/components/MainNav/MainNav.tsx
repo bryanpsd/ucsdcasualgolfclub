@@ -82,9 +82,6 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
           </NavMenu.Item>
         ))}
       </NavMenu.List>
-      <div className={styles.viewportPosition}>
-        <NavMenu.Viewport />
-      </div>
     </NavMenu.Root>
   );
 };

@@ -5,7 +5,7 @@ import { color } from '../../../../styles/designTokens/colors';
 export const mainNavRoot = style([
   tokens({
     height: 'col-12',
-    display: { 'xl-max': 'none', 'xl-min': 'flex' },
+    display: { 'lg-max': 'none', 'lg-min': 'flex' },
   }),
   {
     justifyContent: 'flex-end',
@@ -61,6 +61,7 @@ export const mainNavContent = style([
     listStyle: 'none',
     boxShadow: `0px 4px 12px 0px rgba(0, 0, 0, 0.1)`,
     zIndex: 500,
+    top: '100%',
   },
 ]);
 
@@ -92,15 +93,3 @@ export const arrow = style({
   transform: 'rotate(45deg)',
   borderTopLeftRadius: '2px',
 });
-
-export const viewportPosition = style([
-  tokens({
-    position: 'absolute',
-    width: 'col-12',
-    display: 'flex',
-    justifyContent: 'center',
-  }),
-  {
-    top: '100%',
-  },
-]);
