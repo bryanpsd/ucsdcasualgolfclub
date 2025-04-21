@@ -11,7 +11,7 @@ import type { TypeCourseSkeleton } from './TypeCourse';
 export interface TypeResultsFields {
   title?: EntryFieldTypes.Symbol;
   course?: EntryFieldTypes.EntryLink<TypeCourseSkeleton>;
-  flight?: EntryFieldTypes.Symbol<'1st Flight' | '2nd Flight'>;
+  flight?: EntryFieldTypes.Symbol<'First Flight' | 'Second Flight'>;
   gross?: EntryFieldTypes.Integer;
   courseHandicap?: EntryFieldTypes.Integer;
   net?: EntryFieldTypes.Integer;

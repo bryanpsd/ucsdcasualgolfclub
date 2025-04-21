@@ -36,6 +36,7 @@ export async function getStaticPaths() {
               address: item.fields.address,
               summary: item.fields.summary,
               courseWebsite: item.fields.courseSite,
+              coursePar: item.fields.coursePar,
               courseImage:
                 item.fields.courseImage && 'fields' in item.fields.courseImage
                   ? (item.fields.courseImage.fields.file?.url ?? '')
@@ -47,9 +48,7 @@ export async function getStaticPaths() {
                   players: tournament.fields.players ?? 'N/A',
                   amenities: tournament.fields.amenities ?? [],
                   results: tournament.fields.results ?? [],
-                  coursePar: tournament.fields.coursePar,
-                  mensTees: tournament.fields.mensTees,
-                  womensTees: tournament.fields.womensTees,
+                  tees: tournament.fields.tees ?? [],
                   firstFlight:
                     tournament.fields.firstFlight
                       ?.map((player) => {
@@ -123,6 +122,7 @@ const {
   courseImage,
   summary,
   address,
+  coursePar,
   tournaments = [],
   courseWebsite,
 } = Astro.props;
@@ -205,20 +205,11 @@ const lowestGrossOverall = Math.min(
           players={tournaments[0]?.players}
           amenities={tournaments[0]?.amenities}
           results={tournaments[0]?.results}
-          coursePar={tournaments[0]?.coursePar}
-          mensTees={tournaments[0]?.mensTees}
-          womensTees={tournaments[0]?.womensTees}
         />
         {
-          tournaments[0]?.coursePar !== undefined &&
-            tournaments[0]?.mensTees !== undefined &&
-            tournaments[0]?.womensTees !== undefined && (
-              <CourseInfo
-                coursePar={tournaments[0]?.coursePar}
-                mensTees={tournaments[0]?.mensTees}
-                womensTees={tournaments[0]?.womensTees}
-              />
-            )
+          tournaments[0]?.tees !== undefined && (
+            <CourseInfo coursePar={coursePar} tees={tournaments[0]?.tees} />
+          )
         }
       </div>
     </div>

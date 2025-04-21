@@ -13,7 +13,7 @@ export const seasonRecapWrapper = style([
 export const seasonRecapList = style([
   tokens({
     display: 'flex',
-    flexDirection: { 'xs-min': 'column', 'md-min': 'row' },
+    flexDirection: { 'xs-min': 'column', 'sm-min': 'row' },
     gap: 16,
   }),
 ]);

@@ -24,8 +24,8 @@ const lastUpdatedDate = entries.items.reduce((latest, item) => {
   thead={gross
     ? ['Gross Leaders']
     : net && firstFlight
-      ? ['Net Leaders 1st Flight']
-      : ['Net Leaders 2nd Flight']}
+      ? ['Net Leaders First Flight']
+      : ['Net Leaders Second Flight']}
   colSpan={2}
   tbody={entries.items
     .map((item) => {
@@ -41,7 +41,7 @@ const lastUpdatedDate = entries.items.reduce((latest, item) => {
         net &&
         item.fields.net !== undefined &&
         item.fields.roundsCheck &&
-        item.fields.flight === '1st Flight'
+        item.fields.flight === 'First Flight'
       ) {
         return [item.fields.playerName, item.fields.net];
       } else if (
@@ -49,7 +49,7 @@ const lastUpdatedDate = entries.items.reduce((latest, item) => {
         net &&
         item.fields.net !== undefined &&
         item.fields.roundsCheck &&
-        item.fields.flight === '2nd Flight'
+        item.fields.flight === 'Second Flight'
       ) {
         return [item.fields.playerName, item.fields.net];
       }

@@ -26,6 +26,7 @@ export interface TypeTournamentFields {
   coursePar?: EntryFieldTypes.Integer;
   mensTees?: EntryFieldTypes.Symbol;
   womensTees?: EntryFieldTypes.Symbol;
+  tees?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
 }
 
 export type TypeTournamentSkeleton = EntrySkeletonType<

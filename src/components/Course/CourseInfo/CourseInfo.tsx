@@ -3,13 +3,14 @@ import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
 import * as styles from './CourseInfo.css';
 
 interface Props {
-  coursePar?: number;
+  coursePar?: string;
   mensTees?: string;
   womensTees?: string;
+  tees?: string[];
 }
 
 export const CourseInfo = (props: Props) => {
-  const { coursePar, mensTees, womensTees } = props;
+  const { coursePar, mensTees, womensTees, tees } = props;
 
   return (
     <div className={styles.courseCardInfo}>
@@ -22,9 +23,10 @@ export const CourseInfo = (props: Props) => {
       </ResponsiveHeadline>
       <div className={styles.courseCardInfoListWrapper}>
         <ul className={styles.courseCardInfoList}>
-          <li>Par {coursePar}</li>
-          <li>Men {mensTees}</li>
-          <li>Women {womensTees}</li>
+          <li>Par: {coursePar}</li>
+          {tees?.map((tee, index) => (
+            <li key={index}>{tee}</li>
+          ))}
         </ul>
       </div>
     </div>

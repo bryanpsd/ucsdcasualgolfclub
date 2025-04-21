@@ -11,6 +11,7 @@ import type { TypeTournamentSkeleton } from './TypeTournament';
 export interface TypeCourseFields {
   courseName?: EntryFieldTypes.Symbol;
   course?: EntryFieldTypes.Symbol;
+  coursePar?: EntryFieldTypes.Symbol;
   slug?: EntryFieldTypes.Symbol;
   courseSite?: EntryFieldTypes.Symbol;
   courseImage?: EntryFieldTypes.AssetLink;
