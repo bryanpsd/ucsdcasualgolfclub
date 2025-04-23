@@ -1,37 +1,61 @@
 ---
-import { contentfulClient } from '../../lib/contentful';
-import type { TypeLeadersSkeleton } from '../../types/contentful';
+import { contentfulClient } from "../../lib/contentful";
+import type { TypeLeadersSkeleton } from "../../types/contentful";
+import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster";
+import { Select } from "./_components/Select";
 
-import Layout from '../../layouts/Layout.astro';
-import { Hero } from '~components/Hero';
-import { Table } from '~components/Table';
+import Layout from "../../layouts/Layout.astro";
+import { Hero } from "~components/Hero";
+import { Table } from "~components/Table";
 
-import * as styles from '../../styles/common.css';
+import * as styles from "../../styles/common.css";
 
-const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
-  content_type: 'leaders',
-  order: ['fields.handicapIndex'],
+const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
+  content_type: "roster",
 });
+
+const rosterYears = Array.from(
+  new Set(entries.items.map((item) => item.fields.year?.toString()))
+).filter((year): year is string => Boolean(year));
+
+const currentRosterPlayers = entries.items
+  .filter((item) => item.fields.title?.includes("Current")) // Filter by title
+  .flatMap((item) =>
+    item.fields.players?.map((player) => {
+      if (player && "fields" in player) {
+        return {
+          playerName: player.fields.playerName,
+          handicapIndex: player.fields.handicapIndex,
+          guest: player.fields.guest,
+        };
+      }
+      return null;
+    })
+  )
+  .filter((player) => player !== null) // Remove null values
+  .filter((player) => !player?.guest?.includes("Yes")) // Exclude guests
+  .sort(
+    (a, b) => (a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity)
+  );
 ---
 
 <Layout title="Roster" description="Roster">
   <Hero title="Roster" />
   <div class={styles.subPageWrapper}>
+    <Select
+      options={rosterYears}
+      label="Select Year"
+      currentOption={undefined}
+      onChangeUrl="/roster/"
+    />
     <Table
-      thead={['Player', 'Index']}
-      tbody={entries.items
-        .filter((item) => item.fields.onCurrentRoster === true) // Filter players on the current roster
-        .map((item) => {
-          return item.fields.guest?.includes('Yes')
-            ? null
-            : [
-                item.fields.playerName,
-                item.fields.handicapIndex === undefined
-                  ? 'NH'
-                  : String(item.fields.handicapIndex),
-              ];
-        })
-        .filter((row) => row !== null) as string[][]}
+      thead={["Player", "Index"]}
+      tbody={currentRosterPlayers.map((player) => [
+        player?.playerName,
+        player?.handicapIndex === undefined
+          ? "NH"
+          : String(player.handicapIndex),
+      ])}
     />
   </div>
 </Layout>

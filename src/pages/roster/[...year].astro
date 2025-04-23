@@ -1,15 +1,16 @@
 ---
-import { contentfulClient } from '../../lib/contentful';
-import type { TypeRosterSkeleton } from '../../types/contentful/TypeRoster';
+import { contentfulClient } from "../../lib/contentful";
+import type { TypeRosterSkeleton } from "../../types/contentful/TypeRoster";
 
-import Layout from '../../layouts/Layout.astro';
-import { Hero } from '~components/Hero';
+import Layout from "../../layouts/Layout.astro";
+import { Hero } from "~components/Hero";
+import { Table } from "~components/Table";
 
-import * as styles from '~styles/common.css';
+import * as styles from "~styles/common.css";
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
-    content_type: 'roster',
+    content_type: "roster",
   });
 
   const pages = entries.items.map((item) => {
@@ -18,14 +19,15 @@ export async function getStaticPaths() {
         year: item.fields.year?.toString(),
       },
       props: {
-        year: item.fields.year ?? 'N/A',
+        year: item.fields.year ?? "N/A",
         players:
           item.fields.players
             ?.map((player) => {
-              if (player && 'fields' in player) {
+              if (player && "fields" in player) {
                 return {
                   playerName: player.fields.playerName,
                   handicapIndex: player.fields.handicapIndex,
+                  guest: player.fields.guest,
                 };
               }
               return null;
@@ -44,23 +46,20 @@ const { year, players = [] } = Astro.props;
 <Layout>
   <Hero title={`${year} Roster`} />
   <div class={styles.subPageWrapper}>
-    <table class={styles.table}>
-      <thead>
-        <tr>
-          <th>Player</th>
-          <th>Index</th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          players.map((player) => (
-            <tr>
-              <td>{player?.playerName}</td>
-              <td>{player?.handicapIndex ?? 'N/A'}</td>
-            </tr>
-          ))
-        }
-      </tbody>
-    </table>
+    <Table
+      thead={["Player", "Index"]}
+      tbody={players
+        .map((player) => {
+          return player?.guest?.includes("Yes")
+            ? null
+            : [
+                player?.playerName,
+                player?.handicapIndex === undefined
+                  ? "NH"
+                  : String(player.handicapIndex),
+              ];
+        })
+        .filter((row) => row !== null) as string[][]}
+    />
   </div>
 </Layout>
