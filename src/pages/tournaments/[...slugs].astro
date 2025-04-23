@@ -207,7 +207,7 @@ const lowestGrossOverall = Math.min(
           results={tournaments[0]?.results}
         />
         {
-          tournaments[0]?.tees !== undefined && (
+          coursePar !== undefined && tournaments[0]?.tees !== undefined && (
             <CourseInfo coursePar={coursePar} tees={tournaments[0]?.tees} />
           )
         }

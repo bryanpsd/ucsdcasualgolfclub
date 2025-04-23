@@ -1,17 +1,16 @@
 ---
-import { contentfulClient } from "../../lib/contentful";
-import type { TypeLeadersSkeleton } from "../../types/contentful";
-import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster";
-import { Select } from "./_components/Select";
+import { contentfulClient } from '../../lib/contentful';
 
-import Layout from "../../layouts/Layout.astro";
-import { Hero } from "~components/Hero";
-import { Table } from "~components/Table";
+import type { TypeRosterSkeleton } from '~types/contentful/TypeRoster';
 
-import * as styles from "../../styles/common.css";
+import Layout from '../../layouts/Layout.astro';
+import { Hero } from '~components/Hero';
+import { Table } from '~components/Table';
+
+import * as styles from '../../styles/common.css';
 
 const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
-  content_type: "roster",
+  content_type: 'roster',
 });
 
 const rosterYears = Array.from(
@@ -19,10 +18,10 @@ const rosterYears = Array.from(
 ).filter((year): year is string => Boolean(year));
 
 const currentRosterPlayers = entries.items
-  .filter((item) => item.fields.title?.includes("Current")) // Filter by title
+  .filter((item) => item.fields.title?.includes('Current')) // Filter by title
   .flatMap((item) =>
     item.fields.players?.map((player) => {
-      if (player && "fields" in player) {
+      if (player && 'fields' in player) {
         return {
           playerName: player.fields.playerName,
           handicapIndex: player.fields.handicapIndex,
@@ -33,7 +32,7 @@ const currentRosterPlayers = entries.items
     })
   )
   .filter((player) => player !== null) // Remove null values
-  .filter((player) => !player?.guest?.includes("Yes")) // Exclude guests
+  .filter((player) => !player?.guest?.includes('Yes')) // Exclude guests
   .sort(
     (a, b) => (a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity)
   );
@@ -42,18 +41,12 @@ const currentRosterPlayers = entries.items
 <Layout title="Roster" description="Roster">
   <Hero title="Roster" />
   <div class={styles.subPageWrapper}>
-    <Select
-      options={rosterYears}
-      label="Select Year"
-      currentOption={undefined}
-      onChangeUrl="/roster/"
-    />
     <Table
-      thead={["Player", "Index"]}
+      thead={['Player', 'Index']}
       tbody={currentRosterPlayers.map((player) => [
-        player?.playerName,
+        player?.playerName ?? 'Unknown',
         player?.handicapIndex === undefined
-          ? "NH"
+          ? 'NH'
           : String(player.handicapIndex),
       ])}
     />

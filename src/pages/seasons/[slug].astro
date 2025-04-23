@@ -47,7 +47,17 @@ const { slug } = Astro.params;
               return false;
             })
             .map((tournament) => ({
-              tournament,
+              tournament: {
+                fields: {
+                  ...('fields' in tournament ? tournament.fields : {}),
+                  date:
+                    'fields' in tournament ? tournament.fields.date : undefined,
+                  clubChampionship:
+                    'fields' in tournament
+                      ? (tournament.fields.clubChampionship ?? false)
+                      : false,
+                },
+              },
               course: item.fields.course,
               slug: item.fields.slug,
             }));
@@ -56,13 +66,17 @@ const { slug } = Astro.params;
         .sort(
           (a, b) =>
             new Date(
-              a?.tournament && 'fields' in a.tournament
-                ? a.tournament.fields.date
+              a?.tournament &&
+              'fields' in a.tournament &&
+              typeof a.tournament.fields.date === 'string'
+                ? new Date(a.tournament.fields.date).getTime()
                 : 0
             ).getTime() -
             new Date(
-              b?.tournament && 'fields' in b.tournament
-                ? b.tournament.fields.date
+              b?.tournament &&
+              'fields' in b.tournament &&
+              typeof b.tournament.fields.date === 'string'
+                ? new Date(b.tournament.fields.date).getTime()
                 : 0
             ).getTime()
         )

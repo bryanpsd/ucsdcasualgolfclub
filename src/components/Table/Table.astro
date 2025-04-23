@@ -1,5 +1,5 @@
 ---
-import * as styles from "./Table.css";
+import * as styles from './Table.css';
 
 type Props = {
   thead: string[];
@@ -45,9 +45,9 @@ const { thead, tbody, tfoot, colSpan = 0 } = Astro.props;
             ) : (
               cell !== null && (
                 <td
-                  class={`${styles.td} ${typeof cell === "object" && cell.className ? cell.className : ""}`}
+                  class={`${styles.td} ${typeof cell === 'object' && cell.className ? cell.className : ''}`}
                 >
-                  {typeof cell === "object" ? cell.value : cell}
+                  {typeof cell === 'object' ? cell.value : cell}
                 </td>
               )
             )

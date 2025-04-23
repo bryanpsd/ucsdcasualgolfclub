@@ -53,20 +53,15 @@ const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null;
       isMiniCard
     />
     {
-      results ? (
+      results && typeof results === 'object' && results?.fields?.file?.url ? (
         <Button
           as="a"
           color="primary"
-          color="secondary"
           variant="outlined"
           size="small"
           target="_blank"
           rel="noopener noreferrer"
-          href={
-            typeof results === 'object' && results?.fields?.file?.url
-              ? results.fields.file.url
-              : undefined
-          }
+          href={results.fields.file.url}
         >
           Results
         </Button>
