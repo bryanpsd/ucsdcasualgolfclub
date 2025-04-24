@@ -5,6 +5,7 @@ import type { TypeRosterSkeleton } from '../../types/contentful/TypeRoster';
 import Layout from '../../layouts/Layout.astro';
 import { Hero } from '~components/Hero';
 import { Table } from '~components/Table';
+import { Select } from './_components/Select';
 
 import * as styles from '~styles/common.css';
 
@@ -43,12 +44,21 @@ export async function getStaticPaths() {
   return pages;
 }
 
-const { year, players = [] } = Astro.props;
+const { year, players = [], years = [] } = Astro.props;
 ---
 
 <Layout>
   <Hero title={`${year} Roster`} />
   <div class={styles.subPageWrapper}>
+    <Select
+      client:load
+      options={years}
+      currentOption={String(year)}
+      onChangeUrl={(selectedYear) =>
+        selectedYear === 'Current Roster'
+          ? '/roster'
+          : `/roster/${selectedYear}`}
+    />
     <Table
       thead={['Player', 'Index']}
       tbody={players
