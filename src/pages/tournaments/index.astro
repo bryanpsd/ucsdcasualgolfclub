@@ -1,15 +1,15 @@
 ---
-import { contentfulClient } from '../../lib/contentful';
-import type { TypeCourseSkeleton } from '../../types/contentful';
+import { contentfulClient } from "../../lib/contentful";
+import type { TypeCourseSkeleton } from "../../types/contentful";
 
-import Layout from '../../layouts/Layout.astro';
-import { CourseCard } from '../../components/Course/CourseCard';
-import { Hero } from '~components/Hero';
+import Layout from "../../layouts/Layout.astro";
+import { CourseCard } from "../../components/Course/CourseCard";
+import { Hero } from "~components/Hero";
 
-import * as styles from '~styles/common.css';
+import * as styles from "~styles/common.css";
 
 const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-  content_type: 'course',
+  content_type: "course",
 });
 
 const getTournaments = entries.items
@@ -17,24 +17,23 @@ const getTournaments = entries.items
     return item.fields.tournaments?.map((tournament) => {
       if (
         tournament &&
-        'fields' in tournament &&
+        "fields" in tournament &&
         tournament.fields.date &&
-        new Date(tournament.fields.date) > new Date('2024-12-05')
+        new Date(tournament.fields.date) > new Date("2024-12-05")
       ) {
         return {
           ...item.fields,
+          coursePar: item.fields.coursePar,
           tournaments: [
             {
               prices: tournament.fields.prices,
               date: tournament.fields.date,
               players: tournament.fields.players,
-              amenities: tournament.fields.amenities,
-              coursePar: tournament.fields.coursePar,
-              mensTees: tournament.fields.mensTees,
-              womensTees: tournament.fields.womensTees,
+              inclusions: tournament.fields.inclusions,
+              tees: tournament.fields.tees,
               results:
                 tournament.fields.results &&
-                'fields' in tournament.fields.results
+                "fields" in tournament.fields.results
                   ? (tournament.fields.results.fields.file?.url ?? null)
                   : null,
               clubChampionship: tournament.fields.clubChampionship ?? false,
@@ -68,11 +67,9 @@ const getCurrentYear = new Date().getFullYear();
           prices={item?.tournaments[0].prices}
           players={item?.tournaments[0].players}
           slug={item?.slug}
-          amenities={item?.tournaments[0].amenities}
           results={item?.tournaments[0].results}
-          mensTees={item?.tournaments[0].mensTees}
-          womensTees={item?.tournaments[0].womensTees}
-          coursePar={item?.tournaments[0].coursePar}
+          inclusions={item?.tournaments[0].inclusions}
+          tees={item?.tournaments[0].tees}
         />
       ))
     }

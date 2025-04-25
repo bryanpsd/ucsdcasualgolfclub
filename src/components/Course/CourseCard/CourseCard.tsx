@@ -1,27 +1,26 @@
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
-import { Button } from '../../Button/Button';
-import { CourseDetails } from '../CourseDetails';
-import { Typography } from '~components/Typography';
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { Button } from "../../Button/Button";
+import { CourseDetails } from "../CourseDetails";
+import { Typography } from "~components/Typography";
 
-import Clock from '../../../icons/clock.svg?react';
+import Clock from "../../../icons/clock.svg?react";
 
-import type { TypeCourseProps } from '../../../types/contentful';
+import type { TypeCourseProps } from "../../../types/contentful";
 
-import * as styles from './CourseCard.css';
+import * as styles from "./CourseCard.css";
 
 interface CourseCardProps extends TypeCourseProps {
   hideCourseInfo?: boolean;
   date?: string;
-  players?: number;
+  players?: string;
   prices?: string[];
-  amenities?: string[];
+  inclusions?: string[];
   results?: string | null | undefined;
   clubChampionship?: boolean;
-  coursePar?: number;
-  mensTees?: string;
-  womensTees?: string;
+  coursePar?: string;
+  tees?: string[];
 }
 
 export const CourseCard = (props: CourseCardProps) => {
@@ -31,7 +30,8 @@ export const CourseCard = (props: CourseCardProps) => {
     hideCourseInfo,
     players,
     prices,
-    amenities,
+    tees,
+    inclusions,
     date,
     results,
     clubChampionship,
@@ -44,19 +44,19 @@ export const CourseCard = (props: CourseCardProps) => {
       {date && (
         <div
           className={styles.dateWrapper({
-            variant: isWednesday ? 'secondary' : 'default',
+            variant: isWednesday ? "secondary" : "default",
           })}
         >
-          <Typography color="inverse">{format(date, 'MMM')}</Typography>
+          <Typography color="inverse">{format(date, "MMM")}</Typography>
           <Typography color="inverse" variant="headlineLg">
-            {format(date, 'd')}
+            {format(date, "d")}
           </Typography>
-          <Typography color="inverse">{format(date, 'E')}</Typography>
+          <Typography color="inverse">{format(date, "E")}</Typography>
         </div>
       )}
       {hideCourseInfo ? (
         <div className={styles.courseCardNameWrapper}>
-          <ResponsiveHeadline size={1} as="h2">
+          <ResponsiveHeadline size={2} as="h2">
             {course}
           </ResponsiveHeadline>
           {clubChampionship && (
@@ -68,7 +68,7 @@ export const CourseCard = (props: CourseCardProps) => {
       ) : (
         <div className={styles.courseCardInfo}>
           <div>
-            <ResponsiveHeadline size={1} as="h2">
+            <ResponsiveHeadline size={2} as="h2">
               {course}
             </ResponsiveHeadline>
             {clubChampionship && (
@@ -83,13 +83,14 @@ export const CourseCard = (props: CourseCardProps) => {
           </div>
           <div className={styles.courseCardTime}>
             <Clock height={30} width={30} aria-hidden="true" />
-            {date && format(date, 'h:mmaaa')}
+            {date && format(date, "h:mmaaa")}
           </div>
           <CourseDetails
-            amenities={amenities}
+            inclusions={inclusions}
             isMiniCard={false}
             prices={prices}
-            players={players ?? 0}
+            players={players || ""}
+            tees={tees}
           />
         </div>
       )}
@@ -102,7 +103,7 @@ export const CourseCard = (props: CourseCardProps) => {
               color="primary"
               size="small"
               variant="contained"
-              href={`/tournaments/${format(date, 'yyyy')}/${slug}`}
+              href={`/tournaments/${format(date, "yyyy")}/${slug}`}
             >
               Details
             </Button>

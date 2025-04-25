@@ -1,16 +1,15 @@
 ---
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
-import { Button } from '../../Button/Button';
-import { CourseDetails } from '../CourseDetails';
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { Button } from "../../Button/Button";
+import { CourseDetails } from "../CourseDetails";
 
-import * as styles from './MiniCard.css';
+import * as styles from "./MiniCard.css";
 
 const {
   title,
   course,
-  amenities,
   prices,
   players,
   date,
@@ -36,8 +35,8 @@ const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null;
       {
         validDate ? (
           <>
-            <span>{format(date, 'E M/d/yy')}</span>@
-            <span>{format(date, 'h:mmaaa')}</span>
+            <span>{format(date, "E M/d/yy")}</span>@
+            <span>{format(date, "h:mmaaa")}</span>
           </>
         ) : (
           <span>Date not available</span>
@@ -45,15 +44,9 @@ const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null;
       }
     </div>
 
-    <CourseDetails
-      client:load
-      amenities={amenities}
-      prices={prices}
-      players={players}
-      isMiniCard
-    />
+    <CourseDetails client:load prices={prices} players={players} isMiniCard />
     {
-      results && typeof results === 'object' && results?.fields?.file?.url ? (
+      results && typeof results === "object" && results?.fields?.file?.url ? (
         <Button
           as="a"
           variant="outlined"
@@ -71,12 +64,12 @@ const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null;
           color="secondary"
           as="a"
           size="small"
-          rel={isCoursePage ? 'noopener noreferrer' : ''}
-          target={isCoursePage ? '_blank' : '_self'}
+          rel={isCoursePage ? "noopener noreferrer" : ""}
+          target={isCoursePage ? "_blank" : "_self"}
           href={
             isCoursePage
               ? courseWebsite
-              : `/tournaments/${format(new Date(date as string), 'yyyy')}/${slug}`
+              : `/tournaments/${format(new Date(date as string), "yyyy")}/${slug}`
           }
         >
           {label}

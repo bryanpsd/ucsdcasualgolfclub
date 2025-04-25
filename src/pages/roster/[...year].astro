@@ -1,17 +1,16 @@
 ---
-import { contentfulClient } from '../../lib/contentful';
-import type { TypeRosterSkeleton } from '../../types/contentful/TypeRoster';
+import { contentfulClient } from "../../lib/contentful";
+import type { TypeRosterSkeleton } from "../../types/contentful/TypeRoster";
 
-import Layout from '../../layouts/Layout.astro';
-import { Hero } from '~components/Hero';
-import { Table } from '~components/Table';
-import { Select } from './_components/Select';
+import Layout from "../../layouts/Layout.astro";
+import { Hero } from "~components/Hero";
+import { Table } from "~components/Table";
 
-import * as styles from '~styles/common.css';
+import * as styles from "~styles/common.css";
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
-    content_type: 'roster',
+    content_type: "roster",
   });
 
   const pages = entries.items.map((item) => {
@@ -20,11 +19,11 @@ export async function getStaticPaths() {
         year: item.fields.year?.toString(),
       },
       props: {
-        year: item.fields.year ?? 'N/A',
+        year: item.fields.year ?? "N/A",
         players:
           item.fields.players
             ?.map((player) => {
-              if (player && 'fields' in player) {
+              if (player && "fields" in player) {
                 return {
                   playerName: player.fields.playerName,
                   handicapIndex: player.fields.handicapIndex,
@@ -35,7 +34,7 @@ export async function getStaticPaths() {
             })
             .filter(Boolean) ?? [],
         years: entries.items.map(
-          (entry) => entry.fields.year?.toString() ?? 'N/A'
+          (entry) => entry.fields.year?.toString() ?? "N/A"
         ),
       },
     };
@@ -44,31 +43,22 @@ export async function getStaticPaths() {
   return pages;
 }
 
-const { year, players = [], years = [] } = Astro.props;
+const { year, players = [] } = Astro.props;
 ---
 
 <Layout>
   <Hero title={`${year} Roster`} />
   <div class={styles.subPageWrapper}>
-    <Select
-      client:load
-      options={years}
-      currentOption={String(year)}
-      onChangeUrl={(selectedYear) =>
-        selectedYear === 'Current Roster'
-          ? '/roster'
-          : `/roster/${selectedYear}`}
-    />
     <Table
-      thead={['Player', 'Index']}
+      thead={["Player", "Index"]}
       tbody={players
         .map((player) => {
-          return player?.guest?.includes('Yes')
+          return player?.guest?.includes("Yes")
             ? null
             : [
                 player?.playerName,
                 player?.handicapIndex === undefined
-                  ? 'NH'
+                  ? "NH"
                   : String(player.handicapIndex),
               ];
         })

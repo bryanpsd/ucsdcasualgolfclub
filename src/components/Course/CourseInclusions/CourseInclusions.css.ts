@@ -1,0 +1,52 @@
+import { style } from "@vanilla-extract/css";
+import { tokens } from "../../../styles/designTokens.css";
+import { color } from "../../../styles/designTokens/colors";
+import { recipe } from "@vanilla-extract/recipes";
+
+export const courseInclusionsWrapper = style([
+  tokens({
+    display: "flex",
+    flexDirection: "column",
+    gap: 4,
+  }),
+]);
+
+export const courseInclusionsList = style([
+  tokens({
+    display: "flex",
+    flexDirection: "row",
+    gap: { "xs-min": 8, "lg-min": 0 },
+    flexWrap: { "xs-min": "wrap", "lg-min": "nowrap" },
+  }),
+]);
+
+export const courseInclusionsListItem = recipe({
+  base: [
+    tokens({
+      display: "flex",
+      paddingX: 4,
+      alignItems: "center",
+    }),
+    {
+      selectors: {
+        "&:first-child": {
+          paddingLeft: 0,
+        },
+        "&:last-child": {
+          borderRight: "none",
+        },
+      },
+    },
+  ],
+  variants: {
+    variant: {
+      default: {
+        borderRight: `1px solid ${color.brand.navy}`,
+      },
+      secondary: {
+        borderRight: `1px solid ${color.brand.white}`,
+        color: color.brand.white,
+      },
+    },
+  },
+});

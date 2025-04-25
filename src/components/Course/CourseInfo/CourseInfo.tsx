@@ -1,16 +1,14 @@
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
 
-import * as styles from './CourseInfo.css';
+import * as styles from "./CourseInfo.css";
 
 interface Props {
   coursePar?: string;
-  mensTees?: string;
-  womensTees?: string;
   tees?: string[];
 }
 
 export const CourseInfo = (props: Props) => {
-  const { coursePar, mensTees, womensTees, tees } = props;
+  const { coursePar, tees } = props;
 
   return (
     <div className={styles.courseCardInfo}>

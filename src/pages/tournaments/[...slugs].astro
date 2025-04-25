@@ -1,30 +1,30 @@
 ---
-import { contentfulClient } from '../../lib/contentful';
+import { contentfulClient } from "../../lib/contentful";
 
-import Layout from '../../layouts/Layout.astro';
-import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse';
-import { MiniCard } from '~components/Course/MiniCard';
-import { Map } from '~components/Course/Map';
+import Layout from "../../layouts/Layout.astro";
+import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse";
+import { MiniCard } from "~components/Course/MiniCard";
+import { Map } from "~components/Course/Map";
 
-import { RichText } from '~components/RichText';
-import FlightCard from './_components/FlightCard/FlightCard.astro';
-import { Hero } from '~components/Hero';
+import { RichText } from "~components/RichText";
+import FlightCard from "./_components/FlightCard/FlightCard.astro";
+import { Hero } from "~components/Hero";
 
-import { CourseInfo } from '~components/Course/CourseInfo';
+import { CourseInfo } from "~components/Course/CourseInfo";
 
-import * as commonStyles from '~styles/common.css';
-import * as styles from './_style/tournament.css';
+import * as commonStyles from "~styles/common.css";
+import * as styles from "./_style/tournament.css";
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-    content_type: 'course',
+    content_type: "course",
     include: 3,
   });
 
   const pages = entries.items
     .flatMap((item) => {
       return item.fields.tournaments?.map((tournament) => {
-        if (tournament && 'fields' in tournament && tournament.fields.date) {
+        if (tournament && "fields" in tournament && tournament.fields.date) {
           const year = new Date(tournament.fields.date).getFullYear();
 
           return {
@@ -38,27 +38,27 @@ export async function getStaticPaths() {
               courseWebsite: item.fields.courseSite,
               coursePar: item.fields.coursePar,
               courseImage:
-                item.fields.courseImage && 'fields' in item.fields.courseImage
-                  ? (item.fields.courseImage.fields.file?.url ?? '')
+                item.fields.courseImage && "fields" in item.fields.courseImage
+                  ? (item.fields.courseImage.fields.file?.url ?? "")
                   : undefined,
               tournaments: [
                 {
                   prices: tournament.fields.prices ?? [],
-                  date: tournament.fields.date ?? 'N/A',
-                  players: tournament.fields.players ?? 'N/A',
-                  amenities: tournament.fields.amenities ?? [],
+                  date: tournament.fields.date ?? "N/A",
+                  players: tournament.fields.players ?? "N/A",
+                  inclusions: tournament.fields.inclusions ?? [],
                   results: tournament.fields.results ?? [],
                   tees: tournament.fields.tees ?? [],
                   firstFlight:
                     tournament.fields.firstFlight
                       ?.map((player) => {
-                        if (player && 'fields' in player) {
+                        if (player && "fields" in player) {
                           return {
                             playerName: player.fields.playerName,
                             handicapIndex: player.fields.handicapIndex,
                             guest: player.fields.guest,
                             results: player.fields.results?.map((result) => {
-                              if (result && 'fields' in result) {
+                              if (result && "fields" in result) {
                                 return {
                                   ...result.fields,
                                   courseHandicap: result.fields.courseHandicap,
@@ -79,13 +79,13 @@ export async function getStaticPaths() {
                   secondFlight:
                     tournament.fields.secondFlight
                       ?.map((player) => {
-                        if (player && 'fields' in player) {
+                        if (player && "fields" in player) {
                           return {
                             playerName: player.fields.playerName,
                             handicapIndex: player.fields.handicapIndex,
                             guest: player.fields.guest,
                             results: player.fields.results?.map((result) => {
-                              if (result && 'fields' in result) {
+                              if (result && "fields" in result) {
                                 return {
                                   ...result.fields,
                                   courseHandicap: result.fields.courseHandicap,
@@ -203,7 +203,7 @@ const lowestGrossOverall = Math.min(
           prices={tournaments[0]?.prices}
           date={tournaments[0]?.date}
           players={tournaments[0]?.players}
-          amenities={tournaments[0]?.amenities}
+          inclusions={tournaments[0]?.inclusions}
           results={tournaments[0]?.results}
         />
         {

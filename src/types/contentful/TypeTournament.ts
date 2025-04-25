@@ -4,17 +4,17 @@ import type {
   EntryFieldTypes,
   EntrySkeletonType,
   LocaleCode,
-} from 'contentful';
-import type { TypeLeadersSkeleton } from './TypeLeaders';
+} from "contentful";
+import type { TypeLeadersSkeleton } from "./TypeLeaders";
 
 export interface TypeTournamentFields {
   title: EntryFieldTypes.Symbol;
   date: EntryFieldTypes.Date;
   price?: EntryFieldTypes.Integer;
   prices?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
-  players?: EntryFieldTypes.Integer;
+  players?: EntryFieldTypes.Symbol;
   type?: EntryFieldTypes.Symbol;
-  amenities?: EntryFieldTypes.Array<EntryFieldTypes.Symbol<'Balls' | 'Cart'>>;
+  inclusions?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
   firstFlight?: EntryFieldTypes.Array<
     EntryFieldTypes.EntryLink<TypeLeadersSkeleton>
   >;
@@ -23,15 +23,12 @@ export interface TypeTournamentFields {
   >;
   results?: EntryFieldTypes.AssetLink;
   clubChampionship?: EntryFieldTypes.Boolean;
-  coursePar?: EntryFieldTypes.Integer;
-  mensTees?: EntryFieldTypes.Symbol;
-  womensTees?: EntryFieldTypes.Symbol;
   tees?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
 }
 
 export type TypeTournamentSkeleton = EntrySkeletonType<
   TypeTournamentFields,
-  'tournament'
+  "tournament"
 >;
 export type TypeTournament<
   Modifiers extends ChainModifiers,
@@ -44,10 +41,10 @@ export function isTypeTournament<
 >(
   entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeTournament<Modifiers, Locales> {
-  return entry.sys.contentType.sys.id === 'tournament';
+  return entry.sys.contentType.sys.id === "tournament";
 }
 
 export type TypeTournamentProps = TypeTournament<
-  'WITHOUT_UNRESOLVABLE_LINKS',
-  'en-US'
->['fields'];
+  "WITHOUT_UNRESOLVABLE_LINKS",
+  "en-US"
+>["fields"];
