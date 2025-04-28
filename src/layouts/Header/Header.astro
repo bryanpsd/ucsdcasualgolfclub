@@ -14,7 +14,7 @@ const banners = await Astro.callAction(actions.getHeaderBanners, null);
 const { pathname } = Astro.url;
 ---
 
-<a class={`sr-only ${styles.mainContentJumpLink}`} href="#main"
+<a class={`sr-only ${styles.mainContentJumpLink}`} href="#main-content"
   >Jump to main content</a
 >
 {
