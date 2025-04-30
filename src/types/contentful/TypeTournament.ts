@@ -22,6 +22,7 @@ export interface TypeTournamentFields {
     EntryFieldTypes.EntryLink<TypeLeadersSkeleton>
   >;
   results?: EntryFieldTypes.AssetLink;
+  resultsJson?: EntryFieldTypes.Object;
   clubChampionship?: EntryFieldTypes.Boolean;
   tees?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
 }

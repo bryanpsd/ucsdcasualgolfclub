@@ -61,6 +61,7 @@ export async function getStaticPaths() {
                               if (result && "fields" in result) {
                                 return {
                                   ...result.fields,
+                                  index: result.fields.index,
                                   courseHandicap: result.fields.courseHandicap,
                                   gross: result.fields.gross,
                                   net: result.fields.net,
@@ -88,6 +89,7 @@ export async function getStaticPaths() {
                               if (result && "fields" in result) {
                                 return {
                                   ...result.fields,
+                                  index: result.fields.index,
                                   courseHandicap: result.fields.courseHandicap,
                                   gross: result.fields.gross,
                                   net: result.fields.net,
@@ -157,6 +159,7 @@ const lowestGrossOverall = Math.min(
                 handicapIndex: player?.handicapIndex,
                 guest: player?.guest ? [player.guest[0]] : undefined,
                 results: player?.results?.map((result) => ({
+                  index: result?.index,
                   gross: result?.gross,
                   courseHandicap: result?.courseHandicap,
                   net: result?.net,
@@ -180,6 +183,7 @@ const lowestGrossOverall = Math.min(
                 handicapIndex: player?.handicapIndex,
                 guest: player?.guest ? [player.guest[0]] : undefined,
                 results: player?.results?.map((result) => ({
+                  index: result?.index,
                   gross: result?.gross,
                   courseHandicap: result?.courseHandicap,
                   net: result?.net,

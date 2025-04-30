@@ -1,6 +1,3 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import contentful from "contentful-management";
 
 // Contentful configuration
@@ -8,30 +5,55 @@ const SPACE_ID = "pzpj6n7gq2ak";
 const ACCESS_TOKEN = "CFPAT-ey2MInbXh26X4plQO0Z5iKHpPvahP3VXs4mZjy1QrYo";
 const ENVIRONMENT_ID = "master";
 
-// Get __dirname in ES module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Read JSON file
-const resultsFilePath = path.join(__dirname, "../results/results.json");
-const resultsData = JSON.parse(fs.readFileSync(resultsFilePath, "utf-8"));
-
 // Initialize Contentful client
 const client = contentful.createClient({
   accessToken: ACCESS_TOKEN,
 });
+
+// Get the Tournament Title from the command-line arguments
+const tournamentTitleArg = process.argv[2];
+if (!tournamentTitleArg) {
+  console.error("Please provide a Tournament Title as an argument.");
+  process.exit(1);
+}
 
 async function pushResultsToContentful() {
   try {
     const space = await client.getSpace(SPACE_ID);
     const environment = await space.getEnvironment(ENVIRONMENT_ID);
 
+    // Fetch the Tournament entry with the matching title
+    const tournamentEntries = await environment.getEntries({
+      content_type: "tournament", // Replace with your Tournament content type ID
+      "fields.title[match]": tournamentTitleArg, // Match the Tournament Title
+    });
+
+    if (tournamentEntries.items.length === 0) {
+      console.error(
+        `No Tournament found with the title: ${tournamentTitleArg}`
+      );
+      return;
+    }
+
+    const tournament = tournamentEntries.items[0]; // Use the first matching Tournament entry
+    const resultsJson = tournament.fields.resultsJson?.["en-US"]; // Extract resultsJson
+
+    if (!resultsJson) {
+      console.error(
+        `The Tournament "${tournamentTitleArg}" does not have a resultsJson field.`
+      );
+      return;
+    }
+
+    const resultsData =
+      typeof resultsJson === "string" ? JSON.parse(resultsJson) : resultsJson;
+
     const courseEntries = await environment.getEntries({
       content_type: "course",
     });
 
     const courseMap = courseEntries.items.reduce((map, item) => {
-      const courseName = item.fields?.course?.["en-US"]; // Safely access the name field
+      const courseName = item.fields?.course?.["en-US"]; //
       if (courseName) {
         map[courseName] = item.sys.id;
       } else {
@@ -81,20 +103,30 @@ async function pushResultsToContentful() {
           flight: {
             "en-US": result.flight,
           },
+          index: {
+            "en-US": result.index,
+          },
           gross: {
-            "en-US": result.gross,
+            "en-US": result.gross !== null ? result.gross : undefined,
           },
           net: {
-            "en-US": result.net,
+            "en-US": result.net !== null ? result.net : undefined,
           },
           courseHandicap: {
-            "en-US": result.courseHandicap,
+            "en-US":
+              result.courseHandicap !== null
+                ? result.courseHandicap
+                : undefined,
           },
           putts: {
-            "en-US": result.putts,
+            "en-US": result.putts !== null ? result.putts : undefined,
           },
           closestTo: {
-            "en-US": result.closestTo !== null ? result.closestTo : undefined,
+            "en-US": Array.isArray(result.closestTo)
+              ? result.closestTo
+              : result.closestTo !== null
+              ? [result.closestTo]
+              : undefined,
           },
           longDrive: {
             "en-US": result.longDrive !== "" ? result.longDrive : undefined,
