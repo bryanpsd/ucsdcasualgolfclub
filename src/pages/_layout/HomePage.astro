@@ -13,6 +13,8 @@ import type { TypeTournamentSkeleton } from "~types/contentful/TypeTournament";
 import type { Entry } from "contentful";
 
 import * as styles from "./HomePage.css";
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { Table } from "~components/Table";
 
 // Fetch simplePage entries
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
@@ -90,9 +92,10 @@ const courseSlug = courseEntries.items.find((course) =>
         ))
       }
       <section class={styles.rightCol}>
-        <Leaderboard gross />
+        <Table thead={["Leaderboards"]} tbody={[["Coming Soon"]]} />
+        <!-- <Leaderboard gross />
         <Leaderboard net firstFlight />
-        <Leaderboard net secondFlight />
+        <Leaderboard net secondFlight /> -->
       </section>
     </section>
   </div>
