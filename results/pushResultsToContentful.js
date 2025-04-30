@@ -1,4 +1,8 @@
 import contentful from 'contentful-management';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env file
+dotenv.config();
 
 // Contentful configuration
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
