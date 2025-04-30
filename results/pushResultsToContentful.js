@@ -1,9 +1,9 @@
-import contentful from "contentful-management";
+import contentful from 'contentful-management';
 
 // Contentful configuration
-const SPACE_ID = "pzpj6n7gq2ak";
-const ACCESS_TOKEN = "CFPAT-ey2MInbXh26X4plQO0Z5iKHpPvahP3VXs4mZjy1QrYo";
-const ENVIRONMENT_ID = "master";
+const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
+const ACCESS_TOKEN = process.env.CONTENTFUL_ACCESS_TOKEN;
+const ENVIRONMENT_ID = process.env.CONTENTFUL_ENVIRONMENT_ID;
 
 // Initialize Contentful client
 const client = contentful.createClient({
@@ -13,7 +13,7 @@ const client = contentful.createClient({
 // Get the Tournament Title from the command-line arguments
 const tournamentTitleArg = process.argv[2];
 if (!tournamentTitleArg) {
-  console.error("Please provide a Tournament Title as an argument.");
+  console.error('Please provide a Tournament Title as an argument.');
   process.exit(1);
 }
 
@@ -24,8 +24,8 @@ async function pushResultsToContentful() {
 
     // Fetch the Tournament entry with the matching title
     const tournamentEntries = await environment.getEntries({
-      content_type: "tournament", // Replace with your Tournament content type ID
-      "fields.title[match]": tournamentTitleArg, // Match the Tournament Title
+      content_type: 'tournament', // Replace with your Tournament content type ID
+      'fields.title[match]': tournamentTitleArg, // Match the Tournament Title
     });
 
     if (tournamentEntries.items.length === 0) {
@@ -36,7 +36,7 @@ async function pushResultsToContentful() {
     }
 
     const tournament = tournamentEntries.items[0]; // Use the first matching Tournament entry
-    const resultsJson = tournament.fields.resultsJson?.["en-US"]; // Extract resultsJson
+    const resultsJson = tournament.fields.resultsJson?.['en-US']; // Extract resultsJson
 
     if (!resultsJson) {
       console.error(
@@ -46,14 +46,14 @@ async function pushResultsToContentful() {
     }
 
     const resultsData =
-      typeof resultsJson === "string" ? JSON.parse(resultsJson) : resultsJson;
+      typeof resultsJson === 'string' ? JSON.parse(resultsJson) : resultsJson;
 
     const courseEntries = await environment.getEntries({
-      content_type: "course",
+      content_type: 'course',
     });
 
     const courseMap = courseEntries.items.reduce((map, item) => {
-      const courseName = item.fields?.course?.["en-US"]; //
+      const courseName = item.fields?.course?.['en-US']; //
       if (courseName) {
         map[courseName] = item.sys.id;
       } else {
@@ -65,11 +65,11 @@ async function pushResultsToContentful() {
     }, {});
 
     // Extract course name and date
-    const { "Course Name": courseName, Date: date } = resultsData[0];
-    const formattedDate = new Date(date).toLocaleDateString("en-US", {
-      year: "2-digit",
-      month: "2-digit",
-      day: "2-digit",
+    const { 'Course Name': courseName, Date: date } = resultsData[0];
+    const formattedDate = new Date(date).toLocaleDateString('en-US', {
+      year: '2-digit',
+      month: '2-digit',
+      day: '2-digit',
     });
 
     // Process each result entry
@@ -86,50 +86,50 @@ async function pushResultsToContentful() {
       const entryTitle = `${result.title} - ${courseName} (${formattedDate})`;
 
       // Create Contentful entry for results
-      const entry = await environment.createEntry("results", {
+      const entry = await environment.createEntry('results', {
         fields: {
           title: {
-            "en-US": entryTitle,
+            'en-US': entryTitle,
           },
           course: {
-            "en-US": {
+            'en-US': {
               sys: {
-                type: "Link",
-                linkType: "Entry",
+                type: 'Link',
+                linkType: 'Entry',
                 id: courseId,
               },
             },
           },
           flight: {
-            "en-US": result.flight,
+            'en-US': result.flight,
           },
           index: {
-            "en-US": result.index,
+            'en-US': result.index,
           },
           gross: {
-            "en-US": result.gross !== null ? result.gross : undefined,
+            'en-US': result.gross !== null ? result.gross : undefined,
           },
           net: {
-            "en-US": result.net !== null ? result.net : undefined,
+            'en-US': result.net !== null ? result.net : undefined,
           },
           courseHandicap: {
-            "en-US":
+            'en-US':
               result.courseHandicap !== null
                 ? result.courseHandicap
                 : undefined,
           },
           putts: {
-            "en-US": result.putts !== null ? result.putts : undefined,
+            'en-US': result.putts !== null ? result.putts : undefined,
           },
           closestTo: {
-            "en-US": Array.isArray(result.closestTo)
+            'en-US': Array.isArray(result.closestTo)
               ? result.closestTo
               : result.closestTo !== null
               ? [result.closestTo]
               : undefined,
           },
           longDrive: {
-            "en-US": result.longDrive !== "" ? result.longDrive : undefined,
+            'en-US': result.longDrive !== '' ? result.longDrive : undefined,
           },
         },
       });
@@ -138,26 +138,26 @@ async function pushResultsToContentful() {
 
       // Add the results entry to the Player content type
       const playerEntries = await environment.getEntries({
-        content_type: "leaders", // Replace with your Player content type ID
-        "fields.playerName[match]": result.title, // Match Player name with result title
+        content_type: 'leaders', // Replace with your Player content type ID
+        'fields.playerName[match]': result.title, // Match Player name with result title
       });
 
       if (playerEntries.items.length > 0) {
         const player = playerEntries.items[0];
-        const existingResults = player.fields.results?.["en-US"] || [];
+        const existingResults = player.fields.results?.['en-US'] || [];
 
         // Add the new result entry to the Player's results field
         existingResults.push({
           sys: {
-            type: "Link",
-            linkType: "Entry",
+            type: 'Link',
+            linkType: 'Entry',
             id: entry.sys.id,
           },
         });
 
         // Update the Player entry
         player.fields.results = {
-          "en-US": existingResults,
+          'en-US': existingResults,
         };
 
         await player.update();
@@ -169,10 +169,10 @@ async function pushResultsToContentful() {
     }
 
     console.log(
-      "All results have been pushed to Contentful and linked to Players."
+      'All results have been pushed to Contentful and linked to Players.'
     );
   } catch (error) {
-    console.error("Error pushing results to Contentful:", error);
+    console.error('Error pushing results to Contentful:', error);
   }
 }
 
