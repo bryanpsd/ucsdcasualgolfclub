@@ -1,5 +1,5 @@
 ---
-import { actions } from 'astro:actions';
+import { server } from '../../actions';
 import { Image } from 'astro:assets';
 import logo from '~/assets/brand-logo.png';
 import { MainNav } from './components/MainNav';
@@ -9,7 +9,7 @@ import { Banner } from './components/Banner';
 
 import * as styles from './Header.css';
 
-const banners = await Astro.callAction(actions.getHeaderBanners, null);
+const banners = await Astro.callAction(server.getHeaderBanners, null);
 
 const { pathname } = Astro.url;
 ---
