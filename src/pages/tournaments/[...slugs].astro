@@ -45,9 +45,9 @@ export async function getStaticPaths() {
                   : undefined,
               tournaments: [
                 {
-                  prices: tournament.fields.prices ?? [],
+                  prices: tournament.fields.prices,
                   date: tournament.fields.date ?? 'N/A',
-                  players: tournament.fields.players ?? 'N/A',
+                  players: tournament.fields.players,
                   inclusions: tournament.fields.inclusions ?? [],
                   results: tournament.fields.results ?? [],
                   tees: tournament.fields.tees ?? [],
