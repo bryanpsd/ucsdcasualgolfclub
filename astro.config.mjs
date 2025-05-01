@@ -9,6 +9,7 @@ import icon from 'astro-icon';
 
 export default defineConfig({
   adapter: netlify(),
+  output: 'server',
   integrations: [react(), icon()],
   vite: {
     plugins: [viteTsconfigPaths(), vanillaExtractPlugin(), svgr()],

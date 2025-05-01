@@ -1,3 +1,5 @@
+import { constants } from './constants';
+
 const fonts = [
   '/fonts/Roboto-Regular.ttf',
   '/fonts/Roboto-Light.ttf',
@@ -53,4 +55,11 @@ const ucsdRobotoFontFaces = fonts.map((url) => {
   return fontFaceGenerator(url, 'Roboto');
 });
 
-export { ucsdRobotoFontFaces };
+const typography = {
+  // @material-ui/core/styles/createTypography.d.ts
+  htmlFontSize: 10, // html.fontSize set to 62.5% in `CssBaseline` override
+  fontFamily: ['Roboto', 'serif'].join(', '),
+  ...constants.typography,
+};
+
+export { typography, ucsdRobotoFontFaces };

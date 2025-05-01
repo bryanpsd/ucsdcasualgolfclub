@@ -1,5 +1,4 @@
-// eslint-disable-next-line unused-imports/no-unused-imports
-import React from 'react';
+import type { ForwardedRef } from 'react';
 
 declare module 'react' {
   function forwardRef<T, P = unknown>(
