@@ -131,6 +131,8 @@ const {
   courseWebsite,
 } = Astro.props
 
+const tournamentYear = tournaments[0]?.date ? new Date(tournaments[0].date).getFullYear() : 'N/A'
+
 const allFlights = [...(tournaments[0]?.firstFlight || []), ...(tournaments[0]?.secondFlight || [])]
 
 const lowestGrossOverall = Math.min(
@@ -140,7 +142,10 @@ const lowestGrossOverall = Math.min(
 )
 ---
 
-<Layout>
+<Layout
+  title={`${tournamentYear} Tournament at ${course}  | UCSD Casual Golf Club`}
+  description={`Explore the ${tournamentYear} tournament at ${course}. View details, results, and more.`}
+>
   <Hero course={course} courseImage={courseImage} />
   <section class={commonStyles.subPageWrapper}>
     <div class={styles.tournamentWrapper}>

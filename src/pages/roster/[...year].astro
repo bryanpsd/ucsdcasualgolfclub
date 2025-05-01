@@ -46,7 +46,10 @@ export async function getStaticPaths() {
 const { year, players = [] } = Astro.props
 ---
 
-<Layout>
+<Layout
+  title={`${year} Roster | UCSD Casual Golf Club`}
+  description={`Explore the ${year} roster of the UCSD Casual Golf Club. View player and handicap indexes.`}
+>
   <Hero title={`${year} Roster`} />
   <div class={styles.subPageWrapper}>
     <Table

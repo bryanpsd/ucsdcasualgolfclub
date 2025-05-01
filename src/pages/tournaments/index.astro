@@ -53,7 +53,10 @@ const getTournaments = entries.items
 const getCurrentYear = new Date().getFullYear()
 ---
 
-<Layout>
+<Layout
+  title={`${getCurrentYear} Tournaments | UCSD Casual Golf Club`}
+  description={`Explore all tournaments happening in ${getCurrentYear}. View details, results, and more.`}
+>
   <Hero title={`${getCurrentYear} Tournaments`} />
   <div class={styles.subPageWrapper}>
     {
