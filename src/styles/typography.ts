@@ -1,8 +1,18 @@
-import fonts from '../assets/fonts';
-import { constants } from './constants';
+const fonts = [
+  '/fonts/Roboto-Regular.ttf',
+  '/fonts/Roboto-Light.ttf',
+  '/fonts/Roboto-Medium.ttf',
+  '/fonts/Roboto-Bold.ttf',
+  '/fonts/Roboto-Black.ttf',
+  '/fonts/Roboto-Italic.ttf',
+  '/fonts/Roboto-LightItalic.ttf',
+  '/fonts/Roboto-MediumItalic.ttf',
+  '/fonts/Roboto-BoldItalic.ttf',
+  '/fonts/Roboto-BlackItalic.ttf',
+];
 
 /**
- * generates a fontFace rule from a fontUrl and fontName
+ * Generates a fontFace rule from a fontUrl and fontName
  * @param fontUrl Url to font file
  * @param fontName Name of font family collection
  * @returns @fontFace CSS rule
@@ -43,10 +53,4 @@ const ucsdRobotoFontFaces = fonts.map((url) => {
   return fontFaceGenerator(url, 'Roboto');
 });
 
-const typography = {
-  // @material-ui/core/styles/createTypography.d.ts
-  htmlFontSize: 10, // html.fontSize set to 62.5% in `CssBaseline` override
-  fontFamily: ['Roboto', 'serif'].join(', '),
-  ...constants.typography,
-};
-export { typography, ucsdRobotoFontFaces };
+export { ucsdRobotoFontFaces };

@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css';
-import { tokens } from '../styles/designTokens.css';
-import { color } from '../styles/designTokens/colors';
-import { fontSize } from './designTokens/typography';
+import { tokens } from './designTokens.css'; // Fixed path
+import { color } from './designTokens/colors'; // Fixed path
+import { fontSize } from './designTokens/typography'; // Fixed path
 
 export const mainWrapper = style([
   tokens({

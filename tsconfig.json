@@ -9,7 +9,9 @@
     "exactOptionalPropertyTypes": false,
     "baseUrl": "src",
     "noEmit": true,
+    "outDir": "dist",
     "paths": {
+      "@fonts": ["assets/fonts/*"],
       "~*": ["*"]
     }
   }
