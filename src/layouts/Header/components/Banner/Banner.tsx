@@ -22,7 +22,7 @@ const bannerOptions: Options = {
     ),
     [INLINES.HYPERLINK]: (node, children) => {
       return (
-        <Link className={styles.bannerLink} href={node.data.uri} jumpLink>
+        <Link className={styles.bannerLink} href={node.data.uri}>
           {children}
         </Link>
       )
