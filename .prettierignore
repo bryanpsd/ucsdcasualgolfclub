@@ -1,0 +1,17 @@
+**/node_modules
+**/dist
+**/build
+**/package.json
+**/yarn.lock
+**/package-lock.json
+**/.eslintrc
+**/tsconfig.json
+public/*
+**/src/assets/**
+**/infra/**
+
+**/reportWebVitals.ts
+
+*.css
+*.yml
+*.md

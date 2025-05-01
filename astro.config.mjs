@@ -8,6 +8,7 @@ import react from '@astrojs/react'
 import icon from 'astro-icon'
 
 export default defineConfig({
+  site: 'https://ucsdcasualgolfclub.netlify.app',
   adapter: netlify(),
   output: 'server',
   integrations: [react(), icon()],
