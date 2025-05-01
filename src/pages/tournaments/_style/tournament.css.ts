@@ -1,8 +1,5 @@
 import { style } from '@vanilla-extract/css';
-import { contentPadding, pageMaxWidth } from '../../../styles/common.css';
-import { breakpointQuery, tokens } from '../../../styles/designTokens.css';
-import { color } from '../../../styles/designTokens/colors';
-
+import { tokens } from '../../../styles/designTokens.css';
 export const tournamentWrapper = style([
   tokens({
     display: 'flex',

@@ -1,4 +1,3 @@
-import { type StyleRule } from '@vanilla-extract/css';
 import { type RecipeVariants, recipe } from '@vanilla-extract/recipes';
 import { tokens } from '../../styles/designTokens.css';
 import {

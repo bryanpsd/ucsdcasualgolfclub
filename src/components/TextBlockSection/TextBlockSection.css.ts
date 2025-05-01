@@ -1,7 +1,5 @@
 import { style } from '@vanilla-extract/css';
 import { tokens } from '../../styles/designTokens.css';
-import { color } from '../../styles/designTokens/colors';
-import { fontSize, lineHeight } from '../../styles/designTokens/typography';
 
 const firstChildMarginTop = style({
   selectors: {

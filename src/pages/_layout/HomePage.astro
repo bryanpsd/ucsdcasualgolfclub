@@ -1,30 +1,30 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import { contentfulClient } from "../../lib/contentful";
+import Layout from '../../layouts/Layout.astro';
+import { contentfulClient } from '../../lib/contentful';
 import type {
   TypeCourseSkeleton,
   TypeSimplePageSkeleton,
-} from "../../types/contentful";
-import { RichText } from "~components/RichText";
+} from '../../types/contentful';
 
-import { MiniCard } from "~components/Course/MiniCard";
-import { Leaderboard } from "~components/Leaderboard";
-import type { TypeTournamentSkeleton } from "~types/contentful/TypeTournament";
-import type { Entry } from "contentful";
+import { RichText } from '~components/RichText';
+import { MiniCard } from '~components/Course/MiniCard';
+import { Leaderboard } from '~components/Leaderboard';
+import { Table } from '~components/Table';
 
-import * as styles from "./HomePage.css";
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
-import { Table } from "~components/Table";
+import type { TypeTournamentSkeleton } from '~types/contentful/TypeTournament';
+import type { Entry } from 'contentful';
+
+import * as styles from './HomePage.css';
 
 // Fetch simplePage entries
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-  content_type: "simplePage",
-  "fields.title": "Home",
+  content_type: 'simplePage',
+  'fields.title': 'Home',
 });
 
 // Fetch course and tournament data
 const courseEntries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-  content_type: "course",
+  content_type: 'course',
 });
 
 // Find the first upcoming tournament date
@@ -35,7 +35,7 @@ const upcomingTournament = courseEntries.items
       tournament
     ): tournament is Entry<TypeTournamentSkeleton, undefined, string> =>
       tournament &&
-      "fields" in tournament &&
+      'fields' in tournament &&
       tournament.fields.date &&
       new Date(tournament.fields.date) > new Date() // Filter for future dates
   )
@@ -45,16 +45,16 @@ const upcomingTournament = courseEntries.items
   )[0]; // Get the earliest upcoming tournament
 
 // Extract relevant data
-const tournamentDate = upcomingTournament?.fields.date ?? "TBD";
+const tournamentDate = upcomingTournament?.fields.date ?? 'TBD';
 const tournamentPrices = upcomingTournament?.fields.prices ?? [];
-const tournamentPlayers = upcomingTournament?.fields.players ?? "N/A";
+const tournamentPlayers = upcomingTournament?.fields.players ?? 'N/A';
 const tournamentInclusions = upcomingTournament?.fields.inclusions ?? [];
 const courseName =
   courseEntries.items.find((course) =>
     course.fields.tournaments?.some(
       (tournament) => tournament === upcomingTournament
     )
-  )?.fields.course ?? "Unknown Course";
+  )?.fields.course ?? 'Unknown Course';
 
 const courseSlug = courseEntries.items.find((course) =>
   course.fields.tournaments?.some(
@@ -70,7 +70,7 @@ const courseSlug = courseEntries.items.find((course) =>
   <div class={styles.homeWrapper}>
     <section class={styles.homeHero}>
       <MiniCard
-        title={"Upcoming Tournament"}
+        title={'Upcoming Tournament'}
         date={tournamentDate}
         prices={tournamentPrices}
         players={tournamentPlayers}
@@ -92,7 +92,7 @@ const courseSlug = courseEntries.items.find((course) =>
         ))
       }
       <section class={styles.rightCol}>
-        <Table thead={["Leaderboards"]} tbody={[["Coming Soon"]]} />
+        <Table thead={['Leaderboards']} tbody={[['Coming Soon']]} />
         <!-- <Leaderboard gross />
         <Leaderboard net firstFlight />
         <Leaderboard net secondFlight /> -->
