@@ -9,7 +9,6 @@ import type { TypeResultsSkeleton } from './TypeResults'
 
 export interface TypeLeadersFields {
   playerName?: EntryFieldTypes.Symbol
-  currentHandicapIndex?: EntryFieldTypes.Number
   handicapIndex?: EntryFieldTypes.Number
   gross?: EntryFieldTypes.Integer
   net?: EntryFieldTypes.Number
