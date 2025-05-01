@@ -1,8 +1,8 @@
-import { style } from '@vanilla-extract/css';
-import { contentPadding, pageMaxWidth } from '../../styles/common.css';
-import { tokens } from '../../styles/designTokens.css';
-import { color } from '../../styles/designTokens/colors';
-import { fontSize } from '../../styles/designTokens/typography';
+import { style } from '@vanilla-extract/css'
+import { contentPadding, pageMaxWidth } from '../../styles/common.css'
+import { tokens } from '../../styles/designTokens.css'
+import { color } from '../../styles/designTokens/colors'
+import { fontSize } from '../../styles/designTokens/typography'
 
 export const headerWrapper = style([
   tokens({
@@ -15,7 +15,7 @@ export const headerWrapper = style([
     backgroundColor: color.brand.navy,
     fontSize: fontSize.sizeFont4,
   },
-]);
+])
 
 export const header = style([
   tokens({
@@ -27,13 +27,13 @@ export const header = style([
   }),
   pageMaxWidth,
   contentPadding,
-]);
+])
 
 export const logoWrapper = style([
   tokens({
     display: 'flex',
   }),
-]);
+])
 
 export const logoLink = style([
   tokens({
@@ -48,7 +48,7 @@ export const logoLink = style([
   {
     fontSize: fontSize.sizeFont5,
   },
-]);
+])
 
 export const mainContentJumpLink = style({
   selectors: {
@@ -60,4 +60,4 @@ export const mainContentJumpLink = style({
       position: 'static',
     },
   },
-});
+})

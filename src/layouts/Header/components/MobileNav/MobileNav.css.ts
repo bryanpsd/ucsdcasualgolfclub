@@ -1,6 +1,6 @@
-import { keyframes, style } from '@vanilla-extract/css';
-import { tokens } from '../../../../styles/designTokens.css';
-import { color } from '../../../../styles/designTokens/colors';
+import { keyframes, style } from '@vanilla-extract/css'
+import { tokens } from '../../../../styles/designTokens.css'
+import { color } from '../../../../styles/designTokens/colors'
 
 export const mobileNavRoot = style([
   tokens({
@@ -12,7 +12,7 @@ export const mobileNavRoot = style([
     alignItems: 'center',
     padding: '0 1rem',
   },
-]);
+])
 
 export const mobileNavIcon = style({
   backgroundColor: 'transparent',
@@ -21,7 +21,7 @@ export const mobileNavIcon = style({
       backgroundColor: 'transparent',
     },
   },
-});
+})
 
 export const mobileNavItem = style([
   tokens({
@@ -49,14 +49,14 @@ export const mobileNavItem = style([
       },
     },
   },
-]);
+])
 
 export const menuIcon = style({
   justifyContent: 'space-between',
   alignItems: 'center',
   padding: '0 1rem',
   fill: color.navigationText,
-});
+})
 
 export const trigger = style([
   tokens({
@@ -66,16 +66,16 @@ export const trigger = style([
   {
     color: color.brand.navy,
   },
-]);
+])
 
 const open = keyframes({
   '0%': { height: 0 },
   '100%': { height: 'var(--radix-navigation-menu-viewport-height)' },
-});
+})
 const close = keyframes({
   '0%': { height: 'var(--radix-navigation-menu-viewport-height)' },
   '100%': { height: 0 },
-});
+})
 
 export const viewport = style({
   transition: 'height 0.3s',
@@ -89,4 +89,4 @@ export const viewport = style({
       animation: `${close} 0.3s`,
     },
   },
-});
+})

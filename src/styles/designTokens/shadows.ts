@@ -1,7 +1,7 @@
-import { alphaToHex } from '../../utils/alphaToHex';
-import { color } from './colors';
+import { alphaToHex } from '../../utils/alphaToHex'
+import { color } from './colors'
 
-const { grayscale } = color;
+const { grayscale } = color
 
 // MUI Reference Shadows
 const muiShadows = {
@@ -30,7 +30,7 @@ const muiShadows = {
   22: `0px 10px 14px -6px ${grayscale.shadow1},0px 22px 35px 3px ${grayscale.shadow2},0px 8px 42px 7px ${grayscale.shadow3}`,
   23: `0px 11px 14px -7px ${grayscale.shadow1},0px 23px 36px 3px ${grayscale.shadow2},0px 9px 44px 8px ${grayscale.shadow3}`,
   24: `0px 11px 15px -7px ${grayscale.shadow1},0px 24px 38px 3px ${grayscale.shadow2},0px 9px 46px 8px ${grayscale.shadow3}`,
-} as const;
+} as const
 
 export const boxShadow = {
   none: 'none',
@@ -43,4 +43,4 @@ export const boxShadow = {
   popover: `0px 4px 12px 0px ${grayscale.black}1A`,
   accordion: `0 .2rem .4rem -0.2rem  ${grayscale.shadow4}`,
   ...muiShadows,
-} as const;
+} as const

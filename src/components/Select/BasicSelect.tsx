@@ -1,13 +1,13 @@
-import * as Select from "@radix-ui/react-select";
+import * as Select from '@radix-ui/react-select'
 
 export const BasicSelect = ({
   items,
   value,
   onValueChange,
 }: {
-  onValueChange: (value: string) => void;
-  value: string;
-  items: { text: string; value: string }[];
+  onValueChange: (value: string) => void
+  value: string
+  items: { text: string; value: string }[]
 }) => {
   return (
     <Select.Root value={value} onValueChange={onValueChange}>
@@ -34,5 +34,5 @@ export const BasicSelect = ({
         </Select.Content>
       </Select.Portal>
     </Select.Root>
-  );
-};
+  )
+}

@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css';
-import { breakpointQuery, tokens } from '../../../../styles/designTokens.css';
-import { color } from '../../../../styles/designTokens/colors';
+import { style } from '@vanilla-extract/css'
+import { breakpointQuery, tokens } from '../../../../styles/designTokens.css'
+import { color } from '../../../../styles/designTokens/colors'
 
 export const mainNavItem = style([
   tokens({
@@ -27,7 +27,7 @@ export const mainNavItem = style([
       },
     },
   },
-]);
+])
 
 export const mainNavItemArrow = style([
   {
@@ -58,7 +58,7 @@ export const mainNavItemArrow = style([
       },
     },
   },
-]);
+])
 
 export const hideBelowDesktop = style({
   position: 'absolute',
@@ -81,4 +81,4 @@ export const hideBelowDesktop = style({
       border: 'unset',
     },
   },
-});
+})

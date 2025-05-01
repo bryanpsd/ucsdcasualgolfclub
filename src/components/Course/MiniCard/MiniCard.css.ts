@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css';
-import { tokens } from '../../../styles/designTokens.css';
-import { color } from '../../../styles/designTokens/colors';
+import { style } from '@vanilla-extract/css'
+import { tokens } from '../../../styles/designTokens.css'
+import { color } from '../../../styles/designTokens/colors'
 
 export const miniCardWrapper = style([
   tokens({
@@ -12,7 +12,7 @@ export const miniCardWrapper = style([
   {
     backgroundColor: color.brand.navy,
   },
-]);
+])
 
 export const miniCardTitle = style([
   tokens({
@@ -21,11 +21,11 @@ export const miniCardTitle = style([
   {
     color: color.brand.white,
   },
-]);
+])
 
 export const miniCardCourse = style({
   color: color.brand.white,
-});
+})
 
 export const miniCard = style([
   tokens({
@@ -40,7 +40,7 @@ export const miniCard = style([
   {
     borderTop: `1px solid ${color.brand.black}`,
   },
-]);
+])
 
 export const dateTimeWrapper = style([
   tokens({
@@ -54,4 +54,4 @@ export const dateTimeWrapper = style([
   {
     color: color.brand.yellow,
   },
-]);
+])

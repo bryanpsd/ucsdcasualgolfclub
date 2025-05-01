@@ -1,1 +1,1 @@
-export { default as Leaderboard } from './Leaderboard.astro';
+export { default as Leaderboard } from './Leaderboard.astro'

@@ -1,1 +1,1 @@
-export { default as Table } from "./Table.astro";
+export { default as Table } from './Table.astro'

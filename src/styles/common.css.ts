@@ -1,7 +1,7 @@
-import { style } from '@vanilla-extract/css';
-import { tokens } from './designTokens.css'; // Fixed path
-import { color } from './designTokens/colors'; // Fixed path
-import { fontSize } from './designTokens/typography'; // Fixed path
+import { style } from '@vanilla-extract/css'
+import { tokens } from './designTokens.css' // Fixed path
+import { color } from './designTokens/colors' // Fixed path
+import { fontSize } from './designTokens/typography' // Fixed path
 
 export const mainWrapper = style([
   tokens({
@@ -11,20 +11,20 @@ export const mainWrapper = style([
     flexDirection: 'column',
     alignItems: 'center',
   }),
-]);
+])
 
 export const pageMaxWidth = style([
   tokens({ width: 'col-12', marginLeft: 'auto', marginRight: 'auto' }),
   {
     maxWidth: 1280,
   },
-]);
+])
 
 export const contentPadding = style([
   tokens({
     paddingX: { 'xs-min': 16, 'md-min': 24, 'lg-min': 48 },
   }),
-]);
+])
 
 export const subPageWrapper = style([
   tokens({
@@ -32,7 +32,7 @@ export const subPageWrapper = style([
   }),
   pageMaxWidth,
   contentPadding,
-]);
+])
 
 export const centerContent = style([
   tokens({
@@ -41,20 +41,20 @@ export const centerContent = style([
     alignItems: 'center',
     padding: 12,
   }),
-]);
+])
 
 export const heroWrapper = style([
   tokens({
     marginY: 12,
     textAlign: 'center',
   }),
-]);
+])
 
 export const image = style({
   maxWidth: '100%',
   height: 'auto',
   display: 'block',
-});
+})
 
 export const table = style([
   tokens({
@@ -63,13 +63,13 @@ export const table = style([
   {
     fontSize: fontSize.sizeFont4,
   },
-]);
+])
 
 export const thead = style({
   color: color.brand.yellow,
   backgroundColor: color.brand.navy,
   fontWeight: 600,
-});
+})
 
 export const th = style([
   tokens({
@@ -84,7 +84,7 @@ export const th = style([
       },
     },
   },
-]);
+])
 
 export const tr = style({
   borderBottom: `1px solid ${color.tableBorder}`,
@@ -93,7 +93,7 @@ export const tr = style({
       backgroundColor: color.brand.gray,
     },
   },
-});
+})
 
 export const td = style([
   tokens({
@@ -104,10 +104,10 @@ export const td = style([
   {
     borderLeft: `1px solid ${color.tableBorder}`,
   },
-]);
+])
 
 export const tfoot = style({
   color: color.brand.yellow,
   backgroundColor: color.brand.navy,
   fontWeight: 600,
-});
+})

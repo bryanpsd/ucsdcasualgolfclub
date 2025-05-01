@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css';
-import { tokens } from '../../styles/designTokens.css';
-import { color } from '../../styles/designTokens/colors';
+import { style } from '@vanilla-extract/css'
+import { tokens } from '../../styles/designTokens.css'
+import { color } from '../../styles/designTokens/colors'
 
 export const link = style([
   tokens({
@@ -11,11 +11,11 @@ export const link = style([
       textDecoration: 'underline',
     },
   },
-]);
+])
 
 export const jumpLink = style([
   tokens({ textDecoration: 'underline', cursor: 'pointer' }),
   {
     color: color.brand.navy,
   },
-]);
+])

@@ -1,1 +1,1 @@
-export * from './ResponsiveHeadline';
+export * from './ResponsiveHeadline'

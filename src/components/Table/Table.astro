@@ -1,22 +1,22 @@
 ---
-import * as styles from './Table.css';
+import * as styles from './Table.css'
 
 type Props = {
-  thead: string[];
-  colSpan?: number;
+  thead: string[]
+  colSpan?: number
   tbody: Array<
     Array<
       | string
       | {
-          value: string;
-          className?: string;
+          value: string
+          className?: string
         }
     >
-  >;
-  tfoot?: string[];
-};
+  >
+  tfoot?: string[]
+}
 
-const { thead, tbody, tfoot, colSpan = 0 } = Astro.props;
+const { thead, tbody, tfoot, colSpan = 0 } = Astro.props
 ---
 
 <table class={styles.table}>

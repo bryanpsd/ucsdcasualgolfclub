@@ -1,8 +1,8 @@
-import { ucsd } from '../styles/ucsd';
+import { ucsd } from '../styles/ucsd'
 
-const gutterWidth = '2.4rem';
-const outerMarginWidth = '3.2rem';
-const smallOuterMarginWidth = '1.6rem';
+const gutterWidth = '2.4rem'
+const outerMarginWidth = '3.2rem'
+const smallOuterMarginWidth = '1.6rem'
 
 const constants = {
   snackbarSize: {
@@ -57,8 +57,7 @@ const constants = {
   buttonIconSmall: '1.6rem',
   buttonIconSmallMargin: '0.4rem',
   buttonTouchRippleMargin: '-0.2rem',
-  border: (width: number, color: string): string =>
-    `0.${width}rem solid ${color}`,
+  border: (width: number, color: string): string => `0.${width}rem solid ${color}`,
   radioBoxMinHeight: '7rem',
   radioBoxWidth: '36.8rem',
   radioBoxLabelMaxWidth: '28.9rem',
@@ -182,6 +181,6 @@ const constants = {
       marginRight: '1.6rem',
     },
   },
-} as const;
+} as const
 
-export { constants };
+export { constants }

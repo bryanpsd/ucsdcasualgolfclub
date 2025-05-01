@@ -1,33 +1,33 @@
 ---
-export const prerender = true;
+export const prerender = true
 
-import { contentfulClient } from '../../lib/contentful';
+import { contentfulClient } from '../../lib/contentful'
 
-import Layout from '../../layouts/Layout.astro';
-import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse';
-import { MiniCard } from '~components/Course/MiniCard';
-import { Map } from '~components/Course/Map';
+import Layout from '../../layouts/Layout.astro'
+import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse'
+import { MiniCard } from '~components/Course/MiniCard'
+import { Map } from '~components/Course/Map'
 
-import { RichText } from '~components/RichText';
-import FlightCard from './_components/FlightCard/FlightCard.astro';
-import { Hero } from '~components/Hero';
+import { RichText } from '~components/RichText'
+import FlightCard from './_components/FlightCard/FlightCard.astro'
+import { Hero } from '~components/Hero'
 
-import { CourseInfo } from '~components/Course/CourseInfo';
+import { CourseInfo } from '~components/Course/CourseInfo'
 
-import * as commonStyles from '~styles/common.css';
-import * as styles from './_style/tournament.css';
+import * as commonStyles from '~styles/common.css'
+import * as styles from './_style/tournament.css'
 
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
     content_type: 'course',
     include: 3,
-  });
+  })
 
   const pages = entries.items
     .flatMap((item) => {
       return item.fields.tournaments?.map((tournament) => {
         if (tournament && 'fields' in tournament && tournament.fields.date) {
-          const year = new Date(tournament.fields.date).getFullYear();
+          const year = new Date(tournament.fields.date).getFullYear()
 
           return {
             params: {
@@ -71,12 +71,12 @@ export async function getStaticPaths() {
                                   longDrive: result.fields.longDrive,
                                   putts: result.fields.putts,
                                   closestTo: result.fields.closestTo,
-                                };
+                                }
                               }
                             }),
-                          };
+                          }
                         }
-                        return null;
+                        return null
                       })
                       .filter(Boolean) ?? [],
                   secondFlight:
@@ -99,26 +99,26 @@ export async function getStaticPaths() {
                                   longDrive: result.fields.longDrive,
                                   putts: result.fields.putts,
                                   closestTo: result.fields.closestTo,
-                                };
+                                }
                               }
                             }),
-                          };
+                          }
                         }
-                        return null;
+                        return null
                       })
                       .filter(Boolean) ?? [],
                 },
               ],
             },
-          };
+          }
         }
 
-        return null;
-      });
+        return null
+      })
     })
-    .filter(Boolean);
+    .filter(Boolean)
 
-  return pages;
+  return pages
 }
 
 const {
@@ -129,18 +129,15 @@ const {
   coursePar,
   tournaments = [],
   courseWebsite,
-} = Astro.props;
+} = Astro.props
 
-const allFlights = [
-  ...(tournaments[0]?.firstFlight || []),
-  ...(tournaments[0]?.secondFlight || []),
-];
+const allFlights = [...(tournaments[0]?.firstFlight || []), ...(tournaments[0]?.secondFlight || [])]
 
 const lowestGrossOverall = Math.min(
   ...allFlights
     .flatMap((player) => player?.results?.map((result) => result?.gross) || [])
     .filter((gross) => gross !== undefined && gross !== null)
-);
+)
 ---
 
 <Layout>

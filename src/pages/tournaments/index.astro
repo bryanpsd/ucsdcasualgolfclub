@@ -1,25 +1,25 @@
 ---
-import { contentfulClient } from "../../lib/contentful";
-import type { TypeCourseSkeleton } from "../../types/contentful";
+import { contentfulClient } from '../../lib/contentful'
+import type { TypeCourseSkeleton } from '../../types/contentful'
 
-import Layout from "../../layouts/Layout.astro";
-import { CourseCard } from "../../components/Course/CourseCard";
-import { Hero } from "~components/Hero";
+import Layout from '../../layouts/Layout.astro'
+import { CourseCard } from '../../components/Course/CourseCard'
+import { Hero } from '~components/Hero'
 
-import * as styles from "~styles/common.css";
+import * as styles from '~styles/common.css'
 
 const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-  content_type: "course",
-});
+  content_type: 'course',
+})
 
 const getTournaments = entries.items
   .flatMap((item) => {
     return item.fields.tournaments?.map((tournament) => {
       if (
         tournament &&
-        "fields" in tournament &&
+        'fields' in tournament &&
         tournament.fields.date &&
-        new Date(tournament.fields.date) > new Date("2024-12-05")
+        new Date(tournament.fields.date) > new Date('2024-12-05')
       ) {
         return {
           ...item.fields,
@@ -32,26 +32,25 @@ const getTournaments = entries.items
               inclusions: tournament.fields.inclusions,
               tees: tournament.fields.tees,
               results:
-                tournament.fields.results &&
-                "fields" in tournament.fields.results
+                tournament.fields.results && 'fields' in tournament.fields.results
                   ? (tournament.fields.results.fields.file?.url ?? null)
                   : null,
               clubChampionship: tournament.fields.clubChampionship ?? false,
             },
           ],
-        };
+        }
       }
-      return null;
-    });
+      return null
+    })
   })
   .filter(Boolean)
   .sort(
     (a, b) =>
       new Date(a?.tournaments?.[0]?.date ?? 0).getTime() -
       new Date(b?.tournaments?.[0]?.date ?? 0).getTime()
-  );
+  )
 
-const getCurrentYear = new Date().getFullYear();
+const getCurrentYear = new Date().getFullYear()
 ---
 
 <Layout>

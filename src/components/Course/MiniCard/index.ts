@@ -1,1 +1,1 @@
-export { default as MiniCard } from './MiniCard.astro';
+export { default as MiniCard } from './MiniCard.astro'

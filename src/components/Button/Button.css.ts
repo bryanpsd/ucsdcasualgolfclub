@@ -1,6 +1,6 @@
-import { globalStyle, style } from '@vanilla-extract/css';
-import { type RecipeVariants, recipe } from '@vanilla-extract/recipes';
-import { tokens } from '../../styles/designTokens.css';
+import { globalStyle, style } from '@vanilla-extract/css'
+import { type RecipeVariants, recipe } from '@vanilla-extract/recipes'
+import { tokens } from '../../styles/designTokens.css'
 
 export const baseButton = style([
   tokens({
@@ -22,7 +22,7 @@ export const baseButton = style([
     transitionTimingFunction: 'ease-in',
     outlineOffset: '.2rem',
   },
-]);
+])
 
 export const button = recipe({
   base: [
@@ -146,14 +146,14 @@ export const button = recipe({
     variant: 'outlined',
     color: 'primary',
   },
-});
+})
 
 export const buttonLabel = tokens({
   display: 'flex',
   alignItems: 'center',
   alignContent: 'center',
   justifyContent: 'center',
-});
+})
 
 export const buttonIcon = recipe({
   base: [
@@ -251,20 +251,20 @@ export const buttonIcon = recipe({
   defaultVariants: {
     size: 'medium',
   },
-});
+})
 
 globalStyle(`${buttonIcon.classNames.base}`, {
   transition: 'fill 250ms ease-in-out', // Smooth transition for color changes
-});
+})
 
 globalStyle(`${buttonIcon.classNames.variants.size.small} > *:first-child`, {
   fontSize: '1.6rem',
-});
+})
 globalStyle(`${buttonIcon.classNames.variants.size.medium} > *:first-child`, {
   fontSize: '2.0rem',
-});
+})
 globalStyle(`${buttonIcon.classNames.variants.size.large} > *:first-child`, {
   fontSize: '2.2rem',
-});
+})
 
-export type ButtonVariants = RecipeVariants<typeof button>;
+export type ButtonVariants = RecipeVariants<typeof button>

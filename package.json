@@ -8,6 +8,8 @@
     "check": "astro check",
     "preview": "astro preview",
     "astro": "astro",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
     "cf-export": "contentful space export --config src/contentful/export-config.json --management-token $CONTENTFUL_DELIVERY_TOKEN --space-id $CONTENTFUL_SPACE_ID",
     "cf-generate-types": "cf-content-types-generator src/contentful/export.json --v10 --typeguard --out src/types/contentful"
   },
@@ -42,6 +44,8 @@
     "@svgr/plugin-svgo": "^8.1.0",
     "@vanilla-extract/vite-plugin": "^3.9.5",
     "cf-content-types-generator": "^2.15.5",
+    "prettier": "^3.5.3",
+    "prettier-plugin-astro": "^0.14.1",
     "vite-plugin-svgr": "^4.3.0"
   }
 }

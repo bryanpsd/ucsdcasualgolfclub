@@ -1,60 +1,47 @@
 ---
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
-import { Table } from "~components/Table";
-import * as styles from "./FlightCard.css";
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
+import { Table } from '~components/Table'
+import * as styles from './FlightCard.css'
 
 interface FlightCardProps {
-  title: string;
+  title: string
   flight: Array<{
-    playerName: string;
-    handicapIndex?: number;
-    guest?: string[];
+    playerName: string
+    handicapIndex?: number
+    guest?: string[]
     results?: Array<{
-      gross?: number;
-      courseHandicap?: number;
-      index?: number;
-      net?: number;
-      course?: { fields: { course: string } };
-      longDrive?: string;
-      putts?: number;
-      closestTo?: string[];
-    }>;
-  }>;
-  currentCourse: string;
-  lowestGrossOverall?: number;
+      gross?: number
+      courseHandicap?: number
+      index?: number
+      net?: number
+      course?: { fields: { course: string } }
+      longDrive?: string
+      putts?: number
+      closestTo?: string[]
+    }>
+  }>
+  currentCourse: string
+  lowestGrossOverall?: number
 }
 
-const { title, flight, currentCourse, lowestGrossOverall } =
-  Astro.props as FlightCardProps;
+const { title, flight, currentCourse, lowestGrossOverall } = Astro.props as FlightCardProps
 
 const hasResultsForCurrentCourse = flight.some((player) =>
-  player.results?.some(
-    (result) => result.course?.fields.course === currentCourse
-  )
-);
+  player.results?.some((result) => result.course?.fields.course === currentCourse)
+)
 
 const tableHeaders = [
-  "Player",
-  ...(hasResultsForCurrentCourse ? [] : ["Index"]),
+  'Player',
+  ...(hasResultsForCurrentCourse ? [] : ['Index']),
   ...(hasResultsForCurrentCourse
-    ? [
-        "Index",
-        "Gross",
-        "Course Handicap",
-        "Net",
-        "Putts",
-        "Closest To",
-        "Long Drive",
-      ]
+    ? ['Index', 'Gross', 'Course Handicap', 'Net', 'Putts', 'Closest To', 'Long Drive']
     : []),
-];
+]
 
 const filteredResults = flight.map((player) => ({
   ...player,
-  results: player.results?.filter(
-    (result) => result.course?.fields.course === currentCourse
-  ),
-}));
+  results: player.results?.filter((result) => result.course?.fields.course === currentCourse),
+}))
 ---
 
 <div class={styles.flightCardWrapper}>
@@ -65,65 +52,62 @@ const filteredResults = flight.map((player) => ({
     <Table
       thead={tableHeaders}
       tbody={filteredResults.map((player) => {
-        const isLowestGrossOverall =
-          player.results?.[0]?.gross === lowestGrossOverall;
+        const isLowestGrossOverall = player.results?.[0]?.gross === lowestGrossOverall
 
         const lowestNet = Math.min(
           ...filteredResults
             .flatMap((p) => p.results?.map((result) => result.net) || [])
             .filter((net) => net !== undefined && net !== null)
-        );
+        )
 
         const lowestPutts = Math.min(
           ...filteredResults
             .flatMap((p) => p.results?.map((result) => result.putts) || [])
             .filter((putts) => putts !== undefined && putts !== null)
-        );
+        )
 
-        const isLowestNet = player.results?.[0]?.net === lowestNet;
-        const isLowestPutts = player.results?.[0]?.putts === lowestPutts;
-        const hasLongDrive = player.results?.[0]?.longDrive !== undefined;
-        const hasClosestTo = player.results?.[0]?.closestTo !== undefined;
+        const isLowestNet = player.results?.[0]?.net === lowestNet
+        const isLowestPutts = player.results?.[0]?.putts === lowestPutts
+        const hasLongDrive = player.results?.[0]?.longDrive !== undefined
+        const hasClosestTo = player.results?.[0]?.closestTo !== undefined
 
         if (!player.results || player.results.length === 0) {
           return [
-            player.guest?.includes("Yes")
+            player.guest?.includes('Yes')
               ? `${player.playerName} (Guest)`
-              : player.playerName || "Unknown",
-            player.handicapIndex !== undefined
-              ? String(player.handicapIndex)
-              : "NH",
-          ];
+              : player.playerName || 'Unknown',
+            player.handicapIndex !== undefined ? String(player.handicapIndex) : 'NH',
+          ]
         } else {
           return [
-            player.guest?.includes("Yes")
+            player.guest?.includes('Yes')
               ? `${player.playerName} (Guest)`
-              : player.playerName || "Unknown",
+              : player.playerName || 'Unknown',
 
-            String(player.results?.[0]?.index ?? "NH"),
+            String(player.results?.[0]?.index ?? 'NH'),
             {
-              value: String(player.results?.[0]?.gross ?? ""),
+              value: String(player.results?.[0]?.gross ?? ''),
               className: isLowestGrossOverall ? styles.highlighted : undefined,
             },
-            String(player.results?.[0]?.courseHandicap ?? ""),
+            String(player.results?.[0]?.courseHandicap ?? ''),
 
             {
-              value: String(player.results?.[0]?.net ?? ""),
+              value: String(player.results?.[0]?.net ?? ''),
               className: isLowestNet ? styles.highlighted : undefined,
             },
             {
-              value: String(player.results?.[0]?.putts ?? ""),
+              value: String(player.results?.[0]?.putts ?? ''),
               className: isLowestPutts ? styles.highlighted : undefined,
             },
             {
-              value: String(player.results?.[0]?.closestTo ?? ""),
+              value: String(player.results?.[0]?.closestTo ?? ''),
               className: hasClosestTo ? styles.highlighted : undefined,
             },
             {
-              value: String(player.results?.[0]?.longDrive ?? ""),
+              value: String(player.results?.[0]?.longDrive ?? ''),
               className: hasLongDrive ? styles.highlighted : undefined,
             },
-          ];
+          ]
         }
       })}
     />

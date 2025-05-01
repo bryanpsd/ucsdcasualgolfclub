@@ -1,7 +1,7 @@
-import { style } from '@vanilla-extract/css';
-import { tokens } from '../../../styles/designTokens.css';
-import { color } from '../../../styles/designTokens/colors';
-import { recipe } from '@vanilla-extract/recipes';
+import { style } from '@vanilla-extract/css'
+import { tokens } from '../../../styles/designTokens.css'
+import { color } from '../../../styles/designTokens/colors'
+import { recipe } from '@vanilla-extract/recipes'
 
 export const courseCardDetails = style([
   tokens({
@@ -12,7 +12,7 @@ export const courseCardDetails = style([
     width: { 'xs-min': 'col-12', 'md-min': 'col-6' },
     gap: 8,
   }),
-]);
+])
 
 export const courseCardDetailsWrapper = recipe({
   base: [
@@ -31,13 +31,13 @@ export const courseCardDetailsWrapper = recipe({
       },
     },
   },
-});
+})
 
 export const courseCardList = style([
   tokens({
     display: 'flex',
   }),
-]);
+])
 
 export const courseCardListItem = recipe({
   base: [
@@ -68,7 +68,7 @@ export const courseCardListItem = recipe({
       },
     },
   },
-});
+})
 
 export const coursePrice = recipe({
   variants: {
@@ -81,7 +81,7 @@ export const coursePrice = recipe({
       },
     },
   },
-});
+})
 
 export const icons = recipe({
   variants: {
@@ -94,7 +94,7 @@ export const icons = recipe({
       },
     },
   },
-});
+})
 
 export const courseCardDetailsList = recipe({
   base: [
@@ -115,10 +115,10 @@ export const courseCardDetailsList = recipe({
       },
     },
   },
-});
+})
 
 export const courseCardDetailsListItem = style([
   tokens({
     display: 'flex',
   }),
-]);
+])

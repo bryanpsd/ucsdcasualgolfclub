@@ -1,23 +1,18 @@
 ---
-import defaultBackgroundImage from '../../assets/admiral-baker-south-bg.jpg';
+import defaultBackgroundImage from '../../assets/admiral-baker-south-bg.jpg'
 
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 
-import * as styles from './Hero.css';
+import * as styles from './Hero.css'
 
-const { course, title, courseImage } = Astro.props;
+const { course, title, courseImage } = Astro.props
 
-const headline = course || title;
+const headline = course || title
 ---
 
 <section class={styles.heroWrapper}>
   <div class={styles.heroColLeft}>
-    <ResponsiveHeadline
-      className={styles.heroHeadline}
-      size={2}
-      as="h1"
-      color="inverse"
-    >
+    <ResponsiveHeadline className={styles.heroHeadline} size={2} as="h1" color="inverse">
       {headline}</ResponsiveHeadline
     >
   </div>

@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css';
-import { type RecipeVariants, recipe } from '@vanilla-extract/recipes';
-import { tokens } from '../../styles/designTokens.css';
+import { style } from '@vanilla-extract/css'
+import { type RecipeVariants, recipe } from '@vanilla-extract/recipes'
+import { tokens } from '../../styles/designTokens.css'
 
 export const svgIcon = recipe({
   base: style([
@@ -28,6 +28,6 @@ export const svgIcon = recipe({
       'extra-small': tokens({ width: 14, marginRight: 3 }),
     },
   },
-});
+})
 
-export type SvgIconVariants = RecipeVariants<typeof svgIcon>;
+export type SvgIconVariants = RecipeVariants<typeof svgIcon>

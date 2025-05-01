@@ -1,8 +1,5 @@
-import type { CSSProperties } from 'react';
-import {
-  documentToReactComponents,
-  type Options,
-} from '@contentful/rich-text-react-renderer';
+import type { CSSProperties } from 'react'
+import { documentToReactComponents, type Options } from '@contentful/rich-text-react-renderer'
 import {
   type Document,
   type Block,
@@ -10,30 +7,30 @@ import {
   BLOCKS,
   INLINES,
   MARKS,
-} from '@contentful/rich-text-types';
-import { replaceAllSpecialChars } from '../../utils/StringUtils';
-import { concatClasses } from '../../utils/concatClasses';
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline';
-import { Typography, type TypographyProps } from '~components/Typography';
-import { Link } from '~components/Link';
-import { List, ListItem } from './List';
+} from '@contentful/rich-text-types'
+import { replaceAllSpecialChars } from '../../utils/StringUtils'
+import { concatClasses } from '../../utils/concatClasses'
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
+import { Typography, type TypographyProps } from '~components/Typography'
+import { Link } from '~components/Link'
+import { List, ListItem } from './List'
 
-import * as styles from '~components/TextBlockSection/TextBlockSection.css';
+import * as styles from '~components/TextBlockSection/TextBlockSection.css'
 
-const BODY_TYPOGRAPHY_VARIANT: TypographyProps['variant'] = 'bodyMd';
+const BODY_TYPOGRAPHY_VARIANT: TypographyProps['variant'] = 'bodyMd'
 
 export type TextBlockSectionProps = {
-  text?: Document;
-  options?: Options;
-  id?: string;
-  className?: string;
-  style?: CSSProperties;
-};
+  text?: Document
+  options?: Options
+  id?: string
+  className?: string
+  style?: CSSProperties
+}
 
 function generateId(node: Block | Inline): string {
-  const { content } = node;
-  const value = content[0] && 'value' in content[0] ? content[0].value : '';
-  return replaceAllSpecialChars(value, '-');
+  const { content } = node
+  const value = content[0] && 'value' in content[0] ? content[0].value : ''
+  return replaceAllSpecialChars(value, '-')
 }
 
 /**
@@ -46,32 +43,17 @@ const textBlockSectionOptions: Options = {
   renderNode: {
     // headings
     [BLOCKS.HEADING_1]: (node, children) => (
-      <ResponsiveHeadline
-        className={styles.h1}
-        size={3}
-        as="h1"
-        id={generateId(node)}
-      >
+      <ResponsiveHeadline className={styles.h1} size={3} as="h1" id={generateId(node)}>
         {children}
       </ResponsiveHeadline>
     ),
     [BLOCKS.HEADING_2]: (node, children) => (
-      <ResponsiveHeadline
-        className={styles.h2}
-        size={2}
-        as="h2"
-        id={generateId(node)}
-      >
+      <ResponsiveHeadline className={styles.h2} size={2} as="h2" id={generateId(node)}>
         {children}
       </ResponsiveHeadline>
     ),
     [BLOCKS.HEADING_3]: (node, children) => (
-      <ResponsiveHeadline
-        className={styles.h3}
-        size={1}
-        as="h3"
-        id={generateId(node)}
-      >
+      <ResponsiveHeadline className={styles.h3} size={1} as="h3" id={generateId(node)}>
         {children}
       </ResponsiveHeadline>
     ),
@@ -107,29 +89,22 @@ const textBlockSectionOptions: Options = {
 
     // Links
     [INLINES.HYPERLINK]: (node, children) => {
-      const isJumpLink = node.data.uri.startsWith('#');
+      const isJumpLink = node.data.uri.startsWith('#')
       return (
         <Link href={node.data.uri} jumpLink={isJumpLink}>
           {children}
         </Link>
-      );
+      )
     },
   },
 
   renderMark: {
-    [MARKS.BOLD]: (children) => (
-      <span style={{ fontWeight: 500 }}>{children}</span>
-    ),
+    [MARKS.BOLD]: (children) => <span style={{ fontWeight: 500 }}>{children}</span>,
     [MARKS.SUBSCRIPT]: (children) => (
       // Subscript is being used to apply disclaimer text styling. In order to get the text styling
       // to apply to the `Disclaimer` popover `linkText` the styles needed to be applied to the
       // parent container. See the `body` style in `TextBlockSection.css.ts` for more details.
-      <Typography
-        as="span"
-        variant="inherit"
-        color="inherit"
-        data-disclaimer-style="true"
-      >
+      <Typography as="span" variant="inherit" color="inherit" data-disclaimer-style="true">
         {children}
       </Typography>
     ),
@@ -137,7 +112,7 @@ const textBlockSectionOptions: Options = {
       <span style={{ textDecoration: 'underline' }}>{children}</span>
     ),
   },
-};
+}
 
 export const TextBlockSection = ({
   id,
@@ -146,14 +121,10 @@ export const TextBlockSection = ({
   text,
   options,
 }: TextBlockSectionProps) => {
-  if (!text) return null;
+  if (!text) return null
 
   return (
-    <div
-      id={id}
-      className={concatClasses([styles.richTextContainer, className])}
-      style={style}
-    >
+    <div id={id} className={concatClasses([styles.richTextContainer, className])} style={style}>
       {documentToReactComponents(text, {
         ...textBlockSectionOptions,
         ...options,
@@ -167,5 +138,5 @@ export const TextBlockSection = ({
         },
       })}
     </div>
-  );
-};
+  )
+}

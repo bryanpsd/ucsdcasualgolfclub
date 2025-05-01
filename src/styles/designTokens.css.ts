@@ -1,8 +1,8 @@
-import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles';
-import { breakpoints } from './designTokens/breakpoints';
+import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
+import { breakpoints } from './designTokens/breakpoints'
 
-import { vars } from '../styles/theme.css';
-import { objectKeys } from '../types';
+import { vars } from '../styles/theme.css'
+import { objectKeys } from '../types'
 
 export const breakpointQuery = {
   xs: `screen and (min-width: ${breakpoints.xs}px) and (max-width: ${
@@ -37,15 +37,15 @@ export const breakpointQuery = {
   'md-max': `screen and (max-width: ${Number(breakpoints.md) - 0.05}px)`,
   'lg-max': `screen and (max-width: ${Number(breakpoints.lg) - 0.05}px)`,
   'xl-max': `screen and (max-width: ${Number(breakpoints.xl) - 0.05}px)`,
-} as const;
+} as const
 
 const mediaQueryBreakpoints = objectKeys(breakpointQuery).reduce(
   (acc, breakpoint) => {
-    acc[breakpoint] = { '@media': breakpointQuery[breakpoint] };
-    return acc;
+    acc[breakpoint] = { '@media': breakpointQuery[breakpoint] }
+    return acc
   },
   {} as Record<keyof typeof breakpointQuery, { '@media': string }>
-);
+)
 
 // *******************************************************************
 // * Theme Variable Destructuring                                    *
@@ -60,7 +60,7 @@ const {
   lineHeight,
   fontFamily,
   duration,
-} = vars;
+} = vars
 // *******************************************************************
 
 // *******************************************************************
@@ -71,7 +71,7 @@ const {
 // destructuring and spreading to map nested variables to
 const colors = {
   ...color,
-};
+}
 
 const colorProperties = defineProperties({
   conditions: {
@@ -111,7 +111,7 @@ const colorProperties = defineProperties({
     background: { ...colors, ...surface, ...brand },
     backgroundColor: { ...colors, ...surface, ...brand },
   },
-});
+})
 // *******************************************************************
 
 // *******************************************************************
@@ -133,7 +133,7 @@ const typographyProperties = defineProperties({
     textOverflow: ['ellipsis', 'clip', 'unset'],
     whiteSpace: ['normal', 'nowrap', 'pre', 'pre-wrap', 'pre-line'],
   },
-});
+})
 // *******************************************************************
 
 // *******************************************************************
@@ -163,7 +163,7 @@ const spacingProperties = defineProperties({
     paddingX: ['paddingLeft', 'paddingRight'],
     paddingY: ['paddingTop', 'paddingBottom'],
   },
-});
+})
 // *******************************************************************
 
 // *******************************************************************
@@ -195,7 +195,7 @@ const borderProperties = defineProperties({
     borderWidthX: ['borderRightWidth', 'borderLeftWidth'],
     borderWidthY: ['borderTopWidth', 'borderBottomWidth'],
   },
-});
+})
 // *******************************************************************
 
 // *******************************************************************
@@ -215,7 +215,7 @@ const sizingProperties = defineProperties({
     minHeight: space,
     maxHeight: space,
   },
-});
+})
 // *******************************************************************
 
 // *******************************************************************
@@ -268,31 +268,9 @@ const displayProperties = defineProperties({
       'space-evenly',
       'inherit',
     ],
-    justifyItems: [
-      'stretch',
-      'start',
-      'left',
-      'right',
-      'center',
-      'end',
-      'inherit',
-    ],
-    alignItems: [
-      'flex-start',
-      'center',
-      'flex-end',
-      'stretch',
-      'baseline',
-      'inherit',
-    ],
-    alignSelf: [
-      'flex-start',
-      'center',
-      'flex-end',
-      'stretch',
-      'baseline',
-      'inherit',
-    ],
+    justifyItems: ['stretch', 'start', 'left', 'right', 'center', 'end', 'inherit'],
+    alignItems: ['flex-start', 'center', 'flex-end', 'stretch', 'baseline', 'inherit'],
+    alignSelf: ['flex-start', 'center', 'flex-end', 'stretch', 'baseline', 'inherit'],
     alignContent: [
       'center',
       'flex-start',
@@ -321,7 +299,7 @@ const displayProperties = defineProperties({
   shorthands: {
     overflow: ['overflowX', 'overflowY'],
   },
-});
+})
 
 // *******************************************************************
 
@@ -333,7 +311,7 @@ const animationProperties = defineProperties({
   properties: {
     transitionDuration: duration,
   },
-});
+})
 
 // *******************************************************************
 
@@ -345,5 +323,5 @@ export const tokens = createSprinkles(
   borderProperties,
   sizingProperties,
   animationProperties
-);
-export type Tokens = NonNullable<Parameters<typeof tokens>[0]>;
+)
+export type Tokens = NonNullable<Parameters<typeof tokens>[0]>

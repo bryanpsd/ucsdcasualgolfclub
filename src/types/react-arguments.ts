@@ -1,7 +1,7 @@
-import type { ForwardedRef } from 'react';
+import type { ForwardedRef } from 'react'
 
 declare module 'react' {
   function forwardRef<T, P = unknown>(
     render: (props: P, ref: ForwardedRef<T>) => ReactElement | null
-  ): (props: P & RefAttributes<T>) => ReactElement | null;
+  ): (props: P & RefAttributes<T>) => ReactElement | null
 }

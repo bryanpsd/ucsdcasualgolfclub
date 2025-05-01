@@ -1,32 +1,30 @@
-import { type ElementType, forwardRef } from 'react';
+import { type ElementType, forwardRef } from 'react'
 
 import {
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
-} from '../../types/PolymorphicComponent';
-import { concatClasses } from '~utils/concatClasses';
+} from '../../types/PolymorphicComponent'
+import { concatClasses } from '~utils/concatClasses'
 
-import { type TypographyVariants, typography } from './Typography.css';
+import { type TypographyVariants, typography } from './Typography.css'
 
-export type VariantNames = NonNullable<
-  NonNullable<TypographyVariants>['variant']
->;
+export type VariantNames = NonNullable<NonNullable<TypographyVariants>['variant']>
 
-const defaultElement: ElementType = 'p';
+const defaultElement: ElementType = 'p'
 
 export type TypographyProps<
   C extends ElementType = typeof defaultElement,
-  V extends VariantNames = VariantNames
+  V extends VariantNames = VariantNames,
 > = PolymorphicComponentPropWithRef<
   C,
   TypographyVariants & {
-    variant?: V;
-    className?: string;
+    variant?: V
+    className?: string
   }
->;
+>
 
 export const Typography = forwardRef(function TypographyComponent<
-  C extends ElementType = typeof defaultElement
+  C extends ElementType = typeof defaultElement,
 >(
   {
     as: asComponent,
@@ -43,7 +41,7 @@ export const Typography = forwardRef(function TypographyComponent<
   }: TypographyProps<C>,
   ref: PolymorphicRef<C>
 ) {
-  const Component = asComponent ?? defaultElement;
+  const Component = asComponent ?? defaultElement
 
   return (
     <Component
@@ -64,9 +62,9 @@ export const Typography = forwardRef(function TypographyComponent<
     >
       {children}
     </Component>
-  );
-});
+  )
+})
 
 // @ts-expect-error - Disabling error because forwardRef declaration in react-augment.d.ts
 // doesn't currently have the displayName property for React components
-Typography.displayName = 'Typography';
+Typography.displayName = 'Typography'

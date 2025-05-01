@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css';
-import { recipe } from '@vanilla-extract/recipes';
-import { tokens } from '../../../styles/designTokens.css';
+import { style } from '@vanilla-extract/css'
+import { recipe } from '@vanilla-extract/recipes'
+import { tokens } from '../../../styles/designTokens.css'
 
 export const list = recipe({
   base: [
@@ -24,7 +24,7 @@ export const list = recipe({
       },
     },
   },
-});
+})
 
 export const listItem = style({
   selectors: {
@@ -32,4 +32,4 @@ export const listItem = style({
       marginTop: 20,
     },
   },
-});
+})

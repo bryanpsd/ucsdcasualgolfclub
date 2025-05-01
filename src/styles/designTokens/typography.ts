@@ -1,16 +1,13 @@
-import { ucsd } from '../../styles/ucsd';
-import { type Flatten, objectKeys } from '../../types';
+import { ucsd } from '../../styles/ucsd'
+import { type Flatten, objectKeys } from '../../types'
 
-const { variants } = ucsd.typography;
+const { variants } = ucsd.typography
 
-type Variants = typeof variants;
-type TypographyFacetMap<
-  Vars extends Variants,
-  Fac extends keyof Vars[keyof Vars]
-> = {
+type Variants = typeof variants
+type TypographyFacetMap<Vars extends Variants, Fac extends keyof Vars[keyof Vars]> = {
   // remove readonly, map variant names to facet values
-  -readonly [K in keyof Vars]: Vars[K][Fac];
-};
+  -readonly [K in keyof Vars]: Vars[K][Fac]
+}
 
 /**
  *
@@ -22,11 +19,14 @@ const extractTypographyFacet = <V extends Variants, F extends keyof V[keyof V]>(
   variants: V,
   facet: F
 ) => {
-  return objectKeys(variants).reduce((acc, variant) => {
-    acc[variant] = variants[variant][facet];
-    return acc;
-  }, {} as Flatten<TypographyFacetMap<V, F>>);
-};
+  return objectKeys(variants).reduce(
+    (acc, variant) => {
+      acc[variant] = variants[variant][facet]
+      return acc
+    },
+    {} as Flatten<TypographyFacetMap<V, F>>
+  )
+}
 
 /**
  * Typography related tokens for consumption in theme.css.ts
@@ -34,13 +34,13 @@ const extractTypographyFacet = <V extends Variants, F extends keyof V[keyof V]>(
 
 export const fontFamily = {
   base: ['Roboto', 'serif'].join(', '),
-};
+}
 export const fontWeight = {
   fontWeight300: '300',
   fontWeight400: '400',
   fontWeight500: '500',
   fontWeight700: '700',
-} as const;
+} as const
 // export const fontSize = extractTypographyFacet(variants, 'fontSize');
 export const fontSize = {
   sizeFont1: '10px',
@@ -59,7 +59,7 @@ export const fontSize = {
   sizeFont14: '64px',
   sizeFont15: '90px',
   sizeFont16: '96px',
-} as const;
+} as const
 // export const lineHeight = extractTypographyFacet(variants, 'lineHeight');
 export const lineHeight = {
   sizeLineHeight1: '12px',
@@ -78,4 +78,4 @@ export const lineHeight = {
   sizeLineHeight14: '80px',
   sizeLineHeight15: '96px',
   sizeLineHeight16: '120px',
-} as const;
+} as const

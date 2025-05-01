@@ -1,66 +1,56 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { contentfulClient } from '../../lib/contentful';
-import type {
-  TypeCourseSkeleton,
-  TypeSimplePageSkeleton,
-} from '../../types/contentful';
+import Layout from '../../layouts/Layout.astro'
+import { contentfulClient } from '../../lib/contentful'
+import type { TypeCourseSkeleton, TypeSimplePageSkeleton } from '../../types/contentful'
 
-import { RichText } from '~components/RichText';
-import { MiniCard } from '~components/Course/MiniCard';
-import { Leaderboard } from '~components/Leaderboard';
-import { Table } from '~components/Table';
+import { RichText } from '~components/RichText'
+import { MiniCard } from '~components/Course/MiniCard'
+import { Leaderboard } from '~components/Leaderboard'
+import { Table } from '~components/Table'
 
-import type { TypeTournamentSkeleton } from '~types/contentful/TypeTournament';
-import type { Entry } from 'contentful';
+import type { TypeTournamentSkeleton } from '~types/contentful/TypeTournament'
+import type { Entry } from 'contentful'
 
-import * as styles from './HomePage.css';
+import * as styles from './HomePage.css'
 
 // Fetch simplePage entries
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
   content_type: 'simplePage',
   'fields.title': 'Home',
-});
+})
 
 // Fetch course and tournament data
 const courseEntries = await contentfulClient.getEntries<TypeCourseSkeleton>({
   content_type: 'course',
-});
+})
 
 // Find the first upcoming tournament date
 const upcomingTournament = courseEntries.items
   .flatMap((course) => course.fields.tournaments ?? []) // Flatten all tournaments
   .filter(
-    (
-      tournament
-    ): tournament is Entry<TypeTournamentSkeleton, undefined, string> =>
+    (tournament): tournament is Entry<TypeTournamentSkeleton, undefined, string> =>
       tournament &&
       'fields' in tournament &&
       tournament.fields.date &&
       new Date(tournament.fields.date) > new Date() // Filter for future dates
   )
   .sort(
-    (a, b) =>
-      new Date(a.fields.date).getTime() - new Date(b.fields.date).getTime() // Sort by date ascending
-  )[0]; // Get the earliest upcoming tournament
+    (a, b) => new Date(a.fields.date).getTime() - new Date(b.fields.date).getTime() // Sort by date ascending
+  )[0] // Get the earliest upcoming tournament
 
 // Extract relevant data
-const tournamentDate = upcomingTournament?.fields.date ?? 'TBD';
-const tournamentPrices = upcomingTournament?.fields.prices ?? [];
-const tournamentPlayers = upcomingTournament?.fields.players ?? 'N/A';
-const tournamentInclusions = upcomingTournament?.fields.inclusions ?? [];
+const tournamentDate = upcomingTournament?.fields.date ?? 'TBD'
+const tournamentPrices = upcomingTournament?.fields.prices ?? []
+const tournamentPlayers = upcomingTournament?.fields.players ?? 'N/A'
+const tournamentInclusions = upcomingTournament?.fields.inclusions ?? []
 const courseName =
   courseEntries.items.find((course) =>
-    course.fields.tournaments?.some(
-      (tournament) => tournament === upcomingTournament
-    )
-  )?.fields.course ?? 'Unknown Course';
+    course.fields.tournaments?.some((tournament) => tournament === upcomingTournament)
+  )?.fields.course ?? 'Unknown Course'
 
 const courseSlug = courseEntries.items.find((course) =>
-  course.fields.tournaments?.some(
-    (tournament) => tournament === upcomingTournament
-  )
-)?.fields.slug;
+  course.fields.tournaments?.some((tournament) => tournament === upcomingTournament)
+)?.fields.slug
 ---
 
 <Layout
@@ -85,9 +75,7 @@ const courseSlug = courseEntries.items.find((course) =>
       {
         entries.items.map((item) => (
           <section class={styles.leftCol}>
-            {item.fields.content && (
-              <RichText richText={item.fields.content} client:load />
-            )}
+            {item.fields.content && <RichText richText={item.fields.content} client:load />}
           </section>
         ))
       }

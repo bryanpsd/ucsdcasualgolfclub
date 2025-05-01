@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css';
-import { tokens } from '../../styles/designTokens.css';
-import { contentPadding, pageMaxWidth } from '../../styles/common.css';
+import { style } from '@vanilla-extract/css'
+import { tokens } from '../../styles/designTokens.css'
+import { contentPadding, pageMaxWidth } from '../../styles/common.css'
 
 export const homeWrapper = style([
   tokens({
@@ -8,7 +8,7 @@ export const homeWrapper = style([
     flexDirection: 'column',
     width: 'col-12',
   }),
-]);
+])
 
 export const homeHero = style([
   tokens({
@@ -22,7 +22,7 @@ export const homeHero = style([
     backgroundPosition: 'center',
     height: '300px',
   },
-]);
+])
 
 export const homeColWrapper = style([
   tokens({
@@ -34,14 +34,14 @@ export const homeColWrapper = style([
   }),
   pageMaxWidth,
   contentPadding,
-]);
+])
 
 export const leftCol = style([
   tokens({
     display: 'flex',
     width: { 'xs-min': 'col-12', 'lg-min': 'col-8' },
   }),
-]);
+])
 
 export const rightCol = style([
   tokens({
@@ -50,4 +50,4 @@ export const rightCol = style([
     width: { 'xs-min': 'col-12', 'lg-min': 'col-4' },
     gap: 24,
   }),
-]);
+])

@@ -1,4 +1,4 @@
-import type { FlatMut } from '../types';
+import type { FlatMut } from '../types'
 
 const constUCSD = {
   typography: {
@@ -82,6 +82,6 @@ const constUCSD = {
       },
     },
   },
-} as const;
+} as const
 
-export const ucsd = constUCSD as FlatMut<typeof constUCSD>;
+export const ucsd = constUCSD as FlatMut<typeof constUCSD>

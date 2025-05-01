@@ -1,17 +1,17 @@
-import { type Options } from '@contentful/rich-text-react-renderer';
-import { type Document } from '@contentful/rich-text-types';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
-import { Link } from '~components/Link';
-import { TextBlockSection } from '~components/TextBlockSection';
-import { Typography } from '~components/Typography';
-import type { TypeBannerProps } from '~types/contentful/TypeBanner';
+import { type Options } from '@contentful/rich-text-react-renderer'
+import { type Document } from '@contentful/rich-text-types'
+import { BLOCKS, INLINES } from '@contentful/rich-text-types'
+import { Link } from '~components/Link'
+import { TextBlockSection } from '~components/TextBlockSection'
+import { Typography } from '~components/Typography'
+import type { TypeBannerProps } from '~types/contentful/TypeBanner'
 
-import * as styles from './Banner.css';
+import * as styles from './Banner.css'
 
 export type BannerProps = {
-  banner: TypeBannerProps[];
-  currentPath: string;
-};
+  banner: TypeBannerProps[]
+  currentPath: string
+}
 
 const bannerOptions: Options = {
   renderNode: {
@@ -25,24 +25,21 @@ const bannerOptions: Options = {
         <Link className={styles.bannerLink} href={node.data.uri} jumpLink>
           {children}
         </Link>
-      );
+      )
     },
   },
-};
+}
 
 export const Banner = ({ banner, currentPath }: BannerProps) => {
-  const globalBanner = banner.find((item) => item.global);
-  const pageBanner = banner.find((item) => item.pages?.includes(currentPath));
-  const currentBanner = pageBanner || globalBanner;
+  const globalBanner = banner.find((item) => item.global)
+  const pageBanner = banner.find((item) => item.pages?.includes(currentPath))
+  const currentBanner = pageBanner || globalBanner
 
   return (
     currentBanner && (
       <section className={styles.bannerWrapper}>
-        <TextBlockSection
-          text={currentBanner.body as Document}
-          options={bannerOptions}
-        />
+        <TextBlockSection text={currentBanner.body as Document} options={bannerOptions} />
       </section>
     )
-  );
-};
+  )
+}

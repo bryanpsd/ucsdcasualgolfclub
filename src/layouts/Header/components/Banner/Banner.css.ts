@@ -1,6 +1,6 @@
-import { style } from '@vanilla-extract/css';
-import { contentPadding } from '../../../../styles/common.css';
-import { color } from '../../../../styles/designTokens/colors';
+import { style } from '@vanilla-extract/css'
+import { contentPadding } from '../../../../styles/common.css'
+import { color } from '../../../../styles/designTokens/colors'
 
 export const bannerWrapper = style([
   contentPadding,
@@ -15,9 +15,9 @@ export const bannerWrapper = style([
     justifyContent: 'center',
     gap: 16,
   },
-]);
+])
 
 export const bannerLink = style({
   color: color.brand.white,
   textDecoration: 'underline',
-});
+})

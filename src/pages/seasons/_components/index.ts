@@ -1,1 +1,1 @@
-export { default as SeasonRecap } from './SeasonRecap.astro';
+export { default as SeasonRecap } from './SeasonRecap.astro'

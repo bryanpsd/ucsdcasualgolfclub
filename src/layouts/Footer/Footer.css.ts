@@ -1,15 +1,15 @@
-import { style } from '@vanilla-extract/css';
-import { contentPadding, pageMaxWidth } from '../../styles/common.css';
-import { breakpointQuery, tokens } from '../../styles/designTokens.css';
-import { color } from '../../styles/designTokens/colors';
-import { fontSize } from '../../styles/designTokens/typography';
+import { style } from '@vanilla-extract/css'
+import { contentPadding, pageMaxWidth } from '../../styles/common.css'
+import { breakpointQuery, tokens } from '../../styles/designTokens.css'
+import { color } from '../../styles/designTokens/colors'
+import { fontSize } from '../../styles/designTokens/typography'
 
 export const footer = style({
   paddingTop: 24,
   paddingBottom: 24,
   borderTop: `1px solid ${color.brand.gray}`,
   backgroundColor: color.brand.white,
-});
+})
 
 export const footerContent = style([
   contentPadding,
@@ -21,14 +21,14 @@ export const footerContent = style([
     justifyContent: 'center',
     gap: 16,
   },
-]);
+])
 
 export const footerList = style([
   tokens({
     display: 'flex',
     flexDirection: { xs: 'column', md: 'row' },
   }),
-]);
+])
 
 export const footerListItem = style([
   tokens({
@@ -48,7 +48,7 @@ export const footerListItem = style([
       },
     },
   },
-]);
+])
 
 export const footerLink = style([
   tokens({
@@ -58,10 +58,10 @@ export const footerLink = style([
     color: color.brand.black,
     fontSize: fontSize.sizeFont4,
   },
-]);
+])
 
 export const footerCopyright = style([
   tokens({
     fontFamily: 'base',
   }),
-]);
+])

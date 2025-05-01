@@ -1,4 +1,4 @@
-import { constants } from './constants';
+import { constants } from './constants'
 
 const fonts = [
   '/fonts/Roboto-Regular.ttf',
@@ -11,7 +11,7 @@ const fonts = [
   '/fonts/Roboto-MediumItalic.ttf',
   '/fonts/Roboto-BoldItalic.ttf',
   '/fonts/Roboto-BlackItalic.ttf',
-];
+]
 
 /**
  * Generates a fontFace rule from a fontUrl and fontName
@@ -20,27 +20,25 @@ const fonts = [
  * @returns @fontFace CSS rule
  */
 const fontFaceGenerator = (fontUrl: string, fontName: string) => {
-  let fontWeight;
+  let fontWeight
   switch (true) {
     case fontUrl.toLocaleLowerCase().includes('light'):
-      fontWeight = 300;
-      break;
+      fontWeight = 300
+      break
     case fontUrl.toLocaleLowerCase().includes('medium'):
-      fontWeight = 500;
-      break;
+      fontWeight = 500
+      break
     case fontUrl.toLocaleLowerCase().includes('bold'):
-      fontWeight = 700;
-      break;
+      fontWeight = 700
+      break
     case fontUrl.toLocaleLowerCase().includes('black'):
-      fontWeight = 900;
-      break;
+      fontWeight = 900
+      break
     default:
-      fontWeight = 400;
-      break;
+      fontWeight = 400
+      break
   }
-  const fontStyle = fontUrl.toLocaleLowerCase().includes('italic')
-    ? 'italic'
-    : 'normal';
+  const fontStyle = fontUrl.toLocaleLowerCase().includes('italic') ? 'italic' : 'normal'
 
   return {
     fontFamily: fontName,
@@ -48,18 +46,18 @@ const fontFaceGenerator = (fontUrl: string, fontName: string) => {
     fontWeight,
     fontDisplay: 'swap',
     src: `url(${fontUrl}) format('woff2')`,
-  } as const;
-};
+  } as const
+}
 
 const ucsdRobotoFontFaces = fonts.map((url) => {
-  return fontFaceGenerator(url, 'Roboto');
-});
+  return fontFaceGenerator(url, 'Roboto')
+})
 
 const typography = {
   // @material-ui/core/styles/createTypography.d.ts
   htmlFontSize: 10, // html.fontSize set to 62.5% in `CssBaseline` override
   fontFamily: ['Roboto', 'serif'].join(', '),
   ...constants.typography,
-};
+}
 
-export { typography, ucsdRobotoFontFaces };
+export { typography, ucsdRobotoFontFaces }
