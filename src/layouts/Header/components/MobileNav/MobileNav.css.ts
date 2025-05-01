@@ -6,16 +6,13 @@ export const mobileNavRoot = style([
   tokens({
     height: 'col-12',
     display: { 'lg-min': 'none', 'lg-max': 'flex' },
-  }),
-  {
-    justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '0 1rem',
-  },
+  }),
 ])
 
 export const mobileNavIcon = style({
   backgroundColor: 'transparent',
+  padding: 0,
   selectors: {
     '&:hover,&:focus': {
       backgroundColor: 'transparent',
@@ -52,10 +49,8 @@ export const mobileNavItem = style([
 ])
 
 export const menuIcon = style({
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  padding: '0 1rem',
   fill: color.navigationText,
+  padding: 0,
 })
 
 export const trigger = style([

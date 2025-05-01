@@ -25,32 +25,34 @@ export const MobileNav = ({ items }: MobileNavProps) => {
     <div className={styles.mobileNavRoot}>
       <NavMenu.Root>
         <NavMenu.List role="list">
-          <Sheet
-            open={open}
-            trigger={
-              <MainNavItem
-                as="button"
-                label="Navigation Menu"
-                onClick={() => setOpen(true)}
-                icon={<Menu className={styles.menuIcon} height={28} />}
-                hideLabelBelowDesktop
-                hideCaret
-                className={styles.mobileNavIcon}
-              />
-            }
-            onOpenChange={(o) => {
-              setOpen(o)
-            }}
-            title="Navigation Menu"
-          >
-            <NavMenu.Root orientation="vertical">
-              <NavMenu.List>
-                {items.menuItems.map((m) => {
-                  return <NavItem item={m} key={m.label} />
-                })}
-              </NavMenu.List>
-            </NavMenu.Root>
-          </Sheet>
+          <NavMenu.Item>
+            <Sheet
+              open={open}
+              trigger={
+                <MainNavItem
+                  as="button"
+                  label="Navigation Menu"
+                  onClick={() => setOpen(true)}
+                  icon={<Menu className={styles.menuIcon} height={28} />}
+                  hideLabelBelowDesktop
+                  hideCaret
+                  className={styles.mobileNavIcon}
+                />
+              }
+              onOpenChange={(o) => {
+                setOpen(o)
+              }}
+              title="Navigation Menu"
+            >
+              <NavMenu.Root orientation="vertical">
+                <NavMenu.List>
+                  {items.menuItems.map((m) => {
+                    return <NavItem item={m} key={m.label} />
+                  })}
+                </NavMenu.List>
+              </NavMenu.Root>
+            </Sheet>
+          </NavMenu.Item>
         </NavMenu.List>
       </NavMenu.Root>
     </div>
