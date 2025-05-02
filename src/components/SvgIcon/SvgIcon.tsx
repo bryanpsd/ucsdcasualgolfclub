@@ -36,6 +36,7 @@ export const SvgIcon = forwardRef(
     ref: PolymorphicRef<C>
   ) => {
     if (rest.component) {
+      // eslint-disable-next-line no-undef
       console.error('`component` prop is deprecated. Use `as` instead')
     }
 

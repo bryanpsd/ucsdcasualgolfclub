@@ -61,20 +61,16 @@ const tournaments = entries.items
   .sort(
     (a, b) =>
       new Date(
-        a?.tournament &&
-        'fields' in a.tournament &&
-        typeof a.tournament.fields.date === 'string'
+        a?.tournament && 'fields' in a.tournament && typeof a.tournament.fields.date === 'string'
           ? new Date(a.tournament.fields.date).getTime()
           : 0
       ).getTime() -
       new Date(
-        b?.tournament &&
-        'fields' in b.tournament &&
-        typeof b.tournament.fields.date === 'string'
+        b?.tournament && 'fields' in b.tournament && typeof b.tournament.fields.date === 'string'
           ? new Date(b.tournament.fields.date).getTime()
           : 0
       ).getTime()
-)
+  )
 
 // Separate tournaments into current year and previous year
 const currentYearTournaments = tournaments.filter(

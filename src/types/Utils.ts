@@ -35,7 +35,6 @@ export type Narrower<T, R> = T extends R ? never : T
  */
 export type Flatten<T> = {
   [K in keyof T]: T[K]
-  // eslint-disable-next-line @typescript-eslint/ban-types
 } & {}
 
 /**
@@ -48,7 +47,7 @@ export type Mutable<T> = {
 /**
  * Composed type to apply Flatten and Mutable helper types
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
+
 export type FlatMut<T> = Flatten<Mutable<T>> & {}
 
 /**

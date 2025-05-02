@@ -1,4 +1,4 @@
-import { type ElementType, type MouseEventHandler, type ReactNode, forwardRef } from 'react'
+import React, { type ElementType, type MouseEventHandler, type ReactNode, forwardRef } from 'react'
 
 import { type ButtonVariants, button, buttonIcon, buttonLabel } from './Button.css'
 
@@ -33,20 +33,16 @@ export const Button = forwardRef(
   <C extends ElementType>(
     {
       as: asComponent,
-      trackEventProps,
       onClick,
       children,
-      external = false,
       type = 'button',
       className,
       classes,
       color,
       size,
       variant,
-      round = false,
       startIcon,
       endIcon,
-
       ...rest
     }: ButtonProps<C>,
     ref: PolymorphicRef<C>

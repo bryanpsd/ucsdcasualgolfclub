@@ -11,6 +11,8 @@
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint:check": "eslint --ignore-path .gitignore .",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.astro",
+    "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx,.astro --fix",
     "cf-export": "contentful space export --config src/contentful/export-config.json --management-token $CONTENTFUL_DELIVERY_TOKEN --space-id $CONTENTFUL_SPACE_ID",
     "cf-generate-types": "cf-content-types-generator src/contentful/export.json --v10 --typeguard --out src/types/contentful"
   },

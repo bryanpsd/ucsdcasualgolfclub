@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */ // this is a utility type
-
 import type {
   ComponentPropsWithRef,
   ComponentPropsWithoutRef,

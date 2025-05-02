@@ -1,32 +1,9 @@
-import { ucsd } from '../../styles/ucsd'
-import { type Flatten, objectKeys } from '../../types'
-
-const { variants } = ucsd.typography
-
-type Variants = typeof variants
-type TypographyFacetMap<Vars extends Variants, Fac extends keyof Vars[keyof Vars]> = {
-  // remove readonly, map variant names to facet values
-  -readonly [K in keyof Vars]: Vars[K][Fac]
-}
-
 /**
  *
  * @param variants Font variants
  * @param facet keys of variants
  * @returns A mapping of a Variant name to the facet passed
  */
-const extractTypographyFacet = <V extends Variants, F extends keyof V[keyof V]>(
-  variants: V,
-  facet: F
-) => {
-  return objectKeys(variants).reduce(
-    (acc, variant) => {
-      acc[variant] = variants[variant][facet]
-      return acc
-    },
-    {} as Flatten<TypographyFacetMap<V, F>>
-  )
-}
 
 /**
  * Typography related tokens for consumption in theme.css.ts

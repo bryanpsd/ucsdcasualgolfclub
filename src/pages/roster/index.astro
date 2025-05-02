@@ -13,9 +13,9 @@ const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
   content_type: 'roster',
 })
 
-const rosterYears = Array.from(
-  new Set(entries.items.map((item) => item.fields.year?.toString()))
-).filter((year): year is string => Boolean(year))
+// const rosterYears = Array.from(
+//   new Set(entries.items.map((item) => item.fields.year?.toString()))
+// ).filter((year): year is string => Boolean(year))
 
 const currentRosterPlayers = entries.items
   .filter((item) => item.fields.title?.includes('Current')) // Filter by title

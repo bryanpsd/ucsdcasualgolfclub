@@ -5,7 +5,7 @@ export const BasicSelect = ({
   value,
   onValueChange,
 }: {
-  onValueChange: (value: string) => void
+  onValueChange: () => void
   value: string
   items: { text: string; value: string }[]
 }) => {

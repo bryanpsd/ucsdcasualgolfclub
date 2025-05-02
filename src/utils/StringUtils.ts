@@ -3,7 +3,7 @@ export const replaceAllSpecialChars = (text: string, by: string): string => {
     return text
   }
 
-  return text.replace(/[ `~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, by)
+  return text.replace(/[ `~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, by)
 }
 
 export const removeAllSpecialChars = (text?: string): string => {
@@ -44,14 +44,7 @@ export const enumToKeyValueArray = (
   })
 }
 
-export const enumToValuesArray = (
-  enums: {
-    [s: number]: string
-  },
-  filter?: Array<{
-    [s: number]: string
-  }>
-): Array<string> => {
+export const enumToValuesArray = (enums: { [s: number]: string }): Array<string> => {
   return enumToKeyValueArray(enums).map((e) => e.value)
 }
 

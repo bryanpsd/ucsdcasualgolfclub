@@ -51,7 +51,7 @@ const mediaQueryBreakpoints = objectKeys(breakpointQuery).reduce(
 // * Theme Variable Destructuring                                    *
 // *******************************************************************
 const {
-  color: { grayscale, brand, action, surface, outline, foreground, ...color },
+  color: { brand, surface, outline, foreground, ...color },
   space,
   border,
   boxShadow,

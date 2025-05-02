@@ -1,3 +1,4 @@
+import React from 'react'
 import Cart from '../../../icons/golf_cart.svg?react'
 import GolfBallNavy from '../../../icons/golf_ball_navy.svg?react'
 import GolfBallWhite from '../../../icons/golf_ball_white.svg?react'
