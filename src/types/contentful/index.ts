@@ -17,6 +17,10 @@ export { isTypeLeaders } from './TypeLeaders'
 export type { TypeLeaders, TypeLeadersFields, TypeLeadersSkeleton } from './TypeLeaders'
 export { isTypeMessageBox } from './TypeMessageBox'
 export type { TypeMessageBox, TypeMessageBoxFields, TypeMessageBoxSkeleton } from './TypeMessageBox'
+export { isTypeRoster } from './TypeRoster'
+export type { TypeRoster, TypeRosterFields, TypeRosterSkeleton } from './TypeRoster'
+export { isTypeResults } from './TypeResults'
+export type { TypeResults, TypeResultsFields, TypeResultsSkeleton } from './TypeResults'
 export { isTypeSeasonRecap } from './TypeSeasonRecap'
 export type {
   TypeSeasonRecap,
@@ -25,3 +29,5 @@ export type {
 } from './TypeSeasonRecap'
 export { isTypeSimplePage } from './TypeSimplePage'
 export type { TypeSimplePage, TypeSimplePageFields, TypeSimplePageSkeleton } from './TypeSimplePage'
+export { isTypeTournament } from './TypeTournament'
+export type { TypeTournament, TypeTournamentFields, TypeTournamentSkeleton } from './TypeTournament'

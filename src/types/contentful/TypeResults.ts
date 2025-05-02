@@ -48,7 +48,7 @@ export type TypeResults<
   Locales extends LocaleCode = LocaleCode,
 > = Entry<TypeResultsSkeleton, Modifiers, Locales>
 
-export function isResults<Modifiers extends ChainModifiers, Locales extends LocaleCode>(
+export function isTypeResults<Modifiers extends ChainModifiers, Locales extends LocaleCode>(
   entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeResults<Modifiers, Locales> {
   return entry.sys.contentType.sys.id === 'results'

@@ -20,7 +20,7 @@ export type TypeRoster<
   Locales extends LocaleCode = LocaleCode,
 > = Entry<TypeRosterSkeleton, Modifiers, Locales>
 
-export function isRoster<Modifiers extends ChainModifiers, Locales extends LocaleCode>(
+export function isTypeRoster<Modifiers extends ChainModifiers, Locales extends LocaleCode>(
   entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeRoster<Modifiers, Locales> {
   return entry.sys.contentType.sys.id === 'roster'

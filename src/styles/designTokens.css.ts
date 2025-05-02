@@ -75,17 +75,17 @@ const colors = {
 
 const colorProperties = defineProperties({
   conditions: {
-    default: {}, // Ensure this is an empty object for the default condition
+    default: {}, // Default condition
     hover: { selector: `&:hover:not(:disabled),&:focus:not(:disabled)` },
     focus: { selector: `&:focus:not(:disabled)` },
     focusWithin: { selector: '&:focus-within:not(:disabled)' },
     active: { selector: '&:active:not(:disabled)' },
     disabled: { selector: '&:disabled' },
   },
-  defaultCondition: 'default', // Ensure this matches a key in `conditions`
+  defaultCondition: 'default',
   properties: {
     color: {
-      ...(colors as unknown as Record<string, string | undefined>), // Explicitly cast to resolve type incompatibility
+      ...(colors as unknown as Record<string, string>),
       ...brand,
       ...foreground,
       currentColor: 'currentColor',
@@ -93,25 +93,38 @@ const colorProperties = defineProperties({
       initial: 'initial',
     },
     fill: {
-      ...(colors as unknown as Record<string, string | undefined>),
-      ...(brand as Record<string, string | undefined>),
-      ...(foreground as Record<string, string | undefined>),
+      ...(colors as unknown as Record<string, string>),
+      ...(brand as Record<string, string>),
+      ...(foreground as Record<string, string>),
       currentColor: 'currentColor',
       inherit: 'inherit',
       initial: 'initial',
     },
     stroke: {
-      ...(colors as unknown as Record<string, string | undefined>),
-      ...(brand as Record<string, string | undefined>),
+      ...(colors as unknown as Record<string, string>),
+      ...(brand as Record<string, string>),
       currentColor: 'currentColor',
       inherit: 'inherit',
       initial: 'initial',
     },
-    borderColor: { ...colors, ...outline, ...brand },
-    background: { ...colors, ...surface, ...brand },
-    backgroundColor: { ...colors, ...surface, ...brand },
+    borderColor: {
+      ...(colors as unknown as Record<string, string>),
+      ...(outline as Record<string, string>),
+      ...(brand as Record<string, string>),
+    },
+    background: {
+      ...(colors as unknown as Record<string, string>),
+      ...(surface as Record<string, string>),
+      ...(brand as Record<string, string>),
+    },
+    backgroundColor: {
+      ...(colors as unknown as Record<string, string>),
+      ...(surface as Record<string, string>),
+      ...(brand as Record<string, string>),
+    },
   },
 })
+
 // *******************************************************************
 
 // *******************************************************************

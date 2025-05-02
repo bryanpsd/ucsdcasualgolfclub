@@ -13,8 +13,8 @@
     "lint:check": "eslint --ignore-path .gitignore .",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.astro",
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx,.astro --fix",
-    "cf-export": "contentful space export --config src/contentful/export-config.json --management-token $CONTENTFUL_DELIVERY_TOKEN --space-id $CONTENTFUL_SPACE_ID",
-    "cf-generate-types": "cf-content-types-generator src/contentful/export.json --v10 --typeguard --out src/types/contentful"
+    "cf-export": "contentful space export --config src/services/contentful/export-config.json --management-token $CONTENTFUL_DELIVERY_TOKEN --space-id $CONTENTFUL_SPACE_ID",
+    "cf-generate-types": "cf-content-types-generator src/services/contentful/export.json --v10 --typeguard --out src/types/contentful"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

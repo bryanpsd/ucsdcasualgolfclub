@@ -1,6 +1,6 @@
 import { defineAction } from 'astro:actions'
 import type { TypeBannerSkeleton } from '../types/contentful/TypeBanner'
-import { contentfulClient } from '../lib/contentful'
+import { contentfulClient } from '../services/contentful/contentful'
 
 export const getHeaderBanners = defineAction({
   handler: async () => {

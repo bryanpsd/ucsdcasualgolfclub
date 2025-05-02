@@ -62,7 +62,7 @@ async function pushResultsToContentful() {
     }, {})
 
     // Extract course name and date
-    const { 'Course Name': courseName, Date: date } = resultsData[0]
+    const { course: courseName, date: date } = resultsData[0]
     const formattedDate = new Date(date).toLocaleDateString('en-US', {
       year: '2-digit',
       month: '2-digit',
@@ -116,10 +116,9 @@ async function pushResultsToContentful() {
             'en-US': result.putts !== null ? result.putts : undefined,
           },
           closestTo: {
-            'en-US': Array.isArray(result.closestTo)
-              ? result.closestTo
-              : result.closestTo !== null
-                ? [result.closestTo]
+            'en-US':
+              Array.isArray(result.closestTo) && result.closestTo.length > 0
+                ? result.closestTo
                 : undefined,
           },
           longDrive: {

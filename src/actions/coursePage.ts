@@ -2,7 +2,7 @@ import { defineAction } from 'astro:actions'
 import { z } from 'astro:schema'
 import type { TypeCourseProps, TypeCourseSkeleton } from '../types/contentful/TypeCourse'
 
-import { contentfulClient } from '../lib/contentful'
+import { contentfulClient } from '../services/contentful/contentful'
 
 const mapContentfulFields = (fields?: TypeCourseProps) => {
   if (!fields) return null
