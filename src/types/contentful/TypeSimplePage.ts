@@ -8,6 +8,8 @@ import type {
 
 export interface TypeSimplePageFields {
   title?: EntryFieldTypes.Symbol
+  seoTitle?: EntryFieldTypes.Symbol
+  seoDescription?: EntryFieldTypes.Symbol
   slug?: EntryFieldTypes.Symbol
   class?: EntryFieldTypes.Symbol
   content?: EntryFieldTypes.RichText
