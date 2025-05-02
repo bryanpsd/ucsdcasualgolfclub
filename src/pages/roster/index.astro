@@ -51,12 +51,14 @@ const lastUpdated = entries.items
 >
   <Hero title="Roster" />
   <div class={styles.subPageWrapper}>
-    <Table
-      thead={['Player', `Index (as of: ${lastUpdated ?? 'Unknown'})`]}
-      tbody={currentRosterPlayers.map((player) => [
-        player?.playerName ?? 'Unknown',
-        player?.handicapIndex === undefined ? 'NH' : String(player.handicapIndex),
-      ])}
-    />
+    <div style="overflow-x: auto;">
+      <Table
+        thead={['Player', `Index (as of: ${lastUpdated ?? 'Unknown'})`]}
+        tbody={currentRosterPlayers.map((player) => [
+          player?.playerName ?? 'Unknown',
+          player?.handicapIndex === undefined ? 'NH' : String(player.handicapIndex),
+        ])}
+      />
+    </div>
   </div>
 </Layout>

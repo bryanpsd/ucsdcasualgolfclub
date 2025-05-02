@@ -52,18 +52,20 @@ const { year, players = [] } = Astro.props
 >
   <Hero title={`${year} Roster`} />
   <div class={styles.subPageWrapper}>
-    <Table
-      thead={['Player', 'Index']}
-      tbody={players
-        .map((player) => {
-          return player?.guest?.includes('Yes')
-            ? null
-            : [
-                player?.playerName,
-                player?.handicapIndex === undefined ? 'NH' : String(player.handicapIndex),
-              ]
-        })
-        .filter((row) => row !== null) as string[][]}
-    />
+    <div style="overflow-x: auto;">
+      <Table
+        thead={['Player', 'Index']}
+        tbody={players
+          .map((player) => {
+            return player?.guest?.includes('Yes')
+              ? null
+              : [
+                  player?.playerName,
+                  player?.handicapIndex === undefined ? 'NH' : String(player.handicapIndex),
+                ]
+          })
+          .filter((row) => row !== null) as string[][]}
+      />
+    </div>
   </div>
 </Layout>
