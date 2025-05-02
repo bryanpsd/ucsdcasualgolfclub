@@ -7,11 +7,13 @@ import svgr from 'vite-plugin-svgr'
 import react from '@astrojs/react'
 import icon from 'astro-icon'
 
+import partytown from '@astrojs/partytown'
+
 export default defineConfig({
   site: 'https://ucsdcasualgolfclub.netlify.app',
   adapter: netlify(),
   output: 'server',
-  integrations: [react(), icon()],
+  integrations: [react(), icon(), partytown({ config: { forward: ['dataLayer.push'] } })],
   vite: {
     plugins: [viteTsconfigPaths(), vanillaExtractPlugin(), svgr()],
     assetsInclude: ['**/*.ttf'], // Ensure .ttf files are included as assets

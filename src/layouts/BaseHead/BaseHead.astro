@@ -4,6 +4,7 @@
  * It's purpose is to manage global layout props (i.e. page title), global data providers, as well
  * as global style imports.
  */
+import { GoogleAnalytics } from '~layouts/GoogleAnalytics'
 
 import '~/styles/reset.css'
 import '~/styles/theme.css'
@@ -31,5 +32,6 @@ const { title = 'UCSD Casual Golf Club', description = '' } = Astro.props
   <link rel="apple-touch-icon" sizes="152x152" href="/ucsd-icon-384x384.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/ucsd-icon-512x512.png" />
   <meta name="generator" content={Astro.generator} />
+  <GoogleAnalytics measurementId={'G-2L08BXJE20'} />
   <title>{title}</title>
 </head>

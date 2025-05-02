@@ -75,17 +75,17 @@ const colors = {
 
 const colorProperties = defineProperties({
   conditions: {
-    default: {},
+    default: {}, // Ensure this is an empty object for the default condition
     hover: { selector: `&:hover:not(:disabled),&:focus:not(:disabled)` },
     focus: { selector: `&:focus:not(:disabled)` },
     focusWithin: { selector: '&:focus-within:not(:disabled)' },
     active: { selector: '&:active:not(:disabled)' },
     disabled: { selector: '&:disabled' },
   },
-  defaultCondition: 'default',
+  defaultCondition: 'default', // Ensure this matches a key in `conditions`
   properties: {
     color: {
-      ...colors,
+      ...(colors as unknown as Record<string, string | undefined>), // Explicitly cast to resolve type incompatibility
       ...brand,
       ...foreground,
       currentColor: 'currentColor',
@@ -93,16 +93,16 @@ const colorProperties = defineProperties({
       initial: 'initial',
     },
     fill: {
-      ...colors,
-      ...brand,
-      ...foreground,
+      ...(colors as unknown as Record<string, string | undefined>),
+      ...(brand as Record<string, string | undefined>),
+      ...(foreground as Record<string, string | undefined>),
       currentColor: 'currentColor',
       inherit: 'inherit',
       initial: 'initial',
     },
     stroke: {
-      ...colors,
-      ...brand,
+      ...(colors as unknown as Record<string, string | undefined>),
+      ...(brand as Record<string, string | undefined>),
       currentColor: 'currentColor',
       inherit: 'inherit',
       initial: 'initial',
