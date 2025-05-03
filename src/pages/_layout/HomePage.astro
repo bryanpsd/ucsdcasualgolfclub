@@ -24,6 +24,9 @@ const courseEntries = await contentfulClient.getEntries<TypeCourseSkeleton>({
   content_type: 'course',
 })
 
+const today = new Date()
+today.setHours(0, 0, 0, 0) // Set time to 00:00:00
+
 // Find the first upcoming tournament date
 const upcomingTournament = courseEntries.items
   .flatMap((course) => course.fields.tournaments ?? []) // Flatten all tournaments
@@ -32,7 +35,7 @@ const upcomingTournament = courseEntries.items
       tournament &&
       'fields' in tournament &&
       tournament.fields.date &&
-      new Date(tournament.fields.date) > new Date() // Filter for future dates
+      new Date(tournament.fields.date) >= today // Compare with normalized date
   )
   .sort(
     (a, b) => new Date(a.fields.date).getTime() - new Date(b.fields.date).getTime() // Sort by date ascending

@@ -52,7 +52,7 @@ async function pushResultsToContentful() {
     })
 
     const courseMap = courseEntries.items.reduce((map, item) => {
-      const courseName = item.fields?.course?.['en-US'] //
+      const courseName = item.fields?.course?.['en-US']
       if (courseName) {
         map[courseName] = item.sys.id
       } else {
@@ -82,82 +82,99 @@ async function pushResultsToContentful() {
       // Create entry title
       const entryTitle = `${result.title} - ${courseName} (${formattedDate})`
 
-      // Create Contentful entry for results
-      const entry = await environment.createEntry('results', {
-        fields: {
-          title: {
-            'en-US': entryTitle,
-          },
-          course: {
-            'en-US': {
-              sys: {
-                type: 'Link',
-                linkType: 'Entry',
-                id: courseId,
+      try {
+        // Check if an entry with the same title already exists
+        const existingEntries = await environment.getEntries({
+          content_type: 'results', // Replace with your Results content type ID
+          'fields.title[match]': entryTitle,
+          limit: 1,
+        })
+
+        if (existingEntries.items.length > 0) {
+          console.log(`Entry already exists for: ${entryTitle}. Skipping.`)
+          continue
+        }
+
+        // Create Contentful entry for results
+        const entry = await environment.createEntry('results', {
+          fields: {
+            title: {
+              'en-US': entryTitle,
+            },
+            course: {
+              'en-US': {
+                sys: {
+                  type: 'Link',
+                  linkType: 'Entry',
+                  id: courseId,
+                },
               },
             },
-          },
-          flight: {
-            'en-US': result.flight,
-          },
-          index: {
-            'en-US': result.index,
-          },
-          gross: {
-            'en-US': result.gross !== null ? result.gross : undefined,
-          },
-          net: {
-            'en-US': result.net !== null ? result.net : undefined,
-          },
-          courseHandicap: {
-            'en-US': result.courseHandicap !== null ? result.courseHandicap : undefined,
-          },
-          putts: {
-            'en-US': result.putts !== null ? result.putts : undefined,
-          },
-          closestTo: {
-            'en-US':
-              Array.isArray(result.closestTo) && result.closestTo.length > 0
-                ? result.closestTo
-                : undefined,
-          },
-          longDrive: {
-            'en-US': result.longDrive !== '' ? result.longDrive : undefined,
-          },
-        },
-      })
-
-      console.log(`Created draft entry: ${entryTitle}`)
-
-      // Add the results entry to the Player content type
-      const playerEntries = await environment.getEntries({
-        content_type: 'leaders', // Replace with your Player content type ID
-        'fields.playerName[match]': result.title, // Match Player name with result title
-      })
-
-      if (playerEntries.items.length > 0) {
-        const player = playerEntries.items[0]
-        const existingResults = player.fields.results?.['en-US'] || []
-
-        // Add the new result entry to the Player's results field
-        existingResults.push({
-          sys: {
-            type: 'Link',
-            linkType: 'Entry',
-            id: entry.sys.id,
+            flight: {
+              'en-US': result.flight,
+            },
+            index: {
+              'en-US': result.index,
+            },
+            gross: {
+              'en-US': result.gross !== null ? result.gross : undefined,
+            },
+            net: {
+              'en-US': result.net !== null ? result.net : undefined,
+            },
+            courseHandicap: {
+              'en-US': result.courseHandicap !== null ? result.courseHandicap : undefined,
+            },
+            putts: {
+              'en-US': result.putts !== null ? result.putts : undefined,
+            },
+            closestTo: {
+              'en-US':
+                Array.isArray(result.closestTo) && result.closestTo.length > 0
+                  ? result.closestTo
+                  : undefined,
+            },
+            longDrive: {
+              'en-US': result.longDrive !== '' ? result.longDrive : undefined,
+            },
           },
         })
 
-        // Update the Player entry
-        player.fields.results = {
-          'en-US': existingResults,
+        console.log(`Created draft entry: ${entryTitle}`)
+
+        // Add the results entry to the Player content type
+        const playerEntries = await environment.getEntries({
+          content_type: 'leaders', // Replace with your Player content type ID
+          'fields.playerName[match]': result.title, // Match Player name with result title
+        })
+
+        if (playerEntries.items.length > 0) {
+          const player = playerEntries.items[0]
+          const existingResults = player.fields.results?.['en-US'] || []
+
+          // Add the new result entry to the Player's results field
+          existingResults.push({
+            sys: {
+              type: 'Link',
+              linkType: 'Entry',
+              id: entry.sys.id,
+            },
+          })
+
+          // Update the Player entry
+          player.fields.results = {
+            'en-US': existingResults,
+          }
+
+          await player.update()
+
+          console.log(`Added result to Player: ${result.title}`)
+        } else {
+          console.warn(`No matching Player found for: ${result.title}`)
         }
-
-        await player.update()
-
-        console.log(`Added result to Player: ${result.title}`)
-      } else {
-        console.warn(`No matching Player found for: ${result.title}`)
+      } catch (error) {
+        console.error(`Error processing result "${result.title}":`, error)
+        continue // Skip to the next result
       }
     }
 

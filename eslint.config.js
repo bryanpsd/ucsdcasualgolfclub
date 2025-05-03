@@ -19,12 +19,19 @@ export default [
         sourceType: 'module',
         extraFileExtensions: ['.astro'],
       },
+      globals: {
+        console: 'readonly', // Define `console` as a global variable
+        module: 'readonly',
+        require: 'readonly',
+        process: 'readonly',
+      },
     },
     plugins: {
       astro,
     },
     rules: {
       'astro/no-set-html-directive': 'error', // Example Astro-specific rule
+      'no-console': 'off', // Disable the `no-console` rule for Astro files
     },
   },
   {
@@ -34,6 +41,12 @@ export default [
       parserOptions: {
         project: './tsconfig.json', // Explicitly reference tsconfig.json
       },
+      globals: {
+        console: 'readonly', // Define `console` as a global variable
+        module: 'readonly',
+        require: 'readonly',
+        process: 'readonly',
+      },
     },
     plugins: {
       '@typescript-eslint': typescript,
@@ -41,6 +54,7 @@ export default [
     },
     rules: {
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'no-console': 'off', // Disable the `no-console` rule for TypeScript files
       ...jsxA11y.configs.recommended.rules,
     },
   },
@@ -53,10 +67,13 @@ export default [
       },
       globals: {
         console: 'readonly', // Define `console` as a global variable
-        module: 'readonly', // Define `module` as a global variable
-        require: 'readonly', // Define `require` as a global variable
-        process: 'readonly', // Define `process` as a global variable
+        module: 'readonly',
+        require: 'readonly',
+        process: 'readonly',
       },
+    },
+    rules: {
+      'no-console': 'off', // Disable the `no-console` rule globally
     },
   },
   prettier,

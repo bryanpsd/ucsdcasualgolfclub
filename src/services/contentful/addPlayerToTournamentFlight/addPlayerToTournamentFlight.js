@@ -74,11 +74,37 @@ async function addPlayerToTournamentFlight(tournamentTitle) {
       }
 
       // Find the matching player by name
-      const matchingPlayer = players.find((player) => player.name === title)
+      let matchingPlayer = players.find((player) => player.name === title)
 
+      // If no matching player is found, create a new Player entry
       if (!matchingPlayer) {
-        console.warn(`No Player found with the name: ${title}`)
-        continue
+        console.log(`No Player found with the name: ${title}. Creating a new Player entry.`)
+        try {
+          const newPlayer = await environment.createEntry('leaders', {
+            fields: {
+              playerName: {
+                'en-US': title,
+              },
+              results: {
+                'en-US': [], // Initialize with an empty results array
+              },
+            },
+          })
+
+          // Publish the new Player entry
+          await newPlayer.publish()
+          console.log(`Created and published new Player entry: ${title}`)
+
+          // Add the new player to the players list
+          matchingPlayer = {
+            id: newPlayer.sys.id,
+            name: title,
+          }
+          players.push(matchingPlayer)
+        } catch (error) {
+          console.error(`Error creating Player entry for "${title}":`, error)
+          continue
+        }
       }
 
       // Add the player to the appropriate flight field
