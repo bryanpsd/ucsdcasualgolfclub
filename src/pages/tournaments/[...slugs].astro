@@ -133,11 +133,21 @@ const {
 
 const tournamentYear = tournaments[0]?.date ? new Date(tournaments[0].date).getFullYear() : 'N/A'
 
+// Combine all players from First Flight and Second Flight for the current tournament
 const allFlights = [...(tournaments[0]?.firstFlight || []), ...(tournaments[0]?.secondFlight || [])]
 
+// Calculate the lowest gross score for the current tournament across all players in both flights
 const lowestGrossOverall = Math.min(
   ...allFlights
-    .flatMap((player) => player?.results?.map((result) => result?.gross) || [])
+    .flatMap(
+      (player) =>
+        player?.results
+          ?.filter(
+            (result) =>
+              result?.course && 'fields' in result.course && result.course.fields.course === course
+          )
+          .map((result) => result?.gross) || []
+    )
     .filter((gross) => gross !== undefined && gross !== null)
 )
 ---
