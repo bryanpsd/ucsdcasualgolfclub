@@ -1,6 +1,6 @@
 import js from '@eslint/js'
 import astro from 'eslint-plugin-astro'
-import astroParser from 'astro-eslint-parser' // Import the Astro parser
+// import astroParser from 'astro-eslint-parser' // Import the Astro parser
 import typescriptParser from '@typescript-eslint/parser'
 import typescript from '@typescript-eslint/eslint-plugin'
 import prettier from 'eslint-config-prettier'
@@ -11,7 +11,7 @@ export default [
   {
     files: ['src/**/*.astro'], // Only include files in the `src` directory
     languageOptions: {
-      parser: astroParser, // Use the imported Astro parser
+      parser: '@typescript-eslint/parser',
       parserOptions: {
         parser: typescriptParser, // Use TypeScript parser for embedded scripts
         project: './tsconfig.json', // Explicitly reference tsconfig.json

@@ -7,7 +7,8 @@ import Layout from '../../layouts/Layout.astro'
 import { Hero } from '~components/Hero'
 import { Table } from '~components/Table'
 
-import * as styles from '../../styles/common.css'
+import * as styles from './_style/roster.css'
+import * as commonStyles from '../../styles/common.css'
 
 const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
   content_type: 'roster',
@@ -50,12 +51,15 @@ const lastUpdated = entries.items
   description="Explore the UCSD Casual Golf Club roster to meet our members,"
 >
   <Hero title="Roster" />
-  <div class={styles.subPageWrapper}>
+  <div class={commonStyles.subPageWrapper}>
     <div style="overflow-x: auto;">
       <Table
+        client:load
         thead={['Player', `Index (as of: ${lastUpdated ?? 'Unknown'})`]}
         tbody={currentRosterPlayers.map((player) => [
-          player?.playerName ?? 'Unknown',
+          player?.playerName
+            ? `<a href="/results?playerName=${encodeURIComponent(player.playerName)}" class="${styles.rosterLink}">${player.playerName}</a>`
+            : 'Unknown',
           player?.handicapIndex === undefined ? 'NH' : String(player.handicapIndex),
         ])}
       />

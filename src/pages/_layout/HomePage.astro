@@ -83,7 +83,7 @@ const courseSlug = courseEntries.items.find((course) =>
         ))
       }
       <section class={styles.rightCol}>
-        <Table thead={['Leaderboards']} tbody={[['Coming Soon']]} />
+        <Table client:load thead={['Leaderboards']} tbody={[['Coming Soon']]} />
         <!-- <Leaderboard gross />
         <Leaderboard net firstFlight />
         <Leaderboard net secondFlight /> -->

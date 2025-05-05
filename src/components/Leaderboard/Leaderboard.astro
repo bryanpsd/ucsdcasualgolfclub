@@ -21,6 +21,7 @@ const lastUpdatedDate = entries.items.reduce((latest, item) => {
 ---
 
 <Table
+  client:load
   thead={gross
     ? ['Gross Leaders']
     : net && firstFlight
@@ -28,13 +29,9 @@ const lastUpdatedDate = entries.items.reduce((latest, item) => {
       : ['Net Leaders Second Flight']}
   colSpan={2}
   tbody={entries.items
+    .filter((item) => item.fields.onCurrentRoster)
     .map((item) => {
-      if (
-        gross &&
-        item.fields.roundsCheck &&
-        item.fields.onCurrentRoster &&
-        item.fields.gross !== undefined
-      ) {
+      if (gross && item.fields.roundsCheck && item.fields.gross !== undefined) {
         return [item.fields.playerName, item.fields.gross]
       } else if (
         firstFlight &&

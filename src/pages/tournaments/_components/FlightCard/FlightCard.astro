@@ -45,11 +45,12 @@ const filteredResults = flight.map((player) => ({
 ---
 
 <div class={styles.flightCardWrapper}>
-  <ResponsiveHeadline size={1} as="h2">
+  <ResponsiveHeadline id="results-link" size={1} as="h2">
     {title}
   </ResponsiveHeadline>
   <div style="overflow-x: auto;">
     <Table
+      client:load
       thead={tableHeaders}
       tbody={filteredResults.map((player) => {
         const isLowestGrossOverall = player.results?.[0]?.gross === lowestGrossOverall

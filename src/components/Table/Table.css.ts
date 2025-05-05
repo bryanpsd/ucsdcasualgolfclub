@@ -24,7 +24,6 @@ export const th = style([
     paddingY: 8,
     paddingX: 4,
     textAlign: 'left',
-    whiteSpace: 'nowrap',
   }),
   {
     selectors: {
