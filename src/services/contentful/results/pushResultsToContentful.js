@@ -101,6 +101,9 @@ async function pushResultsToContentful() {
             title: {
               'en-US': entryTitle,
             },
+            date: {
+              'en-US': result.date,
+            },
             course: {
               'en-US': {
                 sys: {
