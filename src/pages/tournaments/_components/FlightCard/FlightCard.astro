@@ -32,7 +32,8 @@ interface FlightCardProps {
   lowestGrossOverall?: number
 }
 
-const { title, flight, currentCourse, tournamentDate, lowestGrossOverall, courseChampionship } = Astro.props as FlightCardProps
+const { title, flight, currentCourse, tournamentDate, lowestGrossOverall, courseChampionship } =
+  Astro.props as FlightCardProps
 
 const getYearFromDate = (date?: string) => (date ? new Date(date).getFullYear() : undefined)
 
@@ -111,14 +112,11 @@ const tableHeaders = [
             player.handicapIndex !== undefined ? String(player.handicapIndex) : 'NH',
           ]
         } else {
-          const statsForYear = player.yearlyStats?.find(
-            (stats) => stats.year === tournamentYear
-          )
+          const statsForYear = player.yearlyStats?.find((stats) => stats.year === tournamentYear)
 
           const isLowestYearlyGross =
             courseChampionship && statsForYear?.gross === lowestYearlyGross
-          const isLowestYearlyNet =
-            courseChampionship && statsForYear?.net === lowestYearlyNet
+          const isLowestYearlyNet = courseChampionship && statsForYear?.net === lowestYearlyNet
 
           return [
             player.guest?.includes('Yes')
