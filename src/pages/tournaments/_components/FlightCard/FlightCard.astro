@@ -4,6 +4,7 @@ import { Table } from '~components/Table'
 import * as styles from './FlightCard.css'
 
 interface FlightCardProps {
+  courseChampionship?: boolean
   title: string
   flight: Array<{
     playerName: string
@@ -20,13 +21,18 @@ interface FlightCardProps {
       closestTo?: string[]
       date?: string
     }>
+    yearlyStats?: Array<{
+      year?: number
+      gross?: number
+      net?: number
+    }>
   }>
   currentCourse: string
   tournamentDate: string
   lowestGrossOverall?: number
 }
 
-const { title, flight, currentCourse, tournamentDate, lowestGrossOverall } = Astro.props as FlightCardProps
+const { title, flight, currentCourse, tournamentDate, lowestGrossOverall, courseChampionship } = Astro.props as FlightCardProps
 
 const getYearFromDate = (date?: string) => (date ? new Date(date).getFullYear() : undefined)
 
@@ -39,27 +45,34 @@ const filteredResults = flight.map((player) => ({
     const isSameYear = resultYear === tournamentYear
     const isSameCourse = result.course?.fields.course === currentCourse
 
-    // Debugging: Log result details
-    console.log('Result:', result)
-    console.log('Result Year:', resultYear, 'Is Same Year:', isSameYear, 'Is Same Course:', isSameCourse)
-
     return isSameYear && isSameCourse
   }),
 }))
 
-console.log('Filtered Results:', filteredResults)
-
 const hasResultsForCurrentCourse = filteredResults.some((player) =>
   player.results?.some((result) => result.course?.fields.course === currentCourse)
 )
+
+const lowestYearlyGross = Math.min(
+  ...flight
+    .flatMap((player) => player.yearlyStats?.map((stats) => stats.gross) || [])
+    .filter((gross) => gross !== undefined && gross !== null)
+)
+
+const lowestYearlyNet = Math.min(
+  ...flight
+    .flatMap((player) => player.yearlyStats?.map((stats) => stats.net) || [])
+    .filter((net) => net !== undefined && net !== null)
+)
+
 const tableHeaders = [
   'Player',
   ...(hasResultsForCurrentCourse ? [] : ['Index']),
   ...(hasResultsForCurrentCourse
     ? ['Index', 'Gross', 'Course Handicap', 'Net', 'Putts', 'Closest To', 'Long Drive']
     : []),
+  ...(courseChampionship ? ['Final Gross', 'Final Net'] : []),
 ]
-
 ---
 
 <div class={styles.flightCardWrapper}>
@@ -98,6 +111,15 @@ const tableHeaders = [
             player.handicapIndex !== undefined ? String(player.handicapIndex) : 'NH',
           ]
         } else {
+          const statsForYear = player.yearlyStats?.find(
+            (stats) => stats.year === tournamentYear
+          )
+
+          const isLowestYearlyGross =
+            courseChampionship && statsForYear?.gross === lowestYearlyGross
+          const isLowestYearlyNet =
+            courseChampionship && statsForYear?.net === lowestYearlyNet
+
           return [
             player.guest?.includes('Yes')
               ? `${player.playerName} (Guest)`
@@ -126,6 +148,28 @@ const tableHeaders = [
               value: String(player.results?.[0]?.longDrive ?? ''),
               className: hasLongDrive ? styles.highlighted : undefined,
             },
+            ...(courseChampionship
+              ? [
+                  {
+                    value:
+                      statsForYear?.gross !== undefined
+                        ? statsForYear.gross > 0
+                          ? `+${statsForYear.gross}`
+                          : statsForYear.gross
+                        : undefined,
+                    className: isLowestYearlyGross ? styles.highlighted : undefined,
+                  },
+                  {
+                    value:
+                      statsForYear?.net !== undefined
+                        ? statsForYear.net > 0
+                          ? `+${statsForYear.net}`
+                          : statsForYear.net
+                        : undefined,
+                    className: isLowestYearlyNet ? styles.highlighted : undefined,
+                  },
+                ]
+              : []),
           ]
         }
       })}
