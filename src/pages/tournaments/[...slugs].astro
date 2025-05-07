@@ -160,6 +160,7 @@ const {
 } = Astro.props
 
 const tournamentYear = tournaments[0]?.date ? new Date(tournaments[0].date).getFullYear() : 'N/A'
+const tournamentDate = tournaments[0]?.date
 
 // Combine all players from First Flight and Second Flight for the current tournament
 const allFlights = [...(tournaments[0]?.firstFlight || []), ...(tournaments[0]?.secondFlight || [])]
@@ -205,6 +206,7 @@ const lowestGrossOverall = Math.min(
             <FlightCard
               title="First Flight"
               currentCourse={course}
+              tournamentDate={tournamentDate}
               lowestGrossOverall={lowestGrossOverall}
               courseChampionship={tournaments[0]?.clubChampionship}
               flight={tournaments[0]?.firstFlight?.map((player) => ({
@@ -236,6 +238,7 @@ const lowestGrossOverall = Math.min(
             <FlightCard
               title="Second Flight"
               currentCourse={course}
+              tournamentDate={tournamentDate}
               lowestGrossOverall={lowestGrossOverall}
               courseChampionship={tournaments[0]?.clubChampionship}
               flight={tournaments[0]?.secondFlight?.map((player) => ({

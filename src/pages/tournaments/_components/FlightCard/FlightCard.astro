@@ -18,18 +18,40 @@ interface FlightCardProps {
       longDrive?: string
       putts?: number
       closestTo?: string[]
+      date?: string
     }>
   }>
   currentCourse: string
+  tournamentDate: string
   lowestGrossOverall?: number
 }
 
-const { title, flight, currentCourse, lowestGrossOverall } = Astro.props as FlightCardProps
+const { title, flight, currentCourse, tournamentDate, lowestGrossOverall } = Astro.props as FlightCardProps
 
-const hasResultsForCurrentCourse = flight.some((player) =>
+const getYearFromDate = (date?: string) => (date ? new Date(date).getFullYear() : undefined)
+
+const tournamentYear = getYearFromDate(tournamentDate)
+
+const filteredResults = flight.map((player) => ({
+  ...player,
+  results: player.results?.filter((result) => {
+    const resultYear = getYearFromDate(result.date)
+    const isSameYear = resultYear === tournamentYear
+    const isSameCourse = result.course?.fields.course === currentCourse
+
+    // Debugging: Log result details
+    console.log('Result:', result)
+    console.log('Result Year:', resultYear, 'Is Same Year:', isSameYear, 'Is Same Course:', isSameCourse)
+
+    return isSameYear && isSameCourse
+  }),
+}))
+
+console.log('Filtered Results:', filteredResults)
+
+const hasResultsForCurrentCourse = filteredResults.some((player) =>
   player.results?.some((result) => result.course?.fields.course === currentCourse)
 )
-
 const tableHeaders = [
   'Player',
   ...(hasResultsForCurrentCourse ? [] : ['Index']),
@@ -38,10 +60,6 @@ const tableHeaders = [
     : []),
 ]
 
-const filteredResults = flight.map((player) => ({
-  ...player,
-  results: player.results?.filter((result) => result.course?.fields.course === currentCourse),
-}))
 ---
 
 <div class={styles.flightCardWrapper}>
