@@ -16,10 +16,11 @@ export const CourseInfo = (props: Props) => {
         Information
       </ResponsiveHeadline>
       <div className={styles.courseCardInfoListWrapper}>
-        <ul className={styles.courseCardInfoList}>
-          <li>Par: {coursePar}</li>
-          {tees?.map((tee, index) => <li key={index}>{tee}</li>)}
-        </ul>
+        <div className={styles.courseCardInfoContent}>
+          <h3>Par: {coursePar}</h3>
+          <h3>Tees:</h3>
+          {tees?.map((tee, index) => <p key={index}>{tee}</p>)}
+        </div>
       </div>
     </div>
   )

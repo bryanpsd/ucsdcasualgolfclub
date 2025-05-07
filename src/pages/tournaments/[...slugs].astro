@@ -17,6 +17,8 @@ import { CourseInfo } from '~components/Course/CourseInfo'
 import * as commonStyles from '~styles/common.css'
 import * as styles from './_style/tournament.css'
 
+import { Scorecard } from '~components/Course/Scorecard'
+
 export async function getStaticPaths() {
   const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
     content_type: 'course',
@@ -39,18 +41,21 @@ export async function getStaticPaths() {
               summary: item.fields.summary,
               courseWebsite: item.fields.courseSite,
               coursePar: item.fields.coursePar,
+              courseScorecard: item.fields.courseScorecard,
               courseImage:
                 item.fields.courseImage && 'fields' in item.fields.courseImage
                   ? (item.fields.courseImage.fields.file?.url ?? '')
                   : undefined,
               tournaments: [
                 {
+                  clubChampionship:
+                    'fields' in tournament ? (tournament.fields.clubChampionship ?? false) : false,
                   prices: tournament.fields.prices,
                   date: tournament.fields.date ?? 'N/A',
                   players: tournament.fields.players,
                   inclusions: tournament.fields.inclusions ?? [],
                   results: tournament.fields.results ?? [],
-                  tees: tournament.fields.tees ?? [],
+                  tees: tournament.fields.tees,
                   firstFlight:
                     tournament.fields.firstFlight
                       ?.map((player) => {
@@ -64,6 +69,7 @@ export async function getStaticPaths() {
                                 return {
                                   ...result.fields,
                                   index: result.fields.index,
+                                  date: result.fields.date,
                                   courseHandicap: result.fields.courseHandicap,
                                   gross: result.fields.gross,
                                   net: result.fields.net,
@@ -71,6 +77,16 @@ export async function getStaticPaths() {
                                   longDrive: result.fields.longDrive,
                                   putts: result.fields.putts,
                                   closestTo: result.fields.closestTo,
+                                }
+                              }
+                            }),
+                            yearlyStats: player.fields.yearlyStats?.map((stats) => {
+                              if (stats && 'fields' in stats) {
+                                return {
+                                  ...stats.fields,
+                                  year: stats.fields.year,
+                                  gross: stats.fields.gross,
+                                  net: stats.fields.net,
                                 }
                               }
                             }),
@@ -91,6 +107,7 @@ export async function getStaticPaths() {
                               if (result && 'fields' in result) {
                                 return {
                                   ...result.fields,
+                                  date: result.fields.date,
                                   index: result.fields.index,
                                   courseHandicap: result.fields.courseHandicap,
                                   gross: result.fields.gross,
@@ -99,6 +116,16 @@ export async function getStaticPaths() {
                                   longDrive: result.fields.longDrive,
                                   putts: result.fields.putts,
                                   closestTo: result.fields.closestTo,
+                                }
+                              }
+                            }),
+                            yearlyStats: player.fields.yearlyStats?.map((stats) => {
+                              if (stats && 'fields' in stats) {
+                                return {
+                                  ...stats.fields,
+                                  year: stats.fields.year,
+                                  gross: stats.fields.gross,
+                                  net: stats.fields.net,
                                 }
                               }
                             }),
@@ -129,6 +156,7 @@ const {
   coursePar,
   tournaments = [],
   courseWebsite,
+  courseScorecard,
 } = Astro.props
 
 const tournamentYear = tournaments[0]?.date ? new Date(tournaments[0].date).getFullYear() : 'N/A'
@@ -156,24 +184,36 @@ const lowestGrossOverall = Math.min(
   title={`${tournamentYear} Tournament at ${course}  | UCSD Casual Golf Club`}
   description={`Explore the ${tournamentYear} tournament at ${course}. View details, results, and more.`}
 >
-  <Hero course={course} courseImage={courseImage} />
+  <Hero
+    course={course}
+    courseImage={courseImage}
+    subHeadline={tournaments[0]?.clubChampionship && 'Club Championship'}
+  />
   <section class={commonStyles.subPageWrapper}>
     <div class={styles.tournamentWrapper}>
       <div class={styles.tournamentLeftCol}>
         {address && <Map longitude={address.lon} latitude={address.lat} />}
-        {summary !== undefined && <RichText richText={summary} />}
+        {
+          summary !== undefined && (
+            <div class={styles.summary}>
+              <RichText richText={summary} />
+            </div>
+          )
+        }
         {
           tournaments[0]?.firstFlight?.length > 0 && (
             <FlightCard
               title="First Flight"
               currentCourse={course}
               lowestGrossOverall={lowestGrossOverall}
+              courseChampionship={tournaments[0]?.clubChampionship}
               flight={tournaments[0]?.firstFlight?.map((player) => ({
                 playerName: player?.playerName,
                 handicapIndex: player?.handicapIndex,
                 guest: player?.guest ? [player.guest[0]] : undefined,
                 results: player?.results?.map((result) => ({
                   index: result?.index,
+                  date: result?.date,
                   gross: result?.gross,
                   courseHandicap: result?.courseHandicap,
                   net: result?.net,
@@ -181,6 +221,11 @@ const lowestGrossOverall = Math.min(
                   longDrive: result?.longDrive,
                   putts: result?.putts,
                   closestTo: result?.closestTo,
+                })),
+                yearlyStats: player?.yearlyStats?.map((stats) => ({
+                  year: stats?.year,
+                  gross: stats?.gross,
+                  net: stats?.net,
                 })),
               }))}
             />
@@ -192,6 +237,7 @@ const lowestGrossOverall = Math.min(
               title="Second Flight"
               currentCourse={course}
               lowestGrossOverall={lowestGrossOverall}
+              courseChampionship={tournaments[0]?.clubChampionship}
               flight={tournaments[0]?.secondFlight?.map((player) => ({
                 playerName: player?.playerName,
                 handicapIndex: player?.handicapIndex,
@@ -199,12 +245,18 @@ const lowestGrossOverall = Math.min(
                 results: player?.results?.map((result) => ({
                   index: result?.index,
                   gross: result?.gross,
+                  date: result?.date,
                   courseHandicap: result?.courseHandicap,
                   net: result?.net,
                   course: result?.course,
                   longDrive: result?.longDrive,
                   putts: result?.putts,
                   closestTo: result?.closestTo,
+                })),
+                yearlyStats: player?.yearlyStats?.map((stats) => ({
+                  year: stats?.year,
+                  gross: stats?.gross,
+                  net: stats?.net,
                 })),
               }))}
             />
@@ -225,11 +277,12 @@ const lowestGrossOverall = Math.min(
           results={tournaments[0]?.results}
         />
         {
-          coursePar !== undefined && tournaments[0]?.tees !== undefined && (
+          tournaments[0]?.tees !== undefined && (
             <CourseInfo coursePar={coursePar} tees={tournaments[0]?.tees} />
           )
         }
       </div>
     </div>
+    <Scorecard courseScorecard={courseScorecard} />
   </section>
 </Layout>

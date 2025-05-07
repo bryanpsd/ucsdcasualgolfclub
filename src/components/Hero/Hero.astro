@@ -6,7 +6,7 @@ import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 
 import * as styles from './Hero.css'
 
-const { course, title, courseImage } = Astro.props
+const { course, title, courseImage, subHeadline } = Astro.props
 
 const headline = course || title
 ---
@@ -16,6 +16,13 @@ const headline = course || title
     <ResponsiveHeadline className={styles.heroHeadline} size={2} as="h1" color="inverse">
       {headline}</ResponsiveHeadline
     >
+    {
+      subHeadline && (
+        <ResponsiveHeadline size={1} as="h2" color="inverse">
+          {subHeadline}
+        </ResponsiveHeadline>
+      )
+    }
   </div>
   <div class={styles.heroColRight}>
     <div

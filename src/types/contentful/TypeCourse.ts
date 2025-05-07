@@ -18,6 +18,7 @@ export interface TypeCourseFields {
   summary?: EntryFieldTypes.RichText
   address?: EntryFieldTypes.Location
   tournaments?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TypeTournamentSkeleton>>
+  courseScorecard?: EntryFieldTypes.Object
 }
 
 export type TypeCourseSkeleton = EntrySkeletonType<TypeCourseFields, 'course'>

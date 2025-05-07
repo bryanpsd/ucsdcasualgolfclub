@@ -29,7 +29,7 @@ export const courseCardInfoListWrapper = style([
   },
 ])
 
-export const courseCardInfoList = style([
+export const courseCardInfoContent = style([
   tokens({
     display: 'flex',
     flexDirection: 'column',

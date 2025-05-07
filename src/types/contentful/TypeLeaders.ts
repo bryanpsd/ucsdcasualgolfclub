@@ -6,6 +6,7 @@ import type {
   LocaleCode,
 } from 'contentful'
 import type { TypeResultsSkeleton } from './TypeResults'
+import type { TypeYearlyStatsSkeleton } from './TypeYearlyStats'
 
 export interface TypeLeadersFields {
   playerName?: EntryFieldTypes.Symbol
@@ -17,6 +18,7 @@ export interface TypeLeadersFields {
   guest?: EntryFieldTypes.Array<EntryFieldTypes.Symbol<'Yes'>>
   onCurrentRoster?: EntryFieldTypes.Boolean
   results?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TypeResultsSkeleton>>
+  yearlyStats?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TypeYearlyStatsSkeleton>>
 }
 
 export type TypeLeadersSkeleton = EntrySkeletonType<TypeLeadersFields, 'leaders'>

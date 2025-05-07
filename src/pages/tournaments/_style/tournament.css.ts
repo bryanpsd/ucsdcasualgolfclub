@@ -18,6 +18,12 @@ export const tournamentLeftCol = style([
   }),
 ])
 
+export const summary = style([
+  tokens({
+    marginBottom: 12,
+  }),
+])
+
 export const tournamentRightCol = style([
   tokens({
     width: { 'xs-min': 'col-12', 'md-min': 'col-4' },
