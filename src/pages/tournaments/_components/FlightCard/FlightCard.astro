@@ -4,7 +4,6 @@ import { Table } from '~components/Table'
 import * as styles from './FlightCard.css'
 
 interface FlightCardProps {
-  courseChampionship?: boolean
   title: string
   flight: Array<{
     playerName: string
@@ -12,7 +11,6 @@ interface FlightCardProps {
     guest?: string[]
     results?: Array<{
       gross?: number
-      date?: string
       courseHandicap?: number
       index?: number
       net?: number
@@ -21,33 +19,15 @@ interface FlightCardProps {
       putts?: number
       closestTo?: string[]
     }>
-    yearlyStats?: Array<{
-      year?: number
-      gross?: number
-      net?: number
-    }>
   }>
   currentCourse: string
   lowestGrossOverall?: number
 }
 
-const { title, flight, currentCourse, lowestGrossOverall, courseChampionship } =
-  Astro.props as FlightCardProps
+const { title, flight, currentCourse, lowestGrossOverall } = Astro.props as FlightCardProps
 
 const hasResultsForCurrentCourse = flight.some((player) =>
   player.results?.some((result) => result.course?.fields.course === currentCourse)
-)
-
-const lowestYearlyGross = Math.min(
-  ...flight
-    .flatMap((player) => player.yearlyStats?.map((stats) => stats.gross) || [])
-    .filter((gross) => gross !== undefined && gross !== null)
-)
-
-const lowestYearlyNet = Math.min(
-  ...flight
-    .flatMap((player) => player.yearlyStats?.map((stats) => stats.net) || [])
-    .filter((net) => net !== undefined && net !== null)
 )
 
 const tableHeaders = [
@@ -56,10 +36,7 @@ const tableHeaders = [
   ...(hasResultsForCurrentCourse
     ? ['Index', 'Gross', 'Course Handicap', 'Net', 'Putts', 'Closest To', 'Long Drive']
     : []),
-  ...(courseChampionship ? ['Final Gross', 'Final Net'] : []),
 ]
-
-const getYearFromDate = (date?: string) => (date ? new Date(date).getFullYear() : undefined)
 
 const filteredResults = flight.map((player) => ({
   ...player,
@@ -75,11 +52,7 @@ const filteredResults = flight.map((player) => ({
     <Table
       client:load
       thead={tableHeaders}
-      tbody={filteredResults.flatMap((player) => {
-        if (!player.results || player.results.length === 0) {
-          return []
-        }
-
+      tbody={filteredResults.map((player) => {
         const isLowestGrossOverall = player.results?.[0]?.gross === lowestGrossOverall
 
         const lowestNet = Math.min(
@@ -99,77 +72,44 @@ const filteredResults = flight.map((player) => ({
         const hasLongDrive = player.results?.[0]?.longDrive !== undefined
         const hasClosestTo = player.results?.[0]?.closestTo !== undefined
 
-        return player.results.map((result) => {
-          const resultYear = getYearFromDate(result.date)
-
-          // Log resultYear and yearlyStats for debugging
-          console.log('Result Year:', resultYear)
-          player.yearlyStats?.forEach((stats) => {
-            console.log('YearlyStats Year:', stats.year)
-          })
-
-          // Find the matching yearlyStats entry for the result year
-          const statsForYear = player.yearlyStats?.find((stats) => stats.year === resultYear)
-
-          // Log statsForYear for debugging
-          console.log('Matching YearlyStats:', statsForYear)
-
-          const isLowestYearlyGross =
-            courseChampionship && statsForYear?.gross === lowestYearlyGross
-          const isLowestYearlyNet = courseChampionship && statsForYear?.net === lowestYearlyNet
-
+        if (!player.results || player.results.length === 0) {
+          return [
+            player.guest?.includes('Yes')
+              ? `${player.playerName} (Guest)`
+              : player.playerName || 'Unknown',
+            player.handicapIndex !== undefined ? String(player.handicapIndex) : 'NH',
+          ]
+        } else {
           return [
             player.guest?.includes('Yes')
               ? `${player.playerName} (Guest)`
               : player.playerName || 'Unknown',
 
-            String(result.index ?? 'NH'),
+            String(player.results?.[0]?.index ?? 'NH'),
             {
-              value: String(result.gross ?? ''),
+              value: String(player.results?.[0]?.gross ?? ''),
               className: isLowestGrossOverall ? styles.highlighted : undefined,
             },
-            String(result.courseHandicap ?? ''),
+            String(player.results?.[0]?.courseHandicap ?? ''),
 
             {
-              value: String(result.net ?? ''),
+              value: String(player.results?.[0]?.net ?? ''),
               className: isLowestNet ? styles.highlighted : undefined,
             },
             {
-              value: String(result.putts ?? ''),
+              value: String(player.results?.[0]?.putts ?? ''),
               className: isLowestPutts ? styles.highlighted : undefined,
             },
             {
-              value: String(result.closestTo ?? ''),
+              value: String(player.results?.[0]?.closestTo ?? ''),
               className: hasClosestTo ? styles.highlighted : undefined,
             },
             {
-              value: String(result.longDrive ?? ''),
+              value: String(player.results?.[0]?.longDrive ?? ''),
               className: hasLongDrive ? styles.highlighted : undefined,
             },
-            ...(courseChampionship
-              ? [
-                  {
-                    value:
-                      statsForYear?.gross !== undefined
-                        ? statsForYear.gross > 0
-                          ? `+${statsForYear.gross}`
-                          : statsForYear.gross
-                        : undefined,
-                    className: isLowestYearlyGross ? styles.highlighted : undefined,
-                  },
-                  {
-                    value:
-                      statsForYear?.net !== undefined
-                        ? statsForYear.net > 0
-                          ? `+${statsForYear.net}`
-                          : statsForYear.net
-                        : undefined,
-                    className: isLowestYearlyNet ? styles.highlighted : undefined,
-                  },
-                ]
-              : []),
           ]
-        })
+        }
       })}
     />
   </div>
