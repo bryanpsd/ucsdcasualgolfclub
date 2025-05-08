@@ -27,7 +27,7 @@ async function processCourseTournaments() {
 
     // Fetch all Course entries
     const courses = await environment.getEntries({
-      content_type: 'course', // Replace with your Course content type ID
+      content_type: 'course',
     })
 
     for (const course of courses.items) {
@@ -45,7 +45,7 @@ async function processCourseTournaments() {
 
         if (tournament.sys.publishedVersion) {
           console.log(`Processing published Tournament entry: ${tournament.fields.title['en-US']}`)
-          await processTournament(tournament, courseName)
+          await processTournament(tournament, courseName, course)
         }
       }
     }
@@ -54,7 +54,7 @@ async function processCourseTournaments() {
   }
 }
 
-async function processTournament(tournament, courseName) {
+async function processTournament(tournament, courseName, course) {
   try {
     console.log('Tournament Fields:', tournament.fields)
 
@@ -181,7 +181,7 @@ async function processTournament(tournament, courseName) {
                 sys: {
                   type: 'Link',
                   linkType: 'Entry',
-                  id: tournament.sys.id,
+                  id: course.sys.id,
                 },
               },
             },
