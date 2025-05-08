@@ -21,6 +21,7 @@ export interface TypeTournamentFields {
   resultsJson?: EntryFieldTypes.Object
   clubChampionship?: EntryFieldTypes.Boolean
   tees?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
+  resultsExcel?: EntryFieldTypes.AssetLink
 }
 
 export type TypeTournamentSkeleton = EntrySkeletonType<TypeTournamentFields, 'tournament'>
