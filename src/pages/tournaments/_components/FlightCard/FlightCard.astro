@@ -29,8 +29,6 @@ interface FlightCardProps {
   }>
   currentCourse: string
   tournamentDate: string
-  lowestGrossOverall?: number
-  lowestPuttsOverall?: number
 }
 
 const {
@@ -38,13 +36,9 @@ const {
   flight,
   currentCourse,
   tournamentDate,
-  lowestGrossOverall,
-  lowestPuttsOverall,
+
   courseChampionship,
 } = Astro.props as FlightCardProps
-
-console.log('Lowest Gross Overall:', lowestGrossOverall)
-console.log('Lowest Putts Overall:', lowestPuttsOverall)
 
 const getYearFromDate = (date?: string) => (date ? new Date(date).getFullYear() : undefined)
 
@@ -60,22 +54,6 @@ const filteredResults = flight.map((player) => ({
     return isSameYear && isSameCourse
   }),
 }))
-
-// Find the player with the lowest gross
-const playerWithLowestGross = filteredResults.find((player) =>
-  player.results?.some((result) => result.gross === lowestGrossOverall)
-)
-if (playerWithLowestGross) {
-  console.log('Player with Lowest Gross:', playerWithLowestGross.playerName)
-}
-
-// Find the player with the lowest putts
-const playerWithLowestPutts = filteredResults.find((player) =>
-  player.results?.some((result) => result.putts === lowestPuttsOverall)
-)
-if (playerWithLowestPutts) {
-  console.log('Player with Lowest Putts:', playerWithLowestPutts.playerName)
-}
 
 const hasResultsForCurrentCourse = filteredResults.some((player) =>
   player.results?.some((result) => result.course?.fields.course === currentCourse)
@@ -112,13 +90,22 @@ const tableHeaders = [
       client:load
       thead={tableHeaders}
       tbody={filteredResults.map((player) => {
-        const isLowestGrossOverall = player.results?.some(
-          (result) => result.gross === lowestGrossOverall && result.date === tournamentDate
-        )
+        const isLowestGrossOverall =
+          player.results?.[0]?.gross ===
+          Math.min(
+            ...filteredResults
+              .flatMap((p) => p.results?.map((result) => result.gross) || [])
+              .filter((gross) => gross !== undefined && gross !== null)
+          )
 
-        const isLowestPuttsOverall = player.results?.some(
-          (result) => result.putts === lowestPuttsOverall && result.date === tournamentDate
-        )
+        const isLowestPuttsOverall =
+          player.results?.[0]?.putts ===
+          Math.min(
+            ...filteredResults
+              .flatMap((p) => p.results?.map((result) => result.putts) || [])
+              .filter((putts) => putts !== undefined && putts !== null)
+          )
+
         const lowestNet = Math.min(
           ...filteredResults
             .flatMap((p) => p.results?.map((result) => result.net) || [])
