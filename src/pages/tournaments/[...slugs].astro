@@ -162,23 +162,47 @@ const {
 const tournamentYear = tournaments[0]?.date ? new Date(tournaments[0].date).getFullYear() : 'N/A'
 const tournamentDate = tournaments[0]?.date
 
-// Combine all players from First Flight and Second Flight for the current tournament
 const allFlights = [...(tournaments[0]?.firstFlight || []), ...(tournaments[0]?.secondFlight || [])]
 
-// Calculate the lowest gross score for the current tournament across all players in both flights
-const lowestGrossOverall = Math.min(
-  ...allFlights
-    .flatMap(
-      (player) =>
-        player?.results
-          ?.filter(
-            (result) =>
-              result?.course && 'fields' in result.course && result.course.fields.course === course
-          )
-          .map((result) => result?.gross) || []
-    )
-    .filter((gross) => gross !== undefined && gross !== null)
-)
+const lowestGrossOverall = allFlights
+  .flatMap(
+    (player) =>
+      player?.results
+        ?.filter(
+          (result) =>
+            result?.course &&
+            'fields' in result.course &&
+            result.course.fields.course === course &&
+            result.date === tournamentDate // Ensure the result matches the tournament date
+        )
+        .map((result) => result?.gross) || []
+  )
+  .filter((gross) => gross !== undefined && gross !== null && !isNaN(gross)) // Ensure valid numbers
+
+const lowestGrossOverallValue =
+  lowestGrossOverall.length > 0 ? Math.min(...lowestGrossOverall) : null
+
+console.log('Lowest Gross Overall Value:', lowestGrossOverallValue)
+
+const lowestPuttsOverall = allFlights
+  .flatMap(
+    (player) =>
+      player?.results
+        ?.filter(
+          (result) =>
+            result?.course &&
+            'fields' in result.course &&
+            result.course.fields.course === course &&
+            result.date === tournamentDate // Ensure the result matches the tournament date
+        )
+        .map((result) => result?.putts) || []
+  )
+  .filter((putts) => putts !== undefined && putts !== null && !isNaN(putts)) // Ensure valid numbers
+
+const lowestPuttsOverallValue =
+  lowestPuttsOverall.length > 0 ? Math.min(...lowestPuttsOverall) : null
+
+console.log('Lowest Putts Overall Value:', lowestPuttsOverallValue)
 ---
 
 <Layout
@@ -208,6 +232,7 @@ const lowestGrossOverall = Math.min(
               currentCourse={course}
               tournamentDate={tournamentDate}
               lowestGrossOverall={lowestGrossOverall}
+              lowestPuttsOverall={lowestPuttsOverall}
               courseChampionship={tournaments[0]?.clubChampionship}
               flight={tournaments[0]?.firstFlight?.map((player) => ({
                 playerName: player?.playerName,
@@ -240,6 +265,7 @@ const lowestGrossOverall = Math.min(
               currentCourse={course}
               tournamentDate={tournamentDate}
               lowestGrossOverall={lowestGrossOverall}
+              lowestPuttsOverall={lowestPuttsOverall}
               courseChampionship={tournaments[0]?.clubChampionship}
               flight={tournaments[0]?.secondFlight?.map((player) => ({
                 playerName: player?.playerName,
