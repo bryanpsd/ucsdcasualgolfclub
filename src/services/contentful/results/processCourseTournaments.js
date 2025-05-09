@@ -56,6 +56,16 @@ async function processCourseTournaments() {
 
 async function processTournament(tournament, courseName, course) {
   try {
+    const firstFlightPlayers = tournament.fields.firstFlight?.['en-US'] || [] // Existing players in First Flight
+    const secondFlightPlayers = tournament.fields.secondFlight?.['en-US'] || [] // Existing players in Second Flight
+
+    if (firstFlightPlayers.length > 0 && secondFlightPlayers.length > 0) {
+      console.log(
+        `Skipping Tournament "${tournament.fields.title?.['en-US']}" as flights are already added.`
+      )
+      return
+    }
+
     console.log('Tournament Fields:', tournament.fields)
 
     const resultsExcelRef = tournament.fields.resultsExcel?.['en-US']
@@ -95,8 +105,6 @@ async function processTournament(tournament, courseName, course) {
     console.log('Parsed Excel Data:', jsonData)
 
     let currentFlight = null // Track the current flight across rows
-    const firstFlightPlayers = tournament.fields.firstFlight?.['en-US'] || [] // Existing players in First Flight
-    const secondFlightPlayers = tournament.fields.secondFlight?.['en-US'] || [] // Existing players in Second Flight
 
     for (const row of jsonData) {
       let name = row['Name'] ? String(row['Name']).trim() : null
