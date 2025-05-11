@@ -161,6 +161,11 @@ const {
 
 const tournamentYear = tournaments[0]?.date ? new Date(tournaments[0].date).getFullYear() : 'N/A'
 const tournamentDate = tournaments[0]?.date
+
+const flights = [
+  { title: 'First Flight', data: tournaments[0]?.firstFlight || [] },
+  { title: 'Second Flight', data: tournaments[0]?.secondFlight || [] },
+]
 ---
 
 <Layout
@@ -184,65 +189,37 @@ const tournamentDate = tournaments[0]?.date
           )
         }
         {
-          tournaments[0]?.firstFlight?.length > 0 && (
-            <FlightCard
-              title="First Flight"
-              currentCourse={course}
-              tournamentDate={tournamentDate}
-              courseChampionship={tournaments[0]?.clubChampionship}
-              flight={tournaments[0]?.firstFlight?.map((player) => ({
-                playerName: player?.playerName,
-                handicapIndex: player?.handicapIndex,
-                guest: player?.guest ? [player.guest[0]] : undefined,
-                results: player?.results?.map((result) => ({
-                  index: result?.index,
-                  date: result?.date,
-                  gross: result?.gross,
-                  courseHandicap: result?.courseHandicap,
-                  net: result?.net,
-                  course: result?.course,
-                  longDrive: result?.longDrive,
-                  putts: result?.putts,
-                  closestTo: result?.closestTo,
-                })),
-                yearlyStats: player?.yearlyStats?.map((stats) => ({
-                  year: stats?.year,
-                  gross: stats?.gross,
-                  net: stats?.net,
-                })),
-              }))}
-            />
-          )
-        }
-        {
-          tournaments[0]?.secondFlight?.length > 0 && (
-            <FlightCard
-              title="Second Flight"
-              currentCourse={course}
-              tournamentDate={tournamentDate}
-              courseChampionship={tournaments[0]?.clubChampionship}
-              flight={tournaments[0]?.secondFlight?.map((player) => ({
-                playerName: player?.playerName,
-                handicapIndex: player?.handicapIndex,
-                guest: player?.guest ? [player.guest[0]] : undefined,
-                results: player?.results?.map((result) => ({
-                  index: result?.index,
-                  gross: result?.gross,
-                  date: result?.date,
-                  courseHandicap: result?.courseHandicap,
-                  net: result?.net,
-                  course: result?.course,
-                  longDrive: result?.longDrive,
-                  putts: result?.putts,
-                  closestTo: result?.closestTo,
-                })),
-                yearlyStats: player?.yearlyStats?.map((stats) => ({
-                  year: stats?.year,
-                  gross: stats?.gross,
-                  net: stats?.net,
-                })),
-              }))}
-            />
+          flights.map(
+            (flight) =>
+              flight.data.length > 0 && (
+                <FlightCard
+                  title={flight.title}
+                  currentCourse={course}
+                  tournamentDate={tournamentDate}
+                  courseChampionship={tournaments[0]?.clubChampionship}
+                  flight={flight.data.map((player) => ({
+                    playerName: player?.playerName,
+                    handicapIndex: player?.handicapIndex,
+                    guest: player?.guest ? [player.guest[0]] : undefined,
+                    results: player?.results?.map((result) => ({
+                      index: result?.index,
+                      date: result?.date,
+                      gross: result?.gross,
+                      courseHandicap: result?.courseHandicap,
+                      net: result?.net,
+                      course: result?.course,
+                      longDrive: result?.longDrive,
+                      putts: result?.putts,
+                      closestTo: result?.closestTo,
+                    })),
+                    yearlyStats: player?.yearlyStats?.map((stats) => ({
+                      year: stats?.year,
+                      gross: stats?.gross,
+                      net: stats?.net,
+                    })),
+                  }))}
+                />
+              )
           )
         }
       </div>
