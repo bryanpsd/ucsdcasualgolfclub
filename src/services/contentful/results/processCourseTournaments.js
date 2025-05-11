@@ -20,7 +20,7 @@ const client = contentful.createClient({
 const formatDateToISO = (date) => new Date(date).toISOString()
 
 // Main function to process tournaments in the Course content type
-async function processCourseTournaments() {
+async function processCourseTournaments(tournamentName) {
   try {
     const space = await client.getSpace(SPACE_ID)
     const environment = await space.getEnvironment(ENVIRONMENT_ID)
@@ -43,8 +43,15 @@ async function processCourseTournaments() {
         const tournamentId = tournamentLink.sys.id
         const tournament = await environment.getEntry(tournamentId)
 
+        const tournamentTitle = tournament.fields.title?.['en-US']
+
+        // Skip tournaments that don't match the provided name
+        if (tournamentName && tournamentTitle !== tournamentName) {
+          continue
+        }
+
         if (tournament.sys.publishedVersion) {
-          console.log(`Processing published Tournament entry: ${tournament.fields.title['en-US']}`)
+          console.log(`Processing published Tournament entry: ${tournamentTitle}`)
           await processTournament(tournament, courseName, course)
         }
       }
@@ -308,4 +315,5 @@ async function processTournament(tournament, courseName, course) {
   }
 }
 // Run the script
-processCourseTournaments()
+const tournamentName = process.argv[2]
+processCourseTournaments(tournamentName)
