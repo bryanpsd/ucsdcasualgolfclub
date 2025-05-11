@@ -10,7 +10,7 @@ import icon from 'astro-icon'
 import partytown from '@astrojs/partytown'
 
 export default defineConfig({
-  site: 'https://ucsdcasualgolfclub.netlify.app',
+  site: 'https://ucsdcasualgolfclub.com',
   adapter: netlify(),
   output: 'server',
   integrations: [react(), icon(), partytown({ config: { forward: ['dataLayer.push'] } })],
