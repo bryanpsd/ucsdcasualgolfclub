@@ -9,7 +9,7 @@ import { Hero } from '~components/Hero'
 import * as styles from '~styles/common.css'
 
 // Get the slug from the URL
-const { slug } = Astro.params
+const { slug = '' } = Astro.params
 
 // Fetch the entry matching the slug
 const entry = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
@@ -18,11 +18,13 @@ const entry = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
   limit: 1,
 })
 
-if (!entry.items.length) {
-  throw new Error(`Page not found for slug: ${slug}`)
+// Handle cases where no entry is found
+if (!slug || !entry.items || entry.items.length === 0) {
+  return Astro.redirect('/not-found')
 }
 
-const page = entry.items[0].fields
+// Safely access the fields property
+const page = entry.items[0]?.fields || {}
 ---
 
 <Layout title={`${page.seoTitle} | UCSD Casual Golf Club`} description={page.seoDescription}>

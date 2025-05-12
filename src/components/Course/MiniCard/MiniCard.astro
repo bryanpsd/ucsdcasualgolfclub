@@ -20,6 +20,7 @@ const {
   slug,
   results,
   inclusions,
+  type,
 } = Astro.props
 
 const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null
@@ -36,6 +37,7 @@ const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null
         validDate ? (
           <>
             <span>{format(date, 'E M/d/yy')}</span>@<span>{format(date, 'h:mmaaa')}</span>
+            {type && type !== 'TBD' && <span>{type}</span>}
           </>
         ) : (
           <span>Date not available</span>

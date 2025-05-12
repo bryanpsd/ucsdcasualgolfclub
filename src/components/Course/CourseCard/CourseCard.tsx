@@ -1,15 +1,12 @@
 import { format } from 'date-fns'
-
 import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 import { Button } from '../../Button/Button'
 import { CourseDetails } from '../CourseDetails'
 import { Typography } from '~components/Typography'
-import { RichText } from '~components/RichText'
 
 import Clock from '../../../icons/clock.svg?react'
 
 import type { TypeCourseProps } from '../../../types/contentful'
-import type { Document } from '@contentful/rich-text-types'
 
 import * as styles from './CourseCard.css'
 
@@ -24,7 +21,7 @@ interface CourseCardProps extends TypeCourseProps {
   coursePar?: string
   tees?: string[]
   type?: string
-  tournamentNotes?: Document | undefined
+  tournamentNotes?: string[]
 }
 
 export const CourseCard = (props: CourseCardProps) => {
@@ -58,7 +55,6 @@ export const CourseCard = (props: CourseCardProps) => {
             {format(date, 'd')}
           </Typography>
           <Typography color="inverse">{format(date, 'E')}</Typography>
-          <Typography color="inverse">{format(date, 'yyyy')}</Typography>
         </div>
       )}
       {hideCourseInfo ? (
@@ -66,7 +62,15 @@ export const CourseCard = (props: CourseCardProps) => {
           <ResponsiveHeadline size={2} as="h2">
             {course}
           </ResponsiveHeadline>
-          {tournamentNotes && <RichText richText={tournamentNotes} />}
+          {tournamentNotes && tournamentNotes.length > 0 && (
+            <div>
+              {tournamentNotes.map((note, index) => (
+                <ResponsiveHeadline className={styles.courseNote} key={index} size={1} as="h3">
+                  {note}
+                </ResponsiveHeadline>
+              ))}
+            </div>
+          )}
           {clubChampionship && (
             <ResponsiveHeadline className={styles.courseNote} size={1} as="h2">
               Club Championship
@@ -79,7 +83,15 @@ export const CourseCard = (props: CourseCardProps) => {
             <ResponsiveHeadline size={2} as="h2">
               {course}
             </ResponsiveHeadline>
-            {tournamentNotes && <RichText richText={tournamentNotes} />}
+            {tournamentNotes && tournamentNotes.length > 0 && (
+              <div>
+                {tournamentNotes.map((note, index) => (
+                  <ResponsiveHeadline className={styles.courseNote} key={index} size={1} as="h3">
+                    {note}
+                  </ResponsiveHeadline>
+                ))}
+              </div>
+            )}
             {clubChampionship && (
               <ResponsiveHeadline className={styles.courseNote} size={1} as="h2">
                 Club Championship

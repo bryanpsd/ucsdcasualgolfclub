@@ -1,0 +1,10 @@
+---
+export const prerender = true
+
+import { Error } from '~layouts/Error'
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
+---
+
+<Error title="Not Found">
+  <ResponsiveHeadline size={3} as="h1">Oops! We can't find that page.</ResponsiveHeadline>
+</Error>
