@@ -60,10 +60,11 @@ export const courseCardNameWrapper = style([
   }),
 ])
 
-export const courseCardTime = style([
+export const courseCardTimeType = style([
   tokens({
     display: 'flex',
     alignItems: 'center',
+    gap: 4,
   }),
 ])
 

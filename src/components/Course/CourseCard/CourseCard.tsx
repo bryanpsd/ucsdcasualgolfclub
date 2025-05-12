@@ -4,10 +4,12 @@ import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 import { Button } from '../../Button/Button'
 import { CourseDetails } from '../CourseDetails'
 import { Typography } from '~components/Typography'
+import { RichText } from '~components/RichText'
 
 import Clock from '../../../icons/clock.svg?react'
 
 import type { TypeCourseProps } from '../../../types/contentful'
+import type { Document } from '@contentful/rich-text-types'
 
 import * as styles from './CourseCard.css'
 
@@ -21,6 +23,8 @@ interface CourseCardProps extends TypeCourseProps {
   clubChampionship?: boolean
   coursePar?: string
   tees?: string[]
+  type?: string
+  tournamentNotes?: Document | undefined
 }
 
 export const CourseCard = (props: CourseCardProps) => {
@@ -34,7 +38,9 @@ export const CourseCard = (props: CourseCardProps) => {
     inclusions,
     date,
     results,
+    type,
     clubChampionship,
+    tournamentNotes,
   } = props
 
   const isWednesday = date && new Date(date).getDay() === 3
@@ -52,6 +58,7 @@ export const CourseCard = (props: CourseCardProps) => {
             {format(date, 'd')}
           </Typography>
           <Typography color="inverse">{format(date, 'E')}</Typography>
+          <Typography color="inverse">{format(date, 'yyyy')}</Typography>
         </div>
       )}
       {hideCourseInfo ? (
@@ -59,6 +66,7 @@ export const CourseCard = (props: CourseCardProps) => {
           <ResponsiveHeadline size={2} as="h2">
             {course}
           </ResponsiveHeadline>
+          {tournamentNotes && <RichText richText={tournamentNotes} />}
           {clubChampionship && (
             <ResponsiveHeadline className={styles.courseNote} size={1} as="h2">
               Club Championship
@@ -71,15 +79,21 @@ export const CourseCard = (props: CourseCardProps) => {
             <ResponsiveHeadline size={2} as="h2">
               {course}
             </ResponsiveHeadline>
+            {tournamentNotes && <RichText richText={tournamentNotes} />}
             {clubChampionship && (
               <ResponsiveHeadline className={styles.courseNote} size={1} as="h2">
                 Club Championship
               </ResponsiveHeadline>
             )}
           </div>
-          <div className={styles.courseCardTime}>
+          <div className={styles.courseCardTimeType}>
             <Clock height={30} width={30} aria-hidden="true" />
-            {date && format(date, 'h:mmaaa')}
+            {date && format(date, 'h:mmaaa')}{' '}
+            {type && (
+              <Typography color="text" variant="bodyLg">
+                {type}
+              </Typography>
+            )}
           </div>
           <CourseDetails
             inclusions={inclusions}

@@ -31,6 +31,8 @@ const getTournaments = entries.items
               players: tournament.fields.players,
               inclusions: tournament.fields.inclusions,
               tees: tournament.fields.tees,
+              type: tournament.fields.type,
+              tournamentNotes: tournament.fields.tournamentNotes,
               results:
                 tournament.fields.results && 'fields' in tournament.fields.results
                   ? (tournament.fields.results.fields.file?.url ?? null)
@@ -66,6 +68,8 @@ const getCurrentYear = new Date().getFullYear()
           date={item?.tournaments[0].date}
           clubChampionship={item?.tournaments[0].clubChampionship}
           course={item?.course}
+          type={item?.tournaments[0].type}
+          tournamentNotes={item?.tournaments[0].tournamentNotes}
           prices={item?.tournaments[0].prices}
           players={item?.tournaments[0].players}
           slug={item?.slug}

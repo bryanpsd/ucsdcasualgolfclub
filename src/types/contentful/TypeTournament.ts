@@ -14,6 +14,7 @@ export interface TypeTournamentFields {
   prices?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
   players?: EntryFieldTypes.Symbol
   type?: EntryFieldTypes.Symbol
+  tournamentNotes?: EntryFieldTypes.RichText
   inclusions?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
   firstFlight?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TypeLeadersSkeleton>>
   secondFlight?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TypeLeadersSkeleton>>
