@@ -49,6 +49,7 @@ const tournaments = entries.items
           fields: {
             ...('fields' in tournament ? tournament.fields : {}),
             date: 'fields' in tournament ? tournament.fields.date : undefined,
+            tournamentNotes: 'fields' in tournament ? tournament.fields.tournamentNotes : undefined,
             clubChampionship:
               'fields' in tournament ? (tournament.fields.clubChampionship ?? false) : false,
           },
@@ -134,6 +135,7 @@ if (currentYearTournaments.length > 0) {
               clubChampionship={
                 'fields' in tournament ? (tournament.fields.clubChampionship ?? false) : false
               }
+              tournamentNotes={tournament.fields.tournamentNotes}
               course={course}
               slug={slug}
               results={

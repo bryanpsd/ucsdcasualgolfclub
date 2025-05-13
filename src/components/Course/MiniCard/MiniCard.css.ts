@@ -42,6 +42,23 @@ export const miniCard = style([
   },
 ])
 
+export const tournamentNotes = style({
+  color: color.brand.white,
+})
+
+export const dateTimeTypeWrapper = style([
+  tokens({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 2,
+  }),
+  {
+    color: color.brand.yellow,
+  },
+])
+
 export const dateTimeWrapper = style([
   tokens({
     display: 'flex',
@@ -51,7 +68,4 @@ export const dateTimeWrapper = style([
     width: 'col-12',
     gap: 2,
   }),
-  {
-    color: color.brand.yellow,
-  },
 ])

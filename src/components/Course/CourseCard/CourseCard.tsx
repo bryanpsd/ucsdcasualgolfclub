@@ -1,5 +1,4 @@
 import { format } from 'date-fns'
-
 import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 import { Button } from '../../Button/Button'
 import { CourseDetails } from '../CourseDetails'
@@ -21,6 +20,8 @@ interface CourseCardProps extends TypeCourseProps {
   clubChampionship?: boolean
   coursePar?: string
   tees?: string[]
+  type?: string
+  tournamentNotes?: string[]
 }
 
 export const CourseCard = (props: CourseCardProps) => {
@@ -34,7 +35,9 @@ export const CourseCard = (props: CourseCardProps) => {
     inclusions,
     date,
     results,
+    type,
     clubChampionship,
+    tournamentNotes,
   } = props
 
   const isWednesday = date && new Date(date).getDay() === 3
@@ -59,6 +62,15 @@ export const CourseCard = (props: CourseCardProps) => {
           <ResponsiveHeadline size={2} as="h2">
             {course}
           </ResponsiveHeadline>
+          {tournamentNotes && tournamentNotes.length > 0 && (
+            <div>
+              {tournamentNotes.map((note, index) => (
+                <ResponsiveHeadline className={styles.courseNote} key={index} size={1} as="h3">
+                  {note}
+                </ResponsiveHeadline>
+              ))}
+            </div>
+          )}
           {clubChampionship && (
             <ResponsiveHeadline className={styles.courseNote} size={1} as="h2">
               Club Championship
@@ -71,15 +83,29 @@ export const CourseCard = (props: CourseCardProps) => {
             <ResponsiveHeadline size={2} as="h2">
               {course}
             </ResponsiveHeadline>
+            {tournamentNotes && tournamentNotes.length > 0 && (
+              <div>
+                {tournamentNotes.map((note, index) => (
+                  <ResponsiveHeadline className={styles.courseNote} key={index} size={1} as="h3">
+                    {note}
+                  </ResponsiveHeadline>
+                ))}
+              </div>
+            )}
             {clubChampionship && (
               <ResponsiveHeadline className={styles.courseNote} size={1} as="h2">
                 Club Championship
               </ResponsiveHeadline>
             )}
           </div>
-          <div className={styles.courseCardTime}>
+          <div className={styles.courseCardTimeType}>
             <Clock height={30} width={30} aria-hidden="true" />
-            {date && format(date, 'h:mmaaa')}
+            {date && format(date, 'h:mmaaa')}{' '}
+            {type && (
+              <Typography color="text" variant="bodyLg">
+                {type}
+              </Typography>
+            )}
           </div>
           <CourseDetails
             inclusions={inclusions}

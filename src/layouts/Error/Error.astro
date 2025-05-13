@@ -1,0 +1,15 @@
+---
+import { Layout } from '~layouts/'
+
+export type Props = {
+  title: string
+}
+
+const { title } = Astro.props
+---
+
+<Layout title={title} showScrollToTop={false}>
+  <main slot="main" id="main">
+    <slot name="message" />
+  </main>
+</Layout>
