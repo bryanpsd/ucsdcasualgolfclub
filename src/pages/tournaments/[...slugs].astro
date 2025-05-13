@@ -164,6 +164,42 @@ const {
 const tournamentYear = tournaments[0]?.date ? new Date(tournaments[0].date).getFullYear() : 'N/A'
 const tournamentDate = tournaments[0]?.date
 
+const allResults = [
+  ...(tournaments[0]?.firstFlight || []).flatMap((player) => player?.results || []),
+  ...(tournaments[0]?.secondFlight || []).flatMap((player) => player?.results || []),
+]
+
+const validGross = allResults
+  .filter((result) => {
+    // Normalize both dates to ISO strings for comparison
+    const isSameDate =
+      result?.date &&
+      !isNaN(new Date(result.date).getTime()) &&
+      new Date(result.date).toISOString().split('T')[0] ===
+        new Date(tournamentDate).toISOString().split('T')[0]
+
+    return isSameDate && result?.gross !== undefined && result?.gross !== null
+  })
+  .map((result) => result?.gross ?? null)
+  .filter((gross): gross is number => gross !== null && !isNaN(gross))
+
+const validPutts = allResults
+  .filter((result) => {
+    // Normalize both dates to ISO strings for comparison
+    const isSameDate =
+      result?.date &&
+      !isNaN(new Date(result.date).getTime()) &&
+      new Date(result.date).toISOString().split('T')[0] ===
+        new Date(tournamentDate).toISOString().split('T')[0]
+
+    return isSameDate && result?.putts !== undefined && result?.putts !== null
+  })
+  .map((result) => result?.putts ?? null)
+  .filter((putts): putts is number => putts !== null && !isNaN(putts))
+
+const lowestGrossOverall = validGross.length > 0 ? Math.min(...validGross) : null
+const lowestPuttsOverall = validPutts.length > 0 ? Math.min(...validPutts) : null
+
 const flights = [
   { title: 'First Flight', data: tournaments[0]?.firstFlight || [] },
   { title: 'Second Flight', data: tournaments[0]?.secondFlight || [] },
@@ -199,6 +235,8 @@ const flights = [
                   currentCourse={course}
                   tournamentDate={tournamentDate}
                   courseChampionship={tournaments[0]?.clubChampionship}
+                  lowestGrossOverall={lowestGrossOverall}
+                  lowestPuttsOverall={lowestPuttsOverall}
                   flight={flight.data.map((player) => ({
                     playerName: player?.playerName,
                     handicapIndex: player?.handicapIndex,

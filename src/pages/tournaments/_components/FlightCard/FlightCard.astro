@@ -5,6 +5,8 @@ import * as styles from './FlightCard.css'
 
 interface FlightCardProps {
   courseChampionship?: boolean
+  lowestPuttsOverall?: number
+  lowestGrossOverall?: number
   title: string
   flight: Array<{
     playerName: string
@@ -36,7 +38,8 @@ const {
   flight,
   currentCourse,
   tournamentDate,
-
+  lowestPuttsOverall,
+  lowestGrossOverall,
   courseChampionship,
 } = Astro.props as FlightCardProps
 
@@ -50,7 +53,6 @@ const filteredResults = flight.map((player) => ({
     const resultYear = getYearFromDate(result.date)
     const isSameYear = resultYear === tournamentYear
     const isSameCourse = result.course?.fields.course === currentCourse
-
     return isSameYear && isSameCourse
   }),
 }))
@@ -90,21 +92,13 @@ const tableHeaders = [
       client:load
       thead={tableHeaders}
       tbody={filteredResults.map((player) => {
-        const isLowestGrossOverall =
-          player.results?.[0]?.gross ===
-          Math.min(
-            ...filteredResults
-              .flatMap((p) => p.results?.map((result) => result.gross) || [])
-              .filter((gross) => gross !== undefined && gross !== null)
-          )
+        const isLowestGrossOverall = player.results?.some(
+          (result) => result.gross === lowestGrossOverall
+        )
 
-        const isLowestPuttsOverall =
-          player.results?.[0]?.putts ===
-          Math.min(
-            ...filteredResults
-              .flatMap((p) => p.results?.map((result) => result.putts) || [])
-              .filter((putts) => putts !== undefined && putts !== null)
-          )
+        const isLowestPuttsOverall = player.results?.some(
+          (result) => result.putts === lowestPuttsOverall
+        )
 
         const lowestNet = Math.min(
           ...filteredResults
