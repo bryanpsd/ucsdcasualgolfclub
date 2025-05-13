@@ -21,6 +21,7 @@ const {
   results,
   inclusions,
   type,
+  tournamentNotes,
 } = Astro.props
 
 const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null
@@ -32,12 +33,25 @@ const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null
     <ResponsiveHeadline className={styles.miniCardCourse} size={1} as="h3">
       {course}
     </ResponsiveHeadline>
-    <div class={styles.dateTimeWrapper}>
+    {
+      tournamentNotes && tournamentNotes.length > 0 && (
+        <div class={styles.tournamentNotes}>
+          {tournamentNotes.map((note: string) => (
+            <ResponsiveHeadline size={1} as="h4">
+              {note}
+            </ResponsiveHeadline>
+          ))}
+        </div>
+      )
+    }
+    <div class={styles.dateTimeTypeWrapper}>
       {
         validDate ? (
           <>
-            <span>{format(date, 'E M/d/yy')}</span>@<span>{format(date, 'h:mmaaa')}</span>
-            {type && type !== 'TBD' && <span>{type}</span>}
+            <div class={styles.dateTimeWrapper}>
+              <span>{format(date, 'E M/d/yy')}</span>@<span>{format(date, 'h:mmaaa')}</span>
+            </div>
+            {type && <div>{type}</div>}
           </>
         ) : (
           <span>Date not available</span>

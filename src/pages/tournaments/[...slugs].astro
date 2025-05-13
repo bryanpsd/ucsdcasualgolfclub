@@ -57,6 +57,7 @@ export async function getStaticPaths() {
                   results: tournament.fields.results ?? [],
                   tees: tournament.fields.tees,
                   type: tournament.fields.type,
+                  tournamentNotes: tournament.fields.tournamentNotes,
                   firstFlight:
                     tournament.fields.firstFlight
                       ?.map((player) => {
@@ -232,6 +233,7 @@ const flights = [
           course={course}
           courseWebsite={courseWebsite}
           type={tournaments[0]?.type}
+          tournamentNotes={tournaments[0]?.tournamentNotes}
           prices={tournaments[0]?.prices}
           date={tournaments[0]?.date}
           players={tournaments[0]?.players}
