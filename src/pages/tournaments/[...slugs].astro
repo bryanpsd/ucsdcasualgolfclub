@@ -200,8 +200,6 @@ const validPutts = allResults
 const lowestGrossOverall = validGross.length > 0 ? Math.min(...validGross) : null
 const lowestPuttsOverall = validPutts.length > 0 ? Math.min(...validPutts) : null
 
-console.log('Lowest Putts Overall for Current Tournament:', lowestPuttsOverall)
-
 const flights = [
   { title: 'First Flight', data: tournaments[0]?.firstFlight || [] },
   { title: 'Second Flight', data: tournaments[0]?.secondFlight || [] },
