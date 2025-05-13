@@ -5,6 +5,7 @@ import * as styles from './FlightCard.css'
 
 interface FlightCardProps {
   courseChampionship?: boolean
+  lowestPuttsOverall?: number
   title: string
   flight: Array<{
     playerName: string
@@ -31,14 +32,8 @@ interface FlightCardProps {
   tournamentDate: string
 }
 
-const {
-  title,
-  flight,
-  currentCourse,
-  tournamentDate,
-
-  courseChampionship,
-} = Astro.props as FlightCardProps
+const { title, flight, currentCourse, tournamentDate, lowestPuttsOverall, courseChampionship } =
+  Astro.props as FlightCardProps
 
 const getYearFromDate = (date?: string) => (date ? new Date(date).getFullYear() : undefined)
 
@@ -97,14 +92,9 @@ const tableHeaders = [
               .flatMap((p) => p.results?.map((result) => result.gross) || [])
               .filter((gross) => gross !== undefined && gross !== null)
           )
-
-        const isLowestPuttsOverall =
-          player.results?.[0]?.putts ===
-          Math.min(
-            ...filteredResults
-              .flatMap((p) => p.results?.map((result) => result.putts) || [])
-              .filter((putts) => putts !== undefined && putts !== null)
-          )
+        const isLowestPuttsOverall = player.results?.some(
+          (result) => result.putts === lowestPuttsOverall
+        )
 
         const lowestNet = Math.min(
           ...filteredResults
