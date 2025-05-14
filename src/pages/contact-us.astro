@@ -1,0 +1,17 @@
+---
+import Layout from '~layouts/Layout.astro'
+import { Hero } from '~components/Hero'
+import { ContactUsForm } from '~components/ContactUsForm/ContactUsForm'
+
+import * as styles from '~styles/common.css'
+---
+
+<Layout
+  title="Contact Us | UCSD Casual Golf Club"
+  description="Contact us about the UCSD Casual Golf Club"
+>
+  <Hero title="Contact Us" />
+  <div class={styles.subPageWrapper}>
+    <ContactUsForm client:load />
+  </div>
+</Layout>

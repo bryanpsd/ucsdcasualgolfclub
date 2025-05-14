@@ -27,7 +27,7 @@ const mapContentfulFields = (fields?: TypeCourseProps) => {
 
 export const getCoursePage = defineAction({
   input: z.string(),
-  handler: async (slug) => {
+  handler: async (slug: string) => {
     const pageData = await contentfulClient.withoutUnresolvableLinks.getEntries<TypeCourseSkeleton>(
       {
         content_type: 'course',
