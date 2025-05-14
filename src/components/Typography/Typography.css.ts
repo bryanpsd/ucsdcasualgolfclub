@@ -1,8 +1,8 @@
 import { type RecipeVariants, recipe } from '@vanilla-extract/recipes'
-import { tokens } from '../../styles/designTokens.css'
-import { fontSize, fontWeight, lineHeight } from '../../styles/designTokens/typography'
+import { tokens } from '~styles/designTokens.css'
+import { fontSize, fontWeight, lineHeight } from '~styles/designTokens/typography'
 
-import { color } from '../../styles/designTokens/colors'
+import { color } from '~styles/designTokens/colors'
 
 export const typography = recipe({
   base: tokens({ margin: 'none' }),

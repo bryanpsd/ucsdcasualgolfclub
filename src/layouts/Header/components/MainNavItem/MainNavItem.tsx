@@ -1,13 +1,10 @@
 import { forwardRef, type ElementType, type ReactNode } from 'react'
-import Caret from '../../../../icons/caretDown.svg?react'
-import type {
-  PolymorphicComponentPropWithRef,
-  PolymorphicRef,
-} from '../../../../types/PolymorphicComponent'
+import Caret from '~icons/caretDown.svg?react'
+import type { PolymorphicComponentPropWithRef, PolymorphicRef } from '~types/PolymorphicComponent'
 
 import { Typography } from '~components/Typography'
 
-import { concatClasses } from '../../../../utils/concatClasses'
+import { concatClasses } from '~utils/concatClasses'
 
 import * as styles from './MainNavItem.css'
 

@@ -1,5 +1,5 @@
 import { style } from '@vanilla-extract/css'
-import { tokens } from '../../styles/designTokens.css'
+import { tokens } from '~styles/designTokens.css'
 
 const firstChildMarginTop = style({
   selectors: {

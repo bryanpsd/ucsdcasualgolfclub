@@ -1,4 +1,4 @@
-import { alphaToHex } from '../../utils/alphaToHex'
+import { alphaToHex } from '~utils/alphaToHex'
 import { color } from './colors'
 
 const { grayscale } = color

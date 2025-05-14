@@ -8,8 +8,8 @@ import {
   INLINES,
   MARKS,
 } from '@contentful/rich-text-types'
-import { replaceAllSpecialChars } from '../../utils/StringUtils'
-import { concatClasses } from '../../utils/concatClasses'
+import { replaceAllSpecialChars } from '~utils/StringUtils'
+import { concatClasses } from '~utils/concatClasses'
 import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 import { Typography, type TypographyProps } from '~components/Typography'
 import { Link } from '~components/Link'

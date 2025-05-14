@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 
-import CloseCancelIcon from '../../icons/close_cancel.svg?react'
+import CloseCancelIcon from '~icons/close_cancel.svg?react'
 
 import { SvgIcon } from '~components/SvgIcon'
 import { Typography } from '~components/Typography'

@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
-import { tokens } from '../../../../styles/designTokens.css'
-import { color } from '../../../../styles/designTokens/colors'
+import { tokens } from '~styles/designTokens.css'
+import { color } from '~styles/designTokens/colors'
 
 export const mainNavRoot = style([
   tokens({

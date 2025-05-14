@@ -2,12 +2,9 @@ import React, { type ElementType, type MouseEventHandler, type ReactNode, forwar
 
 import { type ButtonVariants, button, buttonIcon, buttonLabel } from './Button.css'
 
-import { concatClasses } from '../../utils/concatClasses'
+import { concatClasses } from '~utils/concatClasses'
 
-import type {
-  PolymorphicComponentPropWithRef,
-  PolymorphicRef,
-} from '../../types/PolymorphicComponent'
+import type { PolymorphicComponentPropWithRef, PolymorphicRef } from '~types/PolymorphicComponent'
 
 export type ButtonProps<C extends ElementType = 'button'> = PolymorphicComponentPropWithRef<
   C,
