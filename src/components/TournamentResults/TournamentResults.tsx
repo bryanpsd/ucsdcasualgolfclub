@@ -97,6 +97,33 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
                           ? `/tournaments/${year}/${courseSlug}#results-link`
                           : null
 
+                      const selected = players.find((p) => p.playerName === selectedPlayer)
+                      const selectedResults = selected?.results || []
+                      const lowestGross =
+                        selectedResults.length > 0
+                          ? Math.min(
+                              ...selectedResults.map((r) =>
+                                typeof r.gross === 'number' ? r.gross : Infinity
+                              )
+                            )
+                          : null
+                      const lowestNet =
+                        selectedResults.length > 0
+                          ? Math.min(
+                              ...selectedResults.map((r) =>
+                                typeof r.net === 'number' ? r.net : Infinity
+                              )
+                            )
+                          : null
+                      const lowestPutts =
+                        selectedResults.length > 0
+                          ? Math.min(
+                              ...selectedResults.map((r) =>
+                                typeof r.putts === 'number' ? r.putts : Infinity
+                              )
+                            )
+                          : null
+
                       return [
                         result.course?.name || 'N/A',
                         result.date !== null
@@ -105,12 +132,30 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
                               month: 'short',
                               day: 'numeric',
                             })
-                          : 'N/A', // Format date as MM/DD/YY
+                          : 'N/A',
                         result.flight !== null ? result.flight : 'N/A',
-                        result.gross !== null ? result.gross.toString() : 'N/A',
+                        {
+                          value: result.gross !== null ? result.gross.toString() : 'N/A',
+                          className:
+                            typeof result.gross === 'number' && result.gross === lowestGross
+                              ? styles.highlighted
+                              : undefined,
+                        },
                         result.courseHandicap !== null ? result.courseHandicap.toString() : 'N/A',
-                        result.net !== null ? result.net.toString() : 'N/A',
-                        result.putts !== null ? result.putts.toString() : 'N/A',
+                        {
+                          value: result.net !== null ? result.net.toString() : 'N/A',
+                          className:
+                            typeof result.net === 'number' && result.net === lowestNet
+                              ? styles.highlighted
+                              : undefined,
+                        },
+                        {
+                          value: result.putts !== null ? result.putts.toString() : 'N/A',
+                          className:
+                            typeof result.putts === 'number' && result.putts === lowestPutts
+                              ? styles.highlighted
+                              : undefined,
+                        },
                         result.closestTo && result.closestTo.length > 0
                           ? result.closestTo.join(', ')
                           : null,

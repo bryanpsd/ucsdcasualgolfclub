@@ -1,5 +1,5 @@
 import { globalFontFace, globalStyle } from '@vanilla-extract/css'
-import { ucsdRobotoFontFaces } from '../../styles/typography'
+import { ucsdRobotoFontFaces } from '~styles/typography'
 
 ucsdRobotoFontFaces.forEach((font) => {
   globalFontFace(font.fontFamily, font)

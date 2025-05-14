@@ -1,8 +1,8 @@
 import React from 'react'
-import Cart from '../../../icons/golf_cart.svg?react'
-import GolfBallNavy from '../../../icons/golf_ball_navy.svg?react'
-import GolfBallWhite from '../../../icons/golf_ball_white.svg?react'
-import WalkingIcon from '../../../icons/walking.svg?react'
+import Cart from '~icons/golf_cart.svg?react'
+import GolfBallNavy from '~icons/golf_ball_navy.svg?react'
+import GolfBallWhite from '~icons/golf_ball_white.svg?react'
+import WalkingIcon from '~icons/walking.svg?react'
 
 import * as styles from './CourseInclusions.css'
 import { ResponsiveHeadline } from '~components/ResponsiveHeadline'

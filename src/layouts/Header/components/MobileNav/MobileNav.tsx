@@ -2,7 +2,7 @@ import { useState } from 'react'
 import * as NavMenu from '@radix-ui/react-navigation-menu'
 
 import { disableHover } from '~layouts/Header/utils/disableHover'
-import Menu from '../../../../icons/menu.svg?react'
+import Menu from '~icons/menu.svg?react'
 
 import { Sheet } from '~components/Sheet/Sheet'
 import { MainNavItem } from './../MainNavItem/MainNavItem'

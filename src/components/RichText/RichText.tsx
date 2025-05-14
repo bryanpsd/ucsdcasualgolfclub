@@ -3,8 +3,8 @@ import { type Options } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
 
 import { type TypographyProps, Typography } from '~components/Typography'
-import { TextBlockSection } from '../../components/TextBlockSection'
-import { List } from '../../components/TextBlockSection/List'
+import { TextBlockSection } from '~components/TextBlockSection'
+import { List } from '~components/TextBlockSection/List'
 import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 
 import * as styles from './RichText.css'

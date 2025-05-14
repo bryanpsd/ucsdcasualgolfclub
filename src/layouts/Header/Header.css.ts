@@ -1,8 +1,8 @@
 import { style } from '@vanilla-extract/css'
-import { contentPadding, pageMaxWidth } from '../../styles/common.css'
-import { tokens } from '../../styles/designTokens.css'
-import { color } from '../../styles/designTokens/colors'
-import { fontSize } from '../../styles/designTokens/typography'
+import { contentPadding, pageMaxWidth } from '~styles/common.css'
+import { tokens } from '~styles/designTokens.css'
+import { color } from '~styles/designTokens/colors'
+import { fontSize } from '~styles/designTokens/typography'
 
 export const headerWrapper = style([
   tokens({
@@ -40,12 +40,12 @@ export const logoLink = style([
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    color: 'navigationText',
     textDecoration: 'none',
     fontFamily: 'base',
     gap: 4,
   }),
   {
+    color: color.brand.white,
     fontSize: fontSize.sizeFont5,
   },
 ])

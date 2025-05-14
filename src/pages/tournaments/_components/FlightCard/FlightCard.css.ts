@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css'
-import { tokens } from '../../../../styles/designTokens.css'
+import { tokens } from '~styles/designTokens.css'
+import { color } from '~styles/designTokens/colors'
 
 export const flightCardWrapper = style([
   tokens({
@@ -13,6 +14,6 @@ export const flightCardWrapper = style([
 ])
 
 export const highlighted = style({
-  backgroundColor: '#ffeb3b', // Yellow background
+  backgroundColor: color.brand.yellow,
   fontWeight: 'bold',
 })

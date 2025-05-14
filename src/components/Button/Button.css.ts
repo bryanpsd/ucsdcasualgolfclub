@@ -1,6 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css'
 import { type RecipeVariants, recipe } from '@vanilla-extract/recipes'
-import { tokens } from '../../styles/designTokens.css'
+import { tokens } from '~styles/designTokens.css'
 
 export const baseButton = style([
   tokens({
@@ -126,7 +126,7 @@ export const button = recipe({
         variant: 'text',
       },
       style: tokens({
-        color: { default: 'inherit', disabled: 'transparent' },
+        color: { default: 'inherit', disabled: 'gray' },
         borderColor: 'transparent',
         backgroundColor: 'transparent',
       }),

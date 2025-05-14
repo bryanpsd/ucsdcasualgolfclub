@@ -1,12 +1,12 @@
 import { format } from 'date-fns'
 import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
-import { Button } from '../../Button/Button'
+import { Button } from '~components/Button/Button'
 import { CourseDetails } from '../CourseDetails'
 import { Typography } from '~components/Typography'
 
-import Clock from '../../../icons/clock.svg?react'
+import Clock from '~icons/clock.svg?react'
 
-import type { TypeCourseProps } from '../../../types/contentful'
+import type { TypeCourseProps } from '~types/contentful'
 
 import * as styles from './CourseCard.css'
 

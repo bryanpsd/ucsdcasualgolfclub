@@ -1,4 +1,4 @@
-import { ucsd } from '../styles/ucsd'
+import { ucsd } from '~styles/ucsd'
 
 const gutterWidth = '2.4rem'
 const outerMarginWidth = '3.2rem'

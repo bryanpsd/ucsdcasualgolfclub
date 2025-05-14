@@ -1,10 +1,7 @@
 import { type ElementType, forwardRef } from 'react'
 import { svgIcon, type SvgIconVariants } from './SvgIcon.css'
-import type {
-  PolymorphicComponentPropWithRef,
-  PolymorphicRef,
-} from '../../types/PolymorphicComponent'
-import { concatClasses } from '../../utils/concatClasses'
+import type { PolymorphicComponentPropWithRef, PolymorphicRef } from '~types/PolymorphicComponent'
+import { concatClasses } from '~utils/concatClasses'
 
 export type SvgIconProps<C extends ElementType = 'svg'> = PolymorphicComponentPropWithRef<
   C,
@@ -36,7 +33,6 @@ export const SvgIcon = forwardRef(
     ref: PolymorphicRef<C>
   ) => {
     if (rest.component) {
-      // eslint-disable-next-line no-undef
       console.error('`component` prop is deprecated. Use `as` instead')
     }
 

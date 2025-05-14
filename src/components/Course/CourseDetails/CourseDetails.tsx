@@ -1,4 +1,4 @@
-import Players from '../../../icons/players.svg?react'
+import Players from '~icons/players.svg?react'
 import { concatClasses } from '~utils/concatClasses'
 import { CourseInclusions } from '../CourseInclusions'
 

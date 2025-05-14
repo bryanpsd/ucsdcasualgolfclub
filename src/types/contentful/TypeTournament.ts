@@ -10,18 +10,16 @@ import type { TypeLeadersSkeleton } from './TypeLeaders'
 export interface TypeTournamentFields {
   title: EntryFieldTypes.Symbol
   date: EntryFieldTypes.Date
-  price?: EntryFieldTypes.Integer
   prices?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
   players?: EntryFieldTypes.Symbol
-  type?: EntryFieldTypes.Symbol
-  tournamentNotes?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
   inclusions?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
+  type?: EntryFieldTypes.Symbol
+  clubChampionship?: EntryFieldTypes.Boolean
+  tournamentNotes?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
+  tees?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
   firstFlight?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TypeLeadersSkeleton>>
   secondFlight?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TypeLeadersSkeleton>>
   results?: EntryFieldTypes.AssetLink
-  resultsJson?: EntryFieldTypes.Object
-  clubChampionship?: EntryFieldTypes.Boolean
-  tees?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
   resultsExcel?: EntryFieldTypes.AssetLink
 }
 
