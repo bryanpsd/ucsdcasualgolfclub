@@ -17,3 +17,8 @@ export const resultTableWrapper = style({
   marginTop: '1rem',
   overflowX: 'auto',
 })
+
+export const highlighted = style({
+  backgroundColor: color.brand.yellow,
+  fontWeight: 'bold',
+})
