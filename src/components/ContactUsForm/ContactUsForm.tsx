@@ -35,7 +35,7 @@ export const ContactUsForm = () => {
         ),
       }
 
-      const response = await fetch('/', {
+      const response = await fetch('/contact', {
         method: 'POST',
         body: new URLSearchParams(formData).toString(),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -59,6 +59,7 @@ export const ContactUsForm = () => {
       data-netlify="true"
       data-netlify-honeypot="bot-field"
       noValidate
+      method="POST"
     >
       <input type="hidden" name="form-name" value="contact" />
       <input type="hidden" {...register('bot-field')} />
