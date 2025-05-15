@@ -1,11 +1,10 @@
-import { useForm } from 'react-hook-form'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 import { useCaptcha } from '~utils/useCaptcha'
 
 import * as styles from './ContactUsForm.css'
 
 type ContactUsFormData = {
-  firstName: string
-  lastName: string
+  name: string
   email: string
   message?: string
   captchaToken?: string
@@ -17,25 +16,27 @@ export const ContactUsForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ContactUsFormData>()
 
-  const onSubmit = async (data: ContactUsFormData) => {
+  const onSubmit: SubmitHandler<ContactUsFormData> = async (data) => {
     try {
       const captchaToken = await captcha.execute()
       data.captchaToken = captchaToken
-
-      // Add the destination email address to the submission payload
-      const submission = {
-        ...data,
-        to: 'test@gmail.com',
+      // Use globalThis.fetch for Node.js compatibility and to fix ESLint 'fetch' is not defined
+      const response = await globalThis.fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString(),
+      })
+      if (response.ok) {
+        console.log('Thanks for your submission!')
+        reset()
+      } else {
+        console.error('Error sending form:', response.status)
       }
-
-      console.log('Submitting to:', submission.to)
-      console.log(submission)
-      // Here you would send `submission` to your backend/email service
     } catch (error) {
-      console.error('Captcha execution failed:', error)
-      return
+      console.error('Error sending form:', error)
     }
   }
 
@@ -48,20 +49,21 @@ export const ContactUsForm = () => {
       data-netlify-honeypot="bot-field"
       noValidate
     >
-      <input type="hidden" name="contact" value="contact" />
-      <input type="text" {...register('firstName', { required: true })} placeholder="First Name" />
-      {errors.firstName && <span>This field is required</span>}
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="hidden" name="bot-field" />
+      <label htmlFor="contact-name">Name:</label>
+      <input id="contact-name" type="text" {...register('name', { required: true })} />
+      {errors.name && <span>This field is required</span>}
 
-      <input type="text" {...register('lastName', { required: true })} placeholder="Last Name" />
-      {errors.lastName && <span>This field is required</span>}
+      <label htmlFor="contact-email">Email:</label>
+      <input id="contact-email" type="email" {...register('email', { required: true })} />
+      {errors.email && <span>This field is required</span>}
 
-      <input type="email" {...register('email', { required: true })} placeholder="Email Address" />
-      {errors.email && <span>Email is required</span>}
+      <label htmlFor="contact-message">Message:</label>
+      <textarea id="contact-message" {...register('message', { required: true })}></textarea>
+      {errors.message && <span>This field is required</span>}
 
-      <textarea {...register('message', { required: true })} placeholder="Your message" />
-      {errors.message && <span>Message is required</span>}
-
-      <input type="submit" />
+      <button type="submit">Send</button>
     </form>
   )
 }
