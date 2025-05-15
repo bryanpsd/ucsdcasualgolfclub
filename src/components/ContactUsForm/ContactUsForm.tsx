@@ -1,7 +1,6 @@
+/* global fetch */
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { useCaptcha } from '~utils/useCaptcha'
-import 'cross-fetch/polyfill'
-import fetch from 'cross-fetch'
 
 import * as styles from './ContactUsForm.css'
 
