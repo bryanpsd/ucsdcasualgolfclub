@@ -4,6 +4,7 @@ import type { TypeSeasonRecapSkeleton } from '~types/contentful/TypeSeasonRecap'
 
 import { RichText } from '~components/RichText'
 import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
+import { ContentfulImage } from '~components/Image/ContentfulImage'
 
 import * as styles from './SeasonRecap.css'
 
@@ -24,11 +25,11 @@ const seasonRecap = response.items.find((item) => item.fields.title?.includes(ye
         <ul class={styles.seasonRecapList}>
           {seasonRecap.winners.map((winner) => (
             <li>
-              <img
-                class={styles.seasonRecapImage}
+              <ContentfulImage
+                client:load
+                className={styles.seasonRecapImage}
                 src={winner && 'fields' in winner ? winner.fields.file?.url || '' : ''}
-                alt={winner && 'fields' in winner ? winner.fields.title : ''}
-                style="max-width: 200px;"
+                alt={winner && 'fields' in winner ? (winner.fields.title ?? '') : ''}
               />
               <ResponsiveHeadline size={1} as="h3">
                 {winner && 'fields' in winner ? winner.fields.title : ''}

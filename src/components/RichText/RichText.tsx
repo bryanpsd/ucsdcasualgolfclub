@@ -6,6 +6,7 @@ import { type TypographyProps, Typography } from '~components/Typography'
 import { TextBlockSection } from '~components/TextBlockSection'
 import { List } from '~components/TextBlockSection/List'
 import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
+import { ContentfulImage } from '~components/Image/ContentfulImage'
 
 import * as styles from './RichText.css'
 
@@ -37,15 +38,7 @@ const options: Options = {
 
     [BLOCKS.EMBEDDED_ASSET]: (node) => {
       const { url, fileName } = node.data.target.fields.file
-      return (
-        <img
-          width={node.data.target.fields.file.details.image.width}
-          height={node.data.target.fields.file.details.image.height}
-          className={styles.image}
-          src={url}
-          alt={fileName}
-        />
-      )
+      return <ContentfulImage className={styles.image} src={url} alt={fileName} />
     },
     [BLOCKS.EMBEDDED_ENTRY]: (node) => {
       if (node.data.target.sys.contentType.sys.id === 'seasonRecap') {
@@ -59,13 +52,7 @@ const options: Options = {
                 const { title, file } = winner.fields
                 return (
                   <li key={title}>
-                    <img
-                      className={styles.image}
-                      src={file.url}
-                      alt={file.title}
-                      width={file.details.image.width}
-                      height={file.details.image.height}
-                    />
+                    <ContentfulImage className={styles.image} src={file.url} alt={file.title} />
                     <ResponsiveHeadline size={1} as="h3">
                       {title}
                     </ResponsiveHeadline>

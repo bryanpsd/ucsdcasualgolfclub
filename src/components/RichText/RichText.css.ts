@@ -31,6 +31,7 @@ export const seasonRecapList = style([
 ])
 
 export const image = style({
+  display: 'block',
   width: '100%',
   height: 'auto',
 })
