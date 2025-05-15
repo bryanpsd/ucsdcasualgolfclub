@@ -17,7 +17,7 @@ export const homeHero = style([
     justifyContent: 'center',
   }),
   {
-    backgroundImage: 'url(../../assets/admiral-baker-south-bg.jpg)',
+    backgroundImage: 'url(../../assets/admiral-baker-south-bg.webp)',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     height: '300px',
