@@ -17,18 +17,22 @@ export const ContactUsForm = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
     reset,
   } = useForm<ContactUsFormData>()
 
   const onSubmit: SubmitHandler<ContactUsFormData> = async (data) => {
     try {
+      // Get captcha token and set it in the form state
       const captchaToken = await captcha.execute()
+      setValue('captchaToken', captchaToken)
       // Prepare data for Netlify
       const formData: Record<string, string> = {
         'form-name': 'contact',
-        ...Object.fromEntries(Object.entries(data).filter(([, v]) => v !== undefined)),
-        captchaToken,
+        ...Object.fromEntries(
+          Object.entries({ ...data, captchaToken }).filter(([, v]) => v !== undefined)
+        ),
       }
 
       const response = await fetch('/', {
