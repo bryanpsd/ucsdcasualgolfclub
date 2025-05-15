@@ -9,11 +9,13 @@ import icon from 'astro-icon'
 
 import partytown from '@astrojs/partytown'
 
+import sitemap from '@astrojs/sitemap';
+
 export default defineConfig({
   site: 'https://ucsdcasualgolfclub.com',
   adapter: netlify(),
   output: 'server',
-  integrations: [react(), icon(), partytown({ config: { forward: ['dataLayer.push'] } })],
+  integrations: [react(), icon(), partytown({ config: { forward: ['dataLayer.push'] } }), sitemap()],
   vite: {
     plugins: [viteTsconfigPaths(), vanillaExtractPlugin(), svgr()],
     assetsInclude: ['**/*.ttf'], // Ensure .ttf files are included as assets
