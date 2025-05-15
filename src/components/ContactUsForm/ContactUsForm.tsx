@@ -1,5 +1,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { useCaptcha } from '~utils/useCaptcha'
+import 'cross-fetch/polyfill'
+import fetch from 'cross-fetch'
 
 import * as styles from './ContactUsForm.css'
 
@@ -22,12 +24,17 @@ export const ContactUsForm = () => {
   const onSubmit: SubmitHandler<ContactUsFormData> = async (data) => {
     try {
       const captchaToken = await captcha.execute()
-      data.captchaToken = captchaToken
-      // Use globalThis.fetch for Node.js compatibility and to fix ESLint 'fetch' is not defined
-      const response = await globalThis.fetch('/', {
+      // Prepare data for Netlify
+      const formData: Record<string, string> = {
+        'form-name': 'contact',
+        ...Object.fromEntries(Object.entries(data).filter(([, v]) => v !== undefined)),
+        captchaToken,
+      }
+
+      const response = await fetch('/', {
         method: 'POST',
+        body: new URLSearchParams(formData).toString(),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString(),
       })
       if (response.ok) {
         console.log('Thanks for your submission!')
@@ -42,6 +49,7 @@ export const ContactUsForm = () => {
 
   return (
     <form
+      name="contact"
       className={styles.formWrapper}
       onSubmit={handleSubmit(onSubmit)}
       data-netlify="true"
