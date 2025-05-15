@@ -63,7 +63,6 @@ export const ContactUsForm = () => {
     >
       <input type="hidden" name="form-name" value="contact" />
       <input type="hidden" {...register('bot-field')} />
-      <input type="hidden" {...register('captchaToken')} />
       <label htmlFor="contact-name">Name:</label>
       <input id="contact-name" type="text" {...register('name', { required: true })} />
       {errors.name && <span>This field is required</span>}
