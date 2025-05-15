@@ -42,7 +42,6 @@ export const ContactUsForm = () => {
 
   return (
     <form
-      name="contact"
       className={styles.formWrapper}
       onSubmit={handleSubmit(onSubmit)}
       data-netlify="true"
