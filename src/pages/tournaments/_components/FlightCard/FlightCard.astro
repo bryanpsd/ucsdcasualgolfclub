@@ -61,15 +61,25 @@ const hasResultsForCurrentCourse = filteredResults.some((player) =>
   player.results?.some((result) => result.course?.fields.course === currentCourse)
 )
 
-const lowestYearlyGross = Math.min(
+const lowestYearlyGrossForTournament = Math.min(
   ...flight
-    .flatMap((player) => player.yearlyStats?.map((stats) => stats.gross) || [])
+    .flatMap(
+      (player) =>
+        player.yearlyStats
+          ?.filter((stats) => stats.year === tournamentYear)
+          .map((stats) => stats.gross) || []
+    )
     .filter((gross) => gross !== undefined && gross !== null)
 )
 
-const lowestYearlyNet = Math.min(
+const lowestYearlyNetForTournament = Math.min(
   ...flight
-    .flatMap((player) => player.yearlyStats?.map((stats) => stats.net) || [])
+    .flatMap(
+      (player) =>
+        player.yearlyStats
+          ?.filter((stats) => stats.year === tournamentYear)
+          .map((stats) => stats.net) || []
+    )
     .filter((net) => net !== undefined && net !== null)
 )
 
@@ -122,8 +132,10 @@ const tableHeaders = [
           const statsForYear = player.yearlyStats?.find((stats) => stats.year === tournamentYear)
 
           const isLowestYearlyGross =
-            courseChampionship && statsForYear?.gross === lowestYearlyGross
-          const isLowestYearlyNet = courseChampionship && statsForYear?.net === lowestYearlyNet
+            courseChampionship && statsForYear?.gross === lowestYearlyGrossForTournament
+
+          const isLowestYearlyNet =
+            courseChampionship && statsForYear?.net === lowestYearlyNetForTournament
 
           return [
             player.guest?.includes('Yes')
