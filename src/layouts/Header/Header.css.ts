@@ -37,10 +37,10 @@ export const logoWrapper = style([
 
 export const logoLink = style([
   tokens({
+    textDecoration: 'none',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    textDecoration: 'none',
     fontFamily: 'base',
     gap: 4,
   }),

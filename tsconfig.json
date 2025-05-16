@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
-    "target": "es6",
+    "target": "ES2022",
     "lib": ["dom", "dom.iterable", "esnext"], // Ensure DOM types are included
     "allowJs": true,
     "skipLibCheck": true,

@@ -4,6 +4,7 @@ export const prerender = true
 import Layout from '~layouts/Layout.astro'
 import { Hero } from '~components/Hero'
 import { ContactUsForm } from '~components/ContactUsForm/ContactUsForm'
+import { ToastContainer } from 'react-toastify'
 
 import * as styles from '~styles/common.css'
 ---
@@ -14,6 +15,7 @@ import * as styles from '~styles/common.css'
 >
   <Hero title="Contact" />
   <div class={styles.subPageWrapper}>
+    <ToastContainer position="top-center" client:load />
     <ContactUsForm client:load />
   </div>
 </Layout>

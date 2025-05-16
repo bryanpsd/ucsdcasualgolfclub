@@ -7,7 +7,6 @@ export const mainNavItem = style([
     display: 'flex',
     alignItems: 'center',
     paddingX: 16,
-    textDecoration: 'none',
     height: 'col-12',
   }),
   {
