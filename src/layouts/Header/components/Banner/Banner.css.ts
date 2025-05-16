@@ -19,5 +19,5 @@ export const bannerWrapper = style([
 
 export const bannerLink = style({
   color: color.brand.white,
-  textDecoration: 'underline',
+  textDecoration: 'underline !important',
 })
