@@ -1,5 +1,6 @@
 import { style } from '@vanilla-extract/css'
 import { tokens } from '~styles/designTokens.css'
+import { color } from '~styles/designTokens/colors'
 
 const firstChildMarginTop = style({
   selectors: {
@@ -40,5 +41,12 @@ export const list = style([
 export const richTextContainer = style([
   {
     marginTop: 0,
+  },
+])
+
+export const link = style([
+  {
+    color: color.brand.navy,
+    textDecoration: 'underline',
   },
 ])

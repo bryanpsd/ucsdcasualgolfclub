@@ -13,6 +13,10 @@ export const flightCardWrapper = style([
   }),
 ])
 
+export const flightCardLink = style({
+  color: color.brand.navy,
+})
+
 export const highlighted = style({
   backgroundColor: color.brand.yellow,
   fontWeight: 'bold',
