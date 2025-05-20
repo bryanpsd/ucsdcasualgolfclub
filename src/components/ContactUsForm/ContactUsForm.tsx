@@ -3,6 +3,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useCaptcha } from '~utils/useCaptcha'
+import { validateCaptcha } from '~actions/utils/captcha'
 
 import { Button } from '~components/Button/Button'
 
@@ -21,7 +22,6 @@ export const ContactUsForm = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
     reset,
   } = useForm<ContactUsFormData>()
@@ -30,18 +30,23 @@ export const ContactUsForm = () => {
     try {
       // Get captcha token and set it in the form state
       const captchaToken = await captcha.execute()
-      setValue('captchaToken', captchaToken)
+      data.captchaToken = captchaToken
+
+      // Validate captcha on the server
+      const captchaResponse = await validateCaptcha({ token: captchaToken })
+      if (!captchaResponse || captchaResponse.tokenProperties?.valid !== true) {
+        toast.error('Captcha validation failed. Please try again.')
+        return
+      }
+
       // Prepare data for Netlify
-      const formData: Record<string, string> = {
-        'form-name': 'contact',
-        ...Object.fromEntries(
-          Object.entries({ ...data, captchaToken }).filter(([, v]) => v !== undefined)
-        ),
+      const formData = {
+        ...data,
       }
 
       const response = await fetch('/contact', {
         method: 'POST',
-        body: new URLSearchParams(formData).toString(),
+        body: new URLSearchParams(formData as Record<string, string>).toString(),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       })
       if (response.ok) {
