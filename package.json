@@ -24,6 +24,7 @@
     "@astrojs/sitemap": "^3.4.0",
     "@contentful/rich-text-html-renderer": "^17.0.0",
     "@contentful/rich-text-react-renderer": "^16.0.1",
+    "@google-cloud/recaptcha-enterprise": "^6.1.0",
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-menubar": "^1.1.6",
     "@radix-ui/react-navigation-menu": "^1.2.5",

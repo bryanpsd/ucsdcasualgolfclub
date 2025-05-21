@@ -121,11 +121,17 @@ const tableHeaders = [
         const hasLongDrive = player.results?.[0]?.longDrive !== undefined
         const hasClosestTo = player.results?.[0]?.closestTo !== undefined
 
-        if (!player.results || player.results.length === 0) {
-          return [
+        const playerNameHtml = `<a class="${styles.flightCardLink}" href="/results?playerName=${encodeURIComponent(player.playerName)}">
+          ${
             player.guest?.includes('Yes')
               ? `${player.playerName} (Guest)`
-              : player.playerName || 'Unknown',
+              : player.playerName || 'Unknown'
+          }
+        </a>`
+
+        if (!player.results || player.results.length === 0) {
+          return [
+            playerNameHtml,
             player.handicapIndex !== undefined ? String(player.handicapIndex) : 'NH',
           ]
         } else {
@@ -138,10 +144,7 @@ const tableHeaders = [
             courseChampionship && statsForYear?.net === lowestYearlyNetForTournament
 
           return [
-            player.guest?.includes('Yes')
-              ? `${player.playerName} (Guest)`
-              : player.playerName || 'Unknown',
-
+            playerNameHtml,
             String(player.results?.[0]?.index ?? 'NH'),
             {
               value: String(player.results?.[0]?.gross ?? ''),

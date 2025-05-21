@@ -1,8 +1,8 @@
 {
-  "extends": "astro/tsconfigs/base",
+   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "esnext"], // Ensure DOM types are included
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,14 +16,20 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "noEmit": true,
-    "outDir": "dist",
     "paths": {
       "@fonts": ["assets/fonts/*"],
       "~*": ["*"]
     }
   },
-  "include": ["src/**/*"], // Include all files in the `src` directory
-  "exclude": ["dist"] // Exclude the `dist` directory
+  "include": [
+    "src",
+    "astro-env.d.ts",
+    ".astro/types.d.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }
