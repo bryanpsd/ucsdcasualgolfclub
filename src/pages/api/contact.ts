@@ -1,26 +1,21 @@
+import type { APIRoute } from 'astro'
 import { validateCaptcha } from '~actions/utils/captcha'
 
-export default async function handler(
-  req: {
-    method: string
-    body: { name: string; email: string; message: string; captchaToken: string }
-  },
-  res: {
-    status: (code: number) => {
-      end: () => any
-      json: (body: any) => any
-    }
-  }
-) {
-  if (req.method !== 'POST') return res.status(405).end()
-
-  const { name, email, message, captchaToken } = req.body
-
+export const POST: APIRoute = async ({ request }) => {
   try {
+    const { name, email, message, captchaToken } = await request.json()
+
     // Validate captcha on the server
     const captchaResponse = await validateCaptcha({ token: captchaToken })
-    if (!captchaResponse || captchaResponse.tokenProperties?.valid !== true) {
-      return res.status(400).json({ error: 'Captcha validation failed.' })
+    if (
+      !captchaResponse ||
+      typeof (captchaResponse as { success?: boolean }).success !== 'boolean' ||
+      (captchaResponse as { success: boolean }).success !== true
+    ) {
+      return new Response(JSON.stringify({ error: 'Captcha validation failed.' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      })
     }
 
     // --- Netlify form submission logic ---
@@ -31,7 +26,6 @@ export default async function handler(
       message,
     })
 
-    // Post to your own Netlify site to trigger Netlify Forms
     const netlifyResponse = await fetch('https://ucsdcasualgolfclub.com/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -39,11 +33,20 @@ export default async function handler(
     })
 
     if (!netlifyResponse.ok) {
-      return res.status(500).json({ error: 'Failed to submit to Netlify Forms.' })
+      return new Response(JSON.stringify({ error: 'Failed to submit to Netlify Forms.' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      })
     }
 
-    return res.status(200).json({ success: true })
-  } catch {
-    return res.status(500).json({ error: 'Server error. Please try again.' })
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  } catch (err) {
+    return new Response(JSON.stringify({ error: 'Server error. Please try again.' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
   }
 }
