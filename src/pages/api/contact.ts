@@ -1,4 +1,3 @@
-/* global fetch */
 import { validateCaptcha } from '~actions/utils/captcha'
 
 export default async function handler(
@@ -33,7 +32,7 @@ export default async function handler(
     })
 
     // Post to your own Netlify site to trigger Netlify Forms
-    const netlifyResponse = await fetch('https://ucsdcasualgolfclub.netlify.app/', {
+    const netlifyResponse = await fetch('https://ucsdcasualgolfclub.com/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: netlifyFormData.toString(),

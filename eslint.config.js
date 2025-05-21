@@ -1,80 +1,52 @@
-import js from '@eslint/js'
+// eslint.config.ts
 import astro from 'eslint-plugin-astro'
-// import astroParser from 'astro-eslint-parser' // Import the Astro parser
-import typescriptParser from '@typescript-eslint/parser'
-import typescript from '@typescript-eslint/eslint-plugin'
-import prettier from 'eslint-config-prettier'
-import jsxA11y from 'eslint-plugin-jsx-a11y'
+import react from '@eslint-react/eslint-plugin'
+import tseslint from '@typescript-eslint/eslint-plugin'
+import tsparser from '@typescript-eslint/parser'
+import globals from 'globals'
 
 export default [
-  js.configs.recommended,
   {
-    files: ['src/**/*.astro'], // Only include files in the `src` directory
+    files: ['**/*.astro'],
+    plugins: { astro },
     languageOptions: {
-      parser: '@typescript-eslint/parser',
+      parser: astro.parser,
+      globals: globals.browser,
+    },
+    rules: {
+      // Astro-specific rules
+      'astro/no-unused-vars': 'warn',
+    },
+  },
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parser: tsparser,
       parserOptions: {
-        parser: typescriptParser, // Use TypeScript parser for embedded scripts
-        project: './tsconfig.json', // Explicitly reference tsconfig.json
-        ecmaVersion: 2021,
+        project: './tsconfig.json',
+        tsconfigRootDir: process.cwd(),
         sourceType: 'module',
-        extraFileExtensions: ['.astro'],
+        ecmaFeatures: { jsx: true },
       },
       globals: {
-        console: 'readonly', // Define `console` as a global variable
-        module: 'readonly',
-        require: 'readonly',
-        process: 'readonly',
+        ...globals.browser,
+        ...globals.node,
       },
     },
     plugins: {
-      astro,
+      '@typescript-eslint': tseslint,
+      react,
     },
     rules: {
-      'astro/no-set-html-directive': 'error', // Example Astro-specific rule
-      'no-console': 'off', // Disable the `no-console` rule for Astro files
+      // TypeScript and React rules
+      '@typescript-eslint/no-unused-vars': 'warn',
+      'react/jsx-uses-react': 'off',
+      'react/react-in-jsx-scope': 'off',
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
     },
   },
-  {
-    files: ['src/**/*.ts', 'src/**/*.tsx'], // Only include TypeScript files in `src`
-    languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        project: './tsconfig.json', // Explicitly reference tsconfig.json
-      },
-      globals: {
-        console: 'readonly', // Define `console` as a global variable
-        module: 'readonly',
-        require: 'readonly',
-        process: 'readonly',
-      },
-    },
-    plugins: {
-      '@typescript-eslint': typescript,
-      'jsx-a11y': jsxA11y,
-    },
-    rules: {
-      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
-      'no-console': 'off', // Disable the `no-console` rule for TypeScript files
-      ...jsxA11y.configs.recommended.rules,
-    },
-  },
-  {
-    files: ['**/*.js', '**/*.ts'], // Apply to all JavaScript and TypeScript files
-    languageOptions: {
-      parserOptions: {
-        ecmaVersion: 2021,
-        sourceType: 'module',
-      },
-      globals: {
-        console: 'readonly', // Define `console` as a global variable
-        module: 'readonly',
-        require: 'readonly',
-        process: 'readonly',
-      },
-    },
-    rules: {
-      'no-console': 'off', // Disable the `no-console` rule globally
-    },
-  },
-  prettier,
 ]
