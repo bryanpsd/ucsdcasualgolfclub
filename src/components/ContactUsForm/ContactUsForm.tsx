@@ -3,10 +3,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useCaptcha } from '~utils/useCaptcha'
-import { validateCaptcha } from '~actions/utils/captcha'
-
 import { Button } from '~components/Button/Button'
-
 import * as styles from './ContactUsForm.css'
 
 type ContactUsFormData = {
@@ -14,7 +11,6 @@ type ContactUsFormData = {
   email: string
   message?: string
   'bot-field'?: string
-  captchaToken?: string
 }
 
 export const ContactUsForm = () => {
@@ -28,33 +24,19 @@ export const ContactUsForm = () => {
 
   const onSubmit: SubmitHandler<ContactUsFormData> = async (data) => {
     try {
-      // Get captcha token and set it in the form state
       const captchaToken = await captcha.execute()
-      data.captchaToken = captchaToken
-
-      // Validate captcha on the server
-      const captchaResponse = await validateCaptcha({ token: captchaToken })
-      if (!captchaResponse || captchaResponse.tokenProperties?.valid !== true) {
-        toast.error('Captcha validation failed. Please try again.')
-        return
-      }
-
-      // Prepare data for Netlify
-      const formData = {
-        ...data,
-      }
-
-      const response = await fetch('/contact', {
+      const response = await fetch('/src/pages/api/contact.ts', {
         method: 'POST',
-        body: new URLSearchParams(formData as Record<string, string>).toString(),
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, captchaToken }),
       })
+
       if (response.ok) {
         toast.success('Form submitted successfully!')
         reset()
       } else {
-        toast.error('There was a problem submitting the form. Please try again.')
-        console.error('Error sending form:', response.status)
+        const errorMsg = (await response.json()).error || 'There was a problem submitting the form.'
+        toast.error(errorMsg)
       }
     } catch (error) {
       toast.error('There was a problem submitting the form. Please try again.')
