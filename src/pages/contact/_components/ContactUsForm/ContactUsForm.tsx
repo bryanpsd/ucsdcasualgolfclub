@@ -1,4 +1,3 @@
-/* global fetch */
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -25,6 +24,7 @@ export const ContactUsForm = () => {
   const onSubmit: SubmitHandler<ContactUsFormData> = async (data) => {
     try {
       const captchaToken = await captcha.execute()
+
       const response = await fetch('/src/pages/api/contact.ts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -35,8 +35,8 @@ export const ContactUsForm = () => {
         toast.success('Form submitted successfully!')
         reset()
       } else {
-        const errorMsg = (await response.json()).error || 'There was a problem submitting the form.'
-        toast.error(errorMsg)
+        const { error } = await response.json()
+        toast.error(error || 'There was a problem submitting the form.')
       }
     } catch (error) {
       toast.error('There was a problem submitting the form. Please try again.')

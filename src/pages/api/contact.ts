@@ -3,14 +3,22 @@ import { validateCaptcha } from '~actions/utils/captcha'
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { name, email, message, captchaToken } = await request.json()
+    const { name, email, message, captchaToken, 'bot-field': botField } = await request.json()
+
+    // Honeypot check
+    if (botField) {
+      return new Response(JSON.stringify({ error: 'Bot detected.' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
 
     // Validate captcha on the server
     const captchaResponse = await validateCaptcha({ token: captchaToken })
     if (
       !captchaResponse ||
-      typeof (captchaResponse as { success?: boolean }).success !== 'boolean' ||
-      (captchaResponse as { success: boolean }).success !== true
+      typeof (captchaResponse as any).success !== 'boolean' ||
+      (captchaResponse as any).success !== true
     ) {
       return new Response(JSON.stringify({ error: 'Captcha validation failed.' }), {
         status: 400,
@@ -18,7 +26,7 @@ export const POST: APIRoute = async ({ request }) => {
       })
     }
 
-    // --- Netlify form submission logic ---
+    // Prepare Netlify form data
     const netlifyFormData = new URLSearchParams({
       'form-name': 'contact',
       name,
@@ -26,6 +34,7 @@ export const POST: APIRoute = async ({ request }) => {
       message,
     })
 
+    // Forward to Netlify Forms (use your production domain)
     const netlifyResponse = await fetch('https://ucsdcasualgolfclub.com/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
