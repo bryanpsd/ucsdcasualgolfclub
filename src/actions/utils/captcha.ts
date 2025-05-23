@@ -16,6 +16,7 @@ export const validateCaptcha = async ({ token }: ValidateCaptchaArgs) => {
       score: 1.0,
       challenge_ts: new Date().toISOString(),
       hostname: 'HOSTNAME_NOT_VALIDATED',
+      tokenProperties: { valid: true },
     }
   }
 
@@ -23,11 +24,6 @@ export const validateCaptcha = async ({ token }: ValidateCaptchaArgs) => {
   const client = new RecaptchaEnterpriseServiceClient({
     credentials: GCP_CREDENTIALS,
   })
-
-  if (!CAPTCHA_SITE_KEY) {
-    throw new Error('CAPTCHA_SITE_KEY is not defined')
-  }
-
   const projectPath = client.projectPath('ucsdcgc-map')
 
   try {
@@ -45,17 +41,24 @@ export const validateCaptcha = async ({ token }: ValidateCaptchaArgs) => {
         `The CreateAssessment call failed because the token was: ${res.tokenProperties.invalidReason}`
       )
     }
-    return res.riskAnalysis
+    // Return all relevant properties for validation in your API route
+    return {
+      success: true,
+      score: res.riskAnalysis?.score ?? 0,
+      reasons: res.riskAnalysis?.reasons ?? [],
+      tokenProperties: res.tokenProperties,
+      challenge_ts: res.tokenProperties?.createTime,
+      hostname: res.tokenProperties?.hostname,
+    }
   } catch (err) {
     let message = err
-
     if (err instanceof Error) {
       message = err.message
     }
-
     return {
       success: false,
       'error-codes': ['unable-to-validate-captcha-token'],
+      message,
     }
   } finally {
     client.close()

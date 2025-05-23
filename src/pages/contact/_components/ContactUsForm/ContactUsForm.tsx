@@ -25,7 +25,7 @@ export const ContactUsForm = () => {
     try {
       const captchaToken = await captcha.execute()
 
-      const response = await fetch('/src/pages/api/contact.ts', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...data, captchaToken }),

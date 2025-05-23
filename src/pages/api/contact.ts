@@ -1,6 +1,8 @@
 import type { APIRoute } from 'astro'
 import { validateCaptcha } from '~actions/utils/captcha'
 
+export const CAPTCHA_THRESHOLD = Number(import.meta.env.RECAPTCHA_THRESHOLD) || 0.1
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const { name, email, message, captchaToken, 'bot-field': botField } = await request.json()
@@ -15,10 +17,13 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Validate captcha on the server
     const captchaResponse = await validateCaptcha({ token: captchaToken })
+
+    // Use CAPTCHA_THRESHOLD to check the score if available
     if (
       !captchaResponse ||
       typeof (captchaResponse as any).success !== 'boolean' ||
-      (captchaResponse as any).success !== true
+      (captchaResponse as any).success !== true ||
+      (typeof captchaResponse.score === 'number' && captchaResponse.score < CAPTCHA_THRESHOLD)
     ) {
       return new Response(JSON.stringify({ error: 'Captcha validation failed.' }), {
         status: 400,
