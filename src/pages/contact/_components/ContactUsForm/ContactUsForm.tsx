@@ -53,7 +53,6 @@ export const ContactUsForm = () => {
       data-netlify-honeypot="bot-field"
       noValidate
       method="POST"
-      hidden
     >
       <input type="hidden" name="form-name" value="contact" />
       <input type="hidden" {...register('bot-field')} />

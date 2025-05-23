@@ -59,6 +59,11 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     if (!netlifyResponse?.ok) {
+      console.error('Failed to submit to Netlify Forms:', {
+        status: netlifyResponse?.status,
+        body: netlifyText,
+        error: lastError ? String(lastError) : undefined,
+      })
       return new Response(
         JSON.stringify({
           error: 'Failed to submit to Netlify Forms.',
