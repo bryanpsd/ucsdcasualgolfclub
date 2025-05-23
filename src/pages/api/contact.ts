@@ -40,7 +40,7 @@ export const POST: APIRoute = async ({ request }) => {
     })
 
     // Only use your production domain
-    const netlifyUrl = 'https://ucsdcasualgolfclub.com/'
+    const netlifyUrl = 'https://ucsdcasualgolfclub.com/contact/'
 
     let netlifyResponse, netlifyText, lastError
 
