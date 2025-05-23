@@ -39,18 +39,38 @@ export const POST: APIRoute = async ({ request }) => {
       message,
     })
 
-    // Forward to Netlify Forms (use your production domain)
-    const netlifyResponse = await fetch('https://ucsdcasualgolfclub.com/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: netlifyFormData.toString(),
-    })
+    // Only use your production domain
+    const netlifyUrl = 'https://ucsdcasualgolfclub.com/'
 
-    if (!netlifyResponse.ok) {
-      return new Response(JSON.stringify({ error: 'Failed to submit to Netlify Forms.' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
+    let netlifyResponse, netlifyText, lastError
+
+    try {
+      netlifyResponse = await fetch(netlifyUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: netlifyFormData.toString(),
       })
+      netlifyText = await netlifyResponse.text()
+      console.log('Netlify response status:', netlifyResponse.status)
+      console.log('Netlify response body:', netlifyText)
+    } catch (err) {
+      lastError = err
+      console.error('Netlify Forms POST error:', err)
+    }
+
+    if (!netlifyResponse?.ok) {
+      return new Response(
+        JSON.stringify({
+          error: 'Failed to submit to Netlify Forms.',
+          netlifyStatus: netlifyResponse?.status,
+          netlifyBody: netlifyText,
+          netlifyError: lastError ? String(lastError) : undefined,
+        }),
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
     }
 
     return new Response(JSON.stringify({ success: true }), {
@@ -58,6 +78,7 @@ export const POST: APIRoute = async ({ request }) => {
       headers: { 'Content-Type': 'application/json' },
     })
   } catch (err) {
+    console.error('Server error:', err)
     return new Response(JSON.stringify({ error: 'Server error. Please try again.' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
