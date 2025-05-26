@@ -1,6 +1,8 @@
 ---
 import { Layout } from '~layouts/'
 
+import * as styles from '~styles/errorPages.css'
+
 export type Props = {
   title: string
 }
@@ -8,8 +10,10 @@ export type Props = {
 const { title } = Astro.props
 ---
 
-<Layout title={title} showScrollToTop={false}>
-  <main slot="main" id="main">
-    <slot name="message" />
+<Layout title={title}>
+  <main>
+    <div class={styles.contentPadding}>
+      <slot />
+    </div>
   </main>
 </Layout>

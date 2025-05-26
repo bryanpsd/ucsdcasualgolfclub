@@ -20,7 +20,7 @@ const entry = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
 
 // Handle cases where no entry is found
 if (!slug || !entry.items || entry.items.length === 0) {
-  return Astro.redirect('/not-found')
+  return Astro.redirect('/404')
 }
 
 // Safely access the fields property
