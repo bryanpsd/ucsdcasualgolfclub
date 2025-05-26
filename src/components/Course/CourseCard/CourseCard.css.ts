@@ -31,9 +31,14 @@ export const dateWrapper = recipe({
     variant: {
       default: {
         backgroundColor: color.brand.navy,
+        color: color.brand.white,
       },
       secondary: {
         backgroundColor: color.brand.blue,
+      },
+      special: {
+        backgroundColor: color.brand.yellow,
+        color: color.brand.navy,
       },
     },
   },

@@ -41,20 +41,26 @@ export const CourseCard = (props: CourseCardProps) => {
   } = props
 
   const isWednesday = date && new Date(date).getDay() === 3
+  const isSaturday = date && new Date(date).getDay() === 6
+  const isSpecialEvent = date && !isWednesday && !isSaturday
 
   return (
     <section className={styles.courseCardWrapper}>
       {date && (
         <div
           className={styles.dateWrapper({
-            variant: isWednesday ? 'secondary' : 'default',
+            variant: isSpecialEvent ? 'special' : isWednesday ? 'secondary' : 'default',
           })}
         >
-          <Typography color="inverse">{format(date, 'MMM')}</Typography>
-          <Typography color="inverse" variant="headlineLg">
+          <Typography color={isSpecialEvent ? 'primary' : 'inverse'}>
+            {format(date, 'MMM')}
+          </Typography>
+          <Typography color={isSpecialEvent ? 'primary' : 'inverse'} variant="headlineLg">
             {format(date, 'd')}
           </Typography>
-          <Typography color="inverse">{format(date, 'E')}</Typography>
+          <Typography color={isSpecialEvent ? 'primary' : 'inverse'}>
+            {format(date, 'E')}
+          </Typography>
         </div>
       )}
       {hideCourseInfo ? (
