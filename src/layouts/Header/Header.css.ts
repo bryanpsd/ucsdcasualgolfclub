@@ -14,6 +14,9 @@ export const headerWrapper = style([
     height: 84,
     backgroundColor: color.brand.navy,
     fontSize: fontSize.sizeFont4,
+    position: 'sticky',
+    top: 0,
+    zIndex: 1000,
   },
 ])
 
