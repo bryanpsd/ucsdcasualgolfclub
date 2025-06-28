@@ -1,6 +1,6 @@
 import type { FlatMut } from '../types'
 
-const constUCSD = {
+const ucsdFontStyles = {
   typography: {
     fontFamily: 'Roboto, serif',
     color: '#000000',
@@ -84,4 +84,4 @@ const constUCSD = {
   },
 } as const
 
-export const ucsd = constUCSD as FlatMut<typeof constUCSD>
+export const ucsd = ucsdFontStyles as FlatMut<typeof ucsdFontStyles>

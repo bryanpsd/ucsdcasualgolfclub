@@ -1,6 +1,5 @@
 import { createGlobalTheme } from '@vanilla-extract/css'
 import { breakpoints } from '~styles/designTokens/breakpoints'
-import { boxShadow } from '~styles/designTokens/shadows'
 import { color } from '~styles/designTokens/colors'
 import { space } from '~styles/designTokens/spacing'
 import { duration } from '~styles/designTokens/duration'
@@ -17,7 +16,6 @@ export const vars = createGlobalTheme(':root', {
   fontWeight,
   space,
   border,
-  boxShadow,
   breakpoints,
   duration,
 })

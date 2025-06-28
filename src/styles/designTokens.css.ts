@@ -54,7 +54,6 @@ const {
   color: { brand, surface, outline, foreground, ...color },
   space,
   border,
-  boxShadow,
   fontSize,
   fontWeight,
   lineHeight,
@@ -198,7 +197,6 @@ const borderProperties = defineProperties({
     borderLeftWidth: space,
 
     borderRadius: border.radius,
-    boxShadow,
     outline: ['none'],
   },
   shorthands: {
