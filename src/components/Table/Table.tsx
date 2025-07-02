@@ -1,4 +1,4 @@
-import React, { type ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
 import * as styles from './Table.css'
 
 type TableCell =
@@ -16,14 +16,18 @@ type Props = {
   tfoot?: string[]
 }
 
-export const Table: React.FC<Props> = ({ thead, tbody, tfoot, colSpan = 0 }) => {
+export const Table: FC<Props> = ({ thead, tbody, tfoot, colSpan = 0 }) => {
   return (
     <table className={styles.table}>
       {thead && (
         <thead className={styles.thead}>
           <tr>
-            {thead.map((header, index) => (
-              <th key={index} colSpan={colSpan} className={styles.th}>
+            {thead.map((header) => (
+              <th
+                key={typeof header === 'string' ? header : undefined}
+                colSpan={colSpan}
+                className={styles.th}
+              >
                 {header}
               </th>
             ))}

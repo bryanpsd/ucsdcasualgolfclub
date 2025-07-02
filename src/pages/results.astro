@@ -1,13 +1,12 @@
 ---
-import { contentfulClient } from '~services/contentful/contentful'
-
-import type { TypeLeadersSkeleton } from '~types/contentful'
+import { Hero } from '~components/Hero'
+import { TournamentResults } from '~components/TournamentResults'
 
 import Layout from '~layouts/Layout.astro'
-import { Hero } from '~components/Hero'
+import { contentfulClient } from '~services/contentful/contentful'
 
 import * as styles from '~styles/common.css'
-import { TournamentResults } from '~components/TournamentResults'
+import type { TypeLeadersSkeleton } from '~types/contentful'
 
 const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
   content_type: 'leaders',

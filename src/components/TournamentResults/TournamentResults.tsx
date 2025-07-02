@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Table } from '~components/Table'
 
 import * as styles from './TournamentResults.css'

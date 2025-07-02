@@ -1,13 +1,11 @@
 ---
-import { contentfulClient } from '~services/contentful/contentful'
-
-import type { TypeSimplePageSkeleton } from '~types/contentful'
+import { Hero } from '~components/Hero'
+import { RichText } from '~components/RichText'
 
 import Layout from '~layouts/Layout.astro'
-import { RichText } from '~components/RichText'
-import { Hero } from '~components/Hero'
-
+import { contentfulClient } from '~services/contentful/contentful'
 import * as styles from '~styles/common.css'
+import type { TypeSimplePageSkeleton } from '~types/contentful'
 
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
   content_type: 'simplePage',

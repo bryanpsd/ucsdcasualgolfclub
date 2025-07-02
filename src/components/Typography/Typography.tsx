@@ -1,9 +1,6 @@
 import { type ElementType, forwardRef } from 'react'
 
-import {
-  type PolymorphicComponentPropWithRef,
-  type PolymorphicRef,
-} from '~types/PolymorphicComponent'
+import type { PolymorphicComponentPropWithRef, PolymorphicRef } from '~types/PolymorphicComponent'
 import { concatClasses } from '~utils/concatClasses'
 
 import { type TypographyVariants, typography } from './Typography.css'

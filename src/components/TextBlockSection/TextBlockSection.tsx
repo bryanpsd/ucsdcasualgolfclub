@@ -1,21 +1,20 @@
-import type { CSSProperties } from 'react'
-import { documentToReactComponents, type Options } from '@contentful/rich-text-react-renderer'
+import { type Options, documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import {
-  type Document,
-  type Block,
-  type Inline,
   BLOCKS,
+  type Block,
+  type Document,
   INLINES,
+  type Inline,
   MARKS,
 } from '@contentful/rich-text-types'
-import { replaceAllSpecialChars } from '~utils/StringUtils'
-import { concatClasses } from '~utils/concatClasses'
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
-import { Typography, type TypographyProps } from '~components/Typography'
+import type { CSSProperties } from 'react'
 import { Link } from '~components/Link'
-import { List, ListItem } from './List'
-
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 import * as styles from '~components/TextBlockSection/TextBlockSection.css'
+import { Typography, type TypographyProps } from '~components/Typography'
+import { concatClasses } from '~utils/concatClasses'
+import { replaceAllSpecialChars } from '~utils/StringUtils'
+import { List, ListItem } from './List'
 
 const BODY_TYPOGRAPHY_VARIANT: TypographyProps['variant'] = 'bodyMd'
 

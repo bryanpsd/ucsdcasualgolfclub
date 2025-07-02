@@ -1,12 +1,11 @@
-import { BLOCKS } from '@contentful/rich-text-types'
-import { type Options } from '@contentful/rich-text-react-renderer'
+import type { Options } from '@contentful/rich-text-react-renderer'
 import type { Document } from '@contentful/rich-text-types'
-
-import { type TypographyProps, Typography } from '~components/Typography'
+import { BLOCKS } from '@contentful/rich-text-types'
+import { ContentfulImage } from '~components/Image/ContentfulImage'
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 import { TextBlockSection } from '~components/TextBlockSection'
 import { List } from '~components/TextBlockSection/List'
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
-import { ContentfulImage } from '~components/Image/ContentfulImage'
+import { Typography, type TypographyProps } from '~components/Typography'
 
 import * as styles from './RichText.css'
 
@@ -14,7 +13,7 @@ const BODY_TYPOGRAPHY_VARIANT: TypographyProps['variant'] = 'bodyMd'
 
 const options: Options = {
   renderNode: {
-    [BLOCKS.HEADING_2]: (node, children) => (
+    [BLOCKS.HEADING_2]: (_node, children) => (
       <ResponsiveHeadline size={2} as="h2">
         {children}
       </ResponsiveHeadline>
@@ -48,17 +47,19 @@ const options: Options = {
           <div className={styles.seasonRecap}>
             <RichText richText={summary} />
             <ul className={styles.seasonRecapList}>
-              {winners.map((winner: { fields: { title: string; file: any } }) => {
-                const { title, file } = winner.fields
-                return (
-                  <li key={title}>
-                    <ContentfulImage className={styles.image} src={file.url} alt={file.title} />
-                    <ResponsiveHeadline size={1} as="h3">
-                      {title}
-                    </ResponsiveHeadline>
-                  </li>
-                )
-              })}
+              {winners.map(
+                (winner: { fields: { title: string; file: { url: string; title: string } } }) => {
+                  const { title, file } = winner.fields
+                  return (
+                    <li key={title}>
+                      <ContentfulImage className={styles.image} src={file.url} alt={file.title} />
+                      <ResponsiveHeadline size={1} as="h3">
+                        {title}
+                      </ResponsiveHeadline>
+                    </li>
+                  )
+                }
+              )}
             </ul>
           </div>
         )
