@@ -1,155 +1,128 @@
----
-export const prerender = true
+export const prerender = true;
 
-import { CourseCard } from '~components/Course/CourseCard'
-import { contentfulClient } from '~services/contentful/contentful'
-import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse'
-
-import Layout from '~layouts/Layout.astro'
-import { Hero } from '~components/Hero'
-import SeasonRecap from './_components/SeasonRecap.astro'
-
-import * as styles from '~styles/common.css'
+import { CourseCard } from "~components/Course/CourseCard";
+import { Hero } from "~components/Hero";
+import Layout from "~layouts/Layout.astro";
+import { contentfulClient } from "~services/contentful/contentful";
+import * as styles from "~styles/common.css";
+import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse";
+import SeasonRecap from "./_components/SeasonRecap.astro";
 
 export function getStaticPaths() {
-  const getYear = new Date().getFullYear() - 1
-  const pastSeasonsLinks = Array.from({ length: getYear - 2018 }, (_, i) => {
-    const year = getYear - i
-    return {
-      params: {
-        slug: year.toString(),
-      },
-    }
-  })
-  return pastSeasonsLinks
+	const getYear = new Date().getFullYear() - 1;
+	const pastSeasonsLinks = Array.from({ length: getYear - 2018 }, (_, i) => {
+		const year = getYear - i;
+		return {
+			params: {
+				slug: year.toString(),
+			},
+		};
+	});
+	return pastSeasonsLinks;
 }
 
 const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-  content_type: 'course',
-})
+	content_type: "course",
+});
 
-const { slug } = Astro.params
+const { slug } = Astro.params;
 
 // Get the previous year
-const previousYear = (parseInt(slug) - 1).toString()
+const previousYear = (parseInt(slug) - 1).toString();
 
 // Process tournaments
 const tournaments = entries.items
-  .flatMap((item) => {
-    return item.fields.tournaments
-      ?.filter((tournament) => {
-        if ('fields' in tournament && tournament.fields.date) {
-          const tournamentYear = new Date(tournament.fields.date).getFullYear()
-          return tournamentYear.toString() === slug || tournamentYear.toString() === previousYear
-        }
-        return false
-      })
-      .map((tournament) => ({
-        tournament: {
-          fields: {
-            ...('fields' in tournament ? tournament.fields : {}),
-            date: 'fields' in tournament ? tournament.fields.date : undefined,
-            tournamentNotes: 'fields' in tournament ? tournament.fields.tournamentNotes : undefined,
-            clubChampionship:
-              'fields' in tournament ? (tournament.fields.clubChampionship ?? false) : false,
-          },
-        },
-        course: item.fields.course,
-        slug: item.fields.slug,
-      }))
-  })
-  .filter(Boolean)
-  .sort(
-    (a, b) =>
-      new Date(
-        a?.tournament && 'fields' in a.tournament && typeof a.tournament.fields.date === 'string'
-          ? new Date(a.tournament.fields.date).getTime()
-          : 0
-      ).getTime() -
-      new Date(
-        b?.tournament && 'fields' in b.tournament && typeof b.tournament.fields.date === 'string'
-          ? new Date(b.tournament.fields.date).getTime()
-          : 0
-      ).getTime()
-  )
+	.flatMap((item) => {
+		return item.fields.tournaments
+			?.filter((tournament) => {
+				if ("fields" in tournament && tournament.fields.date) {
+					const tournamentYear = new Date(tournament.fields.date).getFullYear();
+					return (
+						tournamentYear.toString() === slug ||
+						tournamentYear.toString() === previousYear
+					);
+				}
+				return false;
+			})
+			.map((tournament) => ({
+				tournament: {
+					fields: {
+						...("fields" in tournament ? tournament.fields : {}),
+						date: "fields" in tournament ? tournament.fields.date : undefined,
+						tournamentNotes:
+							"fields" in tournament
+								? tournament.fields.tournamentNotes
+								: undefined,
+						clubChampionship:
+							"fields" in tournament
+								? (tournament.fields.clubChampionship ?? false)
+								: false,
+					},
+				},
+				course: item.fields.course,
+				slug: item.fields.slug,
+			}));
+	})
+	.filter(Boolean)
+	.sort(
+		(a, b) =>
+			new Date(
+				a?.tournament &&
+					"fields" in a.tournament &&
+					typeof a.tournament.fields.date === "string"
+					? new Date(a.tournament.fields.date).getTime()
+					: 0,
+			).getTime() -
+			new Date(
+				b?.tournament &&
+					"fields" in b.tournament &&
+					typeof b.tournament.fields.date === "string"
+					? new Date(b.tournament.fields.date).getTime()
+					: 0,
+			).getTime(),
+	);
 
 // Separate tournaments into current year and previous year
 const currentYearTournaments = tournaments.filter(
-  (t) =>
-    t?.tournament &&
-    'fields' in t.tournament &&
-    t.tournament.fields.date &&
-    !isNaN(new Date(t.tournament.fields.date).getTime()) &&
-    new Date(t.tournament.fields.date).getFullYear().toString() === slug
-)
+	(t) =>
+		t?.tournament &&
+		"fields" in t.tournament &&
+		t.tournament.fields.date &&
+		!isNaN(new Date(t.tournament.fields.date).getTime()) &&
+		new Date(t.tournament.fields.date).getFullYear().toString() === slug,
+);
 
 const previousYearTournaments = tournaments.filter(
-  (t) =>
-    t?.tournament &&
-    'fields' in t.tournament &&
-    t.tournament.fields.date &&
-    !isNaN(new Date(t.tournament.fields.date).getTime()) &&
-    new Date(t.tournament.fields.date).getFullYear().toString() === previousYear
-)
+	(t) =>
+		t?.tournament &&
+		"fields" in t.tournament &&
+		t.tournament.fields.date &&
+		!isNaN(new Date(t.tournament.fields.date).getTime()) &&
+		new Date(t.tournament.fields.date).getFullYear().toString() ===
+			previousYear,
+);
 
 // Add the last tournament of the previous year to the beginning of the current year tournaments,
 // excluding the Club Championship
 if (previousYearTournaments.length > 0) {
-  const lastTournamentOfPreviousYear = previousYearTournaments[previousYearTournaments.length - 1]
-  if (
-    lastTournamentOfPreviousYear &&
-    !lastTournamentOfPreviousYear.tournament.fields.clubChampionship
-  ) {
-    currentYearTournaments.unshift(lastTournamentOfPreviousYear)
-  }
+	const lastTournamentOfPreviousYear =
+		previousYearTournaments[previousYearTournaments.length - 1];
+	if (
+		lastTournamentOfPreviousYear &&
+		!lastTournamentOfPreviousYear.tournament.fields.clubChampionship
+	) {
+		currentYearTournaments.unshift(lastTournamentOfPreviousYear);
+	}
 }
 
 // Remove the last tournament of the current year unless it is the Club Championship
 if (currentYearTournaments.length > 0) {
-  const lastTournamentOfCurrentYear = currentYearTournaments[currentYearTournaments.length - 1]
-  if (
-    lastTournamentOfCurrentYear &&
-    !lastTournamentOfCurrentYear.tournament.fields.clubChampionship
-  ) {
-    currentYearTournaments.pop()
-  }
+	const lastTournamentOfCurrentYear =
+		currentYearTournaments[currentYearTournaments.length - 1];
+	if (
+		lastTournamentOfCurrentYear &&
+		!lastTournamentOfCurrentYear.tournament.fields.clubChampionship
+	) {
+		currentYearTournaments.pop();
+	}
 }
----
-
-<Layout
-  title={`${slug} Season | UCSD Casual Golf Club`}
-  description={`Explore the ${slug} season of the UCSD Casual Golf Club. View tournaments, results, and highlights from the year.`}
->
-  <Hero title={`${slug} Season`} />
-  <div class={styles.subPageWrapper}>
-    <SeasonRecap year={slug} />
-    {
-      currentYearTournaments.map((item) => {
-        if (item && item.tournament) {
-          const { tournament, course, slug } = item
-          return (
-            <CourseCard
-              client:load
-              hideCourseInfo
-              date={'fields' in tournament ? tournament.fields.date : undefined}
-              clubChampionship={
-                'fields' in tournament ? (tournament.fields.clubChampionship ?? false) : false
-              }
-              tournamentNotes={tournament.fields.tournamentNotes}
-              course={course}
-              slug={slug}
-              results={
-                'fields' in tournament &&
-                tournament.fields.results &&
-                'fields' in tournament.fields.results
-                  ? tournament.fields.results.fields.file?.url
-                  : undefined
-              }
-            />
-          )
-        }
-        return null
-      })
-    }
-  </div>
-</Layout>

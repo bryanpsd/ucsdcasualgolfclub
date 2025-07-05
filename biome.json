@@ -7,7 +7,8 @@
       "recommended": true,
       "correctness": {
         "useJsxKeyInIterable": "off",
-        "noChildrenProp": "off"
+        "noChildrenProp": "off",
+        "useExhaustiveDependencies": "warn"
       },
       "style": {
         "noParameterAssign": "error",
@@ -19,7 +20,16 @@
         "noUnusedTemplateLiteral": "error",
         "useNumberNamespace": "error",
         "noInferrableTypes": "error",
-        "noUselessElse": "error"
+        "noUselessElse": "error",
+        "useImportType": "error"
+      },
+      "a11y": {
+        "useAltText": "error",
+        "useAriaPropsForRole": "error",
+        "useValidAriaProps": "error"
+      },
+      "nursery": {
+        "useSortedClasses": "error"
       }
     }
   },
@@ -31,30 +41,56 @@
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
-    "indentWidth": 2
+    "indentWidth": 2,
+    "lineWidth": 100
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "single"
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "semicolons": "asNeeded",
+      "trailingCommas": "es5"
     }
   },
+  "files": {},
   "overrides": [
     {
       "includes": ["**/*.astro"],
+      "linter": {
+        "enabled": false
+      },
+      "formatter": {
+        "enabled": false
+      }
+    },
+    {
+      "includes": ["**/*.tsx", "**/*.jsx"],
       "javascript": {
         "formatter": {
-          "quoteStyle": "double"
+          "jsxQuoteStyle": "double"
         }
       },
       "linter": {
         "rules": {
+          "correctness": {
+            "useExhaustiveDependencies": "warn"
+          },
           "style": {
-            "useConst": "off",
-            "useImportType": "off"
+            "useImportType": "error"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.css.ts", "**/*.css.js"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useImportType": "off",
+            "noUnusedTemplateLiteral": "off"
           },
           "correctness": {
-            "noUnusedVariables": "off",
-            "noUnusedImports": "off"
+            "noUnusedVariables": "off"
           }
         }
       }

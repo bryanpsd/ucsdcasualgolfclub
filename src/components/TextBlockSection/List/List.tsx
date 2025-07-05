@@ -1,6 +1,12 @@
 import type { ReactNode } from 'react'
-import { type TypographyProps, Typography } from '~components/Typography'
+
+import { Typography, type TypographyProps } from '~components/Typography'
+
 import { list, listItem } from './List.css'
+
+export type ListItemProps = {
+  children?: ReactNode
+}
 
 type ListProps = {
   variant?: TypographyProps['variant']
@@ -14,10 +20,6 @@ export const List = ({ variant, ordered, children }: ListProps) => {
       {children}
     </Typography>
   )
-}
-
-export type ListItemProps = {
-  children?: ReactNode
 }
 
 export const ListItem = ({ children }: ListItemProps) => {
