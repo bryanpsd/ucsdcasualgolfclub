@@ -1,104 +1,127 @@
 {
-  "root": false,
   "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "files": {},
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100,
+    "attributePosition": "auto",
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "expand": "auto",
+    "useEditorconfig": true,
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/build",
+      "!**/package.json",
+      "!**/yarn.lock",
+      "!**/package-lock.json",
+      "!**/.eslintrc",
+      "!**/tsconfig.json",
+      "!public/*",
+      "!**/src/assets/**",
+      "!**/infra/**",
+      "!**/reportWebVitals.ts",
+      "!**/*.css",
+      "!**/*.yml",
+      "!**/*.md"
+    ]
+  },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
-      "correctness": {
-        "useJsxKeyInIterable": "off",
-        "noChildrenProp": "off",
-        "useExhaustiveDependencies": "warn"
-      },
-      "style": {
-        "noParameterAssign": "error",
-        "useAsConstAssertion": "error",
-        "useDefaultParameterLast": "error",
-        "useEnumInitializers": "error",
-        "useSelfClosingElements": "error",
-        "useSingleVarDeclarator": "error",
-        "noUnusedTemplateLiteral": "error",
-        "useNumberNamespace": "error",
-        "noInferrableTypes": "error",
-        "noUselessElse": "error",
-        "useImportType": "error"
-      },
       "a11y": {
         "useAltText": "error",
         "useAriaPropsForRole": "error",
         "useValidAriaProps": "error"
       },
-      "nursery": {
-        "useSortedClasses": "error"
+      "correctness": {
+        "noChildrenProp": "off",
+        "useExhaustiveDependencies": "warn",
+        "useJsxKeyInIterable": "off"
+      },
+      "nursery": { "useSortedClasses": "error" },
+      "style": {
+        "noInferrableTypes": "error",
+        "noParameterAssign": "error",
+        "noUnusedTemplateLiteral": "error",
+        "noUselessElse": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useImportType": "error",
+        "useNumberNamespace": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error"
       }
     }
   },
-  "vcs": {
-    "enabled": true,
-    "clientKind": "git",
-    "useIgnoreFile": true
-  },
-  "formatter": {
-    "enabled": true,
-    "indentStyle": "space",
-    "indentWidth": 2,
-    "lineWidth": 100
-  },
   "javascript": {
     "formatter": {
-      "quoteStyle": "single",
       "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "es5",
       "semicolons": "asNeeded",
-      "trailingCommas": "es5"
+      "arrowParentheses": "always",
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "auto",
+      "bracketSpacing": true
     }
   },
-  "files": {},
+  "json": { "parser": { "allowComments": true } },
+  "html": { "formatter": { "selfCloseVoidElements": "always" } },
   "overrides": [
     {
       "includes": ["**/*.astro"],
       "linter": {
-        "enabled": false
-      },
-      "formatter": {
-        "enabled": false
+        "rules": {
+          "style": {
+            "useConst": "off",
+            "useImportType": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off",
+            "noUnusedImports": "off"
+          }
+        }
       }
     },
     {
       "includes": ["**/*.tsx", "**/*.jsx"],
-      "javascript": {
-        "formatter": {
-          "jsxQuoteStyle": "double"
-        }
-      },
+      "javascript": { "formatter": { "jsxQuoteStyle": "double" } },
       "linter": {
         "rules": {
-          "correctness": {
-            "useExhaustiveDependencies": "warn"
-          },
-          "style": {
-            "useImportType": "error"
-          }
+          "correctness": { "useExhaustiveDependencies": "warn" },
+          "style": { "useImportType": "error" }
         }
       }
     },
     {
-      "includes": ["**/*.css.ts", "**/*.css.js"],
+      "includes": ["**/*.css.ts"],
+      "assist": { "actions": { "source": { "organizeImports": "on" } } },
+      "formatter": {
+        "attributePosition": "auto",
+        "bracketSameLine": false,
+        "bracketSpacing": true,
+        "expand": "auto"
+      },
       "linter": {
         "rules": {
+          "correctness": { "noUnusedVariables": "off" },
           "style": {
-            "useImportType": "off",
-            "noUnusedTemplateLiteral": "off"
-          },
-          "correctness": {
-            "noUnusedVariables": "off"
+            "noUnusedTemplateLiteral": "off",
+            "useImportType": "off"
           }
         }
       }
     }
-  ],
-  "json": {
-    "parser": {
-      "allowComments": true
-    }
-  }
+  ]
 }

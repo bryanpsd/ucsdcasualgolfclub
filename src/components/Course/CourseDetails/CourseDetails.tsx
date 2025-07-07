@@ -3,6 +3,7 @@ import { concatClasses } from '~utils/concatClasses'
 import { CourseInclusions } from '../CourseInclusions'
 
 import * as styles from './CourseDetails.css'
+
 interface Props {
   players: string
   inclusions?: string[]

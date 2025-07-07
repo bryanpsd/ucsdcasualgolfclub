@@ -1,6 +1,6 @@
 import * as NavMenu from '@radix-ui/react-navigation-menu'
 
-import { useState, type PointerEventHandler } from 'react'
+import { type PointerEventHandler, useState } from 'react'
 import { MainNavItem } from '../MainNavItem/MainNavItem'
 
 import * as styles from './MainNav.css'

@@ -1,4 +1,4 @@
-import { type Options, documentToReactComponents } from '@contentful/rich-text-react-renderer'
+import { documentToReactComponents, type Options } from '@contentful/rich-text-react-renderer'
 import {
   BLOCKS,
   type Block,

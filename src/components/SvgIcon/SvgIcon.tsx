@@ -1,7 +1,7 @@
 import { type ElementType, forwardRef } from 'react'
-import { svgIcon, type SvgIconVariants } from './SvgIcon.css'
 import type { PolymorphicComponentPropWithRef, PolymorphicRef } from '~types/PolymorphicComponent'
 import { concatClasses } from '~utils/concatClasses'
+import { type SvgIconVariants, svgIcon } from './SvgIcon.css'
 
 export type SvgIconProps<C extends ElementType = 'svg'> = PolymorphicComponentPropWithRef<
   C,

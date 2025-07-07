@@ -1,6 +1,6 @@
 import { actions } from 'astro:actions'
 import { useEffect, useState } from 'react'
-import { type ReCaptchaInstance, load, getInstance } from 'recaptcha-v3'
+import { getInstance, load, type ReCaptchaInstance } from 'recaptcha-v3'
 
 let CACHED_CONFIG = { SITE_KEY: '', USE_ENTERPRISE: true }
 

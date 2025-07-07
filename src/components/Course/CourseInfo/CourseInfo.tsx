@@ -19,7 +19,9 @@ export const CourseInfo = (props: Props) => {
         <div className={styles.courseCardInfoContent}>
           <h3>Par: {coursePar}</h3>
           <h3>Tees:</h3>
-          {tees?.map((tee, index) => <p key={index}>{tee}</p>)}
+          {tees?.map((tee, index) => (
+            <p key={index}>{tee}</p>
+          ))}
         </div>
       </div>
     </div>

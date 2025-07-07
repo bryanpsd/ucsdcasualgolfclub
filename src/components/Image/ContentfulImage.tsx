@@ -1,4 +1,4 @@
-import type { CSSProperties, ComponentPropsWithRef } from 'react'
+import type { ComponentPropsWithRef, CSSProperties } from 'react'
 
 export interface ContentfulImageProps {
   id?: string

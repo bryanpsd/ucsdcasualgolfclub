@@ -1,12 +1,11 @@
 ---
-import { contentfulClient } from '~services/contentful/contentful'
-import type { TypeCourseSkeleton } from '~types/contentful'
-
-import Layout from '~layouts/Layout.astro'
 import { CourseCard } from '~components/Course/CourseCard'
 import { Hero } from '~components/Hero'
 
+import Layout from '~layouts/Layout.astro'
+import { contentfulClient } from '~services/contentful/contentful'
 import * as styles from '~styles/common.css'
+import type { TypeCourseSkeleton } from '~types/contentful'
 
 const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
   content_type: 'course',

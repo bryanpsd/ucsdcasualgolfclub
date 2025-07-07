@@ -51,9 +51,8 @@ export const enumToValuesArray = (enums: { [s: number]: string }): Array<string>
 export const toRef = (str?: string | number | boolean) => {
   if (str != null) {
     return String(removeAllSpecialChars(str.toString())).toLocaleLowerCase()
-  } else {
-    return ''
   }
+  return ''
 }
 
 export function isNullOrEmpty(str: string | null | undefined): boolean {

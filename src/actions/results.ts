@@ -1,6 +1,6 @@
 import { defineAction } from 'astro:actions'
-import type { TypeResultsSkeleton } from '../types/contentful/TypeResults'
 import { contentfulClient } from '../services/contentful/contentful'
+import type { TypeResultsSkeleton } from '../types/contentful/TypeResults'
 
 export const getResults = defineAction({
   handler: async () => {

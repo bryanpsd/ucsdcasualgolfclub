@@ -1,6 +1,6 @@
+import { recipe } from '@vanilla-extract/recipes'
 import { tokens } from '~styles/designTokens.css'
 import { color } from '~styles/designTokens/colors'
-import { recipe } from '@vanilla-extract/recipes'
 
 export const courseInclusionsWrapper = recipe({
   base: [

@@ -1,5 +1,5 @@
-import * as contentful from 'contentful'
 import type { EntryFieldTypes } from 'contentful'
+import * as contentful from 'contentful'
 
 export interface SimplePage {
   contentTypeId: 'simplePage'

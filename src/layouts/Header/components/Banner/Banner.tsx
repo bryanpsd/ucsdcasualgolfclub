@@ -1,6 +1,5 @@
-import { type Options } from '@contentful/rich-text-react-renderer'
-import { type Document } from '@contentful/rich-text-types'
-import { BLOCKS, INLINES } from '@contentful/rich-text-types'
+import type { Options } from '@contentful/rich-text-react-renderer'
+import { BLOCKS, type Document, INLINES } from '@contentful/rich-text-types'
 import { Link } from '~components/Link'
 import { TextBlockSection } from '~components/TextBlockSection'
 import { Typography } from '~components/Typography'

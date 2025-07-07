@@ -1,8 +1,7 @@
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
-import { breakpoints } from './designTokens/breakpoints'
-
 import { vars } from '../styles/theme.css'
 import { objectKeys } from '../types'
+import { breakpoints } from './designTokens/breakpoints'
 
 export const breakpointQuery = {
   xs: `screen and (min-width: ${breakpoints.xs}px) and (max-width: ${

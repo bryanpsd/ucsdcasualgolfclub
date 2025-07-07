@@ -1,7 +1,7 @@
-import { style } from '@vanilla-extract/css'
-import { tokens } from '~styles/designTokens.css'
-import { color } from '~styles/designTokens/colors'
-import { recipe } from '@vanilla-extract/recipes'
+import { style } from '@vanilla-extract/css';
+import { recipe } from '@vanilla-extract/recipes';
+import { tokens } from '~styles/designTokens.css';
+import { color } from '~styles/designTokens/colors';
 
 export const courseCardWrapper = style([
   tokens({
@@ -10,11 +10,12 @@ export const courseCardWrapper = style([
     width: 'col-12',
     paddingY: 10,
     gap: 10,
+    
   }),
   {
     borderTop: `1px solid ${color.brand.navy}`,
   },
-])
+]);
 
 export const dateWrapper = recipe({
   base: [
@@ -42,7 +43,7 @@ export const dateWrapper = recipe({
       },
     },
   },
-})
+});
 
 export const courseCardInfo = style([
   tokens({
@@ -53,7 +54,7 @@ export const courseCardInfo = style([
     width: { 'xs-min': 'col-12', 'md-min': 'col-7', 'lg-min': 'col-6' },
     gap: 8,
   }),
-])
+]);
 
 export const courseCardNameWrapper = style([
   tokens({
@@ -63,7 +64,7 @@ export const courseCardNameWrapper = style([
     justifyContent: 'center',
     width: { 'xs-min': 'col-12', 'md-min': 'col-7', 'lg-min': 'col-6' },
   }),
-])
+]);
 
 export const courseCardTimeType = style([
   tokens({
@@ -71,13 +72,13 @@ export const courseCardTimeType = style([
     alignItems: 'center',
     gap: 4,
   }),
-])
+]);
 
 export const courseCardList = style([
   tokens({
     display: 'flex',
   }),
-])
+]);
 
 export const courseCardListItem = style([
   tokens({
@@ -96,7 +97,7 @@ export const courseCardListItem = style([
       },
     },
   },
-])
+]);
 
 export const courseCardButtons = style([
   tokens({
@@ -106,7 +107,7 @@ export const courseCardButtons = style([
     justifyContent: { 'xs-min': 'center', 'md-min': 'flex-end' },
     width: { 'xs-min': 'col-12', 'md-min': 'col-3', 'lg-min': 'col-4' },
   }),
-])
+]);
 
 export const courseCardButtonsWrapper = style([
   tokens({
@@ -114,12 +115,12 @@ export const courseCardButtonsWrapper = style([
     flexDirection: { 'xs-min': 'row', 'md-min': 'column', 'lg-min': 'row' },
     gap: 8,
   }),
-])
+]);
 
 export const courseNote = style({
   color: color.brand.blue,
-})
+});
 
 export const coursePrice = style({
   color: color.outline.success,
-})
+});

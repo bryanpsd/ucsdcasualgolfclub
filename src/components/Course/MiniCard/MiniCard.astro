@@ -1,8 +1,7 @@
 ---
 import { format } from 'date-fns'
-
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 import { Button } from '~components/Button'
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 import { CourseDetails } from '../CourseDetails'
 import { CourseInclusions } from '../CourseInclusions'
 
@@ -24,7 +23,8 @@ const {
   tournamentNotes,
 } = Astro.props
 
-const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null
+const parsedDate = date ? Date.parse(date) : Number.NaN
+const validDate = date && !Number.isNaN(parsedDate) ? new Date(date) : null
 ---
 
 <div class={styles.miniCardWrapper}>

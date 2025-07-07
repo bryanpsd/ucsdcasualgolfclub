@@ -1,7 +1,7 @@
 import contentful from 'contentful-management'
 import dotenv from 'dotenv'
-import xlsx from 'xlsx'
 import fetch from 'node-fetch'
+import xlsx from 'xlsx'
 
 // Load environment variables from .env file
 dotenv.config()
@@ -126,17 +126,18 @@ async function processTournament(tournament, courseName, course) {
         currentFlight = 'First Flight'
         console.log(`Switching to Flight: ${currentFlight}`)
         continue // Skip this row as it only indicates the flight
-      } else if (name === '2nd Flight') {
+      }
+      if (name === '2nd Flight') {
         currentFlight = 'Second Flight'
         console.log(`Switching to Flight: ${currentFlight}`)
         continue // Skip this row as it only indicates the flight
       }
 
-      const index = row['Index'] ? parseFloat(row['Index']) : null
-      const gross = row['Gross'] ? parseFloat(row['Gross']) : null
-      const courseHandicap = row['Crs Hcp'] ? parseFloat(row['Crs Hcp']) : null
-      const net = row['Net'] ? parseFloat(row['Net']) : null
-      const putts = row['Putts'] ? parseInt(row['Putts'], 10) : null
+      const index = row['Index'] ? Number.parseFloat(row['Index']) : null
+      const gross = row['Gross'] ? Number.parseFloat(row['Gross']) : null
+      const courseHandicap = row['Crs Hcp'] ? Number.parseFloat(row['Crs Hcp']) : null
+      const net = row['Net'] ? Number.parseFloat(row['Net']) : null
+      const putts = row['Putts'] ? Number.parseInt(row['Putts'], 10) : null
 
       // Convert closestTo to an array and handle "Closest To" text
       const closestToRaw = row['Closest To'] ? String(row['Closest To']).trim() : null
@@ -296,7 +297,6 @@ async function processTournament(tournament, courseName, course) {
         }
       } catch (error) {
         console.error(`Error processing result for "${name}":`, error)
-        continue // Skip to the next result
       }
     }
 

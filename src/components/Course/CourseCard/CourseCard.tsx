@@ -1,12 +1,10 @@
 import { format } from 'date-fns'
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 import { Button } from '~components/Button/Button'
-import { CourseDetails } from '../CourseDetails'
+import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
 import { Typography } from '~components/Typography'
-
 import Clock from '~icons/clock.svg?react'
-
 import type { TypeCourseProps } from '~types/contentful'
+import { CourseDetails } from '../CourseDetails'
 
 import * as styles from './CourseCard.css'
 
@@ -70,8 +68,8 @@ export const CourseCard = (props: CourseCardProps) => {
           </ResponsiveHeadline>
           {tournamentNotes && tournamentNotes.length > 0 && (
             <div>
-              {tournamentNotes.map((note, index) => (
-                <ResponsiveHeadline className={styles.courseNote} key={index} size={1} as="h3">
+              {tournamentNotes.map((note) => (
+                <ResponsiveHeadline className={styles.courseNote} key={note} size={1} as="h3">
                   {note}
                 </ResponsiveHeadline>
               ))}
@@ -91,8 +89,8 @@ export const CourseCard = (props: CourseCardProps) => {
             </ResponsiveHeadline>
             {tournamentNotes && tournamentNotes.length > 0 && (
               <div>
-                {tournamentNotes.map((note, index) => (
-                  <ResponsiveHeadline className={styles.courseNote} key={index} size={1} as="h3">
+                {tournamentNotes.map((note) => (
+                  <ResponsiveHeadline className={styles.courseNote} key={note} size={1} as="h3">
                     {note}
                   </ResponsiveHeadline>
                 ))}

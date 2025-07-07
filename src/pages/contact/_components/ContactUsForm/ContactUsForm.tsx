@@ -1,8 +1,8 @@
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { useCaptcha } from '~utils/useCaptcha'
 import { Button } from '~components/Button/Button'
+import { useCaptcha } from '~utils/useCaptcha'
 import * as styles from './ContactUsForm.css'
 
 type ContactUsFormData = {
@@ -91,7 +91,7 @@ export const ContactUsForm = () => {
           className={styles.textarea}
           id="contact-message"
           {...register('message', { required: true })}
-        ></textarea>
+        />
         {errors.message && <span className={styles.error}>Enter a message.</span>}
       </div>
 

@@ -1,5 +1,5 @@
-import type { MainNavProps } from '../components/MainNav'
 import { contentfulClient } from '../../../services/contentful/contentful'
+import type { MainNavProps } from '../components/MainNav'
 
 const getAvailableSeasons = async () => {
   const entries = await contentfulClient.getEntries({

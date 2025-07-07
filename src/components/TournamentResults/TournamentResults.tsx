@@ -103,7 +103,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
                         selectedResults.length > 0
                           ? Math.min(
                               ...selectedResults.map((r) =>
-                                typeof r.gross === 'number' ? r.gross : Infinity
+                                typeof r.gross === 'number' ? r.gross : Number.POSITIVE_INFINITY
                               )
                             )
                           : null
@@ -111,7 +111,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
                         selectedResults.length > 0
                           ? Math.min(
                               ...selectedResults.map((r) =>
-                                typeof r.net === 'number' ? r.net : Infinity
+                                typeof r.net === 'number' ? r.net : Number.POSITIVE_INFINITY
                               )
                             )
                           : null
@@ -119,7 +119,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
                         selectedResults.length > 0
                           ? Math.min(
                               ...selectedResults.map((r) =>
-                                typeof r.putts === 'number' ? r.putts : Infinity
+                                typeof r.putts === 'number' ? r.putts : Number.POSITIVE_INFINITY
                               )
                             )
                           : null

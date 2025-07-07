@@ -21,8 +21,8 @@ export const POST: APIRoute = async ({ request }) => {
     // Use CAPTCHA_THRESHOLD to check the score if available
     if (
       !captchaResponse ||
-      typeof (captchaResponse as any).success !== 'boolean' ||
-      (captchaResponse as any).success !== true ||
+      typeof captchaResponse.success !== 'boolean' ||
+      captchaResponse.success !== true ||
       (typeof captchaResponse.score === 'number' && captchaResponse.score < CAPTCHA_THRESHOLD)
     ) {
       return new Response(JSON.stringify({ error: 'Captcha validation failed.' }), {
@@ -42,7 +42,9 @@ export const POST: APIRoute = async ({ request }) => {
     // Only use your production domain
     const netlifyUrl = 'https://ucsdcasualgolfclub.com/contact/'
 
-    let netlifyResponse, netlifyText, lastError
+    let netlifyResponse: Response | undefined
+    let netlifyText: string | undefined
+    let lastError: unknown
 
     try {
       netlifyResponse = await fetch(netlifyUrl, {
