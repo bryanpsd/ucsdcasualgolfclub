@@ -1,15 +1,12 @@
 ---
+import type { Entry } from 'contentful'
+import { MiniCard } from '~components/Course/MiniCard'
+import { Leaderboard } from '~components/Leaderboard'
+import { RichText } from '~components/RichText'
 import Layout from '~layouts/Layout.astro'
 import { contentfulClient } from '~services/contentful/contentful'
 import type { TypeCourseSkeleton, TypeSimplePageSkeleton } from '~types/contentful'
-
-import { RichText } from '~components/RichText'
-import { MiniCard } from '~components/Course/MiniCard'
-//import { Leaderboard } from '~components/Leaderboard'
-import { Table } from '~components/Table'
-
 import type { TypeTournamentSkeleton } from '~types/contentful/TypeTournament'
-import type { Entry } from 'contentful'
 
 import * as styles from './HomePage.css'
 
@@ -83,10 +80,9 @@ const courseSlug = courseEntries.items.find((course) =>
         ))
       }
       <section class={styles.rightCol}>
-        <Table client:load thead={['Leaderboards']} tbody={[['Coming Soon']]} />
-        <!-- <Leaderboard gross />
+        <Leaderboard gross />
         <Leaderboard net firstFlight />
-        <Leaderboard net secondFlight /> -->
+        <Leaderboard net secondFlight />
       </section>
     </section>
   </div>
