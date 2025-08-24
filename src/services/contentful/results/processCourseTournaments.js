@@ -1,7 +1,7 @@
 import contentful from 'contentful-management'
 import dotenv from 'dotenv'
-import xlsx from 'xlsx'
 import fetch from 'node-fetch'
+import xlsx from 'xlsx'
 
 // Load environment variables from .env file
 dotenv.config()
@@ -155,7 +155,7 @@ async function processTournament(tournament, courseName, course) {
         net: isNaN(net) ? null : net,
         putts: isNaN(putts) ? null : putts,
         closestTo: closestTo, // Ensure closestTo is always an array
-        longDrive: longDrive === 'M' || longDrive === 'F' ? longDrive : '',
+        longDrive: longDrive === 'M' || longDrive === 'F' || longDrive === 'B' ? longDrive : '',
         course: courseName,
         date: formatDateToISO(tournamentDate),
         flight: currentFlight, // Use the currentFlight value

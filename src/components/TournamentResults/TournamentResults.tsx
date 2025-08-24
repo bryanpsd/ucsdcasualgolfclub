@@ -11,7 +11,7 @@ export interface Result {
   net: number | null
   courseHandicap: number | null
   closestTo: string[] | null
-  longDrive: 'F' | 'M' | null
+  longDrive: 'F' | 'M' | 'B' | null
   flight: 'First Flight' | 'Second Flight' | null
   course?: {
     name: string

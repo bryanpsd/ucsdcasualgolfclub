@@ -40,7 +40,7 @@ export interface TypeResultsFields {
       | '9'
     >
   >
-  longDrive?: EntryFieldTypes.Symbol<'F' | 'M'>
+  longDrive?: EntryFieldTypes.Symbol<'F' | 'M' | 'B'>
 }
 
 export type TypeResultsSkeleton = EntrySkeletonType<TypeResultsFields, 'results'>
