@@ -17,7 +17,9 @@ const { courseScorecard } = Astro.props
         <table class={styles.table}>
           <thead class={styles.thead}>
             <tr>
-              <th class={concatClasses([styles.th, styles.boldColumn])}>Hole</th>
+              <th class={concatClasses([styles.th, styles.boldColumn])}>
+                Hole
+              </th>
               <th class={styles.th}>1</th>
               <th class={styles.th}>2</th>
               <th class={styles.th}>3</th>
@@ -38,20 +40,25 @@ const { courseScorecard } = Astro.props
               <th class={styles.th}>17</th>
               <th class={styles.th}>18</th>
               <th class={concatClasses([styles.th, styles.boldColumn])}>In</th>
-              <th class={concatClasses([styles.th, styles.boldColumn])}>Total</th>
+              <th class={concatClasses([styles.th, styles.boldColumn])}>
+                Total
+              </th>
             </tr>
           </thead>
           <tbody>
             {courseScorecard.map(
               (row: {
-                [x: string]: unknown
-                Hole: unknown
-                Out: unknown
-                In: unknown
-                Total: unknown
+                [x: string]: unknown;
+                Hole: unknown;
+                Out: unknown;
+                In: unknown;
+                Total: unknown;
               }) => (
                 <tr class={styles.tr}>
-                  <th scope="row" class={concatClasses([styles.th, styles.boldColumn])}>
+                  <th
+                    scope="row"
+                    class={concatClasses([styles.th, styles.boldColumn])}
+                  >
                     {row.Hole}
                   </th>
                   <td class={styles.td}>{row['1']}</td>
@@ -63,7 +70,9 @@ const { courseScorecard } = Astro.props
                   <td class={styles.td}>{row['7']}</td>
                   <td class={styles.td}>{row['8']}</td>
                   <td class={styles.td}>{row['9']}</td>
-                  <td class={concatClasses([styles.td, styles.boldColumn])}>{row.Out}</td>
+                  <td class={concatClasses([styles.td, styles.boldColumn])}>
+                    {row.Out}
+                  </td>
                   <td class={styles.td}>{row['10']}</td>
                   <td class={styles.td}>{row['11']}</td>
                   <td class={styles.td}>{row['12']}</td>
@@ -73,10 +82,14 @@ const { courseScorecard } = Astro.props
                   <td class={styles.td}>{row['16']}</td>
                   <td class={styles.td}>{row['17']}</td>
                   <td class={styles.td}>{row['18']}</td>
-                  <td class={concatClasses([styles.td, styles.boldColumn])}>{row.In}</td>
-                  <td class={concatClasses([styles.td, styles.boldColumn])}>{row.Total}</td>
+                  <td class={concatClasses([styles.td, styles.boldColumn])}>
+                    {row.In}
+                  </td>
+                  <td class={concatClasses([styles.td, styles.boldColumn])}>
+                    {row.Total}
+                  </td>
                 </tr>
-              )
+              ),
             )}
           </tbody>
         </table>

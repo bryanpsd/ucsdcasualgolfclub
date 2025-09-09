@@ -1,26 +1,37 @@
 ---
-import { server } from '~actions'
 import { Image } from 'astro:assets'
 import logo from '~/assets/brand-logo.png'
-import { MainNav } from './components/MainNav'
-import { menuItems } from './utils/headerItems'
-import { MobileNav } from './components/MobileNav/MobileNav'
+import { server } from '~actions'
 import { Banner } from './components/Banner'
-
+import { MainNav } from './components/MainNav'
+import { MobileNav } from './components/MobileNav/MobileNav'
 import * as styles from './Header.css'
+import { menuItems } from './utils/headerItems'
 
 const banners = await Astro.callAction(server.getHeaderBanners, null)
 
 const { pathname } = Astro.url
 ---
 
-<a class={`sr-only ${styles.mainContentJumpLink}`} href="#main-content">Jump to main content</a>
-{banners.data && <Banner banner={banners.data} currentPath={pathname} client:load />}
+<a class={`sr-only ${styles.mainContentJumpLink}`} href="#main-content"
+  >Jump to main content</a
+>
+{
+  banners.data && (
+    <Banner banner={banners.data} currentPath={pathname} client:load />
+  )
+}
 <header class={styles.headerWrapper}>
   <div class={styles.header}>
     <div class={styles.logoWrapper}>
       <a class={styles.logoLink} href="/">
-        <Image src={logo} alt="UCSD Casual Golf Club" height={30} width={30} aria-hidden="true" />
+        <Image
+          src={logo}
+          alt="UCSD Casual Golf Club"
+          height={30}
+          width={30}
+          aria-hidden="true"
+        />
         UCSD Casual Golf Club
       </a>
     </div>

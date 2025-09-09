@@ -1,26 +1,31 @@
 ---
-import { contentfulClient } from '~services/contentful/contentful'
-
-import type { TypeSimplePageSkeleton } from '~types/contentful'
+import { Hero } from '~components/Hero'
+import { RichText } from '~components/RichText'
 
 import Layout from '~layouts/Layout.astro'
-import { RichText } from '~components/RichText'
-import { Hero } from '~components/Hero'
-
+import { contentfulClient } from '~services/contentful/contentful'
 import * as styles from '~styles/common.css'
+import type { TypeSimplePageSkeleton } from '~types/contentful'
 
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-  content_type: 'simplePage',
-  'fields.slug': 'about',
+	content_type: 'simplePage',
+	'fields.slug': 'about',
 })
 ---
 
-<Layout title="About | UCSD Casual Golf Club" description="Learn about the UCSD Casual Golf Club">
+<Layout
+  title="About | UCSD Casual Golf Club"
+  description="Learn about the UCSD Casual Golf Club"
+>
   <Hero title="About" />
   <div class={styles.subPageWrapper}>
     {
       entries.items.map((item) => (
-        <div>{item.fields.content && <RichText richText={item.fields.content} client:load />}</div>
+        <div>
+          {item.fields.content && (
+            <RichText richText={item.fields.content} client:load />
+          )}
+        </div>
       ))
     }
   </div>

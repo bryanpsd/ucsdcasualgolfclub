@@ -2,23 +2,23 @@ import { style } from '@vanilla-extract/css'
 import { color } from '~styles/designTokens/colors'
 
 export const resultsLink = style({
-  color: color.brand.navy,
+	color: color.brand.navy,
 })
 
 export const intro = style({
-  marginTop: '1rem',
+	marginTop: '1rem',
 })
 
 export const select = style({
-  padding: '0.5rem',
+	padding: '0.5rem',
 })
 
 export const resultTableWrapper = style({
-  marginTop: '1rem',
-  overflowX: 'auto',
+	marginTop: '1rem',
+	overflowX: 'auto',
 })
 
 export const highlighted = style({
-  backgroundColor: color.brand.yellow,
-  fontWeight: 'bold',
+	backgroundColor: color.brand.yellow,
+	fontWeight: 'bold',
 })

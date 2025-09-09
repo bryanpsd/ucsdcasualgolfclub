@@ -6,7 +6,7 @@
 import { globalStyle } from '@vanilla-extract/css'
 
 globalStyle(
-  `html, body, div, span, applet, object, iframe,
+	`html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, img, ins, kbd, q, s, samp,
@@ -19,47 +19,47 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video`,
-  {
-    margin: 0,
-    padding: 0,
-    border: 0,
-    fontSize: '100%',
-    font: 'inherit',
-    verticalAlign: 'baseline',
-  }
+	{
+		margin: 0,
+		padding: 0,
+		border: 0,
+		fontSize: '100%',
+		font: 'inherit',
+		verticalAlign: 'baseline',
+	}
 )
 
 globalStyle(
-  `article, aside, details, figcaption, figure, 
+	`article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section`,
-  {
-    display: 'block',
-  }
+	{
+		display: 'block',
+	}
 )
 
 globalStyle('body', {
-  lineHeight: 1,
+	lineHeight: 1,
 })
 
 globalStyle('ol, ul', {
-  listStyle: 'none',
+	listStyle: 'none',
 })
 
 globalStyle('blockquote, q', {
-  quotes: 'none',
+	quotes: 'none',
 })
 
 globalStyle(
-  `blockquote:before, blockquote:after,
+	`blockquote:before, blockquote:after,
 q:before, q:after`,
-  {
-    content: ["''", 'none'],
-  }
+	{
+		content: ["''", 'none'],
+	}
 )
 
 globalStyle('table', {
-  borderCollapse: 'collapse',
-  borderSpacing: 0,
+	borderCollapse: 'collapse',
+	borderSpacing: 0,
 })
 
 /** Unchanged normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css
@@ -75,8 +75,8 @@ globalStyle('table', {
  */
 
 globalStyle('html', {
-  lineHeight: 1.15 /* 1 */,
-  WebkitTextSizeAdjust: '100%' /* 2 */,
+	lineHeight: 1.15 /* 1 */,
+	WebkitTextSizeAdjust: '100%' /* 2 */,
 })
 
 /* Sections
@@ -87,7 +87,7 @@ globalStyle('html', {
  */
 
 globalStyle('body', {
-  margin: 0,
+	margin: 0,
 })
 
 /**
@@ -95,7 +95,7 @@ globalStyle('body', {
  */
 
 globalStyle('main', {
-  display: 'block',
+	display: 'block',
 })
 
 /* Grouping content
@@ -107,9 +107,9 @@ globalStyle('main', {
  */
 
 globalStyle('hr', {
-  boxSizing: 'content-box' /* 1 */,
-  height: 0 /* 1 */,
-  overflow: 'visible' /* 2 */,
+	boxSizing: 'content-box' /* 1 */,
+	height: 0 /* 1 */,
+	overflow: 'visible' /* 2 */,
 })
 
 /**
@@ -118,8 +118,8 @@ globalStyle('hr', {
  */
 
 globalStyle('pre', {
-  fontFamily: 'monospace, monospace' /* 1 */,
-  fontSize: '1em' /* 2 */,
+	fontFamily: 'monospace, monospace' /* 1 */,
+	fontSize: '1em' /* 2 */,
 })
 
 /* Text-level semantics
@@ -130,7 +130,7 @@ globalStyle('pre', {
  */
 
 globalStyle('a', {
-  backgroundColor: 'transparent',
+	backgroundColor: 'transparent',
 })
 
 /**
@@ -139,8 +139,8 @@ globalStyle('a', {
  */
 
 globalStyle('abbr[title]', {
-  borderBottom: 'none' /* 1 */,
-  textDecoration: ['underline', 'underline dotted'] /* 2 */,
+	borderBottom: 'none' /* 1 */,
+	textDecoration: ['underline', 'underline dotted'] /* 2 */,
 })
 
 /**
@@ -148,7 +148,7 @@ globalStyle('abbr[title]', {
  */
 
 globalStyle('b, strong', {
-  fontWeight: 'bolder',
+	fontWeight: 'bolder',
 })
 
 /**
@@ -157,8 +157,8 @@ globalStyle('b, strong', {
  */
 
 globalStyle('code, kbd, samp', {
-  fontFamily: 'monospace, monospace' /* 1 */,
-  fontSize: '1em' /* 2 */,
+	fontFamily: 'monospace, monospace' /* 1 */,
+	fontSize: '1em' /* 2 */,
 })
 
 /**
@@ -166,7 +166,7 @@ globalStyle('code, kbd, samp', {
  */
 
 globalStyle('small', {
-  fontSize: '80%',
+	fontSize: '80%',
 })
 
 /**
@@ -175,18 +175,18 @@ globalStyle('small', {
  */
 
 globalStyle('sub, sup', {
-  fontSize: '75%',
-  lineHeight: 0,
-  position: 'relative',
-  verticalAlign: 'baseline',
+	fontSize: '75%',
+	lineHeight: 0,
+	position: 'relative',
+	verticalAlign: 'baseline',
 })
 
 globalStyle('sub', {
-  bottom: '-0.25em',
+	bottom: '-0.25em',
 })
 
 globalStyle('sup', {
-  top: '-0.5em',
+	top: '-0.5em',
 })
 
 /* Embedded content
@@ -197,7 +197,7 @@ globalStyle('sup', {
  */
 
 globalStyle('img', {
-  borderStyle: 'none',
+	borderStyle: 'none',
 })
 
 /* Forms
@@ -209,11 +209,11 @@ globalStyle('img', {
  */
 
 globalStyle('button, input, optgroup, select, textarea', {
-  fontFamily: 'inherit' /* 1 */,
-  fontSize: '100%' /* 1 */,
-  lineHeight: 1.15 /* 1 */,
-  margin: 0 /* 2 */,
-  color: 'inherit',
+	fontFamily: 'inherit' /* 1 */,
+	fontSize: '100%' /* 1 */,
+	lineHeight: 1.15 /* 1 */,
+	margin: 0 /* 2 */,
+	color: 'inherit',
 })
 
 /**
@@ -222,7 +222,7 @@ globalStyle('button, input, optgroup, select, textarea', {
  */
 
 globalStyle('button, input', {
-  overflow: 'visible' /* 1 */,
+	overflow: 'visible' /* 1 */,
 })
 
 /**
@@ -231,7 +231,7 @@ globalStyle('button, input', {
  */
 
 globalStyle('button, select', {
-  textTransform: 'none' /* 1 */,
+	textTransform: 'none' /* 1 */,
 })
 
 /**
@@ -239,7 +239,7 @@ globalStyle('button, select', {
  */
 
 globalStyle('button, [type="button"], [type="reset"], [type="submit"]', {
-  WebkitAppearance: 'button',
+	WebkitAppearance: 'button',
 })
 
 /**
@@ -247,14 +247,14 @@ globalStyle('button, [type="button"], [type="reset"], [type="submit"]', {
  */
 
 globalStyle(
-  `button::-moz-focus-inner, 
+	`button::-moz-focus-inner, 
 [type="button"]::-moz-focus-inner, 
 [type="reset"]::-moz-focus-inner, 
 [type="submit"]::-moz-focus-inner`,
-  {
-    borderStyle: 'none',
-    padding: 0,
-  }
+	{
+		borderStyle: 'none',
+		padding: 0,
+	}
 )
 
 /**
@@ -262,7 +262,7 @@ globalStyle(
  */
 
 globalStyle('fieldset', {
-  padding: '0.35em 0.75em 0.625em',
+	padding: '0.35em 0.75em 0.625em',
 })
 
 /**
@@ -273,12 +273,12 @@ globalStyle('fieldset', {
  */
 
 globalStyle('legend', {
-  boxSizing: 'border-box' /* 1 */,
-  color: 'inherit' /* 2 */,
-  display: 'table' /* 1 */,
-  maxWidth: '100%' /* 1 */,
-  padding: 0 /* 3 */,
-  whiteSpace: 'normal' /* 1 */,
+	boxSizing: 'border-box' /* 1 */,
+	color: 'inherit' /* 2 */,
+	display: 'table' /* 1 */,
+	maxWidth: '100%' /* 1 */,
+	padding: 0 /* 3 */,
+	whiteSpace: 'normal' /* 1 */,
 })
 
 /**
@@ -286,7 +286,7 @@ globalStyle('legend', {
  */
 
 globalStyle('progress', {
-  verticalAlign: 'baseline',
+	verticalAlign: 'baseline',
 })
 
 /**
@@ -294,7 +294,7 @@ globalStyle('progress', {
  */
 
 globalStyle('textarea', {
-  overflow: 'auto',
+	overflow: 'auto',
 })
 
 /**
@@ -303,8 +303,8 @@ globalStyle('textarea', {
  */
 
 globalStyle('[type="checkbox"], [type="radio"]', {
-  boxSizing: 'border-box' /* 1 */,
-  padding: 0 /* 2 */,
+	boxSizing: 'border-box' /* 1 */,
+	padding: 0 /* 2 */,
 })
 
 /**
@@ -312,11 +312,11 @@ globalStyle('[type="checkbox"], [type="radio"]', {
  */
 
 globalStyle(
-  `[type="number"]::-webkit-inner-spin-button,
+	`[type="number"]::-webkit-inner-spin-button,
 [type="number"]::-webkit-outer-spin-button`,
-  {
-    height: 'auto',
-  }
+	{
+		height: 'auto',
+	}
 )
 
 /**
@@ -325,8 +325,8 @@ globalStyle(
  */
 
 globalStyle('[type="search"]', {
-  WebkitAppearance: 'textfield' /* 1 */,
-  outlineOffset: '-2px' /* 2 */,
+	WebkitAppearance: 'textfield' /* 1 */,
+	outlineOffset: '-2px' /* 2 */,
 })
 
 /**
@@ -334,7 +334,7 @@ globalStyle('[type="search"]', {
  */
 
 globalStyle('[type="search"]::-webkit-search-decoration', {
-  WebkitAppearance: 'none',
+	WebkitAppearance: 'none',
 })
 
 /**
@@ -343,8 +343,8 @@ globalStyle('[type="search"]::-webkit-search-decoration', {
  */
 
 globalStyle('::-webkit-file-upload-button', {
-  WebkitAppearance: 'button' /* 1 */,
-  font: 'inherit' /* 2 */,
+	WebkitAppearance: 'button' /* 1 */,
+	font: 'inherit' /* 2 */,
 })
 
 /* Interactive
@@ -355,7 +355,7 @@ globalStyle('::-webkit-file-upload-button', {
  */
 
 globalStyle('details', {
-  display: 'block',
+	display: 'block',
 })
 
 /*
@@ -363,7 +363,7 @@ globalStyle('details', {
  */
 
 globalStyle('summary', {
-  display: 'list-item',
+	display: 'list-item',
 })
 
 /* Misc
@@ -374,7 +374,7 @@ globalStyle('summary', {
  */
 
 globalStyle('template', {
-  display: 'none',
+	display: 'none',
 })
 
 /**
@@ -382,5 +382,5 @@ globalStyle('template', {
  */
 
 globalStyle('[hidden]', {
-  display: 'none',
+	display: 'none',
 })

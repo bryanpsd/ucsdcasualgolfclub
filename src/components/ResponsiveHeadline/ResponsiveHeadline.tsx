@@ -5,25 +5,29 @@ import { responsiveHeadline } from './ResponsiveHeadline.css'
 
 const defaultElement: ElementType = 'p'
 
-type HeadlineProps<C extends ElementType = typeof defaultElement> = PolymorphicComponentProp<
-  C,
-  {
-    size?: 1 | 2 | 3 | 4
-  }
->
+type HeadlineProps<C extends ElementType = typeof defaultElement> =
+	PolymorphicComponentProp<
+		C,
+		{
+			size?: 1 | 2 | 3 | 4
+		}
+	>
 
 export const ResponsiveHeadline = <C extends ElementType>({
-  children,
-  as: asComponent,
-  size,
-  className,
-  ...rest
+	children,
+	as: asComponent,
+	size,
+	className,
+	...rest
 }: HeadlineProps<C>) => {
-  const Element = asComponent || defaultElement
+	const Element = asComponent || defaultElement
 
-  return (
-    <Element className={concatClasses([responsiveHeadline({ size }), className])} {...rest}>
-      {children}
-    </Element>
-  )
+	return (
+		<Element
+			className={concatClasses([responsiveHeadline({ size }), className])}
+			{...rest}
+		>
+			{children}
+		</Element>
+	)
 }

@@ -5,14 +5,14 @@ import type { APIRoute } from 'astro'
  * so we aren't making as many requests directly to Contentful.
  */
 export const GET: APIRoute = async ({ url }) => {
-  const contentfulUrl = url.searchParams.get('url')
+	const contentfulUrl = url.searchParams.get('url')
 
-  if (!contentfulUrl) {
-    return new Response(null, { status: 404 })
-  }
+	if (!contentfulUrl) {
+		return new Response(null, { status: 404 })
+	}
 
-  // Need to add `https:` because Contentful uses protocol-relative URLs
-  // https://www.paulirish.com/2010/the-protocol-relative-url/
-  // Use globalThis.fetch for Node.js compatibility
-  return globalThis.fetch('https:' + contentfulUrl)
+	// Need to add `https:` because Contentful uses protocol-relative URLs
+	// https://www.paulirish.com/2010/the-protocol-relative-url/
+	// Use globalThis.fetch for Node.js compatibility
+	return globalThis.fetch(`https:${contentfulUrl}`)
 }
