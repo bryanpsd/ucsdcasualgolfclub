@@ -11,10 +11,10 @@ import type {
 } from '~types/PolymorphicComponent'
 import { concatClasses } from '~utils/concatClasses'
 import {
+	type ButtonVariants,
 	button,
 	buttonIcon,
 	buttonLabel,
-	type ButtonVariants,
 } from './Button.css'
 
 export type ButtonProps<C extends ElementType = 'button'> =

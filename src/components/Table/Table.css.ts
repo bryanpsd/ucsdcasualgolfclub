@@ -1,7 +1,7 @@
 import { style } from '@vanilla-extract/css'
-import { tokens } from '~styles/designTokens.css'
 import { color } from '~styles/designTokens/colors'
 import { fontSize } from '~styles/designTokens/typography'
+import { tokens } from '~styles/designTokens.css'
 
 export const table = style([
 	tokens({

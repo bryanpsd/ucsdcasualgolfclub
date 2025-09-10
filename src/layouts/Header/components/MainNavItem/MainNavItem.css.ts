@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
-import { breakpointQuery, tokens } from '~styles/designTokens.css'
 import { color } from '~styles/designTokens/colors'
+import { breakpointQuery, tokens } from '~styles/designTokens.css'
 
 export const mainNavItem = style([
 	tokens({

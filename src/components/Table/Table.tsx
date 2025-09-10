@@ -42,7 +42,7 @@ export const Table: React.FC<Props> = ({
 			<tbody>
 				{tbody.map((row, rowIndex) => {
 					// Always guarantee unique row and cell keys
-					let rowKey: string | undefined = undefined
+					let rowKey: string | undefined
 					const firstCell = row[0]
 					if (
 						typeof firstCell === 'object' &&

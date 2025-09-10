@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
-import { tokens } from '~styles/designTokens.css'
 import { color } from '~styles/designTokens/colors'
+import { tokens } from '~styles/designTokens.css'
 
 export const heroWrapper = style([
 	tokens({
