@@ -4,7 +4,7 @@ import type {
 	EntryFieldTypes,
 	EntrySkeletonType,
 	LocaleCode,
-} from 'contentful'
+} from "contentful"
 
 export interface TypeSimplePageFields {
 	title?: EntryFieldTypes.Symbol
@@ -17,7 +17,7 @@ export interface TypeSimplePageFields {
 
 export type TypeSimplePageSkeleton = EntrySkeletonType<
 	TypeSimplePageFields,
-	'simplePage'
+	"simplePage"
 >
 export type TypeSimplePage<
 	Modifiers extends ChainModifiers,
@@ -30,5 +30,5 @@ export function isTypeSimplePage<
 >(
 	entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeSimplePage<Modifiers, Locales> {
-	return entry.sys.contentType.sys.id === 'simplePage'
+	return entry.sys.contentType.sys.id === "simplePage"
 }

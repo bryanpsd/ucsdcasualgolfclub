@@ -1,12 +1,12 @@
-import { format } from 'date-fns'
-import { Button } from '~components/Button/Button'
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
-import { Typography } from '~components/Typography'
-import Clock from '~icons/clock.svg?react'
-import type { TypeCourseProps } from '~types/contentful'
-import { CourseDetails } from '../CourseDetails'
+import { format } from "date-fns"
+import { Button } from "~components/Button/Button"
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
+import { Typography } from "~components/Typography"
+import Clock from "~icons/clock.svg?react"
+import type { TypeCourseProps } from "~types/contentful"
+import { CourseDetails } from "../CourseDetails"
 
-import * as styles from './CourseCard.css'
+import * as styles from "./CourseCard.css"
 
 interface CourseCardProps extends TypeCourseProps {
 	hideCourseInfo?: boolean
@@ -48,23 +48,23 @@ export const CourseCard = (props: CourseCardProps) => {
 				<div
 					className={styles.dateWrapper({
 						variant: isSpecialEvent
-							? 'special'
+							? "special"
 							: isWednesday
-								? 'secondary'
-								: 'default',
+								? "secondary"
+								: "default",
 					})}
 				>
-					<Typography color={isSpecialEvent ? 'primary' : 'inverse'}>
-						{format(date, 'MMM')}
+					<Typography color={isSpecialEvent ? "primary" : "inverse"}>
+						{format(date, "MMM")}
 					</Typography>
 					<Typography
-						color={isSpecialEvent ? 'primary' : 'inverse'}
+						color={isSpecialEvent ? "primary" : "inverse"}
 						variant="headlineLg"
 					>
-						{format(date, 'd')}
+						{format(date, "d")}
 					</Typography>
-					<Typography color={isSpecialEvent ? 'primary' : 'inverse'}>
-						{format(date, 'E')}
+					<Typography color={isSpecialEvent ? "primary" : "inverse"}>
+						{format(date, "E")}
 					</Typography>
 				</div>
 			)}
@@ -125,7 +125,7 @@ export const CourseCard = (props: CourseCardProps) => {
 					</div>
 					<div className={styles.courseCardTimeType}>
 						<Clock height={30} width={30} aria-hidden="true" />
-						{date && format(date, 'h:mmaaa')}{' '}
+						{date && format(date, "h:mmaaa")}{" "}
 						{type && (
 							<Typography color="text" variant="bodyLg">
 								{type}
@@ -136,7 +136,7 @@ export const CourseCard = (props: CourseCardProps) => {
 						inclusions={inclusions}
 						isMiniCard={false}
 						prices={prices}
-						players={players || ''}
+						players={players || ""}
 						tees={tees}
 					/>
 				</div>
@@ -150,7 +150,7 @@ export const CourseCard = (props: CourseCardProps) => {
 							color="primary"
 							size="small"
 							variant="contained"
-							href={`/tournaments/${format(date, 'yyyy')}/${slug}`}
+							href={`/tournaments/${format(date, "yyyy")}/${slug}`}
 						>
 							Details
 						</Button>

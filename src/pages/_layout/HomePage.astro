@@ -1,27 +1,27 @@
 ---
-import type { Entry } from 'contentful'
-import { MiniCard } from '~components/Course/MiniCard'
-import { Leaderboard } from '~components/Leaderboard'
-import { RichText } from '~components/RichText'
-import Layout from '~layouts/Layout.astro'
-import { contentfulClient } from '~services/contentful/contentful'
+import type { Entry } from "contentful"
+import { MiniCard } from "~components/Course/MiniCard"
+import { Leaderboard } from "~components/Leaderboard"
+import { RichText } from "~components/RichText"
+import Layout from "~layouts/Layout.astro"
+import { contentfulClient } from "~services/contentful/contentful"
 import type {
 	TypeCourseSkeleton,
 	TypeSimplePageSkeleton,
-} from '~types/contentful'
-import type { TypeTournamentSkeleton } from '~types/contentful/TypeTournament'
+} from "~types/contentful"
+import type { TypeTournamentSkeleton } from "~types/contentful/TypeTournament"
 
-import * as styles from './HomePage.css'
+import * as styles from "./HomePage.css"
 
 // Fetch simplePage entries
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-	content_type: 'simplePage',
-	'fields.title': 'Home',
+	content_type: "simplePage",
+	"fields.title": "Home",
 })
 
 // Fetch course and tournament data
 const courseEntries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-	content_type: 'course',
+	content_type: "course",
 })
 
 const today = new Date()
@@ -35,7 +35,7 @@ const upcomingTournament = courseEntries.items
 			tournament
 		): tournament is Entry<TypeTournamentSkeleton, undefined, string> =>
 			tournament &&
-			'fields' in tournament &&
+			"fields" in tournament &&
 			tournament.fields.date &&
 			new Date(tournament.fields.date) >= today // Compare with normalized date
 	)
@@ -45,16 +45,16 @@ const upcomingTournament = courseEntries.items
 	)[0] // Get the earliest upcoming tournament
 
 // Extract relevant data
-const tournamentDate = upcomingTournament?.fields.date ?? 'TBD'
+const tournamentDate = upcomingTournament?.fields.date ?? "TBD"
 const tournamentPrices = upcomingTournament?.fields.prices ?? []
-const tournamentPlayers = upcomingTournament?.fields.players ?? 'N/A'
+const tournamentPlayers = upcomingTournament?.fields.players ?? "N/A"
 const tournamentInclusions = upcomingTournament?.fields.inclusions ?? []
 const courseName =
 	courseEntries.items.find((course) =>
 		course.fields.tournaments?.some(
 			(tournament) => tournament === upcomingTournament
 		)
-	)?.fields.course ?? 'Unknown Course'
+	)?.fields.course ?? "Unknown Course"
 
 const courseSlug = courseEntries.items.find((course) =>
 	course.fields.tournaments?.some(

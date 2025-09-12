@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react'
-import * as styles from './Table.css'
+import type { ReactNode } from "react"
+import * as styles from "./Table.css"
 
 type TableCell =
 	| string
@@ -29,7 +29,7 @@ export const Table: React.FC<Props> = ({
 					<tr>
 						{thead.map((header) => (
 							<th
-								key={typeof header === 'string' ? header : undefined}
+								key={typeof header === "string" ? header : undefined}
 								colSpan={colSpan}
 								className={styles.th}
 							>
@@ -45,19 +45,19 @@ export const Table: React.FC<Props> = ({
 					let rowKey: string | undefined
 					const firstCell = row[0]
 					if (
-						typeof firstCell === 'object' &&
+						typeof firstCell === "object" &&
 						firstCell &&
-						'key' in firstCell &&
-						typeof firstCell.key === 'string'
+						"key" in firstCell &&
+						typeof firstCell.key === "string"
 					) {
 						rowKey = String(firstCell.key)
-					} else if (typeof firstCell === 'string') {
+					} else if (typeof firstCell === "string") {
 						rowKey = `${firstCell}`
 					} else if (
 						firstCell &&
-						typeof firstCell === 'object' &&
-						'value' in firstCell &&
-						typeof firstCell.value === 'string'
+						typeof firstCell === "object" &&
+						"value" in firstCell &&
+						typeof firstCell.value === "string"
 					) {
 						rowKey = `${firstCell.value}`
 					}
@@ -76,19 +76,19 @@ export const Table: React.FC<Props> = ({
 											scope="row"
 											className={`${styles.th} ${
 												cell &&
-												typeof cell === 'object' &&
-												'className' in cell &&
+												typeof cell === "object" &&
+												"className" in cell &&
 												cell.className
 													? cell.className
-													: ''
+													: ""
 											}`}
-											{...(typeof cell === 'string' && cell.includes('<a')
+											{...(typeof cell === "string" && cell.includes("<a")
 												? { dangerouslySetInnerHTML: { __html: cell } }
 												: {})}
 										>
-											{cell && typeof cell === 'object' && 'value' in cell
+											{cell && typeof cell === "object" && "value" in cell
 												? cell.value
-												: typeof cell === 'string' && !cell.includes('<a')
+												: typeof cell === "string" && !cell.includes("<a")
 													? cell
 													: null}
 										</th>
@@ -99,17 +99,17 @@ export const Table: React.FC<Props> = ({
 											key={cellKey}
 											className={`${styles.td} ${
 												cell &&
-												typeof cell === 'object' &&
-												'className' in cell &&
+												typeof cell === "object" &&
+												"className" in cell &&
 												cell.className
 													? cell.className
-													: ''
+													: ""
 											}`}
-											{...(typeof cell === 'string' && cell.includes('<a')
+											{...(typeof cell === "string" && cell.includes("<a")
 												? { dangerouslySetInnerHTML: { __html: cell } }
 												: {})}
 										>
-											{cell && typeof cell === 'object' && 'value' in cell
+											{cell && typeof cell === "object" && "value" in cell
 												? cell.value
 												: cell}
 										</td>
@@ -125,7 +125,7 @@ export const Table: React.FC<Props> = ({
 					<tr>
 						{tfoot.map((footer) => (
 							<th
-								key={typeof footer === 'string' ? footer : undefined}
+								key={typeof footer === "string" ? footer : undefined}
 								colSpan={colSpan}
 								className={styles.th}
 							>

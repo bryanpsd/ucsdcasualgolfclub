@@ -4,18 +4,18 @@
  * It's purpose is to manage global layout props (i.e. page title), global data providers, as well
  * as global style imports.
  */
-import { GoogleAnalytics } from '~layouts/GoogleAnalytics'
+import { GoogleAnalytics } from "~layouts/GoogleAnalytics"
 
-import '~/styles/global.css'
-import '~/styles/reset.css'
-import '~/styles/theme.css'
+import "~/styles/global.css"
+import "~/styles/reset.css"
+import "~/styles/theme.css"
 
 export interface Props {
 	title: string
 	description?: string
 }
 
-const { title = 'UCSD Casual Golf Club', description = '' } = Astro.props
+const { title = "UCSD Casual Golf Club", description = "" } = Astro.props
 ---
 
 <head>

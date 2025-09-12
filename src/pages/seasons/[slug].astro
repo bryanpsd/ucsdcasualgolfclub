@@ -1,13 +1,13 @@
 ---
 export const prerender = true
 
-import { CourseCard } from '~components/Course/CourseCard'
-import { Hero } from '~components/Hero'
-import Layout from '~layouts/Layout.astro'
-import { contentfulClient } from '~services/contentful/contentful'
-import * as styles from '~styles/common.css'
-import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse'
-import SeasonRecap from './_components/SeasonRecap.astro'
+import { CourseCard } from "~components/Course/CourseCard"
+import { Hero } from "~components/Hero"
+import Layout from "~layouts/Layout.astro"
+import { contentfulClient } from "~services/contentful/contentful"
+import * as styles from "~styles/common.css"
+import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse"
+import SeasonRecap from "./_components/SeasonRecap.astro"
 
 export function getStaticPaths() {
 	const getYear = new Date().getFullYear() - 1
@@ -23,7 +23,7 @@ export function getStaticPaths() {
 }
 
 const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-	content_type: 'course',
+	content_type: "course",
 })
 
 const { slug } = Astro.params
@@ -36,7 +36,7 @@ const tournaments = entries.items
 	.flatMap((item) => {
 		return item.fields.tournaments
 			?.filter((tournament) => {
-				if ('fields' in tournament && tournament.fields.date) {
+				if ("fields" in tournament && tournament.fields.date) {
 					const tournamentYear = new Date(tournament.fields.date).getFullYear()
 					return (
 						tournamentYear.toString() === slug ||
@@ -48,14 +48,14 @@ const tournaments = entries.items
 			.map((tournament) => ({
 				tournament: {
 					fields: {
-						...('fields' in tournament ? tournament.fields : {}),
-						date: 'fields' in tournament ? tournament.fields.date : undefined,
+						...("fields" in tournament ? tournament.fields : {}),
+						date: "fields" in tournament ? tournament.fields.date : undefined,
 						tournamentNotes:
-							'fields' in tournament
+							"fields" in tournament
 								? tournament.fields.tournamentNotes
 								: undefined,
 						clubChampionship:
-							'fields' in tournament
+							"fields" in tournament
 								? (tournament.fields.clubChampionship ?? false)
 								: false,
 					},
@@ -69,15 +69,15 @@ const tournaments = entries.items
 		(a, b) =>
 			new Date(
 				a?.tournament &&
-					'fields' in a.tournament &&
-					typeof a.tournament.fields.date === 'string'
+					"fields" in a.tournament &&
+					typeof a.tournament.fields.date === "string"
 					? new Date(a.tournament.fields.date).getTime()
 					: 0
 			).getTime() -
 			new Date(
 				b?.tournament &&
-					'fields' in b.tournament &&
-					typeof b.tournament.fields.date === 'string'
+					"fields" in b.tournament &&
+					typeof b.tournament.fields.date === "string"
 					? new Date(b.tournament.fields.date).getTime()
 					: 0
 			).getTime()
@@ -87,7 +87,7 @@ const tournaments = entries.items
 const currentYearTournaments = tournaments.filter(
 	(t) =>
 		t?.tournament &&
-		'fields' in t.tournament &&
+		"fields" in t.tournament &&
 		t.tournament.fields.date &&
 		!Number.isNaN(new Date(t.tournament.fields.date).getTime()) &&
 		new Date(t.tournament.fields.date).getFullYear().toString() === slug
@@ -96,7 +96,7 @@ const currentYearTournaments = tournaments.filter(
 const previousYearTournaments = tournaments.filter(
 	(t) =>
 		t?.tournament &&
-		'fields' in t.tournament &&
+		"fields" in t.tournament &&
 		t.tournament.fields.date &&
 		!Number.isNaN(new Date(t.tournament.fields.date).getTime()) &&
 		new Date(t.tournament.fields.date).getFullYear().toString() === previousYear

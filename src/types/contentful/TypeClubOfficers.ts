@@ -4,8 +4,8 @@ import type {
 	EntryFieldTypes,
 	EntrySkeletonType,
 	LocaleCode,
-} from 'contentful'
-import type { TypeLeadersSkeleton } from './TypeLeaders'
+} from "contentful"
+import type { TypeLeadersSkeleton } from "./TypeLeaders"
 
 export interface TypeClubOfficersFields {
 	role?: EntryFieldTypes.Symbol
@@ -14,7 +14,7 @@ export interface TypeClubOfficersFields {
 
 export type TypeClubOfficersSkeleton = EntrySkeletonType<
 	TypeClubOfficersFields,
-	'clubOfficers'
+	"clubOfficers"
 >
 export type TypeClubOfficers<
 	Modifiers extends ChainModifiers,
@@ -27,5 +27,5 @@ export function isTypeClubOfficers<
 >(
 	entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeClubOfficers<Modifiers, Locales> {
-	return entry.sys.contentType.sys.id === 'clubOfficers'
+	return entry.sys.contentType.sys.id === "clubOfficers"
 }

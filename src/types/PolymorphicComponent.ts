@@ -3,10 +3,10 @@ import type {
 	ComponentPropsWithRef,
 	ElementType,
 	PropsWithChildren,
-} from 'react'
+} from "react"
 
 export type PolymorphicRef<C extends ElementType> =
-	ComponentPropsWithRef<C>['ref']
+	ComponentPropsWithRef<C>["ref"]
 
 type AsProp<C extends ElementType> = {
 	as?: C

@@ -1,12 +1,12 @@
-import { type ElementType, forwardRef } from 'react'
+import { type ElementType, forwardRef } from "react"
 import type {
 	PolymorphicComponentPropWithRef,
 	PolymorphicRef,
-} from '~types/PolymorphicComponent'
-import { concatClasses } from '~utils/concatClasses'
-import { type SvgIconVariants, svgIcon } from './SvgIcon.css'
+} from "~types/PolymorphicComponent"
+import { concatClasses } from "~utils/concatClasses"
+import { type SvgIconVariants, svgIcon } from "./SvgIcon.css"
 
-export type SvgIconProps<C extends ElementType = 'svg'> =
+export type SvgIconProps<C extends ElementType = "svg"> =
 	PolymorphicComponentPropWithRef<
 		C,
 		SvgIconVariants & {
@@ -28,19 +28,19 @@ export const SvgIcon = forwardRef(
 			children,
 			classes,
 			className,
-			color = 'inherit',
+			color = "inherit",
 			size,
 			titleAccess,
-			viewBox = '0 0 24 24',
+			viewBox = "0 0 24 24",
 			...rest
 		}: SvgIconProps<C>,
 		ref: PolymorphicRef<C>
 	) => {
 		if (rest.component) {
-			console.error('`component` prop is deprecated. Use `as` instead')
+			console.error("`component` prop is deprecated. Use `as` instead")
 		}
 
-		const Component = asComponent || 'svg'
+		const Component = asComponent || "svg"
 
 		return (
 			<Component
@@ -52,7 +52,7 @@ export const SvgIcon = forwardRef(
 				focusable="false"
 				viewBox={viewBox}
 				aria-hidden={titleAccess ? undefined : true}
-				role={titleAccess ? 'img' : undefined}
+				role={titleAccess ? "img" : undefined}
 				ref={ref}
 				{...rest}
 			>

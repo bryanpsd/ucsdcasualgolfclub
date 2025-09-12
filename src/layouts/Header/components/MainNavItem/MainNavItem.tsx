@@ -1,14 +1,14 @@
-import { type ElementType, forwardRef, type ReactNode } from 'react'
-import { Typography } from '~components/Typography'
-import Caret from '~icons/caretDown.svg?react'
+import { type ElementType, forwardRef, type ReactNode } from "react"
+import { Typography } from "~components/Typography"
+import Caret from "~icons/caretDown.svg?react"
 import type {
 	PolymorphicComponentPropWithRef,
 	PolymorphicRef,
-} from '~types/PolymorphicComponent'
+} from "~types/PolymorphicComponent"
 
-import { concatClasses } from '~utils/concatClasses'
+import { concatClasses } from "~utils/concatClasses"
 
-import * as styles from './MainNavItem.css'
+import * as styles from "./MainNavItem.css"
 
 type MainNavItemProps<Element extends ElementType> =
 	PolymorphicComponentPropWithRef<
@@ -36,7 +36,7 @@ export const MainNavItem = forwardRef(function MainNavItem<
 	}: MainNavItemProps<C>,
 	ref: PolymorphicRef<C>
 ) {
-	const Component = asComponent || 'button'
+	const Component = asComponent || "button"
 	return (
 		<Component
 			ref={ref}
@@ -49,7 +49,7 @@ export const MainNavItem = forwardRef(function MainNavItem<
 				fontWeight={500}
 				color="inherit"
 				variant="inherit"
-				className={hideLabelBelowDesktop ? styles.hideBelowDesktop : ''}
+				className={hideLabelBelowDesktop ? styles.hideBelowDesktop : ""}
 			>
 				{label}
 			</Typography>

@@ -1,9 +1,9 @@
-import * as NavMenu from '@radix-ui/react-navigation-menu'
+import * as NavMenu from "@radix-ui/react-navigation-menu"
 
-import { type PointerEventHandler, useState } from 'react'
-import { MainNavItem } from '../MainNavItem/MainNavItem'
+import { type PointerEventHandler, useState } from "react"
+import { MainNavItem } from "../MainNavItem/MainNavItem"
 
-import * as styles from './MainNav.css'
+import * as styles from "./MainNav.css"
 
 type NavigationLink = {
 	label: string
@@ -25,7 +25,7 @@ const disableHoverInteraction: PointerEventHandler<HTMLElement> = (e) => {
 }
 
 export const MainNav = ({ items, currentPath }: MainNavProps) => {
-	const [active, setActive] = useState('')
+	const [active, setActive] = useState("")
 	return (
 		<NavMenu.Root
 			className={styles.mainNavRoot}
@@ -35,7 +35,7 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
 			<NavMenu.List className={styles.mainNavList}>
 				{items.menuItems.map((item) => (
 					<NavMenu.Item className={styles.mainNavItem} key={item.label}>
-						{'href' in item ? (
+						{"href" in item ? (
 							<NavMenu.Link
 								asChild
 								active={!!(item.href && currentPath.startsWith(item.href))}
@@ -55,9 +55,9 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
 									onPointerLeave={disableHoverInteraction}
 									asChild
 									style={{
-										textDecoration: currentPath.startsWith('/seasons')
-											? 'underline'
-											: 'none',
+										textDecoration: currentPath.startsWith("/seasons")
+											? "underline"
+											: "none",
 									}}
 								>
 									<MainNavItem label={item.label} />

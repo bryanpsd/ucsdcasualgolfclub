@@ -1,13 +1,13 @@
-import { defineAction } from 'astro:actions'
-import { contentfulClient } from '../services/contentful/contentful'
-import type { TypeResultsSkeleton } from '../types/contentful/TypeResults'
+import { defineAction } from "astro:actions"
+import { contentfulClient } from "../services/contentful/contentful"
+import type { TypeResultsSkeleton } from "../types/contentful/TypeResults"
 
 export const getResults = defineAction({
 	handler: async () => {
 		const headerResultsData =
 			await contentfulClient.withoutUnresolvableLinks.getEntries<TypeResultsSkeleton>(
 				{
-					content_type: 'results',
+					content_type: "results",
 				}
 			)
 

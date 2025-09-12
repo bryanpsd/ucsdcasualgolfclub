@@ -1,4 +1,4 @@
-import type { ComponentPropsWithRef, CSSProperties } from 'react'
+import type { ComponentPropsWithRef, CSSProperties } from "react"
 
 export interface ContentfulImageProps {
 	id?: string
@@ -9,17 +9,17 @@ export interface ContentfulImageProps {
 	/** A textual replacement for the image. Required for accessibility. */
 	alt: string
 	/** Props that will be passed to the underlying "img" element. */
-	imgProps?: Omit<ComponentPropsWithRef<'img'>, 'src' | 'alt'>
+	imgProps?: Omit<ComponentPropsWithRef<"img">, "src" | "alt">
 }
 
-const isContentfulSrc = (src = '') => src.startsWith('//images.ctfassets.net')
+const isContentfulSrc = (src = "") => src.startsWith("//images.ctfassets.net")
 
-const getProxySrc = (src = '', imgFormat = '') => {
+const getProxySrc = (src = "", imgFormat = "") => {
 	if (!src) {
-		return ''
+		return ""
 	}
 
-	const format = imgFormat ? imgFormat : src.split('.').pop()
+	const format = imgFormat ? imgFormat : src.split(".").pop()
 	return `/api/contentful-image?url=${encodeURIComponent(`${src}?fm=${format}`)}`
 }
 
@@ -47,8 +47,8 @@ export const ContentfulImage = ({
 		<picture id={id} className={className} style={style}>
 			{isContenfulImage && (
 				<>
-					<source srcSet={getProxySrc(src, 'avif')} type="image/avif" />
-					<source srcSet={getProxySrc(src, 'webp')} type="image/webp" />
+					<source srcSet={getProxySrc(src, "avif")} type="image/avif" />
+					<source srcSet={getProxySrc(src, "webp")} type="image/webp" />
 				</>
 			)}
 			<img src={defaultImgSrc} alt={alt} {...imgProps} />

@@ -4,9 +4,9 @@ import type {
 	EntryFieldTypes,
 	EntrySkeletonType,
 	LocaleCode,
-} from 'contentful'
+} from "contentful"
 
-import type { TypeLeadersSkeleton } from './TypeLeaders'
+import type { TypeLeadersSkeleton } from "./TypeLeaders"
 
 export interface TypeRosterFields {
 	title?: EntryFieldTypes.Symbol
@@ -16,7 +16,7 @@ export interface TypeRosterFields {
 	>
 }
 
-export type TypeRosterSkeleton = EntrySkeletonType<TypeRosterFields, 'roster'>
+export type TypeRosterSkeleton = EntrySkeletonType<TypeRosterFields, "roster">
 export type TypeRoster<
 	Modifiers extends ChainModifiers,
 	Locales extends LocaleCode = LocaleCode,
@@ -28,10 +28,10 @@ export function isTypeRoster<
 >(
 	entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeRoster<Modifiers, Locales> {
-	return entry.sys.contentType.sys.id === 'roster'
+	return entry.sys.contentType.sys.id === "roster"
 }
 
 export type TypeRosterProps = TypeRoster<
-	'WITHOUT_UNRESOLVABLE_LINKS',
-	'en-US'
->['fields']
+	"WITHOUT_UNRESOLVABLE_LINKS",
+	"en-US"
+>["fields"]

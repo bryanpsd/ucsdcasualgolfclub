@@ -1,15 +1,15 @@
-import { actions } from 'astro:actions'
-import { useEffect, useState } from 'react'
-import { getInstance, load, type ReCaptchaInstance } from 'recaptcha-v3'
+import { actions } from "astro:actions"
+import { useEffect, useState } from "react"
+import { getInstance, load, type ReCaptchaInstance } from "recaptcha-v3"
 
-let CACHED_CONFIG = { SITE_KEY: '', USE_ENTERPRISE: true }
+let CACHED_CONFIG = { SITE_KEY: "", USE_ENTERPRISE: true }
 
 async function getConfig() {
 	if (CACHED_CONFIG.SITE_KEY) return CACHED_CONFIG
 	const { error, data } = await actions.getCaptchaConfig()
 
 	if (error || !data) {
-		throw new Error('Unable to get Captcha Config')
+		throw new Error("Unable to get Captcha Config")
 	}
 
 	CACHED_CONFIG = data
@@ -37,7 +37,7 @@ export const useCaptcha = () => {
 			if (captcha) {
 				// Page transitions unload the captcha container.
 				// We need to check if it exists and re-render
-				const current = document.getElementsByClassName('grecaptcha-badge')
+				const current = document.getElementsByClassName("grecaptcha-badge")
 				if (current.length === 0 && SITE_KEY) {
 					window.grecaptcha.enterprise.render({ sitekey: SITE_KEY })
 				}

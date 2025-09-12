@@ -1,14 +1,14 @@
-import { type RecipeVariants, recipe } from '@vanilla-extract/recipes'
-import { color } from '~styles/designTokens/colors'
+import { type RecipeVariants, recipe } from "@vanilla-extract/recipes"
+import { color } from "~styles/designTokens/colors"
 import {
 	fontSize,
 	fontWeight,
 	lineHeight,
-} from '~styles/designTokens/typography'
-import { tokens } from '~styles/designTokens.css'
+} from "~styles/designTokens/typography"
+import { tokens } from "~styles/designTokens.css"
 
 export const typography = recipe({
-	base: tokens({ margin: 'none' }),
+	base: tokens({ margin: "none" }),
 	variants: {
 		variant: {
 			headlineSm: {
@@ -35,7 +35,7 @@ export const typography = recipe({
 				fontSize: fontSize.sizeFont5,
 				lineHeight: lineHeight.sizeLineHeight5,
 			},
-			inherit: tokens({ fontSize: 'inherit', lineHeight: 'inherit' }),
+			inherit: tokens({ fontSize: "inherit", lineHeight: "inherit" }),
 		},
 		fontWeight: {
 			300: { fontWeight: fontWeight.fontWeight300 },
@@ -52,41 +52,41 @@ export const typography = recipe({
 			success: { color: color.outline.success },
 			attention: { color: color.outline.attention },
 			danger: { color: color.outline.danger },
-			inherit: tokens({ color: 'inherit' }),
-			initial: tokens({ color: 'initial' }),
+			inherit: tokens({ color: "inherit" }),
+			initial: tokens({ color: "initial" }),
 		},
 		// These utility styles are from the UI Core Typography component. In the future,
 		// it might make sense to group utiliiy styles together in a single prop similar
 		// to the `sx` prop in Material UI (https://mui.com/system/getting-started/the-sx-prop/.)
 		align: {
-			left: tokens({ textAlign: 'left' }),
-			center: tokens({ textAlign: 'center' }),
-			right: tokens({ textAlign: 'right' }),
-			justify: tokens({ textAlign: 'justify' }),
-			inherit: tokens({ textAlign: 'inherit' }),
+			left: tokens({ textAlign: "left" }),
+			center: tokens({ textAlign: "center" }),
+			right: tokens({ textAlign: "right" }),
+			justify: tokens({ textAlign: "justify" }),
+			inherit: tokens({ textAlign: "inherit" }),
 		},
 		display: {
-			block: tokens({ display: 'block' }),
-			inline: tokens({ display: 'inline' }),
-			initial: tokens({ display: 'initial' }),
+			block: tokens({ display: "block" }),
+			inline: tokens({ display: "inline" }),
+			initial: tokens({ display: "initial" }),
 		},
 		decoration: {
-			none: tokens({ textDecoration: 'none' }),
-			underline: tokens({ textDecoration: 'underline' }),
+			none: tokens({ textDecoration: "none" }),
+			underline: tokens({ textDecoration: "underline" }),
 		},
 		noWrap: {
 			true: tokens({
-				overflow: 'hidden',
-				textOverflow: 'ellipsis',
-				whiteSpace: 'nowrap',
+				overflow: "hidden",
+				textOverflow: "ellipsis",
+				whiteSpace: "nowrap",
 			}),
 		},
 	},
 	defaultVariants: {
-		variant: 'bodyMd',
+		variant: "bodyMd",
 		fontWeight: 400,
-		color: 'default',
-		align: 'inherit',
+		color: "default",
+		align: "inherit",
 		noWrap: false,
 	},
 })

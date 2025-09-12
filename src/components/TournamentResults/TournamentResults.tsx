@@ -7,18 +7,18 @@ function getStableUniqueRowKey(
 	// Use a composite of all relevant fields and a hash for uniqueness
 	const str = [
 		playerName,
-		result.course?.slug || 'no-course',
-		result.date || 'no-date',
-		result.gross ?? 'no-gross',
-		result.net ?? 'no-net',
-		result.putts ?? 'no-putts',
-		result.title ?? 'no-title',
-		result.courseHandicap ?? 'no-ch',
-		result.closestTo ? result.closestTo.join(',') : 'no-closest',
-		result.longDrive ?? 'no-ld',
-		result.flight ?? 'no-flight',
+		result.course?.slug || "no-course",
+		result.date || "no-date",
+		result.gross ?? "no-gross",
+		result.net ?? "no-net",
+		result.putts ?? "no-putts",
+		result.title ?? "no-title",
+		result.courseHandicap ?? "no-ch",
+		result.closestTo ? result.closestTo.join(",") : "no-closest",
+		result.longDrive ?? "no-ld",
+		result.flight ?? "no-flight",
 		idx,
-	].join('|')
+	].join("|")
 	let hash: number = 0
 	let chr: number
 	for (let i = 0; i < str.length; i++) {
@@ -26,15 +26,15 @@ function getStableUniqueRowKey(
 		hash = (hash << 5) - hash + chr
 		hash |= 0
 	}
-	return `row-${playerName}-${result.course?.slug || 'no-course'}-${Math.abs(hash)}-${idx}`
+	return `row-${playerName}-${result.course?.slug || "no-course"}-${Math.abs(hash)}-${idx}`
 }
 
 // Generate a unique key by hashing all result properties (simple hash for uniqueness)
 
-import { useId, useState } from 'react'
-import { Table } from '~components/Table'
+import { useId, useState } from "react"
+import { Table } from "~components/Table"
 
-import * as styles from './TournamentResults.css'
+import * as styles from "./TournamentResults.css"
 
 export interface Result {
 	title: string | null
@@ -44,8 +44,8 @@ export interface Result {
 	net: number | null
 	courseHandicap: number | null
 	closestTo: string[] | null
-	longDrive: 'F' | 'M' | 'B' | null
-	flight: 'First Flight' | 'Second Flight' | null
+	longDrive: "F" | "M" | "B" | null
+	flight: "First Flight" | "Second Flight" | null
 	course?: {
 		name: string
 		slug: string
@@ -64,7 +64,7 @@ type TournamentResultsProps = {
 
 export const TournamentResults: React.FC<TournamentResultsProps> = ({
 	players,
-	selectedPlayer: initialSelectedPlayer = '',
+	selectedPlayer: initialSelectedPlayer = "",
 }) => {
 	const [selectedPlayer, setSelectedPlayer] = useState(initialSelectedPlayer)
 	const selectId = useId()
@@ -102,16 +102,16 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 							{player.results.length > 0 ? (
 								<Table
 									thead={[
-										'Course',
-										'Date',
-										'Flight',
-										'Gross',
-										'Course Handicap',
-										'Net',
-										'Putts',
-										'Closest To',
-										'Long Drive',
-										'Tournament Results',
+										"Course",
+										"Date",
+										"Flight",
+										"Gross",
+										"Course Handicap",
+										"Net",
+										"Putts",
+										"Closest To",
+										"Long Drive",
+										"Tournament Results",
 									]}
 									tbody={player.results
 										.slice()
@@ -143,7 +143,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 												selectedResults.length > 0
 													? Math.min(
 															...selectedResults.map((r) =>
-																typeof r.gross === 'number' ? r.gross : Infinity
+																typeof r.gross === "number" ? r.gross : Infinity
 															)
 														)
 													: null
@@ -151,7 +151,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 												selectedResults.length > 0
 													? Math.min(
 															...selectedResults.map((r) =>
-																typeof r.net === 'number' ? r.net : Infinity
+																typeof r.net === "number" ? r.net : Infinity
 															)
 														)
 													: null
@@ -159,7 +159,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 												selectedResults.length > 0
 													? Math.min(
 															...selectedResults.map((r) =>
-																typeof r.putts === 'number' ? r.putts : Infinity
+																typeof r.putts === "number" ? r.putts : Infinity
 															)
 														)
 													: null
@@ -172,7 +172,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 											)
 											if (seenRowKeys.has(uniqueRowKey)) {
 												console.warn(
-													'DUPLICATE ROW KEY DETECTED:',
+													"DUPLICATE ROW KEY DETECTED:",
 													uniqueRowKey,
 													result,
 													player.playerName,
@@ -183,36 +183,36 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 
 											return [
 												{
-													value: result.course?.name || 'N/A',
+													value: result.course?.name || "N/A",
 													key: uniqueRowKey,
 												},
 												result.date !== null
-													? new Date(result.date).toLocaleDateString('en-US', {
-															year: 'numeric',
-															month: 'short',
-															day: 'numeric',
+													? new Date(result.date).toLocaleDateString("en-US", {
+															year: "numeric",
+															month: "short",
+															day: "numeric",
 														})
-													: 'N/A',
-												result.flight !== null ? result.flight : 'N/A',
+													: "N/A",
+												result.flight !== null ? result.flight : "N/A",
 												{
 													value:
 														result.gross !== null
 															? result.gross.toString()
-															: 'N/A',
+															: "N/A",
 													className:
-														typeof result.gross === 'number' &&
+														typeof result.gross === "number" &&
 														result.gross === lowestGross
 															? styles.highlighted
 															: undefined,
 												},
 												result.courseHandicap !== null
 													? result.courseHandicap.toString()
-													: 'N/A',
+													: "N/A",
 												{
 													value:
-														result.net !== null ? result.net.toString() : 'N/A',
+														result.net !== null ? result.net.toString() : "N/A",
 													className:
-														typeof result.net === 'number' &&
+														typeof result.net === "number" &&
 														result.net === lowestNet
 															? styles.highlighted
 															: undefined,
@@ -221,15 +221,15 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 													value:
 														result.putts !== null
 															? result.putts.toString()
-															: 'N/A',
+															: "N/A",
 													className:
-														typeof result.putts === 'number' &&
+														typeof result.putts === "number" &&
 														result.putts === lowestPutts
 															? styles.highlighted
 															: undefined,
 												},
 												result.closestTo && result.closestTo.length > 0
-													? result.closestTo.join(', ')
+													? result.closestTo.join(", ")
 													: null,
 												result.longDrive !== null ? result.longDrive : null,
 												tournamentUrl ? (
@@ -246,7 +246,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 														Results
 													</a>
 												) : (
-													'N/A'
+													"N/A"
 												),
 											]
 										})}

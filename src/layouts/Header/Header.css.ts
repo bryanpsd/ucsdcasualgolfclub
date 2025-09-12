@@ -1,20 +1,20 @@
-import { style } from '@vanilla-extract/css'
-import { contentPadding, pageMaxWidth } from '~styles/common.css'
-import { color } from '~styles/designTokens/colors'
-import { fontSize } from '~styles/designTokens/typography'
-import { tokens } from '~styles/designTokens.css'
+import { style } from "@vanilla-extract/css"
+import { contentPadding, pageMaxWidth } from "~styles/common.css"
+import { color } from "~styles/designTokens/colors"
+import { fontSize } from "~styles/designTokens/typography"
+import { tokens } from "~styles/designTokens.css"
 
 export const headerWrapper = style([
 	tokens({
-		display: 'flex',
-		justifyContent: 'center',
-		width: 'col-12',
+		display: "flex",
+		justifyContent: "center",
+		width: "col-12",
 	}),
 	{
 		height: 84,
 		backgroundColor: color.brand.navy,
 		fontSize: fontSize.sizeFont4,
-		position: 'sticky',
+		position: "sticky",
 		top: 0,
 		zIndex: 1000,
 	},
@@ -22,11 +22,11 @@ export const headerWrapper = style([
 
 export const header = style([
 	tokens({
-		display: 'flex',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		position: 'relative',
-		width: 'col-12',
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		position: "relative",
+		width: "col-12",
 	}),
 	pageMaxWidth,
 	contentPadding,
@@ -34,17 +34,17 @@ export const header = style([
 
 export const logoWrapper = style([
 	tokens({
-		display: 'flex',
+		display: "flex",
 	}),
 ])
 
 export const logoLink = style([
 	tokens({
-		textDecoration: 'none',
-		display: 'flex',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		fontFamily: 'base',
+		textDecoration: "none",
+		display: "flex",
+		justifyContent: "space-between",
+		alignItems: "center",
+		fontFamily: "base",
 		gap: 4,
 	}),
 	{
@@ -55,12 +55,12 @@ export const logoLink = style([
 
 export const mainContentJumpLink = style({
 	selectors: {
-		'.sr-only&:focus': {
-			height: 'auto',
-			width: 'auto',
-			overflow: 'visible',
-			clip: 'unset',
-			position: 'static',
+		".sr-only&:focus": {
+			height: "auto",
+			width: "auto",
+			overflow: "visible",
+			clip: "unset",
+			position: "static",
 		},
 	},
 })

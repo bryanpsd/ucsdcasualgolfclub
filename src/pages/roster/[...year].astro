@@ -1,17 +1,17 @@
 ---
 export const prerender = true
 
-import { Hero } from '~components/Hero'
-import { Table } from '~components/Table'
+import { Hero } from "~components/Hero"
+import { Table } from "~components/Table"
 
-import Layout from '~layouts/Layout.astro'
-import { contentfulClient } from '~services/contentful/contentful'
-import * as styles from '~styles/common.css'
-import type { TypeRosterSkeleton } from '~types/contentful/TypeRoster'
+import Layout from "~layouts/Layout.astro"
+import { contentfulClient } from "~services/contentful/contentful"
+import * as styles from "~styles/common.css"
+import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster"
 
 export async function getStaticPaths() {
 	const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
-		content_type: 'roster',
+		content_type: "roster",
 	})
 
 	const pages = entries.items.map((item) => {
@@ -20,11 +20,11 @@ export async function getStaticPaths() {
 				year: item.fields.year?.toString(),
 			},
 			props: {
-				year: item.fields.year ?? 'N/A',
+				year: item.fields.year ?? "N/A",
 				players:
 					item.fields.players
 						?.map((player) => {
-							if (player && 'fields' in player) {
+							if (player && "fields" in player) {
 								return {
 									playerName: player.fields.playerName,
 									handicapIndex: player.fields.handicapIndex,
@@ -35,7 +35,7 @@ export async function getStaticPaths() {
 						})
 						.filter(Boolean) ?? [],
 				years: entries.items.map(
-					(entry) => entry.fields.year?.toString() ?? 'N/A'
+					(entry) => entry.fields.year?.toString() ?? "N/A"
 				),
 			},
 		}

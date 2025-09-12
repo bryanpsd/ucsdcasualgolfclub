@@ -8,7 +8,7 @@ export const alphaToHex = (alphaDecimal: number) => {
 	const alphaHex = alphaInt.toString(16).toUpperCase()
 
 	// Pad the hexadecimal value with leading zero if needed
-	const paddedAlphaHex = alphaHex.padStart(2, '0')
+	const paddedAlphaHex = alphaHex.padStart(2, "0")
 
 	return paddedAlphaHex
 }

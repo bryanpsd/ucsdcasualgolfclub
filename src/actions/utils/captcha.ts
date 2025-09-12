@@ -1,8 +1,8 @@
-import { RecaptchaEnterpriseServiceClient } from '@google-cloud/recaptcha-enterprise'
+import { RecaptchaEnterpriseServiceClient } from "@google-cloud/recaptcha-enterprise"
 
-const CAPTCHA_SITE_KEY = import.meta.env.RECAPTCHA_SITE_KEY || ''
+const CAPTCHA_SITE_KEY = import.meta.env.RECAPTCHA_SITE_KEY || ""
 const DISABLE_CAPTCHA_VALIDATION =
-	import.meta.env.DISABLE_CAPTCHA_VALIDATION === 'true'
+	import.meta.env.DISABLE_CAPTCHA_VALIDATION === "true"
 const GCP_CREDENTIALS =
 	(import.meta.env.GCP_CREDENTIALS &&
 		JSON.parse(import.meta.env.GCP_CREDENTIALS)) ||
@@ -18,17 +18,17 @@ export const validateCaptcha = async ({ token }: ValidateCaptchaArgs) => {
 			success: true,
 			score: 1.0,
 			challenge_ts: new Date().toISOString(),
-			hostname: 'HOSTNAME_NOT_VALIDATED',
+			hostname: "HOSTNAME_NOT_VALIDATED",
 			tokenProperties: { valid: true },
 		}
 	}
 
 	if (!token)
-		return { success: false, 'error-codes': ['no-captcha-token-provided'] }
+		return { success: false, "error-codes": ["no-captcha-token-provided"] }
 	const client = new RecaptchaEnterpriseServiceClient({
 		credentials: GCP_CREDENTIALS,
 	})
-	const projectPath = client.projectPath('ucsdcgc-map')
+	const projectPath = client.projectPath("ucsdcgc-map")
 
 	try {
 		const [res] = await client.createAssessment({
@@ -61,7 +61,7 @@ export const validateCaptcha = async ({ token }: ValidateCaptchaArgs) => {
 		}
 		return {
 			success: false,
-			'error-codes': ['unable-to-validate-captcha-token'],
+			"error-codes": ["unable-to-validate-captcha-token"],
 			message,
 		}
 	} finally {

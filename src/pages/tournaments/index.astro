@@ -1,14 +1,14 @@
 ---
-import { CourseCard } from '~components/Course/CourseCard'
-import { Hero } from '~components/Hero'
+import { CourseCard } from "~components/Course/CourseCard"
+import { Hero } from "~components/Hero"
 
-import Layout from '~layouts/Layout.astro'
-import { contentfulClient } from '~services/contentful/contentful'
-import * as styles from '~styles/common.css'
-import type { TypeCourseSkeleton } from '~types/contentful'
+import Layout from "~layouts/Layout.astro"
+import { contentfulClient } from "~services/contentful/contentful"
+import * as styles from "~styles/common.css"
+import type { TypeCourseSkeleton } from "~types/contentful"
 
 const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-	content_type: 'course',
+	content_type: "course",
 })
 
 const getTournaments = entries.items
@@ -16,9 +16,9 @@ const getTournaments = entries.items
 		return item.fields.tournaments?.map((tournament) => {
 			if (
 				tournament &&
-				'fields' in tournament &&
+				"fields" in tournament &&
 				tournament.fields.date &&
-				new Date(tournament.fields.date) > new Date('2024-12-05')
+				new Date(tournament.fields.date) > new Date("2024-12-05")
 			) {
 				return {
 					...item.fields,
@@ -34,7 +34,7 @@ const getTournaments = entries.items
 							tournamentNotes: tournament.fields.tournamentNotes,
 							results:
 								tournament.fields.results &&
-								'fields' in tournament.fields.results
+								"fields" in tournament.fields.results
 									? (tournament.fields.results.fields.file?.url ?? null)
 									: null,
 							clubChampionship: tournament.fields.clubChampionship ?? false,

@@ -1,16 +1,16 @@
-import { useId } from 'react'
-import { type SubmitHandler, useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { Button } from '~components/Button/Button'
-import { useCaptcha } from '~utils/useCaptcha'
-import * as styles from './ContactUsForm.css'
+import { useId } from "react"
+import { type SubmitHandler, useForm } from "react-hook-form"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { Button } from "~components/Button/Button"
+import { useCaptcha } from "~utils/useCaptcha"
+import * as styles from "./ContactUsForm.css"
 
 type ContactUsFormData = {
 	name: string
 	email: string
 	message?: string
-	'bot-field'?: string
+	"bot-field"?: string
 }
 
 export const ContactUsForm = () => {
@@ -29,22 +29,22 @@ export const ContactUsForm = () => {
 		try {
 			const captchaToken = await captcha.execute()
 
-			const response = await fetch('/api/contact', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+			const response = await fetch("/api/contact", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ ...data, captchaToken }),
 			})
 
 			if (response.ok) {
-				toast.success('Form submitted successfully!')
+				toast.success("Form submitted successfully!")
 				reset()
 			} else {
 				const { error } = await response.json()
-				toast.error(error || 'There was a problem submitting the form.')
+				toast.error(error || "There was a problem submitting the form.")
 			}
 		} catch (error) {
-			toast.error('There was a problem submitting the form. Please try again.')
-			console.error('Error sending form:', error)
+			toast.error("There was a problem submitting the form. Please try again.")
+			console.error("Error sending form:", error)
 		}
 	}
 
@@ -59,7 +59,7 @@ export const ContactUsForm = () => {
 			method="POST"
 		>
 			<input type="hidden" name="form-name" value="contact" />
-			<input type="hidden" {...register('bot-field')} />
+			<input type="hidden" {...register("bot-field")} />
 
 			<div className={styles.formField}>
 				<label htmlFor={nameId}>Name:</label>
@@ -67,7 +67,7 @@ export const ContactUsForm = () => {
 					className={styles.input}
 					id={nameId}
 					type="text"
-					{...register('name', { required: true })}
+					{...register("name", { required: true })}
 				/>
 				{errors.name && <span className={styles.error}>Enter a Name</span>}
 			</div>
@@ -78,11 +78,11 @@ export const ContactUsForm = () => {
 					className={styles.input}
 					id={emailId}
 					type="email"
-					{...register('email', {
-						required: 'Enter an Email address',
+					{...register("email", {
+						required: "Enter an Email address",
 						pattern: {
 							value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-							message: 'Enter a valid email address.',
+							message: "Enter a valid email address.",
 						},
 					})}
 				/>
@@ -96,7 +96,7 @@ export const ContactUsForm = () => {
 				<textarea
 					className={styles.textarea}
 					id={messageId}
-					{...register('message', { required: 'Enter a message.' })}
+					{...register("message", { required: "Enter a message." })}
 				/>
 				{errors.message && (
 					<span className={styles.error}>{errors.message.message}</span>

@@ -1,17 +1,17 @@
 ---
-import { ContentfulImage } from '~components/Image/ContentfulImage'
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
+import { ContentfulImage } from "~components/Image/ContentfulImage"
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
 
-import { RichText } from '~components/RichText'
-import { contentfulClient } from '~services/contentful/contentful'
-import type { TypeSeasonRecapSkeleton } from '~types/contentful/TypeSeasonRecap'
+import { RichText } from "~components/RichText"
+import { contentfulClient } from "~services/contentful/contentful"
+import type { TypeSeasonRecapSkeleton } from "~types/contentful/TypeSeasonRecap"
 
-import * as styles from './SeasonRecap.css'
+import * as styles from "./SeasonRecap.css"
 
 const { year } = Astro.props
 
 const response = await contentfulClient.getEntries<TypeSeasonRecapSkeleton>({
-	content_type: 'seasonRecap',
+	content_type: "seasonRecap",
 })
 
 const seasonRecap = response.items.find((item) =>

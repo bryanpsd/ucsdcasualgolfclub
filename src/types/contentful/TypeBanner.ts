@@ -4,7 +4,7 @@ import type {
 	EntryFieldTypes,
 	EntrySkeletonType,
 	LocaleCode,
-} from 'contentful'
+} from "contentful"
 
 export interface TypeBannerFields {
 	name?: EntryFieldTypes.Symbol
@@ -13,7 +13,7 @@ export interface TypeBannerFields {
 	pages?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>
 }
 
-export type TypeBannerSkeleton = EntrySkeletonType<TypeBannerFields, 'banner'>
+export type TypeBannerSkeleton = EntrySkeletonType<TypeBannerFields, "banner">
 export type TypeBanner<
 	Modifiers extends ChainModifiers,
 	Locales extends LocaleCode = LocaleCode,
@@ -25,10 +25,10 @@ export function isTypeBanner<
 >(
 	entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeBanner<Modifiers, Locales> {
-	return entry.sys.contentType.sys.id === 'banner'
+	return entry.sys.contentType.sys.id === "banner"
 }
 
 export type TypeBannerProps = TypeBanner<
-	'WITHOUT_UNRESOLVABLE_LINKS',
-	'en-US'
->['fields']
+	"WITHOUT_UNRESOLVABLE_LINKS",
+	"en-US"
+>["fields"]

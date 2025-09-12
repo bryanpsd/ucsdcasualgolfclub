@@ -1,7 +1,7 @@
 import {
 	documentToReactComponents,
 	type Options,
-} from '@contentful/rich-text-react-renderer'
+} from "@contentful/rich-text-react-renderer"
 import {
 	BLOCKS,
 	type Block,
@@ -9,17 +9,17 @@ import {
 	INLINES,
 	type Inline,
 	MARKS,
-} from '@contentful/rich-text-types'
-import type { CSSProperties } from 'react'
-import { Link } from '~components/Link'
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
-import * as styles from '~components/TextBlockSection/TextBlockSection.css'
-import { Typography, type TypographyProps } from '~components/Typography'
-import { concatClasses } from '~utils/concatClasses'
-import { replaceAllSpecialChars } from '~utils/StringUtils'
-import { List, ListItem } from './List'
+} from "@contentful/rich-text-types"
+import type { CSSProperties } from "react"
+import { Link } from "~components/Link"
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
+import * as styles from "~components/TextBlockSection/TextBlockSection.css"
+import { Typography, type TypographyProps } from "~components/Typography"
+import { concatClasses } from "~utils/concatClasses"
+import { replaceAllSpecialChars } from "~utils/StringUtils"
+import { List, ListItem } from "./List"
 
-const BODY_TYPOGRAPHY_VARIANT: TypographyProps['variant'] = 'bodyMd'
+const BODY_TYPOGRAPHY_VARIANT: TypographyProps["variant"] = "bodyMd"
 
 export type TextBlockSectionProps = {
 	text?: Document
@@ -31,8 +31,8 @@ export type TextBlockSectionProps = {
 
 function generateId(node: Block | Inline): string {
 	const { content } = node
-	const value = content[0] && 'value' in content[0] ? content[0].value : ''
-	return replaceAllSpecialChars(value, '-')
+	const value = content[0] && "value" in content[0] ? content[0].value : ""
+	return replaceAllSpecialChars(value, "-")
 }
 
 /**
@@ -106,7 +106,7 @@ const textBlockSectionOptions: Options = {
 
 		// Links
 		[INLINES.HYPERLINK]: (node, children) => {
-			const isJumpLink = node.data.uri.startsWith('#')
+			const isJumpLink = node.data.uri.startsWith("#")
 			return (
 				<Link
 					className={styles.link}
@@ -137,7 +137,7 @@ const textBlockSectionOptions: Options = {
 			</Typography>
 		),
 		[MARKS.UNDERLINE]: (children) => (
-			<span style={{ textDecoration: 'underline' }}>{children}</span>
+			<span style={{ textDecoration: "underline" }}>{children}</span>
 		),
 	},
 }

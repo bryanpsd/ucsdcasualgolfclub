@@ -1,9 +1,9 @@
-import { contentfulClient } from '../../../services/contentful/contentful'
-import type { MainNavProps } from '../components/MainNav'
+import { contentfulClient } from "../../../services/contentful/contentful"
+import type { MainNavProps } from "../components/MainNav"
 
 const getAvailableSeasons = async () => {
 	const entries = await contentfulClient.getEntries({
-		content_type: 'course',
+		content_type: "course",
 		include: 1,
 	})
 
@@ -12,7 +12,7 @@ const getAvailableSeasons = async () => {
 			Array.isArray(item.fields.tournaments)
 				? item.fields.tournaments.filter(
 						(tournament) =>
-							typeof tournament === 'object' && tournament !== null
+							typeof tournament === "object" && tournament !== null
 					)
 				: []
 		)
@@ -22,13 +22,13 @@ const getAvailableSeasons = async () => {
 		new Set(
 			seasonsWithTournaments.map((tournament) => {
 				if (
-					'fields' in tournament &&
+					"fields" in tournament &&
 					tournament.fields &&
-					typeof tournament.fields === 'object' &&
-					'date' in tournament.fields
+					typeof tournament.fields === "object" &&
+					"date" in tournament.fields
 				) {
-					return typeof tournament.fields.date === 'string' ||
-						typeof tournament.fields.date === 'number'
+					return typeof tournament.fields.date === "string" ||
+						typeof tournament.fields.date === "number"
 						? new Date(tournament.fields.date).getFullYear()
 						: null
 				}
@@ -59,29 +59,29 @@ const generatePastSeasonsLinks = async () => {
 
 const pastSeasonsLinks = await generatePastSeasonsLinks()
 
-export const menuItems: MainNavProps['items'] = {
-	label: 'Main',
+export const menuItems: MainNavProps["items"] = {
+	label: "Main",
 	menuItems: [
 		{
-			label: 'Tournaments',
-			href: '/tournaments',
+			label: "Tournaments",
+			href: "/tournaments",
 		},
 		{
-			label: 'Roster',
-			href: '/roster',
+			label: "Roster",
+			href: "/roster",
 		},
 		{
-			label: 'Seasons',
+			label: "Seasons",
 			links: pastSeasonsLinks,
 		},
 		{
-			label: 'About',
-			href: '/about',
+			label: "About",
+			href: "/about",
 		},
 		{
-			label: 'Join the Club',
-			href: 'https://membership.scga.org/start/join/?cid=885',
-			target: '_blank',
+			label: "Join the Club",
+			href: "https://membership.scga.org/start/join/?cid=885",
+			target: "_blank",
 		},
 	],
 }

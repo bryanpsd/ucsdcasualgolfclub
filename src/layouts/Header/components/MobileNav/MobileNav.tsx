@@ -1,12 +1,12 @@
-import * as NavMenu from '@radix-ui/react-navigation-menu'
-import { useState } from 'react'
-import { Sheet } from '~components/Sheet/Sheet'
-import Menu from '~icons/menu.svg?react'
-import { disableHover } from '~layouts/Header/utils/disableHover'
-import type { MainNavProps } from '../MainNav'
-import { MainNavItem } from './../MainNavItem/MainNavItem'
+import * as NavMenu from "@radix-ui/react-navigation-menu"
+import { useState } from "react"
+import { Sheet } from "~components/Sheet/Sheet"
+import Menu from "~icons/menu.svg?react"
+import { disableHover } from "~layouts/Header/utils/disableHover"
+import type { MainNavProps } from "../MainNav"
+import { MainNavItem } from "./../MainNavItem/MainNavItem"
 
-import * as styles from './MobileNav.css'
+import * as styles from "./MobileNav.css"
 
 type MobileNavProps = MainNavProps & {
 	items: {
@@ -14,7 +14,7 @@ type MobileNavProps = MainNavProps & {
 	}
 }
 
-type NavigationItem = MainNavProps['items']['menuItems'][number]
+type NavigationItem = MainNavProps["items"]["menuItems"][number]
 
 export const MobileNav = ({ items }: MobileNavProps) => {
 	const [open, setOpen] = useState(false)
@@ -59,7 +59,7 @@ export const MobileNav = ({ items }: MobileNavProps) => {
 function NavItem({ item }: { item: NavigationItem }) {
 	return (
 		<NavMenu.Item key={item.label}>
-			{'href' in item ? (
+			{"href" in item ? (
 				<NavMenu.Link asChild>
 					<MainNavItem
 						className={styles.mobileNavItem}

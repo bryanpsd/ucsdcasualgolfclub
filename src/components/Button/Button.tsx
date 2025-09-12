@@ -1,30 +1,30 @@
-import type { FC } from 'react'
+import type { FC } from "react"
 import React, {
 	type ElementType,
 	forwardRef,
 	type MouseEventHandler,
 	type ReactNode,
-} from 'react'
+} from "react"
 import type {
 	PolymorphicComponentPropWithRef,
 	PolymorphicRef,
-} from '~types/PolymorphicComponent'
-import { concatClasses } from '~utils/concatClasses'
+} from "~types/PolymorphicComponent"
+import { concatClasses } from "~utils/concatClasses"
 import {
 	type ButtonVariants,
 	button,
 	buttonIcon,
 	buttonLabel,
-} from './Button.css'
+} from "./Button.css"
 
-export type ButtonProps<C extends ElementType = 'button'> =
+export type ButtonProps<C extends ElementType = "button"> =
 	PolymorphicComponentPropWithRef<
 		C,
 		ButtonVariants & {
-			'data-testid'?: string
+			"data-testid"?: string
 			href?: string | undefined
 			external?: boolean
-			type?: 'button' | 'reset' | 'submit'
+			type?: "button" | "reset" | "submit"
 			startIcon?: ReactNode
 			endIcon?: ReactNode
 			className?: string
@@ -41,7 +41,7 @@ export type ButtonProps<C extends ElementType = 'button'> =
 type ChildrenProps = {
 	startIcon?: ReactNode
 	endIcon?: ReactNode
-	size?: ButtonProps['size']
+	size?: ButtonProps["size"]
 	classes?: Partial<{
 		label: string
 		startIcon: string
@@ -61,7 +61,7 @@ const Children: FC<ChildrenProps> = ({
 		{startIcon ? (
 			<span
 				className={concatClasses([
-					buttonIcon({ position: 'start', size }),
+					buttonIcon({ position: "start", size }),
 					classes?.startIcon,
 				])}
 			>
@@ -72,7 +72,7 @@ const Children: FC<ChildrenProps> = ({
 		{endIcon ? (
 			<span
 				className={concatClasses([
-					buttonIcon({ position: 'end', size }),
+					buttonIcon({ position: "end", size }),
 					classes?.endIcon,
 				])}
 			>
@@ -88,7 +88,7 @@ export const Button = forwardRef(
 			as: asComponent,
 			onClick,
 			children,
-			type = 'button',
+			type = "button",
 			className,
 			classes,
 			color,
@@ -104,7 +104,7 @@ export const Button = forwardRef(
 			onClick?.(e as React.MouseEvent<HTMLButtonElement>)
 		}
 
-		const Component = asComponent || 'button'
+		const Component = asComponent || "button"
 
 		return (
 			<Component

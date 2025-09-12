@@ -4,7 +4,7 @@ import type {
 	EntryFieldTypes,
 	EntrySkeletonType,
 	LocaleCode,
-} from 'contentful'
+} from "contentful"
 
 export interface TypeSeasonRecapFields {
 	title?: EntryFieldTypes.Symbol
@@ -15,7 +15,7 @@ export interface TypeSeasonRecapFields {
 
 export type TypeSeasonRecapSkeleton = EntrySkeletonType<
 	TypeSeasonRecapFields,
-	'seasonRecap'
+	"seasonRecap"
 >
 export type TypeSeasonRecap<
 	Modifiers extends ChainModifiers,
@@ -28,10 +28,10 @@ export function isTypeSeasonRecap<
 >(
 	entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeSeasonRecap<Modifiers, Locales> {
-	return entry.sys.contentType.sys.id === 'seasonRecap'
+	return entry.sys.contentType.sys.id === "seasonRecap"
 }
 
 export type TypeSeasonRecapProps = TypeSeasonRecap<
-	'WITHOUT_UNRESOLVABLE_LINKS',
-	'en-US'
->['fields']
+	"WITHOUT_UNRESOLVABLE_LINKS",
+	"en-US"
+>["fields"]

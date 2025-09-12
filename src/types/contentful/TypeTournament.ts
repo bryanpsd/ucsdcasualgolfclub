@@ -4,8 +4,8 @@ import type {
 	EntryFieldTypes,
 	EntrySkeletonType,
 	LocaleCode,
-} from 'contentful'
-import type { TypeLeadersSkeleton } from './TypeLeaders'
+} from "contentful"
+import type { TypeLeadersSkeleton } from "./TypeLeaders"
 
 export interface TypeTournamentFields {
 	title: EntryFieldTypes.Symbol
@@ -29,7 +29,7 @@ export interface TypeTournamentFields {
 
 export type TypeTournamentSkeleton = EntrySkeletonType<
 	TypeTournamentFields,
-	'tournament'
+	"tournament"
 >
 export type TypeTournament<
 	Modifiers extends ChainModifiers,
@@ -42,10 +42,10 @@ export function isTypeTournament<
 >(
 	entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeTournament<Modifiers, Locales> {
-	return entry.sys.contentType.sys.id === 'tournament'
+	return entry.sys.contentType.sys.id === "tournament"
 }
 
 export type TypeTournamentProps = TypeTournament<
-	'WITHOUT_UNRESOLVABLE_LINKS',
-	'en-US'
->['fields']
+	"WITHOUT_UNRESOLVABLE_LINKS",
+	"en-US"
+>["fields"]

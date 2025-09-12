@@ -1,20 +1,20 @@
-import { style } from '@vanilla-extract/css'
-import { body as textBlockSectionBody } from '~components/TextBlockSection/TextBlockSection.css'
-import { tokens } from '~styles/designTokens.css'
+import { style } from "@vanilla-extract/css"
+import { body as textBlockSectionBody } from "~components/TextBlockSection/TextBlockSection.css"
+import { tokens } from "~styles/designTokens.css"
 
-export const body = style([textBlockSectionBody, { maxWidth: 'none' }])
+export const body = style([textBlockSectionBody, { maxWidth: "none" }])
 
 export const textBlock = style([
 	tokens({
 		marginTop: 48,
-		marginX: 'auto',
+		marginX: "auto",
 	}),
 ])
 
 export const seasonRecap = style([
 	tokens({
-		display: 'flex',
-		flexDirection: 'column',
+		display: "flex",
+		flexDirection: "column",
 		gap: 16,
 		marginTop: 24,
 		marginBottom: 24,
@@ -23,15 +23,15 @@ export const seasonRecap = style([
 
 export const seasonRecapList = style([
 	tokens({
-		display: 'flex',
-		flexDirection: { 'xs-min': 'column', 'md-min': 'row' },
+		display: "flex",
+		flexDirection: { "xs-min": "column", "md-min": "row" },
 		gap: 16,
-		marginX: 'auto',
+		marginX: "auto",
 	}),
 ])
 
 export const image = style({
-	display: 'block',
-	width: '100%',
-	height: 'auto',
+	display: "block",
+	width: "100%",
+	height: "auto",
 })

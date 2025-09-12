@@ -1,15 +1,15 @@
-import * as Dialog from '@radix-ui/react-dialog'
-import type { ReactNode } from 'react'
-import { Button } from '~components/Button'
+import * as Dialog from "@radix-ui/react-dialog"
+import type { ReactNode } from "react"
+import { Button } from "~components/Button"
 
-import { SvgIcon } from '~components/SvgIcon'
-import { Typography } from '~components/Typography'
-import CloseCancelIcon from '~icons/close_cancel.svg?react'
+import { SvgIcon } from "~components/SvgIcon"
+import { Typography } from "~components/Typography"
+import CloseCancelIcon from "~icons/close_cancel.svg?react"
 
-import * as styles from './Sheet.css'
+import * as styles from "./Sheet.css"
 
 export interface SheetProps
-	extends Pick<Dialog.DialogProps, 'open' | 'onOpenChange'> {
+	extends Pick<Dialog.DialogProps, "open" | "onOpenChange"> {
 	/** Element that opens modal.
 	 *
 	 * **Note:** This element **needs** to be able to accept a `ref` prop so focus can be

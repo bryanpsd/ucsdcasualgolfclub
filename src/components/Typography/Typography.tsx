@@ -1,18 +1,18 @@
-import { type ElementType, forwardRef } from 'react'
+import { type ElementType, forwardRef } from "react"
 
 import type {
 	PolymorphicComponentPropWithRef,
 	PolymorphicRef,
-} from '~types/PolymorphicComponent'
-import { concatClasses } from '~utils/concatClasses'
+} from "~types/PolymorphicComponent"
+import { concatClasses } from "~utils/concatClasses"
 
-import { type TypographyVariants, typography } from './Typography.css'
+import { type TypographyVariants, typography } from "./Typography.css"
 
 export type VariantNames = NonNullable<
-	NonNullable<TypographyVariants>['variant']
+	NonNullable<TypographyVariants>["variant"]
 >
 
-const defaultElement: ElementType = 'p'
+const defaultElement: ElementType = "p"
 
 export type TypographyProps<
 	C extends ElementType = typeof defaultElement,
@@ -36,7 +36,7 @@ export const Typography = forwardRef<
 		color,
 		display,
 		noWrap = false,
-		variant = 'bodyMd',
+		variant = "bodyMd",
 		children,
 		fontWeight,
 		decoration,
@@ -68,4 +68,4 @@ export const Typography = forwardRef<
 	)
 })
 
-Typography.displayName = 'Typography'
+Typography.displayName = "Typography"

@@ -4,18 +4,18 @@ import type {
 	EntryFieldTypes,
 	EntrySkeletonType,
 	LocaleCode,
-} from 'contentful'
-import type { TypeResultsSkeleton } from './TypeResults'
-import type { TypeYearlyStatsSkeleton } from './TypeYearlyStats'
+} from "contentful"
+import type { TypeResultsSkeleton } from "./TypeResults"
+import type { TypeYearlyStatsSkeleton } from "./TypeYearlyStats"
 
 export interface TypeLeadersFields {
 	playerName?: EntryFieldTypes.Symbol
 	handicapIndex?: EntryFieldTypes.Number
 	gross?: EntryFieldTypes.Integer
 	net?: EntryFieldTypes.Number
-	flight?: EntryFieldTypes.Symbol<'First Flight' | 'Second Flight'>
+	flight?: EntryFieldTypes.Symbol<"First Flight" | "Second Flight">
 	roundsCheck?: EntryFieldTypes.Boolean
-	guest?: EntryFieldTypes.Array<EntryFieldTypes.Symbol<'Yes'>>
+	guest?: EntryFieldTypes.Array<EntryFieldTypes.Symbol<"Yes">>
 	onCurrentRoster?: EntryFieldTypes.Boolean
 	results?: EntryFieldTypes.Array<
 		EntryFieldTypes.EntryLink<TypeResultsSkeleton>
@@ -27,7 +27,7 @@ export interface TypeLeadersFields {
 
 export type TypeLeadersSkeleton = EntrySkeletonType<
 	TypeLeadersFields,
-	'leaders'
+	"leaders"
 >
 export type TypeLeaders<
 	Modifiers extends ChainModifiers,
@@ -40,10 +40,10 @@ export function isTypeLeaders<
 >(
 	entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeLeaders<Modifiers, Locales> {
-	return entry.sys.contentType.sys.id === 'leaders'
+	return entry.sys.contentType.sys.id === "leaders"
 }
 
 export type TypeLeadersProps = TypeLeaders<
-	'WITHOUT_UNRESOLVABLE_LINKS',
-	'en-US'
->['fields']
+	"WITHOUT_UNRESOLVABLE_LINKS",
+	"en-US"
+>["fields"]

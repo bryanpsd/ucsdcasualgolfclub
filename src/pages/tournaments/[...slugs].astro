@@ -1,30 +1,30 @@
 ---
 export const prerender = true
 
-import { CourseInfo } from '~components/Course/CourseInfo'
-import { Map as CourseMap } from '~components/Course/Map'
-import { MiniCard } from '~components/Course/MiniCard'
-import { Scorecard } from '~components/Course/Scorecard'
-import { Hero } from '~components/Hero'
+import { CourseInfo } from "~components/Course/CourseInfo"
+import { Map as CourseMap } from "~components/Course/Map"
+import { MiniCard } from "~components/Course/MiniCard"
+import { Scorecard } from "~components/Course/Scorecard"
+import { Hero } from "~components/Hero"
 
-import { RichText } from '~components/RichText'
-import Layout from '~layouts/Layout.astro'
-import { contentfulClient } from '~services/contentful/contentful'
-import * as commonStyles from '~styles/common.css'
-import type { TypeCourseSkeleton } from '~types/contentful/TypeCourse'
-import FlightCard from './_components/FlightCard/FlightCard.astro'
-import * as styles from './_style/tournament.css'
+import { RichText } from "~components/RichText"
+import Layout from "~layouts/Layout.astro"
+import { contentfulClient } from "~services/contentful/contentful"
+import * as commonStyles from "~styles/common.css"
+import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse"
+import FlightCard from "./_components/FlightCard/FlightCard.astro"
+import * as styles from "./_style/tournament.css"
 
 export async function getStaticPaths() {
 	const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-		content_type: 'course',
+		content_type: "course",
 		include: 3,
 	})
 
 	const pages = entries.items
 		.flatMap((item) => {
 			return item.fields.tournaments?.map((tournament) => {
-				if (tournament && 'fields' in tournament && tournament.fields.date) {
+				if (tournament && "fields" in tournament && tournament.fields.date) {
 					const year = new Date(tournament.fields.date).getFullYear()
 
 					return {
@@ -39,17 +39,17 @@ export async function getStaticPaths() {
 							coursePar: item.fields.coursePar,
 							courseScorecard: item.fields.courseScorecard,
 							courseImage:
-								item.fields.courseImage && 'fields' in item.fields.courseImage
-									? (item.fields.courseImage.fields.file?.url ?? '')
+								item.fields.courseImage && "fields" in item.fields.courseImage
+									? (item.fields.courseImage.fields.file?.url ?? "")
 									: undefined,
 							tournaments: [
 								{
 									clubChampionship:
-										'fields' in tournament
+										"fields" in tournament
 											? (tournament.fields.clubChampionship ?? false)
 											: false,
 									prices: tournament.fields.prices,
-									date: tournament.fields.date ?? 'N/A',
+									date: tournament.fields.date ?? "N/A",
 									players: tournament.fields.players,
 									inclusions: tournament.fields.inclusions ?? [],
 									results: tournament.fields.results ?? [],
@@ -59,13 +59,13 @@ export async function getStaticPaths() {
 									firstFlight:
 										tournament.fields.firstFlight
 											?.map((player) => {
-												if (player && 'fields' in player) {
+												if (player && "fields" in player) {
 													return {
 														playerName: player.fields.playerName,
 														handicapIndex: player.fields.handicapIndex,
 														guest: player.fields.guest,
 														results: player.fields.results?.map((result) => {
-															if (result && 'fields' in result) {
+															if (result && "fields" in result) {
 																return {
 																	...result.fields,
 																	index: result.fields.index,
@@ -83,7 +83,7 @@ export async function getStaticPaths() {
 														}),
 														yearlyStats: player.fields.yearlyStats?.map(
 															(stats) => {
-																if (stats && 'fields' in stats) {
+																if (stats && "fields" in stats) {
 																	return {
 																		...stats.fields,
 																		year: stats.fields.year,
@@ -102,13 +102,13 @@ export async function getStaticPaths() {
 									secondFlight:
 										tournament.fields.secondFlight
 											?.map((player) => {
-												if (player && 'fields' in player) {
+												if (player && "fields" in player) {
 													return {
 														playerName: player.fields.playerName,
 														handicapIndex: player.fields.handicapIndex,
 														guest: player.fields.guest,
 														results: player.fields.results?.map((result) => {
-															if (result && 'fields' in result) {
+															if (result && "fields" in result) {
 																return {
 																	...result.fields,
 																	date: result.fields.date,
@@ -126,7 +126,7 @@ export async function getStaticPaths() {
 														}),
 														yearlyStats: player.fields.yearlyStats?.map(
 															(stats) => {
-																if (stats && 'fields' in stats) {
+																if (stats && "fields" in stats) {
 																	return {
 																		...stats.fields,
 																		year: stats.fields.year,
@@ -169,7 +169,7 @@ const {
 
 const tournamentYear = tournaments[0]?.date
 	? new Date(tournaments[0].date).getFullYear()
-	: 'N/A'
+	: "N/A"
 const tournamentDate = tournaments[0]?.date
 
 const allResults = [
@@ -187,8 +187,8 @@ const validGross = allResults
 		const isSameDate =
 			result?.date &&
 			!Number.isNaN(new Date(result.date).getTime()) &&
-			new Date(result.date).toISOString().split('T')[0] ===
-				new Date(tournamentDate).toISOString().split('T')[0]
+			new Date(result.date).toISOString().split("T")[0] ===
+				new Date(tournamentDate).toISOString().split("T")[0]
 
 		return isSameDate && result?.gross !== undefined && result?.gross !== null
 	})
@@ -201,8 +201,8 @@ const validPutts = allResults
 		const isSameDate =
 			result?.date &&
 			!Number.isNaN(new Date(result.date).getTime()) &&
-			new Date(result.date).toISOString().split('T')[0] ===
-				new Date(tournamentDate).toISOString().split('T')[0]
+			new Date(result.date).toISOString().split("T")[0] ===
+				new Date(tournamentDate).toISOString().split("T")[0]
 
 		return isSameDate && result?.putts !== undefined && result?.putts !== null
 	})
@@ -215,8 +215,8 @@ const lowestPuttsOverall =
 	validPutts.length > 0 ? Math.min(...validPutts) : null
 
 const flights = [
-	{ title: 'First Flight', data: tournaments[0]?.firstFlight || [] },
-	{ title: 'Second Flight', data: tournaments[0]?.secondFlight || [] },
+	{ title: "First Flight", data: tournaments[0]?.firstFlight || [] },
+	{ title: "Second Flight", data: tournaments[0]?.secondFlight || [] },
 ]
 ---
 

@@ -1,13 +1,13 @@
-import { style } from '@vanilla-extract/css'
-import { color } from '~styles/designTokens/colors'
-import { tokens } from '~styles/designTokens.css'
+import { style } from "@vanilla-extract/css"
+import { color } from "~styles/designTokens/colors"
+import { tokens } from "~styles/designTokens.css"
 
 export const miniCardWrapper = style([
 	tokens({
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
 	}),
 	{
 		backgroundColor: color.brand.navy,
@@ -29,11 +29,11 @@ export const miniCardCourse = style({
 
 export const miniCard = style([
 	tokens({
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
-		width: 'col-12',
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
+		width: "col-12",
 		gap: 8,
 		padding: 10,
 	}),
@@ -48,10 +48,10 @@ export const tournamentNotes = style({
 
 export const dateTimeTypeWrapper = style([
 	tokens({
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
 		gap: 2,
 	}),
 	{
@@ -61,11 +61,11 @@ export const dateTimeTypeWrapper = style([
 
 export const dateTimeWrapper = style([
 	tokens({
-		display: 'flex',
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'center',
-		width: 'col-12',
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "center",
+		width: "col-12",
 		gap: 2,
 	}),
 ])

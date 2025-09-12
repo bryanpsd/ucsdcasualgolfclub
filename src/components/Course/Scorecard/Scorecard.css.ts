@@ -1,30 +1,30 @@
-import { style } from '@vanilla-extract/css'
-import { color } from '~styles/designTokens/colors'
-import { fontSize } from '~styles/designTokens/typography'
-import { tokens } from '~styles/designTokens.css'
+import { style } from "@vanilla-extract/css"
+import { color } from "~styles/designTokens/colors"
+import { fontSize } from "~styles/designTokens/typography"
+import { tokens } from "~styles/designTokens.css"
 
 export const scorecardSectionWrapper = style([
 	tokens({
-		display: 'flex',
-		flexDirection: 'column',
+		display: "flex",
+		flexDirection: "column",
 		gap: 12,
-		width: 'col-12',
+		width: "col-12",
 	}),
 ])
 
 export const scorecardTableWrapper = style([
 	tokens({
-		overflowX: 'auto',
+		overflowX: "auto",
 	}),
 ])
 
 export const table = style([
 	tokens({
-		width: 'col-12',
+		width: "col-12",
 	}),
 	{
 		fontSize: fontSize.sizeFont4,
-		tableLayout: 'auto',
+		tableLayout: "auto",
 	},
 ])
 
@@ -38,12 +38,12 @@ export const th = style([
 	tokens({
 		paddingY: 8,
 		paddingX: 4,
-		textAlign: 'left',
+		textAlign: "left",
 	}),
 	{
 		selectors: {
-			'&:nth-child(2)': {
-				textAlign: 'center',
+			"&:nth-child(2)": {
+				textAlign: "center",
 			},
 		},
 	},
@@ -52,7 +52,7 @@ export const th = style([
 export const tr = style({
 	borderBottom: `1px solid ${color.tableBorder}`,
 	selectors: {
-		'&:hover': {
+		"&:hover": {
 			backgroundColor: color.brand.gray,
 		},
 	},
@@ -62,7 +62,7 @@ export const td = style([
 	tokens({
 		paddingY: 8,
 		paddingX: 4,
-		textAlign: 'center',
+		textAlign: "center",
 	}),
 	{
 		borderLeft: `1px solid ${color.tableBorder}`,
@@ -71,6 +71,6 @@ export const td = style([
 
 export const boldColumn = style([
 	tokens({
-		fontWeight: 'fontWeight700',
+		fontWeight: "fontWeight700",
 	}),
 ])

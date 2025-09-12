@@ -1,16 +1,16 @@
-import type { Options } from '@contentful/rich-text-react-renderer'
-import type { Document } from '@contentful/rich-text-types'
-import { BLOCKS } from '@contentful/rich-text-types'
-import { ContentfulImage } from '~components/Image/ContentfulImage'
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
-import { TextBlockSection } from '~components/TextBlockSection'
-import { List } from '~components/TextBlockSection/List'
-import type { TypographyProps } from '~components/Typography'
-import { Typography } from '~components/Typography'
+import type { Options } from "@contentful/rich-text-react-renderer"
+import type { Document } from "@contentful/rich-text-types"
+import { BLOCKS } from "@contentful/rich-text-types"
+import { ContentfulImage } from "~components/Image/ContentfulImage"
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
+import { TextBlockSection } from "~components/TextBlockSection"
+import { List } from "~components/TextBlockSection/List"
+import type { TypographyProps } from "~components/Typography"
+import { Typography } from "~components/Typography"
 
-import * as styles from './RichText.css'
+import * as styles from "./RichText.css"
 
-const BODY_TYPOGRAPHY_VARIANT: TypographyProps['variant'] = 'bodyMd'
+const BODY_TYPOGRAPHY_VARIANT: TypographyProps["variant"] = "bodyMd"
 
 const options: Options = {
 	renderNode: {
@@ -43,7 +43,7 @@ const options: Options = {
 			)
 		},
 		[BLOCKS.EMBEDDED_ENTRY]: (node) => {
-			if (node.data.target.sys.contentType.sys.id === 'seasonRecap') {
+			if (node.data.target.sys.contentType.sys.id === "seasonRecap") {
 				const { summary } = node.data.target.fields
 				const { winners } = node.data.target.fields
 				return (

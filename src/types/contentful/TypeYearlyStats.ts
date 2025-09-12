@@ -4,7 +4,7 @@ import type {
 	EntryFieldTypes,
 	EntrySkeletonType,
 	LocaleCode,
-} from 'contentful'
+} from "contentful"
 
 export interface TypeYearlyStatsFields {
 	title?: EntryFieldTypes.Symbol
@@ -15,7 +15,7 @@ export interface TypeYearlyStatsFields {
 
 export type TypeYearlyStatsSkeleton = EntrySkeletonType<
 	TypeYearlyStatsFields,
-	'yearlyStats'
+	"yearlyStats"
 >
 export type TypeYearlyStats<
 	Modifiers extends ChainModifiers,
@@ -28,10 +28,10 @@ export function isTypeYearlyStats<
 >(
 	entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeYearlyStats<Modifiers, Locales> {
-	return entry.sys.contentType.sys.id === 'yearlyStats'
+	return entry.sys.contentType.sys.id === "yearlyStats"
 }
 
 export type TypeYearlyStatsProps = TypeYearlyStats<
-	'WITHOUT_UNRESOLVABLE_LINKS',
-	'en-US'
->['fields']
+	"WITHOUT_UNRESOLVABLE_LINKS",
+	"en-US"
+>["fields"]

@@ -1,6 +1,6 @@
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
 
-import * as styles from './CourseInfo.css'
+import * as styles from "./CourseInfo.css"
 
 interface Props {
 	coursePar?: string

@@ -1,7 +1,7 @@
-import contentful from 'contentful-management'
-import dotenv from 'dotenv'
-import fetch from 'node-fetch'
-import xlsx from 'xlsx'
+import contentful from "contentful-management"
+import dotenv from "dotenv"
+import fetch from "node-fetch"
+import xlsx from "xlsx"
 
 // Load environment variables from .env file
 dotenv.config()
@@ -27,12 +27,12 @@ async function processCourseTournaments(tournamentName) {
 
 		// Fetch all Course entries
 		const courses = await environment.getEntries({
-			content_type: 'course',
+			content_type: "course",
 		})
 
 		for (const course of courses.items) {
-			const courseName = course.fields.courseName?.['en-US']
-			const tournaments = course.fields.tournaments?.['en-US'] || []
+			const courseName = course.fields.courseName?.["en-US"]
+			const tournaments = course.fields.tournaments?.["en-US"] || []
 
 			if (!courseName) {
 				console.warn(`Course "${course.sys.id}" is missing a courseName.`)
@@ -42,7 +42,7 @@ async function processCourseTournaments(tournamentName) {
 				const tournamentId = tournamentLink.sys.id
 				const tournament = await environment.getEntry(tournamentId)
 
-				const tournamentTitle = tournament.fields.title?.['en-US']
+				const tournamentTitle = tournament.fields.title?.["en-US"]
 
 				// Skip tournaments that don't match the provided name
 				if (tournamentName && tournamentTitle !== tournamentName) {
@@ -58,33 +58,33 @@ async function processCourseTournaments(tournamentName) {
 			}
 		}
 	} catch (error) {
-		console.error('Error processing Course tournaments:', error)
+		console.error("Error processing Course tournaments:", error)
 	}
 }
 
 async function processTournament(tournament, courseName, course) {
 	try {
-		const firstFlightPlayers = tournament.fields.firstFlight?.['en-US'] || [] // Existing players in First Flight
-		const secondFlightPlayers = tournament.fields.secondFlight?.['en-US'] || [] // Existing players in Second Flight
+		const firstFlightPlayers = tournament.fields.firstFlight?.["en-US"] || [] // Existing players in First Flight
+		const secondFlightPlayers = tournament.fields.secondFlight?.["en-US"] || [] // Existing players in Second Flight
 
 		if (firstFlightPlayers.length > 0 && secondFlightPlayers.length > 0) {
 			console.log(
 				'Skipping Tournament "' +
-					tournament.fields.title?.['en-US'] +
+					tournament.fields.title?.["en-US"] +
 					'" as flights are already added.'
 			)
 			return
 		}
 
-		console.log('Tournament Fields:', tournament.fields)
+		console.log("Tournament Fields:", tournament.fields)
 
-		const resultsExcelRef = tournament.fields.resultsExcel?.['en-US']
-		const tournamentDate = tournament.fields.date?.['en-US']
+		const resultsExcelRef = tournament.fields.resultsExcel?.["en-US"]
+		const tournamentDate = tournament.fields.date?.["en-US"]
 
 		if (!resultsExcelRef) {
 			console.log(
 				'The Tournament "' +
-					tournament.fields.title?.['en-US'] +
+					tournament.fields.title?.["en-US"] +
 					'" does not have a resultsExcel field.'
 			)
 			return
@@ -93,12 +93,12 @@ async function processTournament(tournament, courseName, course) {
 		const space = await client.getSpace(SPACE_ID)
 		const environment = await space.getEnvironment(ENVIRONMENT_ID)
 		const resultsExcelAsset = await environment.getAsset(resultsExcelRef.sys.id)
-		const resultsExcelUrl = resultsExcelAsset.fields.file?.['en-US']?.url
+		const resultsExcelUrl = resultsExcelAsset.fields.file?.["en-US"]?.url
 
 		if (!resultsExcelUrl) {
 			console.log(
 				'The Tournament "' +
-					tournament.fields.title?.['en-US'] +
+					tournament.fields.title?.["en-US"] +
 					'" has an invalid resultsExcel asset (missing URL).'
 			)
 			return
@@ -106,19 +106,19 @@ async function processTournament(tournament, courseName, course) {
 
 		if (!tournamentDate) {
 			console.error(
-				`The Tournament "${tournament.fields.title?.['en-US']}" is missing a date.`
+				`The Tournament "${tournament.fields.title?.["en-US"]}" is missing a date.`
 			)
 			return
 		}
 
 		const response = await fetch(`https:${resultsExcelUrl}`)
 		const arrayBuffer = await response.arrayBuffer()
-		const workbook = xlsx.read(arrayBuffer, { type: 'array' })
+		const workbook = xlsx.read(arrayBuffer, { type: "array" })
 		const sheetName = workbook.SheetNames[0]
 		const sheet = workbook.Sheets[sheetName]
 		const jsonData = xlsx.utils.sheet_to_json(sheet)
 
-		console.log('Parsed Excel Data:', jsonData)
+		console.log("Parsed Excel Data:", jsonData)
 
 		let currentFlight = null // Track the current flight across rows
 
@@ -127,39 +127,39 @@ async function processTournament(tournament, courseName, course) {
 
 			// Remove the text "(guest)" from the name/title field
 			if (name) {
-				name = name.replace(/\(guest\)/gi, '').trim()
+				name = name.replace(/\(guest\)/gi, "").trim()
 			}
 
 			// Update currentFlight based on the name
-			if (name === '1st Flight') {
-				currentFlight = 'First Flight'
+			if (name === "1st Flight") {
+				currentFlight = "First Flight"
 				console.log(`Switching to Flight: ${currentFlight}`)
-			} else if (name === '2nd Flight') {
-				currentFlight = 'Second Flight'
+			} else if (name === "2nd Flight") {
+				currentFlight = "Second Flight"
 				console.log(`Switching to Flight: ${currentFlight}`)
 			}
 
 			const index = row.Index ? parseFloat(row.Index) : null
 			const gross = row.Gross ? parseFloat(row.Gross) : null
-			const courseHandicap = row['Crs Hcp'] ? parseFloat(row['Crs Hcp']) : null
+			const courseHandicap = row["Crs Hcp"] ? parseFloat(row["Crs Hcp"]) : null
 			const net = row.Net ? parseFloat(row.Net) : null
 			const putts = row.Putts ? parseInt(row.Putts, 10) : null
 
 			// Convert closestTo to an array and handle "Closest To" text
-			const closestToRaw = row['Closest To']
-				? String(row['Closest To']).trim()
+			const closestToRaw = row["Closest To"]
+				? String(row["Closest To"]).trim()
 				: null
 			const closestTo =
-				closestToRaw && !closestToRaw.toLowerCase().includes('closest to')
-					? closestToRaw.split(',').map((item) => item.trim())
+				closestToRaw && !closestToRaw.toLowerCase().includes("closest to")
+					? closestToRaw.split(",").map((item) => item.trim())
 					: []
 
-			const longDrive = row['Long Drive']
-				? String(row['Long Drive']).trim()
+			const longDrive = row["Long Drive"]
+				? String(row["Long Drive"]).trim()
 				: null
 
 			const resultData = {
-				title: name ? name.split(',').reverse().join(' ').trim() : null, // Swap text and remove first comma
+				title: name ? name.split(",").reverse().join(" ").trim() : null, // Swap text and remove first comma
 				index: Number.isNaN(index) ? null : index,
 				gross: Number.isNaN(gross) ? null : gross,
 				courseHandicap: Number.isNaN(courseHandicap) ? null : courseHandicap,
@@ -167,9 +167,9 @@ async function processTournament(tournament, courseName, course) {
 				putts: Number.isNaN(putts) ? null : putts,
 				closestTo: closestTo, // Ensure closestTo is always an array
 				longDrive:
-					longDrive === 'M' || longDrive === 'F' || longDrive === 'B'
+					longDrive === "M" || longDrive === "F" || longDrive === "B"
 						? longDrive
-						: '',
+						: "",
 				course: courseName,
 				date: formatDateToISO(tournamentDate),
 				flight: currentFlight, // Use the currentFlight value
@@ -177,10 +177,10 @@ async function processTournament(tournament, courseName, course) {
 
 			const formattedDate = new Date(
 				formatDateToISO(tournamentDate)
-			).toLocaleDateString('en-US', {
-				year: '2-digit',
-				month: '2-digit',
-				day: '2-digit',
+			).toLocaleDateString("en-US", {
+				year: "2-digit",
+				month: "2-digit",
+				day: "2-digit",
 			})
 
 			const entryTitle = `${resultData.title} - ${courseName} (${formattedDate})`
@@ -188,8 +188,8 @@ async function processTournament(tournament, courseName, course) {
 			try {
 				// Check if an entry with the same title already exists
 				const existingEntries = await environment.getEntries({
-					content_type: 'results', // Replace with your Results content type ID
-					'fields.title[match]': entryTitle,
+					content_type: "results", // Replace with your Results content type ID
+					"fields.title[match]": entryTitle,
 					limit: 1,
 				})
 
@@ -201,54 +201,54 @@ async function processTournament(tournament, courseName, course) {
 				}
 
 				// Create Contentful entry for results
-				const entry = await environment.createEntry('results', {
+				const entry = await environment.createEntry("results", {
 					fields: {
 						title: {
-							'en-US': entryTitle,
+							"en-US": entryTitle,
 						},
 						date: {
-							'en-US': resultData.date,
+							"en-US": resultData.date,
 						},
 						course: {
-							'en-US': {
+							"en-US": {
 								sys: {
-									type: 'Link',
-									linkType: 'Entry',
+									type: "Link",
+									linkType: "Entry",
 									id: course.sys.id,
 								},
 							},
 						},
 						flight: {
-							'en-US': resultData.flight,
+							"en-US": resultData.flight,
 						},
 						index: {
-							'en-US': resultData.index,
+							"en-US": resultData.index,
 						},
 						gross: {
-							'en-US': resultData.gross !== null ? resultData.gross : undefined,
+							"en-US": resultData.gross !== null ? resultData.gross : undefined,
 						},
 						net: {
-							'en-US': resultData.net !== null ? resultData.net : undefined,
+							"en-US": resultData.net !== null ? resultData.net : undefined,
 						},
 						courseHandicap: {
-							'en-US':
+							"en-US":
 								resultData.courseHandicap !== null
 									? resultData.courseHandicap
 									: undefined,
 						},
 						putts: {
-							'en-US': resultData.putts !== null ? resultData.putts : undefined,
+							"en-US": resultData.putts !== null ? resultData.putts : undefined,
 						},
 						closestTo: {
-							'en-US':
+							"en-US":
 								Array.isArray(resultData.closestTo) &&
 								resultData.closestTo.length > 0
 									? resultData.closestTo
 									: undefined,
 						},
 						longDrive: {
-							'en-US':
-								resultData.longDrive !== '' ? resultData.longDrive : undefined,
+							"en-US":
+								resultData.longDrive !== "" ? resultData.longDrive : undefined,
 						},
 					},
 				})
@@ -257,8 +257,8 @@ async function processTournament(tournament, courseName, course) {
 
 				// Add the results entry to the Player content type
 				const playerEntries = await environment.getEntries({
-					content_type: 'leaders', // Replace with your Player content type ID
-					'fields.playerName[match]': name, // Match Player name with result title
+					content_type: "leaders", // Replace with your Player content type ID
+					"fields.playerName[match]": name, // Match Player name with result title
 				})
 
 				let player
@@ -266,33 +266,33 @@ async function processTournament(tournament, courseName, course) {
 					player = playerEntries.items[0]
 				} else {
 					// Create a new Player entry if not found
-					player = await environment.createEntry('leaders', {
+					player = await environment.createEntry("leaders", {
 						fields: {
 							playerName: {
-								'en-US': resultData.title,
+								"en-US": resultData.title,
 							},
 							results: {
-								'en-US': [],
+								"en-US": [],
 							},
 						},
 					})
 					console.log(`Created new Player entry for: ${name}`)
 				}
 
-				const existingResults = player.fields.results?.['en-US'] || []
+				const existingResults = player.fields.results?.["en-US"] || []
 
 				// Add the new result entry to the Player's results field
 				existingResults.push({
 					sys: {
-						type: 'Link',
-						linkType: 'Entry',
+						type: "Link",
+						linkType: "Entry",
 						id: entry.sys.id,
 					},
 				})
 
 				// Update the Player entry
 				player.fields.results = {
-					'en-US': existingResults,
+					"en-US": existingResults,
 				}
 
 				await player.update()
@@ -302,17 +302,17 @@ async function processTournament(tournament, courseName, course) {
 				// Add player to the appropriate flight if not already present
 				const playerLink = {
 					sys: {
-						type: 'Link',
-						linkType: 'Entry',
+						type: "Link",
+						linkType: "Entry",
 						id: player.sys.id,
 					},
 				}
 
-				if (currentFlight === 'First Flight') {
+				if (currentFlight === "First Flight") {
 					if (!firstFlightPlayers.some((p) => p.sys.id === player.sys.id)) {
 						firstFlightPlayers.push(playerLink)
 					}
-				} else if (currentFlight === 'Second Flight') {
+				} else if (currentFlight === "Second Flight") {
 					if (!secondFlightPlayers.some((p) => p.sys.id === player.sys.id)) {
 						secondFlightPlayers.push(playerLink)
 					}
@@ -324,18 +324,18 @@ async function processTournament(tournament, courseName, course) {
 
 		// Update the tournament with players in each flight
 		tournament.fields.firstFlight = {
-			'en-US': firstFlightPlayers,
+			"en-US": firstFlightPlayers,
 		}
 		tournament.fields.secondFlight = {
-			'en-US': secondFlightPlayers,
+			"en-US": secondFlightPlayers,
 		}
 
 		await tournament.update()
 		console.log(
-			'Updated tournament with players in First Flight and Second Flight.'
+			"Updated tournament with players in First Flight and Second Flight."
 		)
 	} catch (error) {
-		console.error('Error processing Tournament:', error)
+		console.error("Error processing Tournament:", error)
 	}
 }
 // Run the script

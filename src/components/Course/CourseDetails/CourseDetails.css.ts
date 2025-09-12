@@ -1,15 +1,15 @@
-import { style } from '@vanilla-extract/css'
-import { recipe } from '@vanilla-extract/recipes'
-import { color } from '~styles/designTokens/colors'
-import { tokens } from '~styles/designTokens.css'
+import { style } from "@vanilla-extract/css"
+import { recipe } from "@vanilla-extract/recipes"
+import { color } from "~styles/designTokens/colors"
+import { tokens } from "~styles/designTokens.css"
 
 export const courseCardDetails = style([
 	tokens({
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: { 'xs-min': 'center', 'md-min': 'flex-start' },
-		justifyContent: { 'xs-min': 'center', 'md-min': 'flex-start' },
-		width: { 'xs-min': 'col-12', 'md-min': 'col-6' },
+		display: "flex",
+		flexDirection: "column",
+		alignItems: { "xs-min": "center", "md-min": "flex-start" },
+		justifyContent: { "xs-min": "center", "md-min": "flex-start" },
+		width: { "xs-min": "col-12", "md-min": "col-6" },
 		gap: 8,
 	}),
 ])
@@ -17,8 +17,8 @@ export const courseCardDetails = style([
 export const courseCardDetailsWrapper = recipe({
 	base: [
 		tokens({
-			display: 'flex',
-			flexDirection: 'column',
+			display: "flex",
+			flexDirection: "column",
 
 			gap: 8,
 		}),
@@ -27,7 +27,7 @@ export const courseCardDetailsWrapper = recipe({
 		variant: {
 			default: {},
 			secondary: {
-				alignItems: 'center',
+				alignItems: "center",
 			},
 		},
 	},
@@ -35,24 +35,24 @@ export const courseCardDetailsWrapper = recipe({
 
 export const courseCardList = style([
 	tokens({
-		display: 'flex',
+		display: "flex",
 	}),
 ])
 
 export const courseCardListItem = recipe({
 	base: [
 		tokens({
-			display: 'flex',
+			display: "flex",
 			paddingX: 4,
-			alignItems: 'center',
+			alignItems: "center",
 		}),
 		{
 			selectors: {
-				'&:first-child': {
+				"&:first-child": {
 					paddingLeft: 0,
 				},
-				'&:last-child': {
-					borderRight: 'none',
+				"&:last-child": {
+					borderRight: "none",
 				},
 			},
 		},
@@ -99,8 +99,8 @@ export const icons = recipe({
 export const courseCardDetailsList = recipe({
 	base: [
 		tokens({
-			display: 'flex',
-			flexDirection: 'column',
+			display: "flex",
+			flexDirection: "column",
 			gap: 4,
 		}),
 	],
@@ -111,7 +111,7 @@ export const courseCardDetailsList = recipe({
 			},
 			secondary: {
 				color: color.brand.white,
-				alignItems: 'center',
+				alignItems: "center",
 			},
 		},
 	},
@@ -119,6 +119,6 @@ export const courseCardDetailsList = recipe({
 
 export const courseCardDetailsListItem = style([
 	tokens({
-		display: 'flex',
+		display: "flex",
 	}),
 ])

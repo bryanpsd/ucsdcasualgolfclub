@@ -1,7 +1,7 @@
-import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
-import { vars } from '../styles/theme.css'
-import { objectKeys } from '../types'
-import { breakpoints } from './designTokens/breakpoints'
+import { createSprinkles, defineProperties } from "@vanilla-extract/sprinkles"
+import { vars } from "../styles/theme.css"
+import { objectKeys } from "../types"
+import { breakpoints } from "./designTokens/breakpoints"
 
 export const breakpointQuery = {
 	xs: `screen and (min-width: ${breakpoints.xs}px) and (max-width: ${
@@ -22,28 +22,28 @@ export const breakpointQuery = {
 
 	xl: `screen and (min-width: ${breakpoints.xl}px)`,
 
-	'xs-min': '', // min-width: 0 is always true
-	'sm-min': `screen and (min-width: ${breakpoints.sm}px)`,
+	"xs-min": "", // min-width: 0 is always true
+	"sm-min": `screen and (min-width: ${breakpoints.sm}px)`,
 
-	'md-min': `screen and (min-width: ${breakpoints.md}px)`,
+	"md-min": `screen and (min-width: ${breakpoints.md}px)`,
 
-	'lg-min': `screen and (min-width: ${breakpoints.lg}px)`,
+	"lg-min": `screen and (min-width: ${breakpoints.lg}px)`,
 
-	'xl-min': `screen and (min-width: ${breakpoints.xl}px)`,
+	"xl-min": `screen and (min-width: ${breakpoints.xl}px)`,
 
-	'xs-max': `screen and (max-width: ${breakpoints.xs}px)`,
-	'sm-max': `screen and (max-width: ${Number(breakpoints.sm) - 0.05}px)`,
-	'md-max': `screen and (max-width: ${Number(breakpoints.md) - 0.05}px)`,
-	'lg-max': `screen and (max-width: ${Number(breakpoints.lg) - 0.05}px)`,
-	'xl-max': `screen and (max-width: ${Number(breakpoints.xl) - 0.05}px)`,
+	"xs-max": `screen and (max-width: ${breakpoints.xs}px)`,
+	"sm-max": `screen and (max-width: ${Number(breakpoints.sm) - 0.05}px)`,
+	"md-max": `screen and (max-width: ${Number(breakpoints.md) - 0.05}px)`,
+	"lg-max": `screen and (max-width: ${Number(breakpoints.lg) - 0.05}px)`,
+	"xl-max": `screen and (max-width: ${Number(breakpoints.xl) - 0.05}px)`,
 } as const
 
 const mediaQueryBreakpoints = objectKeys(breakpointQuery).reduce(
 	(acc, breakpoint) => {
-		acc[breakpoint] = { '@media': breakpointQuery[breakpoint] }
+		acc[breakpoint] = { "@media": breakpointQuery[breakpoint] }
 		return acc
 	},
-	{} as Record<keyof typeof breakpointQuery, { '@media': string }>
+	{} as Record<keyof typeof breakpointQuery, { "@media": string }>
 )
 
 // *******************************************************************
@@ -76,34 +76,34 @@ const colorProperties = defineProperties({
 		default: {}, // Default condition
 		hover: { selector: `&:hover:not(:disabled),&:focus:not(:disabled)` },
 		focus: { selector: `&:focus:not(:disabled)` },
-		focusWithin: { selector: '&:focus-within:not(:disabled)' },
-		active: { selector: '&:active:not(:disabled)' },
-		disabled: { selector: '&:disabled' },
+		focusWithin: { selector: "&:focus-within:not(:disabled)" },
+		active: { selector: "&:active:not(:disabled)" },
+		disabled: { selector: "&:disabled" },
 	},
-	defaultCondition: 'default',
+	defaultCondition: "default",
 	properties: {
 		color: {
 			...(colors as unknown as Record<string, string>),
 			...brand,
 			...foreground,
-			currentColor: 'currentColor',
-			inherit: 'inherit',
-			initial: 'initial',
+			currentColor: "currentColor",
+			inherit: "inherit",
+			initial: "initial",
 		},
 		fill: {
 			...(colors as unknown as Record<string, string>),
 			...(brand as Record<string, string>),
 			...(foreground as Record<string, string>),
-			currentColor: 'currentColor',
-			inherit: 'inherit',
-			initial: 'initial',
+			currentColor: "currentColor",
+			inherit: "inherit",
+			initial: "initial",
 		},
 		stroke: {
 			...(colors as unknown as Record<string, string>),
 			...(brand as Record<string, string>),
-			currentColor: 'currentColor',
-			inherit: 'inherit',
-			initial: 'initial',
+			currentColor: "currentColor",
+			inherit: "inherit",
+			initial: "initial",
 		},
 		borderColor: {
 			...(colors as unknown as Record<string, string>),
@@ -133,16 +133,16 @@ const typographyProperties = defineProperties({
 	conditions: {
 		...mediaQueryBreakpoints,
 	},
-	defaultCondition: 'xs-min',
+	defaultCondition: "xs-min",
 	properties: {
 		fontFamily,
-		fontSize: { ...fontSize, ...space, inherit: 'inherit' },
+		fontSize: { ...fontSize, ...space, inherit: "inherit" },
 		fontWeight,
-		lineHeight: { ...lineHeight, ...space, inherit: 'inherit' },
-		textDecoration: ['none', 'underline'],
-		textAlign: ['left', 'center', 'right', 'justify', 'inherit'],
-		textOverflow: ['ellipsis', 'clip', 'unset'],
-		whiteSpace: ['normal', 'nowrap', 'pre', 'pre-wrap', 'pre-line'],
+		lineHeight: { ...lineHeight, ...space, inherit: "inherit" },
+		textDecoration: ["none", "underline"],
+		textAlign: ["left", "center", "right", "justify", "inherit"],
+		textOverflow: ["ellipsis", "clip", "unset"],
+		whiteSpace: ["normal", "nowrap", "pre", "pre-wrap", "pre-line"],
 	},
 })
 // *******************************************************************
@@ -155,7 +155,7 @@ const spacingProperties = defineProperties({
 	conditions: {
 		...mediaQueryBreakpoints,
 	},
-	defaultCondition: 'xs-min',
+	defaultCondition: "xs-min",
 	properties: {
 		margin: space,
 		marginTop: space,
@@ -169,10 +169,10 @@ const spacingProperties = defineProperties({
 		paddingLeft: space,
 	},
 	shorthands: {
-		marginX: ['marginLeft', 'marginRight'],
-		marginY: ['marginTop', 'marginBottom'],
-		paddingX: ['paddingLeft', 'paddingRight'],
-		paddingY: ['paddingTop', 'paddingBottom'],
+		marginX: ["marginLeft", "marginRight"],
+		marginY: ["marginTop", "marginBottom"],
+		paddingX: ["paddingLeft", "paddingRight"],
+		paddingY: ["paddingTop", "paddingBottom"],
 	},
 })
 // *******************************************************************
@@ -196,14 +196,14 @@ const borderProperties = defineProperties({
 		borderLeftWidth: space,
 
 		borderRadius: border.radius,
-		outline: ['none'],
+		outline: ["none"],
 	},
 	shorthands: {
-		borderStyleX: ['borderStyleRight', 'borderStyleLeft'],
-		borderStyleY: ['borderStyleTop', 'borderStyleBottom'],
+		borderStyleX: ["borderStyleRight", "borderStyleLeft"],
+		borderStyleY: ["borderStyleTop", "borderStyleBottom"],
 
-		borderWidthX: ['borderRightWidth', 'borderLeftWidth'],
-		borderWidthY: ['borderTopWidth', 'borderBottomWidth'],
+		borderWidthX: ["borderRightWidth", "borderLeftWidth"],
+		borderWidthY: ["borderTopWidth", "borderBottomWidth"],
 	},
 })
 // *******************************************************************
@@ -216,7 +216,7 @@ const sizingProperties = defineProperties({
 	conditions: {
 		...mediaQueryBreakpoints,
 	},
-	defaultCondition: 'xs-min',
+	defaultCondition: "xs-min",
 	properties: {
 		width: space,
 		minWidth: space,
@@ -235,86 +235,86 @@ const sizingProperties = defineProperties({
 const displayProperties = defineProperties({
 	conditions: {
 		...mediaQueryBreakpoints,
-		disabled: { selector: '&:disabled' },
-		hover: { selector: '&:hover' },
-		active: { selector: '&:active' },
+		disabled: { selector: "&:disabled" },
+		hover: { selector: "&:hover" },
+		active: { selector: "&:active" },
 		default: {},
 	},
-	defaultCondition: 'xs-min',
+	defaultCondition: "xs-min",
 	properties: {
-		position: ['relative', 'absolute', 'fixed', 'sticky', 'static'],
-		verticalAlign: ['baseline', 'top', 'middle', 'bottom'],
+		position: ["relative", "absolute", "fixed", "sticky", "static"],
+		verticalAlign: ["baseline", "top", "middle", "bottom"],
 		display: [
-			'block',
-			'inline-block',
-			'inline',
-			'flex',
-			'inline-flex',
-			'grid',
-			'inline-grid',
-			'none',
-			'inherit',
-			'initial',
+			"block",
+			"inline-block",
+			"inline",
+			"flex",
+			"inline-flex",
+			"grid",
+			"inline-grid",
+			"none",
+			"inherit",
+			"initial",
 		],
-		boxSizing: ['border-box', 'content-box'],
+		boxSizing: ["border-box", "content-box"],
 		flexBasis: {
 			...space,
 			0: 0,
 			1: 1,
-			auto: 'auto',
+			auto: "auto",
 		},
-		flexDirection: ['row', 'row-reverse', 'column', 'column-reverse'],
+		flexDirection: ["row", "row-reverse", "column", "column-reverse"],
 		flexGrow: [0, 1],
-		flexShrink: [0, 1, 'initial'],
-		flexWrap: ['nowrap', 'wrap', 'wrap-reverse'],
-		cursor: ['pointer', 'default', 'not-allowed', 'text'],
+		flexShrink: [0, 1, "initial"],
+		flexWrap: ["nowrap", "wrap", "wrap-reverse"],
+		cursor: ["pointer", "default", "not-allowed", "text"],
 		gap: space,
 		justifyContent: [
-			'center',
-			'flex-start',
-			'flex-end',
-			'space-between',
-			'space-around',
-			'space-evenly',
-			'inherit',
+			"center",
+			"flex-start",
+			"flex-end",
+			"space-between",
+			"space-around",
+			"space-evenly",
+			"inherit",
 		],
 		justifyItems: [
-			'stretch',
-			'start',
-			'left',
-			'right',
-			'center',
-			'end',
-			'inherit',
+			"stretch",
+			"start",
+			"left",
+			"right",
+			"center",
+			"end",
+			"inherit",
 		],
 		alignItems: [
-			'flex-start',
-			'center',
-			'flex-end',
-			'stretch',
-			'baseline',
-			'inherit',
+			"flex-start",
+			"center",
+			"flex-end",
+			"stretch",
+			"baseline",
+			"inherit",
 		],
 		alignSelf: [
-			'flex-start',
-			'center',
-			'flex-end',
-			'stretch',
-			'baseline',
-			'inherit',
+			"flex-start",
+			"center",
+			"flex-end",
+			"stretch",
+			"baseline",
+			"inherit",
 		],
 		alignContent: [
-			'center',
-			'flex-start',
-			'flex-end',
-			'baseline',
-			'stretch',
-			'space-between',
-			'space-around',
-			'inherit',
+			"center",
+			"flex-start",
+			"flex-end",
+			"baseline",
+			"stretch",
+			"space-between",
+			"space-around",
+			"inherit",
 		],
-		overflowY: ['hidden', 'visible', 'scroll', 'auto'],
-		overflowX: ['hidden', 'visible', 'scroll', 'auto'],
+		overflowY: ["hidden", "visible", "scroll", "auto"],
+		overflowX: ["hidden", "visible", "scroll", "auto"],
 		zIndex: {
 			subNav: 500,
 			backToTopButton: 500,
@@ -329,7 +329,7 @@ const displayProperties = defineProperties({
 		},
 	},
 	shorthands: {
-		overflow: ['overflowX', 'overflowY'],
+		overflow: ["overflowX", "overflowY"],
 	},
 })
 

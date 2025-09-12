@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react'
-import { Typography, type TypographyProps } from '~components/Typography'
-import { list, listItem } from './List.css'
+import type { ReactNode } from "react"
+import { Typography, type TypographyProps } from "~components/Typography"
+import { list, listItem } from "./List.css"
 
 type ListProps = {
-	variant?: TypographyProps['variant']
+	variant?: TypographyProps["variant"]
 	ordered?: boolean
 	children?: ReactNode
 }
@@ -12,7 +12,7 @@ export const List = ({ variant, ordered, children }: ListProps) => {
 	return (
 		<Typography
 			variant={variant}
-			as={ordered ? 'ol' : 'ul'}
+			as={ordered ? "ol" : "ul"}
 			className={list({ ordered })}
 		>
 			{children}

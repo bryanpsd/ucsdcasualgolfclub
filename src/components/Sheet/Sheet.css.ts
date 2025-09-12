@@ -1,11 +1,11 @@
-import { keyframes, style } from '@vanilla-extract/css'
-import { color } from '~styles/designTokens/colors'
-import { breakpointQuery, tokens } from '~styles/designTokens.css'
+import { keyframes, style } from "@vanilla-extract/css"
+import { color } from "~styles/designTokens/colors"
+import { breakpointQuery, tokens } from "~styles/designTokens.css"
 
 export const modalOverlay = style([
 	tokens({
-		position: 'fixed',
-		zIndex: 'drawer',
+		position: "fixed",
+		zIndex: "drawer",
 	}),
 	{
 		inset: 0,
@@ -15,38 +15,38 @@ export const modalOverlay = style([
 ])
 
 const slideIn = keyframes({
-	'0%': {
-		right: '-100%',
+	"0%": {
+		right: "-100%",
 	},
-	'100%': {
+	"100%": {
 		right: 0,
 	},
 })
 
 export const modalContent = style([
 	tokens({
-		position: 'fixed',
-		height: 'col-12',
+		position: "fixed",
+		height: "col-12",
 		paddingTop: 16,
 		paddingX: 8,
 		paddingBottom: 24,
-		zIndex: 'drawer',
-		overflowY: 'auto',
+		zIndex: "drawer",
+		overflowY: "auto",
 	}),
 	{
 		top: 0,
 		right: 0,
-		width: '100%',
+		width: "100%",
 		backgroundColor: color.brand.white,
-		'@media': {
-			[breakpointQuery['sm-min']]: {
+		"@media": {
+			[breakpointQuery["sm-min"]]: {
 				width: 336,
 			},
 		},
 		selectors: {
 			'&[data-state="open"]': {
-				'@media': {
-					[breakpointQuery['sm-min']]: {
+				"@media": {
+					[breakpointQuery["sm-min"]]: {
 						animation: `${slideIn} 0.3s`,
 					},
 				},
@@ -57,8 +57,8 @@ export const modalContent = style([
 
 export const modalCloseContainer = style([
 	tokens({
-		width: 'col-12',
-		display: 'flex',
-		justifyContent: 'flex-end',
+		width: "col-12",
+		display: "flex",
+		justifyContent: "flex-end",
 	}),
 ])

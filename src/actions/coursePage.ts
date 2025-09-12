@@ -1,10 +1,10 @@
-import { defineAction } from 'astro:actions'
-import { z } from 'astro:schema'
-import { contentfulClient } from '../services/contentful/contentful'
+import { defineAction } from "astro:actions"
+import { z } from "astro:schema"
+import { contentfulClient } from "../services/contentful/contentful"
 import type {
 	TypeCourseProps,
 	TypeCourseSkeleton,
-} from '../types/contentful/TypeCourse'
+} from "../types/contentful/TypeCourse"
 
 const mapContentfulFields = (fields?: TypeCourseProps) => {
 	if (!fields) return null
@@ -12,7 +12,7 @@ const mapContentfulFields = (fields?: TypeCourseProps) => {
 	// Extract tournament year and generate slug
 	const tournamentYear = fields.tournaments
 		?.map((tournament) => {
-			if (tournament && 'fields' in tournament && tournament.fields.date) {
+			if (tournament && "fields" in tournament && tournament.fields.date) {
 				return new Date(tournament.fields.date).getFullYear() // Extract year
 			}
 			return null
@@ -35,8 +35,8 @@ export const getCoursePage = defineAction({
 		const pageData =
 			await contentfulClient.withoutUnresolvableLinks.getEntries<TypeCourseSkeleton>(
 				{
-					content_type: 'course',
-					'fields.slug': slug.toLowerCase(),
+					content_type: "course",
+					"fields.slug": slug.toLowerCase(),
 					include: 10,
 				}
 			)

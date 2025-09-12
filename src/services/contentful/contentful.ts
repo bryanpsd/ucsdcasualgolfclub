@@ -1,8 +1,8 @@
-import type { EntryFieldTypes } from 'contentful'
-import * as contentful from 'contentful'
+import type { EntryFieldTypes } from "contentful"
+import * as contentful from "contentful"
 
 export interface SimplePage {
-	contentTypeId: 'simplePage'
+	contentTypeId: "simplePage"
 	fields: {
 		title: EntryFieldTypes.Text
 		slug: EntryFieldTypes.Text
@@ -16,5 +16,5 @@ export const contentfulClient = contentful.createClient({
 	accessToken: import.meta.env.DEV
 		? import.meta.env.CONTENTFUL_PREVIEW_TOKEN
 		: import.meta.env.CONTENTFUL_DELIVERY_TOKEN,
-	host: import.meta.env.DEV ? 'preview.contentful.com' : 'cdn.contentful.com',
+	host: import.meta.env.DEV ? "preview.contentful.com" : "cdn.contentful.com",
 })

@@ -8,23 +8,23 @@ export const replaceAllSpecialChars = (text: string, by: string): string => {
 
 export const removeAllSpecialChars = (text?: string): string => {
 	if (text == null) {
-		return ''
+		return ""
 	}
-	return replaceAllSpecialChars(text, '')
+	return replaceAllSpecialChars(text, "")
 }
 
-export const toKebabCase = (input = ''): string => {
-	return input.toLocaleLowerCase().replace(/ /g, '-')
+export const toKebabCase = (input = ""): string => {
+	return input.toLocaleLowerCase().replace(/ /g, "-")
 }
 
 export const enumToStringArray = (
 	enums: { [s: number]: string },
 	sort = true
 ) => {
-	let result = Object.values(enums).filter((value) => typeof value === 'string')
+	let result = Object.values(enums).filter((value) => typeof value === "string")
 	if (sort) {
 		result = result.sort((one, two) =>
-			one === 'Other' || two === 'Other' ? 1 : one > two ? 1 : -1
+			one === "Other" || two === "Other" ? 1 : one > two ? 1 : -1
 		)
 	}
 	return result
@@ -38,7 +38,7 @@ export const enumToKeyValueArray = (
 		[s: number]: string
 	}>
 ): Array<{ label: string; value: string }> => {
-	let values = Object.values(enums).filter((value) => typeof value === 'string')
+	let values = Object.values(enums).filter((value) => typeof value === "string")
 	if (filter) {
 		values = values.filter((item) => !filter.includes(item))
 	}
@@ -57,10 +57,10 @@ export const toRef = (str?: string | number | boolean) => {
 	if (str != null) {
 		return String(removeAllSpecialChars(str.toString())).toLocaleLowerCase()
 	} else {
-		return ''
+		return ""
 	}
 }
 
 export function isNullOrEmpty(str: string | null | undefined): boolean {
-	return str == null || str.trim() === ''
+	return str == null || str.trim() === ""
 }

@@ -4,7 +4,7 @@ import type {
 	EntryFieldTypes,
 	EntrySkeletonType,
 	LocaleCode,
-} from 'contentful'
+} from "contentful"
 
 export interface TypeMessageBoxFields {
 	title?: EntryFieldTypes.Symbol
@@ -13,7 +13,7 @@ export interface TypeMessageBoxFields {
 
 export type TypeMessageBoxSkeleton = EntrySkeletonType<
 	TypeMessageBoxFields,
-	'messageBox'
+	"messageBox"
 >
 export type TypeMessageBox<
 	Modifiers extends ChainModifiers,
@@ -26,5 +26,5 @@ export function isTypeMessageBox<
 >(
 	entry: Entry<EntrySkeletonType, Modifiers, Locales>
 ): entry is TypeMessageBox<Modifiers, Locales> {
-	return entry.sys.contentType.sys.id === 'messageBox'
+	return entry.sys.contentType.sys.id === "messageBox"
 }

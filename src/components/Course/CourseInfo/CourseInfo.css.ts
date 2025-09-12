@@ -1,11 +1,11 @@
-import { style } from '@vanilla-extract/css'
-import { color } from '~styles/designTokens/colors'
-import { tokens } from '~styles/designTokens.css'
+import { style } from "@vanilla-extract/css"
+import { color } from "~styles/designTokens/colors"
+import { tokens } from "~styles/designTokens.css"
 
 export const courseCardInfo = style([
 	tokens({
-		display: 'flex',
-		flexDirection: 'column',
+		display: "flex",
+		flexDirection: "column",
 	}),
 	{
 		backgroundColor: color.brand.navy,
@@ -13,11 +13,11 @@ export const courseCardInfo = style([
 ])
 
 export const courseCardInfoTitle = style({
-	display: 'flex',
+	display: "flex",
 	padding: 10,
 	color: color.brand.white,
-	alignItems: 'center',
-	justifyContent: 'center',
+	alignItems: "center",
+	justifyContent: "center",
 })
 
 export const courseCardInfoListWrapper = style([
@@ -31,8 +31,8 @@ export const courseCardInfoListWrapper = style([
 
 export const courseCardInfoContent = style([
 	tokens({
-		display: 'flex',
-		flexDirection: 'column',
+		display: "flex",
+		flexDirection: "column",
 		gap: 4,
 	}),
 	{

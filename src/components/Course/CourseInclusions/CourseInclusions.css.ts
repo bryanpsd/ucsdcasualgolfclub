@@ -1,12 +1,12 @@
-import { recipe } from '@vanilla-extract/recipes'
-import { color } from '~styles/designTokens/colors'
-import { tokens } from '~styles/designTokens.css'
+import { recipe } from "@vanilla-extract/recipes"
+import { color } from "~styles/designTokens/colors"
+import { tokens } from "~styles/designTokens.css"
 
 export const courseInclusionsWrapper = recipe({
 	base: [
 		tokens({
-			display: 'flex',
-			flexDirection: 'column',
+			display: "flex",
+			flexDirection: "column",
 			gap: 4,
 		}),
 	],
@@ -33,10 +33,10 @@ export const courseInclusionsHeadline = recipe({
 export const courseInclusionsList = recipe({
 	base: [
 		tokens({
-			display: 'flex',
-			flexDirection: 'row',
-			gap: { 'xs-min': 8, 'lg-min': 0 },
-			flexWrap: { 'xs-min': 'wrap', 'lg-min': 'nowrap' },
+			display: "flex",
+			flexDirection: "row",
+			gap: { "xs-min": 8, "lg-min": 0 },
+			flexWrap: { "xs-min": "wrap", "lg-min": "nowrap" },
 		}),
 	],
 	variants: {
@@ -44,7 +44,7 @@ export const courseInclusionsList = recipe({
 			default: {},
 			secondary: {
 				color: color.brand.white,
-				justifyContent: 'center',
+				justifyContent: "center",
 			},
 		},
 	},
@@ -53,17 +53,17 @@ export const courseInclusionsList = recipe({
 export const courseInclusionsListItem = recipe({
 	base: [
 		tokens({
-			display: 'flex',
+			display: "flex",
 			paddingX: 4,
-			alignItems: 'center',
+			alignItems: "center",
 		}),
 		{
 			selectors: {
-				'&:first-child': {
+				"&:first-child": {
 					paddingLeft: 0,
 				},
-				'&:last-child': {
-					borderRight: 'none',
+				"&:last-child": {
+					borderRight: "none",
 				},
 			},
 		},

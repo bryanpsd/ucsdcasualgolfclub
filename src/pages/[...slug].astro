@@ -1,25 +1,25 @@
 ---
-import { Hero } from '~components/Hero'
-import { RichText } from '~components/RichText'
+import { Hero } from "~components/Hero"
+import { RichText } from "~components/RichText"
 
-import Layout from '~layouts/Layout.astro'
-import { contentfulClient } from '~services/contentful/contentful'
-import * as styles from '~styles/common.css'
-import type { TypeSimplePageSkeleton } from '~types/contentful'
+import Layout from "~layouts/Layout.astro"
+import { contentfulClient } from "~services/contentful/contentful"
+import * as styles from "~styles/common.css"
+import type { TypeSimplePageSkeleton } from "~types/contentful"
 
 // Get the slug from the URL
-const { slug = '' } = Astro.params
+const { slug = "" } = Astro.params
 
 // Fetch the entry matching the slug
 const entry = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-	content_type: 'simplePage',
-	'fields.slug': slug,
+	content_type: "simplePage",
+	"fields.slug": slug,
 	limit: 1,
 })
 
 // Handle cases where no entry is found
 if (!slug || !entry.items || entry.items.length === 0) {
-	return Astro.redirect('/404')
+	return Astro.redirect("/404")
 }
 
 // Safely access the fields property

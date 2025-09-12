@@ -1,7 +1,7 @@
 ---
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
-import { Table } from '~components/Table'
-import * as styles from './FlightCard.css'
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
+import { Table } from "~components/Table"
+import * as styles from "./FlightCard.css"
 
 interface FlightCardProps {
 	courseChampionship?: boolean
@@ -87,20 +87,20 @@ const lowestYearlyNetForTournament = Math.min(
 )
 
 const tableHeaders = [
-	'Player',
-	...(hasResultsForCurrentCourse ? [] : ['Index']),
+	"Player",
+	...(hasResultsForCurrentCourse ? [] : ["Index"]),
 	...(hasResultsForCurrentCourse
 		? [
-				'Index',
-				'Gross',
-				'Course Handicap',
-				'Net',
-				'Putts',
-				'Closest To',
-				'Long Drive',
+				"Index",
+				"Gross",
+				"Course Handicap",
+				"Net",
+				"Putts",
+				"Closest To",
+				"Long Drive",
 			]
 		: []),
-	...(courseChampionship ? ['Final Gross', 'Final Net'] : []),
+	...(courseChampionship ? ["Final Gross", "Final Net"] : []),
 ]
 ---
 

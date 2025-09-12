@@ -1,7 +1,7 @@
 ---
 // Import the Google Maps JavaScript API
 const googleMapsApiKey = import.meta.env.GOOGLE_MAPS_API_KEY
-const googleMapsApiUrl = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&callback=initMap&libraries=&v=weekly`
+const googleMapsApiUrl = `https://maps.googleapis.com/maps/api/js?key=${googleMapsApiKey}&loading=async&callback=initMap&libraries=&v=weekly`
 
 interface Props {
 	longitude: number

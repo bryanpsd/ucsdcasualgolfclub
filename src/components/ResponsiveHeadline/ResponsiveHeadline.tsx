@@ -1,9 +1,9 @@
-import type { ElementType } from 'react'
-import type { PolymorphicComponentProp } from 'types/PolymorphicComponent'
-import { concatClasses } from '~utils/concatClasses'
-import { responsiveHeadline } from './ResponsiveHeadline.css'
+import type { ElementType } from "react"
+import type { PolymorphicComponentProp } from "types/PolymorphicComponent"
+import { concatClasses } from "~utils/concatClasses"
+import { responsiveHeadline } from "./ResponsiveHeadline.css"
 
-const defaultElement: ElementType = 'p'
+const defaultElement: ElementType = "p"
 
 type HeadlineProps<C extends ElementType = typeof defaultElement> =
 	PolymorphicComponentProp<

@@ -1,10 +1,10 @@
-import { style } from '@vanilla-extract/css'
-import { color } from '~styles/designTokens/colors'
-import { tokens } from '~styles/designTokens.css'
+import { style } from "@vanilla-extract/css"
+import { color } from "~styles/designTokens/colors"
+import { tokens } from "~styles/designTokens.css"
 
 const firstChildMarginTop = style({
 	selectors: {
-		'&:first-child': {
+		"&:first-child": {
 			marginTop: 0,
 		},
 	},
@@ -34,7 +34,7 @@ export const body = style([
 	{
 		marginTop: 8,
 		selectors: {
-			'& + &': {
+			"& + &": {
 				marginTop: 20,
 			},
 		},
@@ -56,6 +56,6 @@ export const richTextContainer = style([
 export const link = style([
 	{
 		color: color.brand.navy,
-		textDecoration: 'underline',
+		textDecoration: "underline",
 	},
 ])
