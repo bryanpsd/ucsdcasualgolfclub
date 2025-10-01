@@ -29,7 +29,7 @@ const { title = "UCSD Casual Golf Club", description = "" } = Astro.props
   <meta name="viewport" content="width=device-width" />
   <link rel="sitemap" href="/sitemap-index.xml" />
   <link rel="icon" type="image/png" href="/ucsd-icon.png" />
-  <link rel="apple-touch-icon" sizes="57x57" href="/ucsd-icon-57x57.png" />
+  <link rel="apple-touch-icon" sizes="48x48" href="/ucsd-icon-48x48.png" />
   <link rel="apple-touch-icon" sizes="72x72" href="/ucsd-icon-72x72.png" />
   <link rel="apple-touch-icon" sizes="76x76" href="/ucsd-icon-96x96.png" />
   <link rel="apple-touch-icon" sizes="114x114" href="/ucsd-icon-144x144.png" />
@@ -39,7 +39,17 @@ const { title = "UCSD Casual Golf Club", description = "" } = Astro.props
   <link rel="apple-touch-icon" sizes="180x180" href="/ucsd-icon-512x512.png" />
   <link rel="canonical" href={canonicalURL} />
   <meta name="generator" content={Astro.generator} />
-  <GoogleAnalytics measurementId={"G-2L08BXJE20"} />
+  
 </head>
 
 <ClientRouter />
+
+<GoogleAnalytics measurementId={"G-2L08BXJE20"} />
+
+<script>
+	if ("serviceWorker" in navigator) {
+		window.addEventListener("load", () => {
+			navigator.serviceWorker.register("/sw.js", { scope: "/" });
+		});
+	}
+</script>

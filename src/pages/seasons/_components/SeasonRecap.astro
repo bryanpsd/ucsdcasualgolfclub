@@ -37,8 +37,10 @@ const seasonRecap = response.items.find((item) =>
                 }
                 alt={
                   winner && 'fields' in winner
-                    ? (winner.fields.title ?? '')
-                    : ''
+                    ? winner.fields.title && winner.fields.title.trim() !== ''
+                      ? winner.fields.title
+                      : 'Winner image'
+                    : 'Winner image'
                 }
               />
               <ResponsiveHeadline size={1} as="h3">
