@@ -1,17 +1,15 @@
 ---
-import { contentfulClient } from '~services/contentful/contentful'
+import { Hero } from "~components/Hero"
+import { Table } from "~components/Table"
 
-import type { TypeRosterSkeleton } from '~types/contentful/TypeRoster'
-
-import Layout from '~layouts/Layout.astro'
-import { Hero } from '~components/Hero'
-import { Table } from '~components/Table'
-
-import * as styles from './_style/roster.css'
-import * as commonStyles from '~styles/common.css'
+import Layout from "~layouts/Layout.astro"
+import { contentfulClient } from "~services/contentful/contentful"
+import * as commonStyles from "~styles/common.css"
+import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster"
+import * as styles from "./_style/roster.css"
 
 const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
-  content_type: 'roster',
+	content_type: "roster",
 })
 
 // const rosterYears = Array.from(
@@ -19,31 +17,33 @@ const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
 // ).filter((year): year is string => Boolean(year))
 
 const currentRosterPlayers = entries.items
-  .filter((item) => item.fields.title?.includes('Current')) // Filter by title
-  .flatMap((item) =>
-    item.fields.players?.map((player) => {
-      if (player && 'fields' in player) {
-        return {
-          playerName: player.fields.playerName,
-          handicapIndex: player.fields.handicapIndex,
-          guest: player.fields.guest,
-        }
-      }
-      return null
-    })
-  )
-  .filter((player) => player !== null) // Remove null values
-  .filter((player) => !player?.guest?.includes('Yes')) // Exclude guests
-  .sort((a, b) => (a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity))
+	.filter((item) => item.fields.title?.includes("Current")) // Filter by title
+	.flatMap((item) =>
+		item.fields.players?.map((player) => {
+			if (player && "fields" in player) {
+				return {
+					playerName: player.fields.playerName,
+					handicapIndex: player.fields.handicapIndex,
+					guest: player.fields.guest,
+				}
+			}
+			return null
+		})
+	)
+	.filter((player) => player !== null) // Remove null values
+	.filter((player) => !player?.guest?.includes("Yes")) // Exclude guests
+	.sort(
+		(a, b) => (a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity)
+	)
 
 const lastUpdated = entries.items
-  .map((item) => new Date(item.sys.updatedAt))
-  .sort((a, b) => b.getTime() - a.getTime())[0]
-  ?.toLocaleDateString('en-US', {
-    year: '2-digit',
-    month: '2-digit',
-    day: '2-digit',
-  })
+	.map((item) => new Date(item.sys.updatedAt))
+	.sort((a, b) => b.getTime() - a.getTime())[0]
+	?.toLocaleDateString("en-US", {
+		year: "2-digit",
+		month: "2-digit",
+		day: "2-digit",
+	})
 ---
 
 <Layout
@@ -60,7 +60,9 @@ const lastUpdated = entries.items
           player?.playerName
             ? `<a href="/results?playerName=${encodeURIComponent(player.playerName)}" class="${styles.rosterLink}">${player.playerName}</a>`
             : 'Unknown',
-          player?.handicapIndex === undefined ? 'NH' : String(player.handicapIndex),
+          player?.handicapIndex === undefined
+            ? 'NH'
+            : String(player.handicapIndex),
         ])}
       />
     </div>

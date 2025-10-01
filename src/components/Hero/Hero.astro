@@ -1,10 +1,13 @@
 ---
-import defaultBackgroundImage from '~assets/admiral-baker-south-bg.webp'
-const defaultBackgroundImageSrc = (defaultBackgroundImage as unknown as { src: string }).src
+import defaultBackgroundImage from "~assets/admiral-baker-south-bg.webp"
 
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
+const defaultBackgroundImageSrc = (
+	defaultBackgroundImage as unknown as { src: string }
+).src
 
-import * as styles from './Hero.css'
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
+
+import * as styles from "./Hero.css"
 
 const { course, title, courseImage, subHeadline } = Astro.props
 
@@ -13,7 +16,12 @@ const headline = course || title
 
 <section class={styles.heroWrapper}>
   <div class={styles.heroColLeft}>
-    <ResponsiveHeadline className={styles.heroHeadline} size={2} as="h1" color="inverse">
+    <ResponsiveHeadline
+      className={styles.heroHeadline}
+      size={2}
+      as="h1"
+      color="inverse"
+    >
       {headline}</ResponsiveHeadline
     >
     {

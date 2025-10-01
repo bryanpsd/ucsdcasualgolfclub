@@ -1,22 +1,21 @@
 ---
-import { contentfulClient } from '~services/contentful/contentful'
-import { format } from 'date-fns'
+import { format } from "date-fns"
+import { Table } from "~components/Table"
+import { contentfulClient } from "~services/contentful/contentful"
 
-import { Table } from '~components/Table'
-
-import type { TypeLeadersSkeleton } from '~types/contentful'
+import type { TypeLeadersSkeleton } from "~types/contentful"
 
 const { gross, net, firstFlight, secondFlight } = Astro.props
 
 const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
-  content_type: 'leaders',
-  limit: 30,
-  order: (gross && 'fields.gross') || (net && 'fields.net'),
+	content_type: "leaders",
+	limit: 30,
+	order: (gross && "fields.gross") || (net && "fields.net"),
 })
 
 const lastUpdatedDate = entries.items.reduce((latest, item) => {
-  const updatedAt = new Date(item.sys.updatedAt).getTime()
-  return updatedAt > latest ? updatedAt : latest
+	const updatedAt = new Date(item.sys.updatedAt).getTime()
+	return updatedAt > latest ? updatedAt : latest
 }, 0)
 ---
 
@@ -32,7 +31,7 @@ const lastUpdatedDate = entries.items.reduce((latest, item) => {
     .filter((item) => item.fields.onCurrentRoster)
     .map((item) => {
       if (gross && item.fields.roundsCheck && item.fields.gross !== undefined) {
-        return [item.fields.playerName, item.fields.gross]
+        return [item.fields.playerName, item.fields.gross];
       } else if (
         firstFlight &&
         net &&
@@ -40,7 +39,7 @@ const lastUpdatedDate = entries.items.reduce((latest, item) => {
         item.fields.roundsCheck &&
         item.fields.flight === 'First Flight'
       ) {
-        return [item.fields.playerName, item.fields.net]
+        return [item.fields.playerName, item.fields.net];
       } else if (
         secondFlight &&
         net &&
@@ -48,7 +47,7 @@ const lastUpdatedDate = entries.items.reduce((latest, item) => {
         item.fields.roundsCheck &&
         item.fields.flight === 'Second Flight'
       ) {
-        return [item.fields.playerName, item.fields.net]
+        return [item.fields.playerName, item.fields.net];
       }
     })
     .filter((row) => row !== undefined) as string[][]}

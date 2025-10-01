@@ -1,1 +1,1 @@
-export { default as Map } from './Map.astro'
+export { default as Map } from "./Map.astro"

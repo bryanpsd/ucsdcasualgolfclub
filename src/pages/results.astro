@@ -1,61 +1,72 @@
 ---
-import { contentfulClient } from '~services/contentful/contentful'
+import { Hero } from "~components/Hero"
+import { TournamentResults } from "~components/TournamentResults"
 
-import type { TypeLeadersSkeleton } from '~types/contentful'
+import Layout from "~layouts/Layout.astro"
+import { contentfulClient } from "~services/contentful/contentful"
 
-import Layout from '~layouts/Layout.astro'
-import { Hero } from '~components/Hero'
-
-import * as styles from '~styles/common.css'
-import { TournamentResults } from '~components/TournamentResults'
+import * as styles from "~styles/common.css"
+import type { TypeLeadersSkeleton } from "~types/contentful"
 
 const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
-  content_type: 'leaders',
-  include: 3,
+	content_type: "leaders",
+	include: 3,
 })
 
-const players = entries.items.map((entry) => ({
-  playerName: entry.fields.playerName || 'Unknown Player',
-  results:
-    entry.fields.results?.map((result) => ({
-      title: 'fields' in result ? (result.fields?.title ?? null) : null,
-      date:
-        'fields' in result && result.fields?.date
-          ? isNaN(Date.parse(result.fields.date))
-            ? null
-            : new Date(result.fields.date).toISOString() // Use ISO format for sorting
-          : null,
-      gross: 'fields' in result ? (result.fields?.gross ?? null) : null,
-      flight: 'fields' in result ? (result.fields?.flight ?? null) : null,
-      courseHandicap: 'fields' in result ? (result.fields?.courseHandicap ?? null) : null,
-      net: 'fields' in result ? (result.fields?.net ?? null) : null,
-      putts: 'fields' in result ? (result.fields?.putts ?? null) : null,
-      closestTo: 'fields' in result ? (result.fields?.closestTo ?? null) : null,
-      longDrive: 'fields' in result ? (result.fields?.longDrive ?? null) : null,
-      course:
-        'fields' in result && result.fields?.course
-          ? {
-              name:
-                'fields' in result.fields.course
-                  ? result.fields.course.fields?.courseName || 'Unknown Course'
-                  : 'Unknown Course',
-              slug:
-                'fields' in result.fields.course
-                  ? result.fields.course.fields?.slug || 'unknown-course'
-                  : 'unknown-course',
-            }
-          : null,
-    })) ?? [],
-}))
+const players = entries.items
+	.map((entry) => ({
+		playerName: entry.fields.playerName || "Unknown Player",
+		results:
+			entry.fields.results?.map((result) => ({
+				title: "fields" in result ? (result.fields?.title ?? null) : null,
+				date:
+					"fields" in result && result.fields?.date
+						? Number.isNaN(Date.parse(result.fields.date))
+							? null
+							: new Date(result.fields.date).toISOString()
+						: null,
+				gross: "fields" in result ? (result.fields?.gross ?? null) : null,
+				flight: "fields" in result ? (result.fields?.flight ?? null) : null,
+				courseHandicap:
+					"fields" in result ? (result.fields?.courseHandicap ?? null) : null,
+				net: "fields" in result ? (result.fields?.net ?? null) : null,
+				putts: "fields" in result ? (result.fields?.putts ?? null) : null,
+				closestTo:
+					"fields" in result ? (result.fields?.closestTo ?? null) : null,
+				longDrive:
+					"fields" in result ? (result.fields?.longDrive ?? null) : null,
+				course:
+					"fields" in result && result.fields?.course
+						? {
+								name:
+									"fields" in result.fields.course
+										? result.fields.course.fields?.courseName ||
+											"Unknown Course"
+										: "Unknown Course",
+								slug:
+									"fields" in result.fields.course
+										? result.fields.course.fields?.slug || "unknown-course"
+										: "unknown-course",
+							}
+						: null,
+			})) ?? [],
+	}))
+	.filter((player) => player.playerName !== "Unknown Player") // <-- filter out
 
 const url = new URL(Astro.request.url)
-
-const selectedPlayer = url.searchParams.get('playerName') || ''
+const selectedPlayer = url.searchParams.get("playerName") || ""
 ---
 
-<Layout title="Results | UCSD Casual Golf Club" description="Learn about the UCSD Casual Golf Club">
-  <Hero title="Results" />
-  <div class={styles.subPageWrapper}>
-    <TournamentResults players={players} client:load selectedPlayer={selectedPlayer} />
-  </div>
+<Layout
+	title="Results | UCSD Casual Golf Club"
+	description="Learn about the UCSD Casual Golf Club"
+>
+	<Hero title="Results" />
+	<div class={styles.subPageWrapper}>
+		<TournamentResults
+			players={players}
+			client:load
+			selectedPlayer={selectedPlayer}
+		/>
+	</div>
 </Layout>

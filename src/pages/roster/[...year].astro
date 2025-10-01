@@ -1,46 +1,47 @@
 ---
 export const prerender = true
 
-import { contentfulClient } from '~services/contentful/contentful'
-import type { TypeRosterSkeleton } from '~types/contentful/TypeRoster'
+import { Hero } from "~components/Hero"
+import { Table } from "~components/Table"
 
-import Layout from '~layouts/Layout.astro'
-import { Hero } from '~components/Hero'
-import { Table } from '~components/Table'
-
-import * as styles from '~styles/common.css'
+import Layout from "~layouts/Layout.astro"
+import { contentfulClient } from "~services/contentful/contentful"
+import * as styles from "~styles/common.css"
+import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster"
 
 export async function getStaticPaths() {
-  const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
-    content_type: 'roster',
-  })
+	const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
+		content_type: "roster",
+	})
 
-  const pages = entries.items.map((item) => {
-    return {
-      params: {
-        year: item.fields.year?.toString(),
-      },
-      props: {
-        year: item.fields.year ?? 'N/A',
-        players:
-          item.fields.players
-            ?.map((player) => {
-              if (player && 'fields' in player) {
-                return {
-                  playerName: player.fields.playerName,
-                  handicapIndex: player.fields.handicapIndex,
-                  guest: player.fields.guest,
-                }
-              }
-              return null
-            })
-            .filter(Boolean) ?? [],
-        years: entries.items.map((entry) => entry.fields.year?.toString() ?? 'N/A'),
-      },
-    }
-  })
+	const pages = entries.items.map((item) => {
+		return {
+			params: {
+				year: item.fields.year?.toString(),
+			},
+			props: {
+				year: item.fields.year ?? "N/A",
+				players:
+					item.fields.players
+						?.map((player) => {
+							if (player && "fields" in player) {
+								return {
+									playerName: player.fields.playerName,
+									handicapIndex: player.fields.handicapIndex,
+									guest: player.fields.guest,
+								}
+							}
+							return null
+						})
+						.filter(Boolean) ?? [],
+				years: entries.items.map(
+					(entry) => entry.fields.year?.toString() ?? "N/A"
+				),
+			},
+		}
+	})
 
-  return pages
+	return pages
 }
 
 const { year, players = [] } = Astro.props
@@ -62,8 +63,10 @@ const { year, players = [] } = Astro.props
               ? null
               : [
                   player?.playerName,
-                  player?.handicapIndex === undefined ? 'NH' : String(player.handicapIndex),
-                ]
+                  player?.handicapIndex === undefined
+                    ? 'NH'
+                    : String(player.handicapIndex),
+                ];
           })
           .filter((row) => row !== null) as string[][]}
       />

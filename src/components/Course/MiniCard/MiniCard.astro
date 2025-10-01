@@ -1,34 +1,36 @@
 ---
-import { format } from 'date-fns'
+import { format } from "date-fns"
+import { Button } from "~components/Button"
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
+import { CourseDetails } from "../CourseDetails"
+import { CourseInclusions } from "../CourseInclusions"
 
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
-import { Button } from '~components/Button'
-import { CourseDetails } from '../CourseDetails'
-import { CourseInclusions } from '../CourseInclusions'
-
-import * as styles from './MiniCard.css'
+import * as styles from "./MiniCard.css"
 
 const {
-  title,
-  course,
-  prices,
-  players,
-  date,
-  isCoursePage,
-  courseWebsite,
-  label,
-  slug,
-  results,
-  inclusions,
-  type,
-  tournamentNotes,
+	title,
+	course,
+	prices,
+	players,
+	date,
+	isCoursePage,
+	courseWebsite,
+	label,
+	slug,
+	results,
+	inclusions,
+	type,
+	tournamentNotes,
 } = Astro.props
 
-const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null
+const validDate =
+	date && !Number.isNaN(Date.parse(date)) ? new Date(date) : null
 ---
 
 <div class={styles.miniCardWrapper}>
-  <ResponsiveHeadline className={styles.miniCardTitle} size={1} as="h2">{title}</ResponsiveHeadline>
+  <ResponsiveHeadline className={styles.miniCardTitle} size={1} as="h2"
+    >{title}</ResponsiveHeadline
+  >
   <div class={styles.miniCard}>
     <ResponsiveHeadline className={styles.miniCardCourse} size={1} as="h3">
       {course}
@@ -49,7 +51,8 @@ const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null
         validDate ? (
           <>
             <div class={styles.dateTimeWrapper}>
-              <span>{format(date, 'E M/d/yy')}</span>@<span>{format(date, 'h:mmaaa')}</span>
+              <span>{format(date, 'E M/d/yy')}</span>@
+              <span>{format(date, 'h:mmaaa')}</span>
             </div>
             {type && <div>{type}</div>}
           </>
@@ -60,12 +63,21 @@ const validDate = date && !isNaN(Date.parse(date)) ? new Date(date) : null
     </div>
     {
       (prices || players) && (
-        <CourseDetails client:load prices={prices} players={players} isMiniCard />
+        <CourseDetails
+          client:load
+          prices={prices}
+          players={players}
+          isMiniCard
+        />
       )
     }
     {
       isCoursePage && inclusions && inclusions.length > 0 && (
-        <CourseInclusions client:load tournament={{ inclusions: inclusions }} isMiniCard />
+        <CourseInclusions
+          client:load
+          tournament={{ inclusions: inclusions }}
+          isMiniCard
+        />
       )
     }
     {

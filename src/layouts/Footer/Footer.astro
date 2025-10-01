@@ -1,7 +1,7 @@
 ---
-import { Typography } from '~components/Typography'
+import { Typography } from "~components/Typography"
 
-import * as styles from './Footer.css'
+import * as styles from "./Footer.css"
 
 const currentDate = new Date()
 const year = currentDate.getFullYear()
@@ -41,6 +41,8 @@ const year = currentDate.getFullYear()
       </ul>
     </nav>
 
-    <Typography className={styles.footerCopyright}>&copy;{year} UCSD Casual Golf Club</Typography>
+    <Typography className={styles.footerCopyright}
+      >&copy;{year} UCSD Casual Golf Club</Typography
+    >
   </div>
 </footer>

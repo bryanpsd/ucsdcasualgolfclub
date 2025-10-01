@@ -1,4 +1,4 @@
-import { breakpoints } from './breakpoints'
-import { typography } from './typography'
+import { breakpoints } from "./breakpoints"
+import { typography } from "./typography"
 
 export { typography, breakpoints }

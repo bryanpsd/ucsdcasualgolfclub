@@ -1,35 +1,28 @@
 {
-   "extends": "astro/tsconfigs/strict",
-  "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "baseUrl": "./src",
-    "noEmit": true,
-    "paths": {
-      "@fonts": ["assets/fonts/*"],
-      "~*": ["*"]
-    }
-  },
-  "include": [
-    "src",
-    "astro-env.d.ts",
-    ".astro/types.d.ts"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ]
+	"extends": "astro/tsconfigs/strict",
+	"compilerOptions": {
+		"target": "ES2022",
+		"lib": ["dom", "dom.iterable", "ESNext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noFallthroughCasesInSwitch": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "react-jsx",
+		"jsxImportSource": "react",
+		"baseUrl": "./src",
+		"noEmit": true,
+		"paths": {
+			"@fonts": ["assets/fonts/*"],
+			"~*": ["*"]
+		}
+	},
+	"include": ["src", "astro-env.d.ts", ".astro/types.d.ts"],
+	"exclude": ["dist", "node_modules"]
 }

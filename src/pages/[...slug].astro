@@ -1,33 +1,35 @@
 ---
-import { contentfulClient } from '~services/contentful/contentful'
-import type { TypeSimplePageSkeleton } from '~types/contentful'
+import { Hero } from "~components/Hero"
+import { RichText } from "~components/RichText"
 
-import Layout from '~layouts/Layout.astro'
-import { RichText } from '~components/RichText'
-import { Hero } from '~components/Hero'
-
-import * as styles from '~styles/common.css'
+import Layout from "~layouts/Layout.astro"
+import { contentfulClient } from "~services/contentful/contentful"
+import * as styles from "~styles/common.css"
+import type { TypeSimplePageSkeleton } from "~types/contentful"
 
 // Get the slug from the URL
-const { slug = '' } = Astro.params
+const { slug = "" } = Astro.params
 
 // Fetch the entry matching the slug
 const entry = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-  content_type: 'simplePage',
-  'fields.slug': slug,
-  limit: 1,
+	content_type: "simplePage",
+	"fields.slug": slug,
+	limit: 1,
 })
 
 // Handle cases where no entry is found
 if (!slug || !entry.items || entry.items.length === 0) {
-  return Astro.redirect('/404')
+	return Astro.redirect("/404")
 }
 
 // Safely access the fields property
 const page = entry.items[0]?.fields || {}
 ---
 
-<Layout title={`${page.seoTitle} | UCSD Casual Golf Club`} description={page.seoDescription}>
+<Layout
+  title={`${page.seoTitle} | UCSD Casual Golf Club`}
+  description={page.seoDescription}
+>
   <Hero title={page.title} />
   <div class={styles.subPageWrapper}>
     {page.content && <RichText richText={page.content} />}

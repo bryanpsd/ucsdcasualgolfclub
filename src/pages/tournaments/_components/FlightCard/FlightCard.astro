@@ -1,95 +1,106 @@
 ---
-import { ResponsiveHeadline } from '~components/ResponsiveHeadline'
-import { Table } from '~components/Table'
-import * as styles from './FlightCard.css'
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
+import { Table } from "~components/Table"
+import * as styles from "./FlightCard.css"
 
 interface FlightCardProps {
-  courseChampionship?: boolean
-  lowestPuttsOverall?: number
-  lowestGrossOverall?: number
-  title: string
-  flight: Array<{
-    playerName: string
-    handicapIndex?: number
-    guest?: string[]
-    results?: Array<{
-      gross?: number
-      courseHandicap?: number
-      index?: number
-      net?: number
-      course?: { fields: { course: string } }
-      longDrive?: string
-      putts?: number
-      closestTo?: string[]
-      date?: string
-    }>
-    yearlyStats?: Array<{
-      year?: number
-      gross?: number
-      net?: number
-    }>
-  }>
-  currentCourse: string
-  tournamentDate: string
+	courseChampionship?: boolean
+	lowestPuttsOverall?: number
+	lowestGrossOverall?: number
+	title: string
+	flight: Array<{
+		playerName: string
+		handicapIndex?: number
+		guest?: string[]
+		results?: Array<{
+			gross?: number
+			courseHandicap?: number
+			index?: number
+			net?: number
+			course?: { fields: { course: string } }
+			longDrive?: string
+			putts?: number
+			closestTo?: string[]
+			date?: string
+		}>
+		yearlyStats?: Array<{
+			year?: number
+			gross?: number
+			net?: number
+		}>
+	}>
+	currentCourse: string
+	tournamentDate: string
 }
 
 const {
-  title,
-  flight,
-  currentCourse,
-  tournamentDate,
-  lowestPuttsOverall,
-  lowestGrossOverall,
-  courseChampionship,
+	title,
+	flight,
+	currentCourse,
+	tournamentDate,
+	lowestPuttsOverall,
+	lowestGrossOverall,
+	courseChampionship,
 } = Astro.props as FlightCardProps
 
-const getYearFromDate = (date?: string) => (date ? new Date(date).getFullYear() : undefined)
+const getYearFromDate = (date?: string) =>
+	date ? new Date(date).getFullYear() : undefined
 
 const tournamentYear = getYearFromDate(tournamentDate)
 
 const filteredResults = flight.map((player) => ({
-  ...player,
-  results: player.results?.filter((result) => {
-    const resultYear = getYearFromDate(result.date)
-    const isSameYear = resultYear === tournamentYear
-    const isSameCourse = result.course?.fields.course === currentCourse
-    return isSameYear && isSameCourse
-  }),
+	...player,
+	results: player.results?.filter((result) => {
+		const resultYear = getYearFromDate(result.date)
+		const isSameYear = resultYear === tournamentYear
+		const isSameCourse = result.course?.fields.course === currentCourse
+		return isSameYear && isSameCourse
+	}),
 }))
 
 const hasResultsForCurrentCourse = filteredResults.some((player) =>
-  player.results?.some((result) => result.course?.fields.course === currentCourse)
+	player.results?.some(
+		(result) => result.course?.fields.course === currentCourse
+	)
 )
 
 const lowestYearlyGrossForTournament = Math.min(
-  ...flight
-    .flatMap(
-      (player) =>
-        player.yearlyStats
-          ?.filter((stats) => stats.year === tournamentYear)
-          .map((stats) => stats.gross) || []
-    )
-    .filter((gross) => gross !== undefined && gross !== null)
+	...flight
+		.flatMap(
+			(player) =>
+				player.yearlyStats
+					?.filter((stats) => stats.year === tournamentYear)
+					.map((stats) => stats.gross) || []
+		)
+		.filter((gross) => gross !== undefined && gross !== null)
 )
 
 const lowestYearlyNetForTournament = Math.min(
-  ...flight
-    .flatMap(
-      (player) =>
-        player.yearlyStats
-          ?.filter((stats) => stats.year === tournamentYear)
-          .map((stats) => stats.net) || []
-    )
-    .filter((net) => net !== undefined && net !== null)
+	...flight
+		.flatMap(
+			(player) =>
+				player.yearlyStats
+					?.filter((stats) => stats.year === tournamentYear)
+					.map((stats) => stats.net) || []
+		)
+		.filter((net) => net !== undefined && net !== null)
 )
 
 const tableHeaders = [
-  'Player',
-  ...(hasResultsForCurrentCourse ? [] : ['Index']),
-  ...(hasResultsForCurrentCourse
-    ? ['Index', 'Gross', 'Course Handicap', 'Net', 'Putts', 'Closest To', 'Long Drive']
-    : []),
-  ...(courseChampionship ? ['Final Gross', 'Final Net'] : []),
+	"Player",
+	...(hasResultsForCurrentCourse ? [] : ["Index"]),
+	...(hasResultsForCurrentCourse
+		? [
+				"Index",
+				"Gross",
+				"Course Handicap",
+				"Net",
+				"Putts",
+				"Closest To",
+				"Long Drive",
+			]
+		: []),
+	...(courseChampionship ? ["Final Gross", "Final Net"] : []),
 ]
 ---
 
@@ -103,23 +114,23 @@ const tableHeaders = [
       thead={tableHeaders}
       tbody={filteredResults.map((player) => {
         const isLowestGrossOverall = player.results?.some(
-          (result) => result.gross === lowestGrossOverall
-        )
+          (result) => result.gross === lowestGrossOverall,
+        );
 
         const isLowestPuttsOverall = player.results?.some(
-          (result) => result.putts === lowestPuttsOverall
-        )
+          (result) => result.putts === lowestPuttsOverall,
+        );
 
         const lowestNet = Math.min(
           ...filteredResults
             .flatMap((p) => p.results?.map((result) => result.net) || [])
-            .filter((net) => net !== undefined && net !== null)
-        )
+            .filter((net) => net !== undefined && net !== null),
+        );
 
-        const isLowestNet = player.results?.[0]?.net === lowestNet
+        const isLowestNet = player.results?.[0]?.net === lowestNet;
 
-        const hasLongDrive = player.results?.[0]?.longDrive !== undefined
-        const hasClosestTo = player.results?.[0]?.closestTo !== undefined
+        const hasLongDrive = player.results?.[0]?.longDrive !== undefined;
+        const hasClosestTo = player.results?.[0]?.closestTo !== undefined;
 
         const playerNameHtml = `<a class="${styles.flightCardLink}" href="/results?playerName=${encodeURIComponent(player.playerName)}">
           ${
@@ -127,21 +138,27 @@ const tableHeaders = [
               ? `${player.playerName} (Guest)`
               : player.playerName || 'Unknown'
           }
-        </a>`
+        </a>`;
 
         if (!player.results || player.results.length === 0) {
           return [
             playerNameHtml,
-            player.handicapIndex !== undefined ? String(player.handicapIndex) : 'NH',
-          ]
+            player.handicapIndex !== undefined
+              ? String(player.handicapIndex)
+              : 'NH',
+          ];
         } else {
-          const statsForYear = player.yearlyStats?.find((stats) => stats.year === tournamentYear)
+          const statsForYear = player.yearlyStats?.find(
+            (stats) => stats.year === tournamentYear,
+          );
 
           const isLowestYearlyGross =
-            courseChampionship && statsForYear?.gross === lowestYearlyGrossForTournament
+            courseChampionship &&
+            statsForYear?.gross === lowestYearlyGrossForTournament;
 
           const isLowestYearlyNet =
-            courseChampionship && statsForYear?.net === lowestYearlyNetForTournament
+            courseChampionship &&
+            statsForYear?.net === lowestYearlyNetForTournament;
 
           return [
             playerNameHtml,
@@ -176,7 +193,9 @@ const tableHeaders = [
                           ? `+${statsForYear.gross}`
                           : statsForYear.gross
                         : undefined,
-                    className: isLowestYearlyGross ? styles.highlighted : undefined,
+                    className: isLowestYearlyGross
+                      ? styles.highlighted
+                      : undefined,
                   },
                   {
                     value:
@@ -185,11 +204,13 @@ const tableHeaders = [
                           ? `+${statsForYear.net}`
                           : statsForYear.net
                         : undefined,
-                    className: isLowestYearlyNet ? styles.highlighted : undefined,
+                    className: isLowestYearlyNet
+                      ? styles.highlighted
+                      : undefined,
                   },
                 ]
               : []),
-          ]
+          ];
         }
       })}
     />

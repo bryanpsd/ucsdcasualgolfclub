@@ -1,1 +1,1 @@
-export * from './CourseInfo.tsx'
+export * from "./CourseInfo.tsx"
