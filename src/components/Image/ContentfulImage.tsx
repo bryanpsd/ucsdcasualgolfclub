@@ -8,8 +8,15 @@ export interface ContentfulImageProps {
 	src?: string
 	/** A textual replacement for the image. Required for accessibility. */
 	alt: string
+	/** Explicit width of the image (in px). */
+	width?: number | string
+	/** Explicit height of the image (in px). */
+	height?: number | string
 	/** Props that will be passed to the underlying "img" element. */
-	imgProps?: Omit<ComponentPropsWithRef<"img">, "src" | "alt">
+	imgProps?: Omit<
+		ComponentPropsWithRef<"img">,
+		"src" | "alt" | "width" | "height"
+	>
 }
 
 const isContentfulSrc = (src = "") => src.startsWith("//images.ctfassets.net")
@@ -38,6 +45,8 @@ export const ContentfulImage = ({
 	style,
 	src,
 	alt,
+	width,
+	height,
 	imgProps,
 }: ContentfulImageProps) => {
 	const isContenfulImage = isContentfulSrc(src)
@@ -51,7 +60,13 @@ export const ContentfulImage = ({
 					<source srcSet={getProxySrc(src, "webp")} type="image/webp" />
 				</>
 			)}
-			<img src={defaultImgSrc} alt={alt} {...imgProps} />
+			<img
+				src={defaultImgSrc}
+				alt={alt && alt.trim() !== "" ? alt : "UCSD Casual Golf Club image"}
+				width={width}
+				height={height}
+				{...imgProps}
+			/>
 		</picture>
 	)
 }

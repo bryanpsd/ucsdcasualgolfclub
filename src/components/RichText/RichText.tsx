@@ -1,3 +1,21 @@
+// Type guard for file with details
+type FileBasic = { url: string; title: string }
+type FileWithDetails = {
+	url: string
+	title: string
+	details: { image?: { width?: number; height?: number } }
+}
+type FileType = FileBasic | FileWithDetails
+
+function hasImageDetails(file: FileType): file is FileWithDetails {
+	return (
+		"details" in file &&
+		typeof file.details === "object" &&
+		file.details !== null &&
+		"image" in file.details
+	)
+}
+
 import type { Options } from "@contentful/rich-text-react-renderer"
 import type { Document } from "@contentful/rich-text-types"
 import { ContentfulImage } from "~components/Image/ContentfulImage"
@@ -59,9 +77,17 @@ const options: Options = {
 		),
 
 		[BLOCKS.EMBEDDED_ASSET]: (node) => {
-			const { url, fileName } = node.data.target.fields.file
+			const { url, fileName, details } = node.data.target.fields.file
+			const width = details?.image?.width
+			const height = details?.image?.height
 			return (
-				<ContentfulImage className={styles.image} src={url} alt={fileName} />
+				<ContentfulImage
+					className={styles.image}
+					src={url}
+					alt={fileName}
+					width={width}
+					height={height}
+				/>
 			)
 		},
 		[BLOCKS.EMBEDDED_ENTRY]: (node) => {
@@ -86,6 +112,16 @@ const options: Options = {
 												className={styles.image}
 												src={file.url}
 												alt={file.title}
+												width={
+													hasImageDetails(file)
+														? file.details?.image?.width
+														: undefined
+												}
+												height={
+													hasImageDetails(file)
+														? file.details?.image?.height
+														: undefined
+												}
 											/>
 											<ResponsiveHeadline size={1} as="h3">
 												{title}
