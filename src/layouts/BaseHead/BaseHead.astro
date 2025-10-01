@@ -15,12 +15,17 @@ export interface Props {
 	description?: string
 }
 
+const canonicalURL = Astro.url.href
+
+import { ClientRouter } from "astro:transitions"
+
 const { title = "UCSD Casual Golf Club", description = "" } = Astro.props
 ---
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="description" content={description || 'Best Buy Health'} />
+  <title>{title}</title>
+  <meta name="description" content={description || "UCSD Casual Golf Club"} />
   <meta name="viewport" content="width=device-width" />
   <link rel="sitemap" href="/sitemap-index.xml" />
   <link rel="icon" type="image/png" href="/ucsd-icon.png" />
@@ -32,7 +37,9 @@ const { title = "UCSD Casual Golf Club", description = "" } = Astro.props
   <link rel="apple-touch-icon" sizes="144x144" href="/ucsd-icon-256x256.png" />
   <link rel="apple-touch-icon" sizes="152x152" href="/ucsd-icon-384x384.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/ucsd-icon-512x512.png" />
+  <link rel="canonical" href={canonicalURL} />
   <meta name="generator" content={Astro.generator} />
-  <GoogleAnalytics measurementId={'G-2L08BXJE20'} />
-  <title>{title}</title>
+  <GoogleAnalytics measurementId={"G-2L08BXJE20"} />
 </head>
+
+<ClientRouter />
