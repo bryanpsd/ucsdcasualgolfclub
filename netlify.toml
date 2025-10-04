@@ -2,11 +2,6 @@
   command = "pnpm run build"
   publish = "dist"
 
-[[headers]]
-  for = "/style-guide"
-  [headers.values]
-    X-Robots-Tag = "noindex"
-
 # Uncomment and add more as needed
 # [[headers]]
 #   for = "/private/*"
