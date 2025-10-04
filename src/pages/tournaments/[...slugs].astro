@@ -2,7 +2,7 @@
 export const prerender = true
 
 import { CourseInfo } from "~components/Course/CourseInfo"
-import { Map as CourseMap } from "~components/Course/Map"
+import { GoogleMap } from "~components/Course/Map"
 import { MiniCard } from "~components/Course/MiniCard"
 import { Scorecard } from "~components/Course/Scorecard"
 import { Hero } from "~components/Hero"
@@ -234,7 +234,7 @@ const flights = [
       <div class={styles.tournamentLeftCol}>
         {
           address && (
-            <CourseMap longitude={address.lon} latitude={address.lat} />
+            <GoogleMap longitude={address.lon} latitude={address.lat} apiKey={import.meta.env.GOOGLE_MAPS_API_KEY} client:visible/>
           )
         }
         {

@@ -8,14 +8,18 @@ export interface ContentfulImageProps {
 	src?: string
 	/** A textual replacement for the image. Required for accessibility. */
 	alt: string
-	/** Explicit width of the image (in px). */
+	/** Explicit width of the image (in px). Used for aspect ratio/layout stability. */
 	width?: number | string
-	/** Explicit height of the image (in px). */
+	/** Explicit height of the image (in px). Used for aspect ratio/layout stability. */
 	height?: number | string
+	/** How the image should fit in its container (CSS object-fit). */
+	objectFit?: CSSProperties["objectFit"]
+	/** How the image should be positioned within its container (CSS object-position). */
+	objectPosition?: CSSProperties["objectPosition"]
 	/** Props that will be passed to the underlying "img" element. */
 	imgProps?: Omit<
 		ComponentPropsWithRef<"img">,
-		"src" | "alt" | "width" | "height"
+		"src" | "alt" | "width" | "height" | "style"
 	>
 }
 
@@ -47,14 +51,24 @@ export const ContentfulImage = ({
 	alt,
 	width,
 	height,
-	imgProps,
+	objectFit = "contain",
+	objectPosition,
+	imgProps = {},
 }: ContentfulImageProps) => {
-	const isContenfulImage = isContentfulSrc(src)
-	const defaultImgSrc = isContenfulImage ? getProxySrc(src) : src
+	const isContentfulImage = isContentfulSrc(src)
+	const defaultImgSrc = isContentfulImage ? getProxySrc(src) : src
+
+	// Compose the style for the <img> element
+	const imgStyle: CSSProperties = {
+		width: "100%",
+		height: "auto",
+		objectFit,
+		...(objectPosition ? { objectPosition } : {}),
+	}
 
 	return (
 		<picture id={id} className={className} style={style}>
-			{isContenfulImage && (
+			{isContentfulImage && (
 				<>
 					<source srcSet={getProxySrc(src, "avif")} type="image/avif" />
 					<source srcSet={getProxySrc(src, "webp")} type="image/webp" />
@@ -65,6 +79,9 @@ export const ContentfulImage = ({
 				alt={alt && alt.trim() !== "" ? alt : "UCSD Casual Golf Club image"}
 				width={width}
 				height={height}
+				loading={imgProps.loading ?? "lazy"}
+				decoding={imgProps.decoding ?? "async"}
+				style={imgStyle}
 				{...imgProps}
 			/>
 		</picture>
