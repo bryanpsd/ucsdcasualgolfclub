@@ -1,0 +1,37 @@
+[build]
+  command = "pnpm run build"
+  publish = "dist"
+
+[[headers]]
+  for = "/style-guide"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+
+# Uncomment and add more as needed
+# [[headers]]
+#   for = "/private/*"
+#   [headers.values]
+#     X-Robots-Tag = "noindex"
+# [[headers]]
+#   for = "/some-page.html"
+#   [headers.values]
+#     X-Robots-Tag = "noindex"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+
+# Example: Add custom headers for a specific path
+# [[headers]]
+#   for = "/images/*"
+#   [headers.values]
+#     Cache-Control = "public, max-age=31536000"
+
+# Example: Add redirects
+# [[redirects]]
+#   from = "/old-path"
+#   to = "/new-path"
+#   status = 301
