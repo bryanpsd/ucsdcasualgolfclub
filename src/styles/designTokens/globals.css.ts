@@ -1,26 +1,15 @@
-import { globalFontFace, globalStyle } from "@vanilla-extract/css"
-import { ucsdRobotoFontFaces } from "~styles/typography"
-
-ucsdRobotoFontFaces.forEach((font) => {
-	globalFontFace(font.fontFamily, font)
-})
-
-const ucsdRobotoFallback = "Roboto Fallback"
-globalFontFace(ucsdRobotoFallback, {
-	sizeAdjust: "105%",
-	src: "local(arial)",
-})
+import { globalStyle } from "@vanilla-extract/css"
 
 globalStyle("html", {
-	fontSize: 16,
-	boxSizing: "border-box",
-	WebkitFontSmoothing: "antialiased",
-	MozOsxFontSmoothing: "grayscale",
+  fontSize: 16,
+  boxSizing: "border-box",
+  WebkitFontSmoothing: "antialiased",
+  MozOsxFontSmoothing: "grayscale",
 })
 
 globalStyle("*, *::after, *::before", {
-	boxSizing: "inherit",
-	fontFamily: ["Roboto", "serif", ucsdRobotoFallback].join(", "),
+  boxSizing: "inherit",
+  fontFamily: "Roboto, Arial, sans-serif",
 })
 
 globalStyle("strong, b", {

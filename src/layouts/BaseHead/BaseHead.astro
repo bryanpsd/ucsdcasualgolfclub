@@ -50,33 +50,72 @@ const { title = "UCSD Casual Golf Club", description = "" } = Astro.props
 	<meta name="generator" content={Astro.generator} />
 	<link rel="canonical" href={canonicalURL} />
 	<link rel="sitemap" href="/sitemap-index.xml" />
+	{/* Resource Hints for Google Fonts */}
+	<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link rel="dns-prefetch" href="//fonts.googleapis.com" />
+	<link rel="dns-prefetch" href="//fonts.gstatic.com" />
 	<!-- Icons & Manifest -->
 	<link rel="icon" type="image/png" href="/ucsd-icon.png" sizes="256x256" />
-	<link rel="icon" type="image/png" href="/ucsd-icon-96x96.png" sizes="96x96" />
+	<link
+		rel="icon"
+		type="image/png"
+		href="/ucsd-icon-96x96.png"
+		sizes="96x96"
+	/>
 	<link rel="icon" type="image/svg+xml" href="/ucsd-icon.svg" />
 	<link rel="shortcut icon" href="/ucsd-icon.png" />
 	<link rel="apple-touch-icon" sizes="48x48" href="/ucsd-icon-48x48.png" />
 	<link rel="apple-touch-icon" sizes="72x72" href="/ucsd-icon-72x72.png" />
 	<link rel="apple-touch-icon" sizes="76x76" href="/ucsd-icon-96x96.png" />
-	<link rel="apple-touch-icon" sizes="114x114" href="/ucsd-icon-144x144.png" />
-	<link rel="apple-touch-icon" sizes="120x120" href="/ucsd-icon-192x192.png" />
-	<link rel="apple-touch-icon" sizes="144x144" href="/ucsd-icon-256x256.png" />
-	<link rel="apple-touch-icon" sizes="152x152" href="/ucsd-icon-384x384.png" />
-	<link rel="apple-touch-icon" sizes="180x180" href="/ucsd-icon-512x512.png" />
+	<link
+		rel="apple-touch-icon"
+		sizes="114x114"
+		href="/ucsd-icon-144x144.png"
+	/>
+	<link
+		rel="apple-touch-icon"
+		sizes="120x120"
+		href="/ucsd-icon-192x192.png"
+	/>
+	<link
+		rel="apple-touch-icon"
+		sizes="144x144"
+		href="/ucsd-icon-256x256.png"
+	/>
+	<link
+		rel="apple-touch-icon"
+		sizes="152x152"
+		href="/ucsd-icon-384x384.png"
+	/>
+	<link
+		rel="apple-touch-icon"
+		sizes="180x180"
+		href="/ucsd-icon-512x512.png"
+	/>
 	<link rel="manifest" href="/site.webmanifest" />
 	<!-- Robots -->
-	<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+	<meta
+		name="robots"
+		content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+	/>
 	<!-- Open Graph / Facebook -->
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content={canonicalURL} />
 	<meta property="og:title" content={title} />
-	<meta property="og:description" content={description || "UCSD Casual Golf Club"} />
+	<meta
+		property="og:description"
+		content={description || "UCSD Casual Golf Club"}
+	/>
 	<meta property="og:image" content="/ucsd-icon.png" />
 	<!-- Twitter -->
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:url" content={canonicalURL} />
 	<meta name="twitter:title" content={title} />
-	<meta name="twitter:description" content={description || "UCSD Casual Golf Club"} />
+	<meta
+		name="twitter:description"
+		content={description || "UCSD Casual Golf Club"}
+	/>
 	<meta name="twitter:image" content="/ucsd-icon.png" />
 	<script type="application/ld+json" set:html={JSON.stringify(schema)} />
 </head>
