@@ -24,7 +24,7 @@ time, mark, audio, video`,
 		padding: 0,
 		border: 0,
 		fontSize: "100%",
-		font: "inherit",
+		fontWeight: "inherit",
 		verticalAlign: "baseline",
 	}
 )
