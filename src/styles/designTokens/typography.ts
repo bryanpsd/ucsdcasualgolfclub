@@ -10,7 +10,7 @@
  */
 
 export const fontFamily = {
-	base: ["Roboto", "serif"].join(", "),
+	base: ["Roboto", "Arial", "sans-serif"].join(", "),
 }
 export const fontWeight = {
 	fontWeight300: "300",
