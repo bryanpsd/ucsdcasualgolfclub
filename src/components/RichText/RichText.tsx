@@ -61,9 +61,7 @@ const options: Options = {
 		),
 
 		[BLOCKS.PARAGRAPH]: (_node, children) => (
-			<Typography variant={BODY_TYPOGRAPHY_VARIANT} className={styles.body}>
-				{children}
-			</Typography>
+			<Typography variant={BODY_TYPOGRAPHY_VARIANT}>{children}</Typography>
 		),
 
 		[BLOCKS.UL_LIST]: (_node, children) => (

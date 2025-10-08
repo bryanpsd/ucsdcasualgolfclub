@@ -1,6 +1,5 @@
 import { style } from "@vanilla-extract/css"
-import { color } from "~styles/designTokens/colors"
-import { tokens } from "~styles/designTokens.css"
+import { color, tokens } from "~styles"
 
 export const link = style({
 	textDecoration: "none",

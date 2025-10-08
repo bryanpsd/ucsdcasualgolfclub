@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css"
-import { contentPadding, pageMaxWidth } from "~styles/common.css"
-import { tokens } from "~styles/designTokens.css"
+import { tokens } from "~styles"
+import { contentPadding, pageMaxWidth } from "~styles/globals/common.css"
 
 export const homeWrapper = style([
 	tokens({

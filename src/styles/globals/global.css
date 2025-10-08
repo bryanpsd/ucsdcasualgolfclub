@@ -1,7 +1,5 @@
-/*
-  Josh's Custom CSS Reset
-  https://www.joshwcomeau.com/css/custom-css-reset/
-*/
+/* Moved into globals/ for clearer organization. This file was previously at
+   src/styles/global.css — keep the same contents. */
 
 *,
 *::before,

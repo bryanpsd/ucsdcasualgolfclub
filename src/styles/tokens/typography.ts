@@ -1,11 +1,4 @@
 /**
- *
- * @param variants Font variants
- * @param facet keys of variants
- * @returns A mapping of a Variant name to the facet passed
- */
-
-/**
  * Typography related tokens for consumption in theme.css.ts
  */
 
@@ -18,7 +11,6 @@ export const fontWeight = {
 	fontWeight500: "500",
 	fontWeight700: "700",
 } as const
-// export const fontSize = extractTypographyFacet(variants, 'fontSize');
 export const fontSize = {
 	sizeFont1: "10px",
 	sizeFont2: "12px",
@@ -37,7 +29,6 @@ export const fontSize = {
 	sizeFont15: "90px",
 	sizeFont16: "96px",
 } as const
-// export const lineHeight = extractTypographyFacet(variants, 'lineHeight');
 export const lineHeight = {
 	sizeLineHeight1: "12px",
 	sizeLineHeight2: "16px",

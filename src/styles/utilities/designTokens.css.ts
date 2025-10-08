@@ -1,7 +1,6 @@
 import { createSprinkles, defineProperties } from "@vanilla-extract/sprinkles"
-import { vars } from "../styles/theme.css"
-import { objectKeys } from "../types"
-import { breakpoints } from "./designTokens/breakpoints"
+import { vars } from "../globals/theme.css"
+import { breakpoints } from "../tokens/breakpoints"
 
 export const breakpointQuery = {
 	xs: `screen and (min-width: ${breakpoints.xs}px) and (max-width: ${
@@ -38,9 +37,10 @@ export const breakpointQuery = {
 	"xl-max": `screen and (max-width: ${Number(breakpoints.xl) - 0.05}px)`,
 } as const
 
-const mediaQueryBreakpoints = objectKeys(breakpointQuery).reduce(
-	(acc, breakpoint) => {
-		acc[breakpoint] = { "@media": breakpointQuery[breakpoint] }
+const mediaQueryBreakpoints = Object.keys(breakpointQuery).reduce(
+	(acc, key) => {
+		const k = key as keyof typeof breakpointQuery
+		acc[k] = { "@media": breakpointQuery[k] }
 		return acc
 	},
 	{} as Record<keyof typeof breakpointQuery, { "@media": string }>
@@ -65,8 +65,6 @@ const {
 // * Color Properties                                                *
 // *******************************************************************
 
-// defineProperties doesn't support nested objects.
-// destructuring and spreading to map nested variables to
 const colors = {
 	...color,
 }
@@ -344,8 +342,6 @@ const animationProperties = defineProperties({
 		transitionDuration: duration,
 	},
 })
-
-// *******************************************************************
 
 export const tokens = createSprinkles(
 	displayProperties,

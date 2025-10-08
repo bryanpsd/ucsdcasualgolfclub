@@ -1,4 +1,4 @@
-import { ucsd } from "~styles/ucsd"
+import { ucsd } from "./ucsd"
 
 const gutterWidth = "2.4rem"
 const outerMarginWidth = "3.2rem"
@@ -23,35 +23,24 @@ const constants = {
 		padding: 0,
 	},
 	headerHeight: "6.4rem",
-	smallHeaderLogo: {
-		width: "3.4rem",
-	},
+	smallHeaderLogo: { width: "3.4rem" },
 	headerLogoContainer: {
 		display: "flex",
 		justifyContent: "center",
 		alignContent: "center",
 		width: "21rem",
 	},
-	headerLogo: {
-		width: "9.3rem",
-		height: "4.3rem",
-	},
+	headerLogo: { width: "9.3rem", height: "4.3rem" },
 	drawerWidth: "21rem",
 	drawerWidthCondensed: "7.2rem",
-	tabPadding: {
-		default: "0.4rem 1.2rem",
-		small: "0 0.9rem",
-	},
+	tabPadding: { default: "0.4rem 1.2rem", small: "0 0.9rem" },
 	tabMinWidthPx: 160,
 	buttonPadding: {
 		medium: "1.1rem 1rem",
 		small: "0.6rem",
 		large: "1.8rem 1.6rem",
 	},
-	pillHeight: {
-		small: "1.6rem",
-		default: "2.0rem",
-	},
+	pillHeight: { small: "1.6rem", default: "2.0rem" },
 	buttonMinWidth: "9.6rem",
 	buttonTextSmallPadding: "0.2rem 0",
 	buttonIconSmall: "1.6rem",
@@ -94,19 +83,10 @@ const constants = {
 		headerCellPaddingRight: "0.8rem",
 		headerCellPaddingLeft: "1.6rem",
 	},
-	tableMinHeight: {
-		small: "17.5rem",
-		normal: "56.1rem",
-	},
-	tableMaxHeight: {
-		containedModal: "30.7rem",
-		fullModal: "36.5rem",
-	},
+	tableMinHeight: { small: "17.5rem", normal: "56.1rem" },
+	tableMaxHeight: { containedModal: "30.7rem", fullModal: "36.5rem" },
 	alertWidth: "38.9rem",
-	alertSpacing: {
-		boxPadding: smallOuterMarginWidth,
-		buttonPadding: "0.7rem",
-	},
+	alertSpacing: { boxPadding: smallOuterMarginWidth, buttonPadding: "0.7rem" },
 	alertButtonWidth: "17rem",
 	alertDividerWidth: "0.2rem",
 	alertDividerHeight: "3.2rem",
@@ -127,29 +107,17 @@ const constants = {
 	faqTermsMarginTop: "1.2rem",
 	faqTermsMarginBottom: "4.8rem",
 	questionTitleMargin: gutterWidth,
-	nextStepsNumberFont: {
-		fontWeight: 700,
-		fontSize: "1.3rem",
-	},
+	nextStepsNumberFont: { fontWeight: 700, fontSize: "1.3rem" },
 	nextStepsNumberSize: "2.1rem",
 	nextStepsNumberPadding: "0.4rem",
-	nextStepsTitlePadding: "2.5rem", // nextStepNumberSize + nextStepsNumberPadding
+	nextStepsTitlePadding: "2.5rem",
 	nextStepsTitleMarginBottom: "2.4rem",
 	nextStepMarginTop: "6.1rem",
 	nextStepsStepsWidth: {
-		steps2: {
-			default: "75%",
-			small: "100%",
-		},
-		steps3: {
-			default: "100%",
-			small: "125%",
-			negativeMargin: "-12.5%",
-		},
+		steps2: { default: "75%", small: "100%" },
+		steps3: { default: "100%", small: "125%", negativeMargin: "-12.5%" },
 	},
-	extraTypography: {
-		caption: ucsd.typography.variants.caption,
-	},
+	extraTypography: { caption: ucsd.typography.variants.caption },
 	typography: {
 		h1: ucsd.typography.variants.headline,
 		h2: ucsd.typography.variants.pageTitle,
@@ -165,22 +133,12 @@ const constants = {
 		button: {},
 		overline: {},
 	},
-	columnInfo: {
-		"& > .MuiGrid-item": {
-			marginBottom: "1.6rem",
-		},
-	},
-	paperInfo: {
-		width: "100%",
-		margin: "2.2rem 0 1.6rem",
-		padding: "3.2rem",
-	},
+	columnInfo: { "& > .MuiGrid-item": { marginBottom: "1.6rem" } },
+	paperInfo: { width: "100%", margin: "2.2rem 0 1.6rem", padding: "3.2rem" },
 	detailHeader: {
 		display: "flex",
 		alignItems: "center",
-		"& > .MuiButton-root": {
-			marginRight: "1.6rem",
-		},
+		"& > .MuiButton-root": { marginRight: "1.6rem" },
 	},
 } as const
 

@@ -20,7 +20,10 @@
 		"noEmit": true,
 		"paths": {
 			"@fonts": ["assets/fonts/*"],
-			"~*": ["*"]
+			"~/*": ["*"],
+			"~*": ["*"],
+			"~styles": ["styles/index.ts"],
+			"~styles/*": ["styles/*"]
 		}
 	},
 	"include": ["src", "astro-env.d.ts", ".astro/types.d.ts"],

@@ -1,8 +1,7 @@
 import { style } from "@vanilla-extract/css"
-import { contentPadding, pageMaxWidth } from "~styles/common.css"
-import { color } from "~styles/designTokens/colors"
-import { fontSize } from "~styles/designTokens/typography"
-import { breakpointQuery, tokens } from "~styles/designTokens.css"
+import { color, fontSize, tokens } from "~styles"
+import { contentPadding, pageMaxWidth } from "~styles/globals/common.css"
+import { breakpointQuery } from "~styles/utilities/designTokens.css"
 
 export const footer = style({
 	paddingTop: 24,

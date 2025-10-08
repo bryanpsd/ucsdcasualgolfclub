@@ -1,12 +1,8 @@
 import { style } from "@vanilla-extract/css"
-import { body as textBlockSectionBody } from "~components/TextBlockSection/TextBlockSection.css"
-import { tokens } from "~styles/designTokens.css"
-
-export const body = style([textBlockSectionBody, { maxWidth: "none" }])
+import { tokens } from "~styles"
 
 export const textBlock = style([
 	tokens({
-		marginTop: 48,
 		marginX: "auto",
 	}),
 ])

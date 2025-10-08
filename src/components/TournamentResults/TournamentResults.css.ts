@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css"
-import { color } from "~styles/designTokens/colors"
+import { color } from "~styles"
 
 export const resultsLink = style({
 	color: color.brand.navy,

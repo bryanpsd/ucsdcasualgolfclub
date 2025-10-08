@@ -1,9 +1,9 @@
 ---
 export const prerender = true
 
-import "~/styles/global.css"
-import "~/styles/reset.css"
-import "~/styles/theme.css"
+import "~/styles/globals/global.css"
+import "~/styles/globals/reset.css"
+import "~/styles/globals/theme.css"
 
 import { CourseInfo } from "~components/Course/CourseInfo"
 import { GoogleMap } from "~components/Course/Map"
@@ -14,7 +14,7 @@ import { Hero } from "~components/Hero"
 import { RichText } from "~components/RichText"
 import Layout from "~layouts/Layout.astro"
 import { contentfulClient } from "~services/contentful/contentful"
-import * as commonStyles from "~styles/common.css"
+import * as commonStyles from "~styles/globals/common.css"
 import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse"
 import FlightCard from "./_components/FlightCard/FlightCard.astro"
 import * as styles from "./_style/tournament.css"

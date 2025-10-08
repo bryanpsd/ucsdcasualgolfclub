@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css"
-import { contentPadding } from "~styles/common.css"
-import { color } from "~styles/designTokens/colors"
+import { color } from "~styles"
+import { contentPadding } from "~styles/globals/common.css"
 
 export const bannerWrapper = style([
 	contentPadding,

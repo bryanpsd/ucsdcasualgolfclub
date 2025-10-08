@@ -1,15 +1,15 @@
 ---
 export const prerender = true
 
-import "~/styles/global.css"
-import "~/styles/reset.css"
-import "~/styles/theme.css"
+import "~/styles/globals/global.css"
+import "~/styles/globals/reset.css"
+import "~/styles/globals/theme.css"
 
 import { CourseCard } from "~components/Course/CourseCard"
 import { Hero } from "~components/Hero"
 import Layout from "~layouts/Layout.astro"
 import { contentfulClient } from "~services/contentful/contentful"
-import * as styles from "~styles/common.css"
+import * as styles from "~styles/globals/common.css"
 import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse"
 import SeasonRecap from "./_components/SeasonRecap.astro"
 

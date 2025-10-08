@@ -1,7 +1,7 @@
 ---
-import "~/styles/global.css"
-import "~/styles/reset.css"
-import "~/styles/theme.css"
+import "~/styles/globals/global.css"
+import "~/styles/globals/reset.css"
+import "~/styles/globals/theme.css"
 
 import { Hero } from "~components/Hero"
 import { TournamentResults } from "~components/TournamentResults"
@@ -9,7 +9,7 @@ import { TournamentResults } from "~components/TournamentResults"
 import Layout from "~layouts/Layout.astro"
 import { contentfulClient } from "~services/contentful/contentful"
 
-import * as styles from "~styles/common.css"
+import * as styles from "~styles/globals/common.css"
 import type { TypeLeadersSkeleton } from "~types/contentful"
 
 const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
