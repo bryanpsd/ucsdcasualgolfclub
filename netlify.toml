@@ -2,31 +2,44 @@
   command = "pnpm run build"
   publish = "dist"
 
-# Uncomment and add more as needed
-# [[headers]]
-#   for = "/private/*"
-#   [headers.values]
-#     X-Robots-Tag = "noindex"
-# [[headers]]
-#   for = "/some-page.html"
-#   [headers.values]
-#     X-Robots-Tag = "noindex"
-
+# Security headers that apply to all contexts (production, previews, branch deploys)
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Robots-Tag = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Feature-Policy = "geolocation 'none'"
 
-# Example: Add custom headers for a specific path
-# [[headers]]
-#   for = "/images/*"
-#   [headers.values]
-#     Cache-Control = "public, max-age=31536000"
+# Production: allow indexing by search engines
+[context.production]
+  [[headers]]
+    for = "/*"
+    [headers.values]
+      X-Robots-Tag = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
 
-# Example: Add redirects
+# Deploy previews and branch deploys: do NOT index (staging/dev)
+[context.deploy-preview]
+  [[headers]]
+    for = "/*"
+    [headers.values]
+      X-Robots-Tag = "noindex, nofollow"
+
+[context.branch-deploy]
+  [[headers]]
+    for = "/*"
+    [headers.values]
+      X-Robots-Tag = "noindex, nofollow"
+
+# Example: long-term caching for image assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Example redirects (uncomment and update as needed)
 # [[redirects]]
 #   from = "/old-path"
 #   to = "/new-path"
 #   status = 301
+

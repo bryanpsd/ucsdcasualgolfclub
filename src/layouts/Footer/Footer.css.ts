@@ -25,14 +25,14 @@ export const footerContent = style([
 export const footerList = style([
 	tokens({
 		display: "flex",
-		flexDirection: { "xs-min": "column", "lg-min": "row" },
+		flexDirection: { "xs-min": "column", "md-min": "row" },
 	}),
 ])
 
 export const footerListItem = style([
 	tokens({
-		paddingX: { "xs-min": 0, "lg-min": 12 },
-		paddingY: { "xs-min": 4, "lg-min": 0 },
+		paddingX: { "xs-min": 0, "md-min": 12 },
+		paddingY: { "xs-min": 4, "md-min": 0 },
 	}),
 	{
 		"@media": {

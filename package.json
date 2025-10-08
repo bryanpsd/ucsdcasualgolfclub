@@ -9,6 +9,8 @@
     "check": "astro check",
     "preview": "astro preview",
     "astro": "astro",
+    "format": "biome format --write .",
+  	"lint:fix": "biome check --apply .",
     "cf-export": "contentful space export --config src/services/contentful/export-config.json --management-token $CONTENTFUL_DELIVERY_TOKEN --space-id $CONTENTFUL_SPACE_ID",
     "cf-generate-types": "cf-content-types-generator src/services/contentful/export.json --v10 --typeguard --out src/types/contentful",
     "preinstall": "npx only-allow pnpm"
