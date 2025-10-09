@@ -19,6 +19,19 @@
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
 
+[context.production]
+  # Ensure production explicitly serves the robots header. Keeps previews/branch deploys free to override.
+  [[headers]]
+    for = "/*"
+    [headers.values]
+      X-Robots-Tag = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+
+# Example: explicit noindex for a style guide route (page not present now; keep commented or enable if you add the page)
+# [[headers]]
+#   for = "/style-guide"
+#   [headers.values]
+#     X-Robots-Tag = "noindex"
+
 # Example: Add custom headers for a specific path
 # [[headers]]
 #   for = "/images/*"
