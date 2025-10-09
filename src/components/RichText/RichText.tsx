@@ -1,11 +1,11 @@
 // Type guard for file with details
-type FileBasic = { url: string; title: string }
+type FileBasic = { url: string; title: string };
 type FileWithDetails = {
-	url: string
-	title: string
-	details: { image?: { width?: number; height?: number } }
-}
-type FileType = FileBasic | FileWithDetails
+	url: string;
+	title: string;
+	details: { image?: { width?: number; height?: number } };
+};
+type FileType = FileBasic | FileWithDetails;
 
 function hasImageDetails(file: FileType): file is FileWithDetails {
 	return (
@@ -13,19 +13,19 @@ function hasImageDetails(file: FileType): file is FileWithDetails {
 		typeof file.details === "object" &&
 		file.details !== null &&
 		"image" in file.details
-	)
+	);
 }
 
-import type { Options } from "@contentful/rich-text-react-renderer"
-import type { Document } from "@contentful/rich-text-types"
-import { ContentfulImage } from "~components/Image/ContentfulImage"
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
-import { TextBlockSection } from "~components/TextBlockSection"
-import { List } from "~components/TextBlockSection/List"
-import type { TypographyProps } from "~components/Typography"
-import { Typography } from "~components/Typography"
+import type { Options } from "@contentful/rich-text-react-renderer";
+import type { Document } from "@contentful/rich-text-types";
+import { ContentfulImage } from "~components/Image/ContentfulImage";
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { TextBlockSection } from "~components/TextBlockSection";
+import { List } from "~components/TextBlockSection/List";
+import type { TypographyProps } from "~components/Typography";
+import { Typography } from "~components/Typography";
 
-import * as styles from "./RichText.css"
+import * as styles from "./RichText.css";
 
 // Contentful rich text constants (ESM-compatible)
 const BLOCKS = {
@@ -48,9 +48,9 @@ const BLOCKS = {
 	TABLE_ROW: "table-row",
 	TABLE_CELL: "table-cell",
 	TABLE_HEADER_CELL: "table-header-cell",
-}
+};
 
-const BODY_TYPOGRAPHY_VARIANT: TypographyProps["variant"] = "bodyMd"
+const BODY_TYPOGRAPHY_VARIANT: TypographyProps["variant"] = "bodyMd";
 
 const options: Options = {
 	renderNode: {
@@ -75,9 +75,9 @@ const options: Options = {
 		),
 
 		[BLOCKS.EMBEDDED_ASSET]: (node) => {
-			const { url, fileName, details } = node.data.target.fields.file
-			const width = details?.image?.width
-			const height = details?.image?.height
+			const { url, fileName, details } = node.data.target.fields.file;
+			const width = details?.image?.width;
+			const height = details?.image?.height;
 			return (
 				<ContentfulImage
 					className={styles.image}
@@ -86,12 +86,12 @@ const options: Options = {
 					width={width}
 					height={height}
 				/>
-			)
+			);
 		},
 		[BLOCKS.EMBEDDED_ENTRY]: (node) => {
 			if (node.data.target.sys.contentType.sys.id === "seasonRecap") {
-				const { summary } = node.data.target.fields
-				const { winners } = node.data.target.fields
+				const { summary } = node.data.target.fields;
+				const { winners } = node.data.target.fields;
 				return (
 					<div className={styles.seasonRecap}>
 						<RichText richText={summary} />
@@ -99,53 +99,39 @@ const options: Options = {
 							{winners.map(
 								(winner: {
 									fields: {
-										title: string
-										file: { url: string; title: string }
-									}
+										title: string;
+										file: { url: string; title: string };
+									};
 								}) => {
-									const { title, file } = winner.fields
+									const { title, file } = winner.fields;
 									return (
 										<li key={title}>
 											<ContentfulImage
 												className={styles.image}
 												src={file.url}
 												alt={file.title}
-												width={
-													hasImageDetails(file)
-														? file.details?.image?.width
-														: undefined
-												}
-												height={
-													hasImageDetails(file)
-														? file.details?.image?.height
-														: undefined
-												}
+												width={hasImageDetails(file) ? file.details?.image?.width : undefined}
+												height={hasImageDetails(file) ? file.details?.image?.height : undefined}
 											/>
 											<ResponsiveHeadline size={1} as="h3">
 												{title}
 											</ResponsiveHeadline>
 										</li>
-									)
-								}
+									);
+								},
 							)}
 						</ul>
 					</div>
-				)
+				);
 			}
 		},
 	},
-}
+};
 
 interface RichTextProps {
-	richText?: Document
+	richText?: Document;
 }
 
 export const RichText = ({ richText }: RichTextProps) => {
-	return (
-		<TextBlockSection
-			className={styles.textBlock}
-			text={richText}
-			options={options}
-		/>
-	)
-}
+	return <TextBlockSection className={styles.textBlock} text={richText} options={options} />;
+};

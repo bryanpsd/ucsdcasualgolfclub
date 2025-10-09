@@ -1,16 +1,16 @@
 ---
-import { Image } from "astro:assets"
-import logo from "~/assets/brand-logo.png"
-import { server } from "~actions"
-import { Banner } from "./components/Banner"
-import { MainNav } from "./components/MainNav"
-import { MobileNav } from "./components/MobileNav/MobileNav"
-import * as styles from "./Header.css"
-import { menuItems } from "./utils/headerItems"
+import { Image } from "astro:assets";
+import logo from "~/assets/brand-logo.png";
+import { server } from "~actions";
+import { Banner } from "./components/Banner";
+import { MainNav } from "./components/MainNav";
+import { MobileNav } from "./components/MobileNav/MobileNav";
+import * as styles from "./Header.css";
+import { menuItems } from "./utils/headerItems";
 
-const banners = await Astro.callAction(server.getHeaderBanners, null)
+const banners = await Astro.callAction(server.getHeaderBanners, null);
 
-const { pathname } = Astro.url
+const { pathname } = Astro.url;
 ---
 
 <a class={`sr-only ${styles.mainContentJumpLink}`} href="#main-content"

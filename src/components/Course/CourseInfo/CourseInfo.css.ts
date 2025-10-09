@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css"
-import { color, tokens } from "~styles"
+import { style } from "@vanilla-extract/css";
+import { color, tokens } from "~styles";
 
 export const courseCardInfo = style([
 	tokens({
@@ -9,7 +9,7 @@ export const courseCardInfo = style([
 	{
 		backgroundColor: color.brand.navy,
 	},
-])
+]);
 
 export const courseCardInfoTitle = style({
 	display: "flex",
@@ -17,7 +17,7 @@ export const courseCardInfoTitle = style({
 	color: color.brand.white,
 	alignItems: "center",
 	justifyContent: "center",
-})
+});
 
 export const courseCardInfoListWrapper = style([
 	tokens({
@@ -26,7 +26,7 @@ export const courseCardInfoListWrapper = style([
 	{
 		borderTop: `1px solid ${color.brand.black}`,
 	},
-])
+]);
 
 export const courseCardInfoContent = style([
 	tokens({
@@ -37,4 +37,4 @@ export const courseCardInfoContent = style([
 	{
 		color: color.brand.white,
 	},
-])
+]);

@@ -1,23 +1,21 @@
-import Players from "~icons/players.svg?react"
-import { concatClasses } from "~utils/concatClasses"
-import { CourseInclusions } from "../CourseInclusions"
+import Players from "~icons/players.svg?react";
+import { concatClasses } from "~utils/concatClasses";
+import { CourseInclusions } from "../CourseInclusions";
 
-import * as styles from "./CourseDetails.css"
+import * as styles from "./CourseDetails.css";
 
 interface Props {
-	players: string
-	inclusions?: string[]
-	isMiniCard?: boolean
-	prices?: string[]
-	tees?: string[]
+	players: string;
+	inclusions?: string[];
+	isMiniCard?: boolean;
+	prices?: string[];
+	tees?: string[];
 }
 
 export const CourseDetails = (props: Props) => {
-	const { prices, players, isMiniCard, inclusions } = props
+	const { prices, players, isMiniCard, inclusions } = props;
 
-	const formattedPrices = prices
-		? prices.map((price) => `$${price}`).join(" / ")
-		: `$${prices}`
+	const formattedPrices = prices ? prices.map((price) => `$${price}`).join(" / ") : `$${prices}`;
 
 	return (
 		<div
@@ -53,9 +51,7 @@ export const CourseDetails = (props: Props) => {
 					{players}
 				</li>
 			</ul>
-			{inclusions && (
-				<CourseInclusions tournament={{ inclusions: inclusions }} />
-			)}
+			{inclusions && <CourseInclusions tournament={{ inclusions: inclusions }} />}
 		</div>
-	)
-}
+	);
+};

@@ -1,5 +1,5 @@
-import { recipe } from "@vanilla-extract/recipes"
-import { color, tokens } from "~styles"
+import { recipe } from "@vanilla-extract/recipes";
+import { color, tokens } from "~styles";
 
 export const courseInclusionsWrapper = recipe({
 	base: [
@@ -17,7 +17,7 @@ export const courseInclusionsWrapper = recipe({
 			},
 		},
 	},
-})
+});
 
 export const courseInclusionsHeadline = recipe({
 	variants: {
@@ -27,7 +27,7 @@ export const courseInclusionsHeadline = recipe({
 			},
 		},
 	},
-})
+});
 
 export const courseInclusionsList = recipe({
 	base: [
@@ -47,7 +47,7 @@ export const courseInclusionsList = recipe({
 			},
 		},
 	},
-})
+});
 
 export const courseInclusionsListItem = recipe({
 	base: [
@@ -78,7 +78,7 @@ export const courseInclusionsListItem = recipe({
 			},
 		},
 	},
-})
+});
 
 export const courseInclusionsIcon = recipe({
 	variants: {
@@ -91,4 +91,4 @@ export const courseInclusionsIcon = recipe({
 			},
 		},
 	},
-})
+});

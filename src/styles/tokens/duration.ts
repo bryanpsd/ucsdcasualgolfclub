@@ -6,4 +6,4 @@ export const duration = {
 	complex: "375ms",
 	enteringScreen: "225ms",
 	leavingScreen: "195ms",
-} as const
+} as const;

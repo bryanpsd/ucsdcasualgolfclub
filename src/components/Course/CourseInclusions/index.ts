@@ -1,1 +1,1 @@
-export * from "./CourseInclusions.tsx"
+export * from "./CourseInclusions.tsx";

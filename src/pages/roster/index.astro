@@ -1,20 +1,20 @@
 ---
-import "~/styles/globals/global.css"
-import "~/styles/globals/reset.css"
-import "~/styles/globals/theme.css"
+import "~/styles/globals/global.css";
+import "~/styles/globals/reset.css";
+import "~/styles/globals/theme.css";
 
-import { Hero } from "~components/Hero"
-import { Table } from "~components/Table"
+import { Hero } from "~components/Hero";
+import { Table } from "~components/Table";
 
-import Layout from "~layouts/Layout.astro"
-import { contentfulClient } from "~services/contentful/contentful"
-import * as commonStyles from "~styles/globals/common.css"
-import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster"
-import * as styles from "./_style/roster.css"
+import Layout from "~layouts/Layout.astro";
+import { contentfulClient } from "~services/contentful/contentful";
+import * as commonStyles from "~styles/globals/common.css";
+import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster";
+import * as styles from "./_style/roster.css";
 
 const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
 	content_type: "roster",
-})
+});
 
 // const rosterYears = Array.from(
 //   new Set(entries.items.map((item) => item.fields.year?.toString()))
@@ -29,16 +29,14 @@ const currentRosterPlayers = entries.items
 					playerName: player.fields.playerName,
 					handicapIndex: player.fields.handicapIndex,
 					guest: player.fields.guest,
-				}
+				};
 			}
-			return null
-		})
+			return null;
+		}),
 	)
 	.filter((player) => player !== null) // Remove null values
 	.filter((player) => !player?.guest?.includes("Yes")) // Exclude guests
-	.sort(
-		(a, b) => (a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity)
-	)
+	.sort((a, b) => (a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity));
 
 const lastUpdated = entries.items
 	.map((item) => new Date(item.sys.updatedAt))
@@ -47,7 +45,7 @@ const lastUpdated = entries.items
 		year: "2-digit",
 		month: "2-digit",
 		day: "2-digit",
-	})
+	});
 ---
 
 <Layout

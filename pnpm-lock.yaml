@@ -112,7 +112,7 @@ importers:
         version: 0.18.5
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.2.2
+        specifier: ^2.2.5
         version: 2.2.5
       '@svgr/plugin-svgo':
         specifier: ^8.1.0

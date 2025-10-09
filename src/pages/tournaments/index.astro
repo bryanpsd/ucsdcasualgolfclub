@@ -1,19 +1,19 @@
 ---
-import "~/styles/globals/global.css"
-import "~/styles/globals/reset.css"
-import "~/styles/globals/theme.css"
+import "~/styles/globals/global.css";
+import "~/styles/globals/reset.css";
+import "~/styles/globals/theme.css";
 
-import { CourseCard } from "~components/Course/CourseCard"
-import { Hero } from "~components/Hero"
+import { CourseCard } from "~components/Course/CourseCard";
+import { Hero } from "~components/Hero";
 
-import Layout from "~layouts/Layout.astro"
-import { contentfulClient } from "~services/contentful/contentful"
-import * as styles from "~styles/globals/common.css"
-import type { TypeCourseSkeleton } from "~types/contentful"
+import Layout from "~layouts/Layout.astro";
+import { contentfulClient } from "~services/contentful/contentful";
+import * as styles from "~styles/globals/common.css";
+import type { TypeCourseSkeleton } from "~types/contentful";
 
 const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
 	content_type: "course",
-})
+});
 
 const getTournaments = entries.items
 	.flatMap((item) => {
@@ -37,26 +37,25 @@ const getTournaments = entries.items
 							type: tournament.fields.type,
 							tournamentNotes: tournament.fields.tournamentNotes,
 							results:
-								tournament.fields.results &&
-								"fields" in tournament.fields.results
+								tournament.fields.results && "fields" in tournament.fields.results
 									? (tournament.fields.results.fields.file?.url ?? null)
 									: null,
 							clubChampionship: tournament.fields.clubChampionship ?? false,
 						},
 					],
-				}
+				};
 			}
-			return null
-		})
+			return null;
+		});
 	})
 	.filter(Boolean)
 	.sort(
 		(a, b) =>
 			new Date(a?.tournaments?.[0]?.date ?? 0).getTime() -
-			new Date(b?.tournaments?.[0]?.date ?? 0).getTime()
-	)
+			new Date(b?.tournaments?.[0]?.date ?? 0).getTime(),
+	);
 
-const getCurrentYear = new Date().getFullYear()
+const getCurrentYear = new Date().getFullYear();
 ---
 
 <Layout

@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css"
-import { color, tokens } from "~styles"
+import { style } from "@vanilla-extract/css";
+import { color, tokens } from "~styles";
 
 export const miniCardWrapper = style([
 	tokens({
@@ -11,7 +11,7 @@ export const miniCardWrapper = style([
 	{
 		backgroundColor: color.brand.navy,
 	},
-])
+]);
 
 export const miniCardTitle = style([
 	tokens({
@@ -20,11 +20,11 @@ export const miniCardTitle = style([
 	{
 		color: color.brand.white,
 	},
-])
+]);
 
 export const miniCardCourse = style({
 	color: color.brand.white,
-})
+});
 
 export const miniCard = style([
 	tokens({
@@ -39,11 +39,11 @@ export const miniCard = style([
 	{
 		borderTop: `1px solid ${color.brand.black}`,
 	},
-])
+]);
 
 export const tournamentNotes = style({
 	color: color.brand.white,
-})
+});
 
 export const dateTimeTypeWrapper = style([
 	tokens({
@@ -56,7 +56,7 @@ export const dateTimeTypeWrapper = style([
 	{
 		color: color.brand.yellow,
 	},
-])
+]);
 
 export const dateTimeWrapper = style([
 	tokens({
@@ -67,4 +67,4 @@ export const dateTimeWrapper = style([
 		width: "col-12",
 		gap: 2,
 	}),
-])
+]);

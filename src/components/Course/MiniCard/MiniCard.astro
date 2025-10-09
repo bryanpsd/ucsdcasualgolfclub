@@ -1,11 +1,11 @@
 ---
-import { format } from "date-fns"
-import { Button } from "~components/Button"
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
-import { CourseDetails } from "../CourseDetails"
-import { CourseInclusions } from "../CourseInclusions"
+import { format } from "date-fns";
+import { Button } from "~components/Button";
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { CourseDetails } from "../CourseDetails";
+import { CourseInclusions } from "../CourseInclusions";
 
-import * as styles from "./MiniCard.css"
+import * as styles from "./MiniCard.css";
 
 const {
 	title,
@@ -21,10 +21,9 @@ const {
 	inclusions,
 	type,
 	tournamentNotes,
-} = Astro.props
+} = Astro.props;
 
-const validDate =
-	date && !Number.isNaN(Date.parse(date)) ? new Date(date) : null
+const validDate = date && !Number.isNaN(Date.parse(date)) ? new Date(date) : null;
 ---
 
 <div class={styles.miniCardWrapper}>

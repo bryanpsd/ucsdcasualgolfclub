@@ -1,5 +1,5 @@
-import { type RecipeVariants, recipe } from "@vanilla-extract/recipes"
-import { color, fontSize, fontWeight, lineHeight, tokens } from "~styles"
+import { type RecipeVariants, recipe } from "@vanilla-extract/recipes";
+import { color, fontSize, fontWeight, lineHeight, tokens } from "~styles";
 
 export const typography = recipe({
 	base: tokens({ margin: "none" }),
@@ -83,6 +83,6 @@ export const typography = recipe({
 		align: "inherit",
 		noWrap: false,
 	},
-})
+});
 
-export type TypographyVariants = NonNullable<RecipeVariants<typeof typography>>
+export type TypographyVariants = NonNullable<RecipeVariants<typeof typography>>;

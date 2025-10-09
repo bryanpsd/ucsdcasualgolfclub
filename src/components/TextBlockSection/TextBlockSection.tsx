@@ -1,16 +1,13 @@
-import {
-	documentToReactComponents,
-	type Options,
-} from "@contentful/rich-text-react-renderer"
-import type { Block, Document, Inline } from "@contentful/rich-text-types"
-import type { CSSProperties } from "react"
-import { Link } from "~components/Link"
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
-import * as styles from "~components/TextBlockSection/TextBlockSection.css"
-import { Typography, type TypographyProps } from "~components/Typography"
-import { concatClasses } from "~utils/concatClasses"
-import { replaceAllSpecialChars } from "~utils/StringUtils"
-import { List, ListItem } from "./List"
+import { documentToReactComponents, type Options } from "@contentful/rich-text-react-renderer";
+import type { Block, Document, Inline } from "@contentful/rich-text-types";
+import type { CSSProperties } from "react";
+import { Link } from "~components/Link";
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import * as styles from "~components/TextBlockSection/TextBlockSection.css";
+import { Typography, type TypographyProps } from "~components/Typography";
+import { concatClasses } from "~utils/concatClasses";
+import { replaceAllSpecialChars } from "~utils/StringUtils";
+import { List, ListItem } from "./List";
 
 const BLOCKS = {
 	HEADING_1: "heading-1",
@@ -21,24 +18,24 @@ const BLOCKS = {
 	UL_LIST: "unordered-list",
 	OL_LIST: "ordered-list",
 	LIST_ITEM: "list-item",
-}
-const INLINES = { HYPERLINK: "hyperlink" }
-const MARKS = { BOLD: "bold", SUBSCRIPT: "subscript", UNDERLINE: "underline" }
+};
+const INLINES = { HYPERLINK: "hyperlink" };
+const MARKS = { BOLD: "bold", SUBSCRIPT: "subscript", UNDERLINE: "underline" };
 
-const BODY_TYPOGRAPHY_VARIANT: TypographyProps["variant"] = "bodyMd"
+const BODY_TYPOGRAPHY_VARIANT: TypographyProps["variant"] = "bodyMd";
 
 export type TextBlockSectionProps = {
-	text?: Document
-	options?: Options
-	id?: string
-	className?: string
-	style?: CSSProperties
-}
+	text?: Document;
+	options?: Options;
+	id?: string;
+	className?: string;
+	style?: CSSProperties;
+};
 
 function generateId(node: Block | Inline): string {
-	const { content } = node
-	const value = content[0] && "value" in content[0] ? content[0].value : ""
-	return replaceAllSpecialChars(value, "-")
+	const { content } = node;
+	const value = content[0] && "value" in content[0] ? content[0].value : "";
+	return replaceAllSpecialChars(value, "-");
 }
 
 const textBlockSectionOptions: Options = {
@@ -59,12 +56,7 @@ const textBlockSectionOptions: Options = {
 			</ResponsiveHeadline>
 		),
 		[BLOCKS.HEADING_4]: (node, children) => (
-			<Typography
-				variant="bodyLg"
-				fontWeight={500}
-				as="h4"
-				id={generateId(node)}
-			>
+			<Typography variant="bodyLg" fontWeight={500} as="h4" id={generateId(node)}>
 				{children}
 			</Typography>
 		),
@@ -81,29 +73,18 @@ const textBlockSectionOptions: Options = {
 		),
 		[BLOCKS.LIST_ITEM]: (_node, children) => <ListItem>{children}</ListItem>,
 		[INLINES.HYPERLINK]: (node, children) => {
-			const isJumpLink = node.data.uri.startsWith("#")
+			const isJumpLink = node.data.uri.startsWith("#");
 			return (
-				<Link
-					className={styles.link}
-					href={node.data.uri}
-					jumpLink={isJumpLink}
-				>
+				<Link className={styles.link} href={node.data.uri} jumpLink={isJumpLink}>
 					{children}
 				</Link>
-			)
+			);
 		},
 	},
 	renderMark: {
-		[MARKS.BOLD]: (children) => (
-			<span style={{ fontWeight: 500 }}>{children}</span>
-		),
+		[MARKS.BOLD]: (children) => <span style={{ fontWeight: 500 }}>{children}</span>,
 		[MARKS.SUBSCRIPT]: (children) => (
-			<Typography
-				as="span"
-				variant="inherit"
-				color="inherit"
-				data-disclaimer-style="true"
-			>
+			<Typography as="span" variant="inherit" color="inherit" data-disclaimer-style="true">
 				{children}
 			</Typography>
 		),
@@ -111,7 +92,7 @@ const textBlockSectionOptions: Options = {
 			<span style={{ textDecoration: "underline" }}>{children}</span>
 		),
 	},
-}
+};
 
 export const TextBlockSection = ({
 	id,
@@ -120,14 +101,10 @@ export const TextBlockSection = ({
 	text,
 	options,
 }: TextBlockSectionProps) => {
-	if (!text) return null
+	if (!text) return null;
 
 	return (
-		<div
-			id={id}
-			className={concatClasses([styles.richTextContainer, className])}
-			style={style}
-		>
+		<div id={id} className={concatClasses([styles.richTextContainer, className])} style={style}>
 			{documentToReactComponents(text, {
 				...textBlockSectionOptions,
 				...options,
@@ -141,5 +118,5 @@ export const TextBlockSection = ({
 				},
 			})}
 		</div>
-	)
-}
+	);
+};

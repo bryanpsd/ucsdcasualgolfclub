@@ -1,6 +1,6 @@
-import { style } from "@vanilla-extract/css"
-import { color, fontSize, tokens } from "~styles"
-import { contentPadding, pageMaxWidth } from "~styles/globals/common.css"
+import { style } from "@vanilla-extract/css";
+import { color, fontSize, tokens } from "~styles";
+import { contentPadding, pageMaxWidth } from "~styles/globals/common.css";
 
 export const headerWrapper = style([
 	tokens({
@@ -16,7 +16,7 @@ export const headerWrapper = style([
 		top: 0,
 		zIndex: 1000,
 	},
-])
+]);
 
 export const header = style([
 	tokens({
@@ -28,13 +28,13 @@ export const header = style([
 	}),
 	pageMaxWidth,
 	contentPadding,
-])
+]);
 
 export const logoWrapper = style([
 	tokens({
 		display: "flex",
 	}),
-])
+]);
 
 export const logoLink = style([
 	tokens({
@@ -49,7 +49,7 @@ export const logoLink = style([
 		color: color.brand.white,
 		fontSize: fontSize.sizeFont5,
 	},
-])
+]);
 
 export const mainContentJumpLink = style({
 	selectors: {
@@ -61,4 +61,4 @@ export const mainContentJumpLink = style({
 			position: "static",
 		},
 	},
-})
+});

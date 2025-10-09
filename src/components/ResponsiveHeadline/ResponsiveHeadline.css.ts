@@ -1,6 +1,6 @@
-import { recipe } from "@vanilla-extract/recipes"
-import { fontSize, fontWeight, lineHeight } from "~styles"
-import { breakpointQuery, tokens } from "~styles/utilities/designTokens.css"
+import { recipe } from "@vanilla-extract/recipes";
+import { fontSize, fontWeight, lineHeight } from "~styles";
+import { breakpointQuery, tokens } from "~styles/utilities/designTokens.css";
 
 export const responsiveHeadline = recipe({
 	base: [
@@ -66,4 +66,4 @@ export const responsiveHeadline = recipe({
 			},
 		},
 	},
-})
+});

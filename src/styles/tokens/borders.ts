@@ -17,4 +17,4 @@ export const border = {
 		lg: "0.2rem",
 		bannerHighlight: "0.9rem",
 	},
-} as const
+} as const;

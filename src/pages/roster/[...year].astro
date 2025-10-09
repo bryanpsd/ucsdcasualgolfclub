@@ -1,22 +1,22 @@
 ---
-export const prerender = true
+export const prerender = true;
 
-import "~/styles/globals/global.css"
-import "~/styles/globals/reset.css"
-import "~/styles/globals/theme.css"
+import "~/styles/globals/global.css";
+import "~/styles/globals/reset.css";
+import "~/styles/globals/theme.css";
 
-import { Hero } from "~components/Hero"
-import { Table } from "~components/Table"
+import { Hero } from "~components/Hero";
+import { Table } from "~components/Table";
 
-import Layout from "~layouts/Layout.astro"
-import { contentfulClient } from "~services/contentful/contentful"
-import * as styles from "~styles/globals/common.css"
-import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster"
+import Layout from "~layouts/Layout.astro";
+import { contentfulClient } from "~services/contentful/contentful";
+import * as styles from "~styles/globals/common.css";
+import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster";
 
 export async function getStaticPaths() {
 	const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
 		content_type: "roster",
-	})
+	});
 
 	const pages = entries.items.map((item) => {
 		return {
@@ -33,22 +33,20 @@ export async function getStaticPaths() {
 									playerName: player.fields.playerName,
 									handicapIndex: player.fields.handicapIndex,
 									guest: player.fields.guest,
-								}
+								};
 							}
-							return null
+							return null;
 						})
 						.filter(Boolean) ?? [],
-				years: entries.items.map(
-					(entry) => entry.fields.year?.toString() ?? "N/A"
-				),
+				years: entries.items.map((entry) => entry.fields.year?.toString() ?? "N/A"),
 			},
-		}
-	})
+		};
+	});
 
-	return pages
+	return pages;
 }
 
-const { year, players = [] } = Astro.props
+const { year, players = [] } = Astro.props;
 ---
 
 <Layout

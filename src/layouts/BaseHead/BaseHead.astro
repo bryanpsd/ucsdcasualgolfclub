@@ -4,13 +4,13 @@
  * It's purpose is to manage global layout props (i.e. page title), global data providers, as well
  * as global style imports.
  */
-import { GoogleAnalytics } from "~layouts/GoogleAnalytics"
+import { GoogleAnalytics } from "~layouts/GoogleAnalytics";
 export interface Props {
-	title: string
-	description?: string
+	title: string;
+	description?: string;
 }
 
-const canonicalURL = Astro.url.href
+const canonicalURL = Astro.url.href;
 
 const schema = {
 	"@context": "https://schema.org",
@@ -29,11 +29,11 @@ const schema = {
 		addressRegion: "CA",
 		addressCountry: "US",
 	},
-}
+};
 
-import { ClientRouter } from "astro:transitions"
+import { ClientRouter } from "astro:transitions";
 
-const { title = "UCSD Casual Golf Club", description = "" } = Astro.props
+const { title = "UCSD Casual Golf Club", description = "" } = Astro.props;
 ---
 
 <head>

@@ -1,1 +1,1 @@
-export { default as Error } from "./Error.astro"
+export { default as Error } from "./Error.astro";

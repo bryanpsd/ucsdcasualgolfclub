@@ -1,25 +1,25 @@
-import { format } from "date-fns"
-import { Button } from "~components/Button/Button"
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
-import { Typography } from "~components/Typography"
-import Clock from "~icons/clock.svg?react"
-import type { TypeCourseProps } from "~types/contentful"
-import { CourseDetails } from "../CourseDetails"
+import { format } from "date-fns";
+import { Button } from "~components/Button/Button";
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { Typography } from "~components/Typography";
+import Clock from "~icons/clock.svg?react";
+import type { TypeCourseProps } from "~types/contentful";
+import { CourseDetails } from "../CourseDetails";
 
-import * as styles from "./CourseCard.css"
+import * as styles from "./CourseCard.css";
 
 interface CourseCardProps extends TypeCourseProps {
-	hideCourseInfo?: boolean
-	date?: string
-	players?: string
-	prices?: string[]
-	inclusions?: string[]
-	results?: string | null | undefined
-	clubChampionship?: boolean
-	coursePar?: string
-	tees?: string[]
-	type?: string
-	tournamentNotes?: string[]
+	hideCourseInfo?: boolean;
+	date?: string;
+	players?: string;
+	prices?: string[];
+	inclusions?: string[];
+	results?: string | null | undefined;
+	clubChampionship?: boolean;
+	coursePar?: string;
+	tees?: string[];
+	type?: string;
+	tournamentNotes?: string[];
 }
 
 export const CourseCard = (props: CourseCardProps) => {
@@ -36,31 +36,24 @@ export const CourseCard = (props: CourseCardProps) => {
 		type,
 		clubChampionship,
 		tournamentNotes,
-	} = props
+	} = props;
 
-	const isWednesday = date && new Date(date).getDay() === 3
-	const isSaturday = date && new Date(date).getDay() === 6
-	const isSpecialEvent = date && !isWednesday && !isSaturday
+	const isWednesday = date && new Date(date).getDay() === 3;
+	const isSaturday = date && new Date(date).getDay() === 6;
+	const isSpecialEvent = date && !isWednesday && !isSaturday;
 
 	return (
 		<section className={styles.courseCardWrapper}>
 			{date && (
 				<div
 					className={styles.dateWrapper({
-						variant: isSpecialEvent
-							? "special"
-							: isWednesday
-								? "secondary"
-								: "default",
+						variant: isSpecialEvent ? "special" : isWednesday ? "secondary" : "default",
 					})}
 				>
 					<Typography color={isSpecialEvent ? "primary" : "inverse"}>
 						{format(date, "MMM")}
 					</Typography>
-					<Typography
-						color={isSpecialEvent ? "primary" : "inverse"}
-						variant="headlineLg"
-					>
+					<Typography color={isSpecialEvent ? "primary" : "inverse"} variant="headlineLg">
 						{format(date, "d")}
 					</Typography>
 					<Typography color={isSpecialEvent ? "primary" : "inverse"}>
@@ -76,12 +69,7 @@ export const CourseCard = (props: CourseCardProps) => {
 					{tournamentNotes && tournamentNotes.length > 0 && (
 						<div>
 							{tournamentNotes.map((note) => (
-								<ResponsiveHeadline
-									className={styles.courseNote}
-									key={note}
-									size={1}
-									as="h3"
-								>
+								<ResponsiveHeadline className={styles.courseNote} key={note} size={1} as="h3">
 									{note}
 								</ResponsiveHeadline>
 							))}
@@ -102,23 +90,14 @@ export const CourseCard = (props: CourseCardProps) => {
 						{tournamentNotes && tournamentNotes.length > 0 && (
 							<div>
 								{tournamentNotes.map((note) => (
-									<ResponsiveHeadline
-										className={styles.courseNote}
-										key={note}
-										size={1}
-										as="h3"
-									>
+									<ResponsiveHeadline className={styles.courseNote} key={note} size={1} as="h3">
 										{note}
 									</ResponsiveHeadline>
 								))}
 							</div>
 						)}
 						{clubChampionship && (
-							<ResponsiveHeadline
-								className={styles.courseNote}
-								size={1}
-								as="h2"
-							>
+							<ResponsiveHeadline className={styles.courseNote} size={1} as="h2">
 								Club Championship
 							</ResponsiveHeadline>
 						)}
@@ -171,5 +150,5 @@ export const CourseCard = (props: CourseCardProps) => {
 				</div>
 			</div>
 		</section>
-	)
-}
+	);
+};

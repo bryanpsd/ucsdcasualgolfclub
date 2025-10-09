@@ -1,27 +1,22 @@
-import type { ReactNode } from "react"
-import * as styles from "./Table.css"
+import type { ReactNode } from "react";
+import * as styles from "./Table.css";
 
 type TableCell =
 	| string
 	| ReactNode
 	| {
-			value: string | ReactNode
-			className?: string
-	  }
+			value: string | ReactNode;
+			className?: string;
+	  };
 
 type Props = {
-	thead: string[]
-	colSpan?: number
-	tbody: Array<Array<TableCell>>
-	tfoot?: string[]
-}
+	thead: string[];
+	colSpan?: number;
+	tbody: Array<Array<TableCell>>;
+	tfoot?: string[];
+};
 
-export const Table: React.FC<Props> = ({
-	thead,
-	tbody,
-	tfoot,
-	colSpan = 0,
-}) => {
+export const Table: React.FC<Props> = ({ thead, tbody, tfoot, colSpan = 0 }) => {
 	return (
 		<table className={styles.table}>
 			{thead && (
@@ -42,43 +37,39 @@ export const Table: React.FC<Props> = ({
 			<tbody>
 				{tbody.map((row, rowIndex) => {
 					// Always guarantee unique row and cell keys
-					let rowKey: string | undefined
-					const firstCell = row[0]
+					let rowKey: string | undefined;
+					const firstCell = row[0];
 					if (
 						typeof firstCell === "object" &&
 						firstCell &&
 						"key" in firstCell &&
 						typeof firstCell.key === "string"
 					) {
-						rowKey = String(firstCell.key)
+						rowKey = String(firstCell.key);
 					} else if (typeof firstCell === "string") {
-						rowKey = `${firstCell}`
+						rowKey = `${firstCell}`;
 					} else if (
 						firstCell &&
 						typeof firstCell === "object" &&
 						"value" in firstCell &&
 						typeof firstCell.value === "string"
 					) {
-						rowKey = `${firstCell.value}`
+						rowKey = `${firstCell.value}`;
 					}
 					// Always append rowIndex for uniqueness
-					const uniqueRowKey =
-						rowKey !== undefined ? `${rowKey}-${rowIndex}` : `${rowIndex}`
+					const uniqueRowKey = rowKey !== undefined ? `${rowKey}-${rowIndex}` : `${rowIndex}`;
 					return (
 						<tr key={uniqueRowKey} className={styles.tr}>
 							{row.map((cell, cellIndex) => {
 								// Always append cellIndex for uniqueness
-								const cellKey = `${uniqueRowKey}-cell-${cellIndex}`
+								const cellKey = `${uniqueRowKey}-cell-${cellIndex}`;
 								if (cellIndex === 0) {
 									return (
 										<th
 											key={cellKey}
 											scope="row"
 											className={`${styles.th} ${
-												cell &&
-												typeof cell === "object" &&
-												"className" in cell &&
-												cell.className
+												cell && typeof cell === "object" && "className" in cell && cell.className
 													? cell.className
 													: ""
 											}`}
@@ -92,16 +83,13 @@ export const Table: React.FC<Props> = ({
 													? cell
 													: null}
 										</th>
-									)
+									);
 								} else {
 									return (
 										<td
 											key={cellKey}
 											className={`${styles.td} ${
-												cell &&
-												typeof cell === "object" &&
-												"className" in cell &&
-												cell.className
+												cell && typeof cell === "object" && "className" in cell && cell.className
 													? cell.className
 													: ""
 											}`}
@@ -109,15 +97,13 @@ export const Table: React.FC<Props> = ({
 												? { dangerouslySetInnerHTML: { __html: cell } }
 												: {})}
 										>
-											{cell && typeof cell === "object" && "value" in cell
-												? cell.value
-												: cell}
+											{cell && typeof cell === "object" && "value" in cell ? cell.value : cell}
 										</td>
-									)
+									);
 								}
 							})}
 						</tr>
-					)
+					);
 				})}
 			</tbody>
 			{tfoot && (
@@ -136,5 +122,5 @@ export const Table: React.FC<Props> = ({
 				</tfoot>
 			)}
 		</table>
-	)
-}
+	);
+};

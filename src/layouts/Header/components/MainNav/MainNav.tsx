@@ -1,31 +1,31 @@
-import * as NavMenu from "@radix-ui/react-navigation-menu"
+import * as NavMenu from "@radix-ui/react-navigation-menu";
 
-import { type PointerEventHandler, useState } from "react"
-import { MainNavItem } from "../MainNavItem/MainNavItem"
+import { type PointerEventHandler, useState } from "react";
+import { MainNavItem } from "../MainNavItem/MainNavItem";
 
-import * as styles from "./MainNav.css"
+import * as styles from "./MainNav.css";
 
 type NavigationLink = {
-	label: string
-	href?: string
-	target?: string
-	links?: NavigationLink[]
-}
+	label: string;
+	href?: string;
+	target?: string;
+	links?: NavigationLink[];
+};
 
 export type MainNavProps = {
 	items: {
-		label: string
-		menuItems: NavigationLink[]
-	}
-	currentPath: string
-}
+		label: string;
+		menuItems: NavigationLink[];
+	};
+	currentPath: string;
+};
 
 const disableHoverInteraction: PointerEventHandler<HTMLElement> = (e) => {
-	e.preventDefault()
-}
+	e.preventDefault();
+};
 
 export const MainNav = ({ items, currentPath }: MainNavProps) => {
-	const [active, setActive] = useState("")
+	const [active, setActive] = useState("");
 	return (
 		<NavMenu.Root
 			className={styles.mainNavRoot}
@@ -36,16 +36,8 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
 				{items.menuItems.map((item) => (
 					<NavMenu.Item className={styles.mainNavItem} key={item.label}>
 						{"href" in item ? (
-							<NavMenu.Link
-								asChild
-								active={!!(item.href && currentPath.startsWith(item.href))}
-							>
-								<MainNavItem
-									target={item.target}
-									href={item.href}
-									label={item.label}
-									as="a"
-								/>
+							<NavMenu.Link asChild active={!!(item.href && currentPath.startsWith(item.href))}>
+								<MainNavItem target={item.target} href={item.href} label={item.label} as="a" />
 							</NavMenu.Link>
 						) : (
 							<>
@@ -55,9 +47,7 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
 									onPointerLeave={disableHoverInteraction}
 									asChild
 									style={{
-										textDecoration: currentPath.startsWith("/seasons")
-											? "underline"
-											: "none",
+										textDecoration: currentPath.startsWith("/seasons") ? "underline" : "none",
 									}}
 								>
 									<MainNavItem label={item.label} />
@@ -83,5 +73,5 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
 				))}
 			</NavMenu.List>
 		</NavMenu.Root>
-	)
-}
+	);
+};

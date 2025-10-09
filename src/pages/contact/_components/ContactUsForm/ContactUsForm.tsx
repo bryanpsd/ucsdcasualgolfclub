@@ -1,52 +1,52 @@
-import { useId } from "react"
-import { type SubmitHandler, useForm } from "react-hook-form"
-import { toast } from "react-toastify"
-import "react-toastify/dist/ReactToastify.css"
-import { Button } from "~components/Button/Button"
-import { useCaptcha } from "~utils/useCaptcha"
-import * as styles from "./ContactUsForm.css"
+import { useId } from "react";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Button } from "~components/Button/Button";
+import { useCaptcha } from "~utils/useCaptcha";
+import * as styles from "./ContactUsForm.css";
 
 type ContactUsFormData = {
-	name: string
-	email: string
-	message?: string
-	"bot-field"?: string
-}
+	name: string;
+	email: string;
+	message?: string;
+	"bot-field"?: string;
+};
 
 export const ContactUsForm = () => {
-	const captcha = useCaptcha()
+	const captcha = useCaptcha();
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
-	} = useForm<ContactUsFormData>()
-	const nameId = useId()
-	const emailId = useId()
-	const messageId = useId()
+	} = useForm<ContactUsFormData>();
+	const nameId = useId();
+	const emailId = useId();
+	const messageId = useId();
 
 	const onSubmit: SubmitHandler<ContactUsFormData> = async (data) => {
 		try {
-			const captchaToken = await captcha.execute()
+			const captchaToken = await captcha.execute();
 
 			const response = await fetch("/api/contact", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({ ...data, captchaToken }),
-			})
+			});
 
 			if (response.ok) {
-				toast.success("Form submitted successfully!")
-				reset()
+				toast.success("Form submitted successfully!");
+				reset();
 			} else {
-				const { error } = await response.json()
-				toast.error(error || "There was a problem submitting the form.")
+				const { error } = await response.json();
+				toast.error(error || "There was a problem submitting the form.");
 			}
 		} catch (error) {
-			toast.error("There was a problem submitting the form. Please try again.")
-			console.error("Error sending form:", error)
+			toast.error("There was a problem submitting the form. Please try again.");
+			console.error("Error sending form:", error);
 		}
-	}
+	};
 
 	return (
 		<form
@@ -86,9 +86,7 @@ export const ContactUsForm = () => {
 						},
 					})}
 				/>
-				{errors.email && (
-					<span className={styles.error}>{errors.email.message}</span>
-				)}
+				{errors.email && <span className={styles.error}>{errors.email.message}</span>}
 			</div>
 
 			<div className={styles.formField}>
@@ -98,9 +96,7 @@ export const ContactUsForm = () => {
 					id={messageId}
 					{...register("message", { required: "Enter a message." })}
 				/>
-				{errors.message && (
-					<span className={styles.error}>{errors.message.message}</span>
-				)}
+				{errors.message && <span className={styles.error}>{errors.message.message}</span>}
 			</div>
 
 			<div>
@@ -109,5 +105,5 @@ export const ContactUsForm = () => {
 				</Button>
 			</div>
 		</form>
-	)
-}
+	);
+};

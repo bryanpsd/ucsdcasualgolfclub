@@ -1,38 +1,35 @@
-import type { ComponentPropsWithRef, CSSProperties } from "react"
+import type { ComponentPropsWithRef, CSSProperties } from "react";
 
 export interface ContentfulImageProps {
-	id?: string
-	className?: string
-	style?: CSSProperties
+	id?: string;
+	className?: string;
+	style?: CSSProperties;
 	/** Path to the image. */
-	src?: string
+	src?: string;
 	/** A textual replacement for the image. Required for accessibility. */
-	alt: string
+	alt: string;
 	/** Explicit width of the image (in px). Used for aspect ratio/layout stability. */
-	width?: number | string
+	width?: number | string;
 	/** Explicit height of the image (in px). Used for aspect ratio/layout stability. */
-	height?: number | string
+	height?: number | string;
 	/** How the image should fit in its container (CSS object-fit). */
-	objectFit?: CSSProperties["objectFit"]
+	objectFit?: CSSProperties["objectFit"];
 	/** How the image should be positioned within its container (CSS object-position). */
-	objectPosition?: CSSProperties["objectPosition"]
+	objectPosition?: CSSProperties["objectPosition"];
 	/** Props that will be passed to the underlying "img" element. */
-	imgProps?: Omit<
-		ComponentPropsWithRef<"img">,
-		"src" | "alt" | "width" | "height" | "style"
-	>
+	imgProps?: Omit<ComponentPropsWithRef<"img">, "src" | "alt" | "width" | "height" | "style">;
 }
 
-const isContentfulSrc = (src = "") => src.startsWith("//images.ctfassets.net")
+const isContentfulSrc = (src = "") => src.startsWith("//images.ctfassets.net");
 
 const getProxySrc = (src = "", imgFormat = "") => {
 	if (!src) {
-		return ""
+		return "";
 	}
 
-	const format = imgFormat ? imgFormat : src.split(".").pop()
-	return `/api/contentful-image?url=${encodeURIComponent(`${src}?fm=${format}`)}`
-}
+	const format = imgFormat ? imgFormat : src.split(".").pop();
+	return `/api/contentful-image?url=${encodeURIComponent(`${src}?fm=${format}`)}`;
+};
 
 /**
  * Renders a "picture" element with optimizations for images from Contentful.
@@ -55,8 +52,8 @@ export const ContentfulImage = ({
 	objectPosition,
 	imgProps = {},
 }: ContentfulImageProps) => {
-	const isContentfulImage = isContentfulSrc(src)
-	const defaultImgSrc = isContentfulImage ? getProxySrc(src) : src
+	const isContentfulImage = isContentfulSrc(src);
+	const defaultImgSrc = isContentfulImage ? getProxySrc(src) : src;
 
 	// Compose the style for the <img> element
 	const imgStyle: CSSProperties = {
@@ -64,7 +61,7 @@ export const ContentfulImage = ({
 		height: "auto",
 		objectFit,
 		...(objectPosition ? { objectPosition } : {}),
-	}
+	};
 
 	return (
 		<picture id={id} className={className} style={style}>
@@ -85,5 +82,5 @@ export const ContentfulImage = ({
 				{...imgProps}
 			/>
 		</picture>
-	)
-}
+	);
+};

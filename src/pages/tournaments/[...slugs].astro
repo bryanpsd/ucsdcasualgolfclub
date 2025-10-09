@@ -1,35 +1,35 @@
 ---
-export const prerender = true
+export const prerender = true;
 
-import "~/styles/globals/global.css"
-import "~/styles/globals/reset.css"
-import "~/styles/globals/theme.css"
+import "~/styles/globals/global.css";
+import "~/styles/globals/reset.css";
+import "~/styles/globals/theme.css";
 
-import { CourseInfo } from "~components/Course/CourseInfo"
-import { GoogleMap } from "~components/Course/Map"
-import { MiniCard } from "~components/Course/MiniCard"
-import { Scorecard } from "~components/Course/Scorecard"
-import { Hero } from "~components/Hero"
+import { CourseInfo } from "~components/Course/CourseInfo";
+import { GoogleMap } from "~components/Course/Map";
+import { MiniCard } from "~components/Course/MiniCard";
+import { Scorecard } from "~components/Course/Scorecard";
+import { Hero } from "~components/Hero";
 
-import { RichText } from "~components/RichText"
-import Layout from "~layouts/Layout.astro"
-import { contentfulClient } from "~services/contentful/contentful"
-import * as commonStyles from "~styles/globals/common.css"
-import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse"
-import FlightCard from "./_components/FlightCard/FlightCard.astro"
-import * as styles from "./_style/tournament.css"
+import { RichText } from "~components/RichText";
+import Layout from "~layouts/Layout.astro";
+import { contentfulClient } from "~services/contentful/contentful";
+import * as commonStyles from "~styles/globals/common.css";
+import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse";
+import FlightCard from "./_components/FlightCard/FlightCard.astro";
+import * as styles from "./_style/tournament.css";
 
 export async function getStaticPaths() {
 	const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
 		content_type: "course",
 		include: 3,
-	})
+	});
 
 	const pages = entries.items
 		.flatMap((item) => {
 			return item.fields.tournaments?.map((tournament) => {
 				if (tournament && "fields" in tournament && tournament.fields.date) {
-					const year = new Date(tournament.fields.date).getFullYear()
+					const year = new Date(tournament.fields.date).getFullYear();
 
 					return {
 						params: {
@@ -49,9 +49,7 @@ export async function getStaticPaths() {
 							tournaments: [
 								{
 									clubChampionship:
-										"fields" in tournament
-											? (tournament.fields.clubChampionship ?? false)
-											: false,
+										"fields" in tournament ? (tournament.fields.clubChampionship ?? false) : false,
 									prices: tournament.fields.prices,
 									date: tournament.fields.date ?? "N/A",
 									players: tournament.fields.players,
@@ -81,26 +79,24 @@ export async function getStaticPaths() {
 																	longDrive: result.fields.longDrive,
 																	putts: result.fields.putts,
 																	closestTo: result.fields.closestTo,
-																}
+																};
 															}
-															return null
+															return null;
 														}),
-														yearlyStats: player.fields.yearlyStats?.map(
-															(stats) => {
-																if (stats && "fields" in stats) {
-																	return {
-																		...stats.fields,
-																		year: stats.fields.year,
-																		gross: stats.fields.gross,
-																		net: stats.fields.net,
-																	}
-																}
-																return null
+														yearlyStats: player.fields.yearlyStats?.map((stats) => {
+															if (stats && "fields" in stats) {
+																return {
+																	...stats.fields,
+																	year: stats.fields.year,
+																	gross: stats.fields.gross,
+																	net: stats.fields.net,
+																};
 															}
-														),
-													}
+															return null;
+														}),
+													};
 												}
-												return null
+												return null;
 											})
 											.filter(Boolean) ?? [],
 									secondFlight:
@@ -124,40 +120,38 @@ export async function getStaticPaths() {
 																	longDrive: result.fields.longDrive,
 																	putts: result.fields.putts,
 																	closestTo: result.fields.closestTo,
-																}
+																};
 															}
-															return null
+															return null;
 														}),
-														yearlyStats: player.fields.yearlyStats?.map(
-															(stats) => {
-																if (stats && "fields" in stats) {
-																	return {
-																		...stats.fields,
-																		year: stats.fields.year,
-																		gross: stats.fields.gross,
-																		net: stats.fields.net,
-																	}
-																}
-																return null
+														yearlyStats: player.fields.yearlyStats?.map((stats) => {
+															if (stats && "fields" in stats) {
+																return {
+																	...stats.fields,
+																	year: stats.fields.year,
+																	gross: stats.fields.gross,
+																	net: stats.fields.net,
+																};
 															}
-														),
-													}
+															return null;
+														}),
+													};
 												}
-												return null
+												return null;
 											})
 											.filter(Boolean) ?? [],
 								},
 							],
 						},
-					}
+					};
 				}
 
-				return null
-			})
+				return null;
+			});
 		})
-		.filter(Boolean)
+		.filter(Boolean);
 
-	return pages
+	return pages;
 }
 
 const {
@@ -169,21 +163,15 @@ const {
 	tournaments = [],
 	courseWebsite,
 	courseScorecard,
-} = Astro.props
+} = Astro.props;
 
-const tournamentYear = tournaments[0]?.date
-	? new Date(tournaments[0].date).getFullYear()
-	: "N/A"
-const tournamentDate = tournaments[0]?.date
+const tournamentYear = tournaments[0]?.date ? new Date(tournaments[0].date).getFullYear() : "N/A";
+const tournamentDate = tournaments[0]?.date;
 
 const allResults = [
-	...(tournaments[0]?.firstFlight || []).flatMap(
-		(player) => player?.results || []
-	),
-	...(tournaments[0]?.secondFlight || []).flatMap(
-		(player) => player?.results || []
-	),
-]
+	...(tournaments[0]?.firstFlight || []).flatMap((player) => player?.results || []),
+	...(tournaments[0]?.secondFlight || []).flatMap((player) => player?.results || []),
+];
 
 const validGross = allResults
 	.filter((result) => {
@@ -192,12 +180,12 @@ const validGross = allResults
 			result?.date &&
 			!Number.isNaN(new Date(result.date).getTime()) &&
 			new Date(result.date).toISOString().split("T")[0] ===
-				new Date(tournamentDate).toISOString().split("T")[0]
+				new Date(tournamentDate).toISOString().split("T")[0];
 
-		return isSameDate && result?.gross !== undefined && result?.gross !== null
+		return isSameDate && result?.gross !== undefined && result?.gross !== null;
 	})
 	.map((result) => result?.gross ?? null)
-	.filter((gross): gross is number => gross !== null && !Number.isNaN(gross))
+	.filter((gross): gross is number => gross !== null && !Number.isNaN(gross));
 
 const validPutts = allResults
 	.filter((result) => {
@@ -206,22 +194,20 @@ const validPutts = allResults
 			result?.date &&
 			!Number.isNaN(new Date(result.date).getTime()) &&
 			new Date(result.date).toISOString().split("T")[0] ===
-				new Date(tournamentDate).toISOString().split("T")[0]
+				new Date(tournamentDate).toISOString().split("T")[0];
 
-		return isSameDate && result?.putts !== undefined && result?.putts !== null
+		return isSameDate && result?.putts !== undefined && result?.putts !== null;
 	})
 	.map((result) => result?.putts ?? null)
-	.filter((putts): putts is number => putts !== null && !Number.isNaN(putts))
+	.filter((putts): putts is number => putts !== null && !Number.isNaN(putts));
 
-const lowestGrossOverall =
-	validGross.length > 0 ? Math.min(...validGross) : null
-const lowestPuttsOverall =
-	validPutts.length > 0 ? Math.min(...validPutts) : null
+const lowestGrossOverall = validGross.length > 0 ? Math.min(...validGross) : null;
+const lowestPuttsOverall = validPutts.length > 0 ? Math.min(...validPutts) : null;
 
 const flights = [
 	{ title: "First Flight", data: tournaments[0]?.firstFlight || [] },
 	{ title: "Second Flight", data: tournaments[0]?.secondFlight || [] },
-]
+];
 ---
 
 <Layout

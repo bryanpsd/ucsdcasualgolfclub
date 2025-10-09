@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css"
-import { color, fontSize, tokens } from "~styles"
+import { style } from "@vanilla-extract/css";
+import { color, fontSize, tokens } from "~styles";
 
 export const scorecardSectionWrapper = style([
 	tokens({
@@ -8,13 +8,13 @@ export const scorecardSectionWrapper = style([
 		gap: 12,
 		width: "col-12",
 	}),
-])
+]);
 
 export const scorecardTableWrapper = style([
 	tokens({
 		overflowX: "auto",
 	}),
-])
+]);
 
 export const table = style([
 	tokens({
@@ -24,13 +24,13 @@ export const table = style([
 		fontSize: fontSize.sizeFont4,
 		tableLayout: "auto",
 	},
-])
+]);
 
 export const thead = style({
 	color: color.brand.yellow,
 	backgroundColor: color.brand.navy,
 	fontWeight: 600,
-})
+});
 
 export const th = style([
 	tokens({
@@ -45,7 +45,7 @@ export const th = style([
 			},
 		},
 	},
-])
+]);
 
 export const tr = style({
 	borderBottom: `1px solid ${color.tableBorder}`,
@@ -54,7 +54,7 @@ export const tr = style({
 			backgroundColor: color.brand.gray,
 		},
 	},
-})
+});
 
 export const td = style([
 	tokens({
@@ -65,10 +65,10 @@ export const td = style([
 	{
 		borderLeft: `1px solid ${color.tableBorder}`,
 	},
-])
+]);
 
 export const boldColumn = style([
 	tokens({
 		fontWeight: "fontWeight700",
 	}),
-])
+]);

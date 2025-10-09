@@ -60,4 +60,4 @@ export const space = {
 	"col-12": "100%",
 	"col-overflow": "125%",
 	auto: "auto",
-} as const
+} as const;

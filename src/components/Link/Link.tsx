@@ -1,16 +1,13 @@
-import { type ComponentPropsWithRef, forwardRef } from "react"
-import { concatClasses } from "~utils/concatClasses"
-import { jumpLink as jumpLinkClass, link } from "./Link.css"
+import { type ComponentPropsWithRef, forwardRef } from "react";
+import { concatClasses } from "~utils/concatClasses";
+import { jumpLink as jumpLinkClass, link } from "./Link.css";
 
 export type LinkProps = ComponentPropsWithRef<"a"> & {
-	jumpLink?: boolean
-}
+	jumpLink?: boolean;
+};
 
 export const Link = forwardRef(
-	(
-		{ className, children, jumpLink, ...rest }: LinkProps,
-		ref?: LinkProps["ref"]
-	) => {
+	({ className, children, jumpLink, ...rest }: LinkProps, ref?: LinkProps["ref"]) => {
 		return (
 			<a
 				className={concatClasses([className, jumpLink ? jumpLinkClass : link])}
@@ -19,8 +16,8 @@ export const Link = forwardRef(
 			>
 				{children}
 			</a>
-		)
-	}
-)
+		);
+	},
+);
 
-Link.displayName = "Link"
+Link.displayName = "Link";

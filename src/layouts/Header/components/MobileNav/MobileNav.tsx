@@ -1,23 +1,23 @@
-import * as NavMenu from "@radix-ui/react-navigation-menu"
-import { useState } from "react"
-import { Sheet } from "~components/Sheet/Sheet"
-import Menu from "~icons/menu.svg?react"
-import { disableHover } from "~layouts/Header/utils/disableHover"
-import type { MainNavProps } from "../MainNav"
-import { MainNavItem } from "./../MainNavItem/MainNavItem"
+import * as NavMenu from "@radix-ui/react-navigation-menu";
+import { useState } from "react";
+import { Sheet } from "~components/Sheet/Sheet";
+import Menu from "~icons/menu.svg?react";
+import { disableHover } from "~layouts/Header/utils/disableHover";
+import type { MainNavProps } from "../MainNav";
+import { MainNavItem } from "./../MainNavItem/MainNavItem";
 
-import * as styles from "./MobileNav.css"
+import * as styles from "./MobileNav.css";
 
 type MobileNavProps = MainNavProps & {
 	items: {
-		label: string
-	}
-}
+		label: string;
+	};
+};
 
-type NavigationItem = MainNavProps["items"]["menuItems"][number]
+type NavigationItem = MainNavProps["items"]["menuItems"][number];
 
 export const MobileNav = ({ items }: MobileNavProps) => {
-	const [open, setOpen] = useState(false)
+	const [open, setOpen] = useState(false);
 	return (
 		<div className={styles.mobileNavRoot}>
 			<NavMenu.Root>
@@ -37,14 +37,14 @@ export const MobileNav = ({ items }: MobileNavProps) => {
 								/>
 							}
 							onOpenChange={(o) => {
-								setOpen(o)
+								setOpen(o);
 							}}
 							title="Navigation Menu"
 						>
 							<NavMenu.Root orientation="vertical">
 								<NavMenu.List>
 									{items.menuItems.map((m) => {
-										return <NavItem item={m} key={m.label} />
+										return <NavItem item={m} key={m.label} />;
 									})}
 								</NavMenu.List>
 							</NavMenu.Root>
@@ -53,8 +53,8 @@ export const MobileNav = ({ items }: MobileNavProps) => {
 				</ul>
 			</NavMenu.Root>
 		</div>
-	)
-}
+	);
+};
 
 function NavItem({ item }: { item: NavigationItem }) {
 	return (
@@ -71,12 +71,7 @@ function NavItem({ item }: { item: NavigationItem }) {
 				</NavMenu.Link>
 			) : (
 				<>
-					<NavMenu.Trigger
-						{...disableHover}
-						asChild
-						value={item.label}
-						className={styles.trigger}
-					>
+					<NavMenu.Trigger {...disableHover} asChild value={item.label} className={styles.trigger}>
 						<MainNavItem className={styles.mobileNavItem} label={item.label} />
 					</NavMenu.Trigger>
 
@@ -94,12 +89,12 @@ function NavItem({ item }: { item: NavigationItem }) {
 											/>
 										</NavMenu.Link>
 									</li>
-								)
+								);
 							})}
 						</ul>
 					</NavMenu.Content>
 				</>
 			)}
 		</NavMenu.Item>
-	)
+	);
 }

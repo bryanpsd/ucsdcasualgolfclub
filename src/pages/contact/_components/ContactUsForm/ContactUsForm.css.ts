@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css"
-import { tokens } from "~styles"
+import { style } from "@vanilla-extract/css";
+import { tokens } from "~styles";
 
 export const formWrapper = style([
 	tokens({
@@ -9,7 +9,7 @@ export const formWrapper = style([
 		gap: 16,
 		padding: 24,
 	}),
-])
+]);
 
 export const formField = style([
 	tokens({
@@ -18,7 +18,7 @@ export const formField = style([
 		width: "col-12",
 		gap: 4,
 	}),
-])
+]);
 
 export const input = style([
 	tokens({
@@ -35,7 +35,7 @@ export const input = style([
 			},
 		},
 	},
-])
+]);
 
 export const textarea = style([
 	tokens({
@@ -53,8 +53,8 @@ export const textarea = style([
 			},
 		},
 	},
-])
+]);
 
 export const error = style({
 	color: "#d32f2f",
-})
+});

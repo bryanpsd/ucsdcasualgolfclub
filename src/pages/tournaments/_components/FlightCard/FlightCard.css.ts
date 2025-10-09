@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css"
-import { color, tokens } from "~styles"
+import { style } from "@vanilla-extract/css";
+import { color, tokens } from "~styles";
 
 export const flightCardWrapper = style([
 	tokens({
@@ -10,13 +10,13 @@ export const flightCardWrapper = style([
 		overflowX: "auto",
 		marginBottom: 12,
 	}),
-])
+]);
 
 export const flightCardLink = style({
 	color: color.brand.navy,
-})
+});
 
 export const highlighted = style({
 	backgroundColor: color.brand.yellow,
 	fontWeight: "bold",
-})
+});

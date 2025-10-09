@@ -49,4 +49,4 @@ export const color = {
 	navigationText: "#ffffff",
 	footerText: "#ffffff",
 	tableBorder: "#cccccc",
-}
+};

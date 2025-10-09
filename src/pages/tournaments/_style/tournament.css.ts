@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css"
-import { tokens } from "~styles"
+import { style } from "@vanilla-extract/css";
+import { tokens } from "~styles";
 export const tournamentWrapper = style([
 	tokens({
 		display: "flex",
@@ -7,7 +7,7 @@ export const tournamentWrapper = style([
 		gap: 12,
 		width: "col-12",
 	}),
-])
+]);
 
 export const tournamentLeftCol = style([
 	tokens({
@@ -16,13 +16,13 @@ export const tournamentLeftCol = style([
 		display: "flex",
 		flexDirection: "column",
 	}),
-])
+]);
 
 export const summary = style([
 	tokens({
 		marginBottom: 12,
 	}),
-])
+]);
 
 export const tournamentRightCol = style([
 	tokens({
@@ -31,4 +31,4 @@ export const tournamentRightCol = style([
 		flexDirection: "column",
 		gap: 12,
 	}),
-])
+]);

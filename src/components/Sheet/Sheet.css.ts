@@ -1,6 +1,6 @@
-import { keyframes, style } from "@vanilla-extract/css"
-import { color, tokens } from "~styles"
-import { breakpointQuery } from "~styles/utilities/designTokens.css"
+import { keyframes, style } from "@vanilla-extract/css";
+import { color, tokens } from "~styles";
+import { breakpointQuery } from "~styles/utilities/designTokens.css";
 
 export const modalOverlay = style([
 	tokens({
@@ -12,7 +12,7 @@ export const modalOverlay = style([
 		backgroundColor: color.brand.black,
 		opacity: 0.5,
 	},
-])
+]);
 
 const slideIn = keyframes({
 	"0%": {
@@ -21,7 +21,7 @@ const slideIn = keyframes({
 	"100%": {
 		right: 0,
 	},
-})
+});
 
 export const modalContent = style([
 	tokens({
@@ -53,7 +53,7 @@ export const modalContent = style([
 			},
 		},
 	},
-])
+]);
 
 export const modalCloseContainer = style([
 	tokens({
@@ -61,4 +61,4 @@ export const modalCloseContainer = style([
 		display: "flex",
 		justifyContent: "flex-end",
 	}),
-])
+]);

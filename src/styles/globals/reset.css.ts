@@ -3,7 +3,7 @@
  * https://meyerweb.com/eric/tools/css/reset/
  */
 
-import { globalStyle } from "@vanilla-extract/css"
+import { globalStyle } from "@vanilla-extract/css";
 
 globalStyle(
 	`html, body, div, span, applet, object, iframe,
@@ -26,41 +26,41 @@ time, mark, audio, video`,
 		fontSize: "100%",
 		fontWeight: "inherit",
 		verticalAlign: "baseline",
-	}
-)
+	},
+);
 
 globalStyle(
 	`article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section`,
 	{
 		display: "block",
-	}
-)
+	},
+);
 
 globalStyle("body", {
 	lineHeight: 1,
-})
+});
 
 globalStyle("ol, ul", {
 	listStyle: "none",
-})
+});
 
 globalStyle("blockquote, q", {
 	quotes: "none",
-})
+});
 
 globalStyle(
 	`blockquote:before, blockquote:after,
 q:before, q:after`,
 	{
 		content: ["''", "none"],
-	}
-)
+	},
+);
 
 globalStyle("table", {
 	borderCollapse: "collapse",
 	borderSpacing: 0,
-})
+});
 
 /** Unchanged normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css
  * implemented in Vanilla-Extract globalStyle entries
@@ -77,7 +77,7 @@ globalStyle("table", {
 globalStyle("html", {
 	lineHeight: 1.15 /* 1 */,
 	WebkitTextSizeAdjust: "100%" /* 2 */,
-})
+});
 
 /* Sections
    ========================================================================== */
@@ -88,7 +88,7 @@ globalStyle("html", {
 
 globalStyle("body", {
 	margin: 0,
-})
+});
 
 /**
  * Render the `main` element consistently in IE.
@@ -96,7 +96,7 @@ globalStyle("body", {
 
 globalStyle("main", {
 	display: "block",
-})
+});
 
 /* Grouping content
    ========================================================================== */
@@ -110,7 +110,7 @@ globalStyle("hr", {
 	boxSizing: "content-box" /* 1 */,
 	height: 0 /* 1 */,
 	overflow: "visible" /* 2 */,
-})
+});
 
 /**
  * 1. Correct the inheritance and scaling of font size in all browsers.
@@ -120,7 +120,7 @@ globalStyle("hr", {
 globalStyle("pre", {
 	fontFamily: "monospace, monospace" /* 1 */,
 	fontSize: "1em" /* 2 */,
-})
+});
 
 /* Text-level semantics
    ========================================================================== */
@@ -131,7 +131,7 @@ globalStyle("pre", {
 
 globalStyle("a", {
 	backgroundColor: "transparent",
-})
+});
 
 /**
  * 1. Remove the bottom border in Chrome 57-
@@ -141,7 +141,7 @@ globalStyle("a", {
 globalStyle("abbr[title]", {
 	borderBottom: "none" /* 1 */,
 	textDecoration: ["underline", "underline dotted"] /* 2 */,
-})
+});
 
 /**
  * Add the correct font weight in Chrome, Edge, and Safari.
@@ -149,7 +149,7 @@ globalStyle("abbr[title]", {
 
 globalStyle("b, strong", {
 	fontWeight: "bolder",
-})
+});
 
 /**
  * 1. Correct the inheritance and scaling of font size in all browsers.
@@ -159,7 +159,7 @@ globalStyle("b, strong", {
 globalStyle("code, kbd, samp", {
 	fontFamily: "monospace, monospace" /* 1 */,
 	fontSize: "1em" /* 2 */,
-})
+});
 
 /**
  * Add the correct font size in all browsers.
@@ -167,7 +167,7 @@ globalStyle("code, kbd, samp", {
 
 globalStyle("small", {
 	fontSize: "80%",
-})
+});
 
 /**
  * Prevent `sub` and `sup` elements from affecting the line height in
@@ -179,15 +179,15 @@ globalStyle("sub, sup", {
 	lineHeight: 0,
 	position: "relative",
 	verticalAlign: "baseline",
-})
+});
 
 globalStyle("sub", {
 	bottom: "-0.25em",
-})
+});
 
 globalStyle("sup", {
 	top: "-0.5em",
-})
+});
 
 /* Embedded content
    ========================================================================== */
@@ -198,7 +198,7 @@ globalStyle("sup", {
 
 globalStyle("img", {
 	borderStyle: "none",
-})
+});
 
 /* Forms
    ========================================================================== */
@@ -214,7 +214,7 @@ globalStyle("button, input, optgroup, select, textarea", {
 	lineHeight: 1.15 /* 1 */,
 	margin: 0 /* 2 */,
 	color: "inherit",
-})
+});
 
 /**
  * Show the overflow in IE.
@@ -223,7 +223,7 @@ globalStyle("button, input, optgroup, select, textarea", {
 
 globalStyle("button, input", {
 	overflow: "visible" /* 1 */,
-})
+});
 
 /**
  * Remove the inheritance of text transform in Edge, Firefox, and IE.
@@ -232,7 +232,7 @@ globalStyle("button, input", {
 
 globalStyle("button, select", {
 	textTransform: "none" /* 1 */,
-})
+});
 
 /**
  * Correct the inability to style clickable types in iOS and Safari.
@@ -240,7 +240,7 @@ globalStyle("button, select", {
 
 globalStyle('button, [type="button"], [type="reset"], [type="submit"]', {
 	WebkitAppearance: "button",
-})
+});
 
 /**
  * Remove the inner border and padding in Firefox.
@@ -254,8 +254,8 @@ globalStyle(
 	{
 		borderStyle: "none",
 		padding: 0,
-	}
-)
+	},
+);
 
 /**
  * Correct the padding in Firefox.
@@ -263,7 +263,7 @@ globalStyle(
 
 globalStyle("fieldset", {
 	padding: "0.35em 0.75em 0.625em",
-})
+});
 
 /**
  * 1. Correct the text wrapping in Edge and IE.
@@ -279,7 +279,7 @@ globalStyle("legend", {
 	maxWidth: "100%" /* 1 */,
 	padding: 0 /* 3 */,
 	whiteSpace: "normal" /* 1 */,
-})
+});
 
 /**
  * Add the correct vertical alignment in Chrome, Firefox, and Opera.
@@ -287,7 +287,7 @@ globalStyle("legend", {
 
 globalStyle("progress", {
 	verticalAlign: "baseline",
-})
+});
 
 /**
  * Remove the default vertical scrollbar in IE 10+.
@@ -295,7 +295,7 @@ globalStyle("progress", {
 
 globalStyle("textarea", {
 	overflow: "auto",
-})
+});
 
 /**
  * 1. Add the correct box sizing in IE 10.
@@ -305,7 +305,7 @@ globalStyle("textarea", {
 globalStyle('[type="checkbox"], [type="radio"]', {
 	boxSizing: "border-box" /* 1 */,
 	padding: 0 /* 2 */,
-})
+});
 
 /**
  * Correct the cursor style of increment and decrement buttons in Chrome.
@@ -316,8 +316,8 @@ globalStyle(
 [type="number"]::-webkit-outer-spin-button`,
 	{
 		height: "auto",
-	}
-)
+	},
+);
 
 /**
  * 1. Correct the odd appearance in Chrome and Safari.
@@ -327,7 +327,7 @@ globalStyle(
 globalStyle('[type="search"]', {
 	WebkitAppearance: "textfield" /* 1 */,
 	outlineOffset: "-2px" /* 2 */,
-})
+});
 
 /**
  * Remove the inner padding in Chrome and Safari on macOS.
@@ -335,7 +335,7 @@ globalStyle('[type="search"]', {
 
 globalStyle('[type="search"]::-webkit-search-decoration', {
 	WebkitAppearance: "none",
-})
+});
 
 /**
  * 1. Correct the inability to style clickable types in iOS and Safari.
@@ -345,7 +345,7 @@ globalStyle('[type="search"]::-webkit-search-decoration', {
 globalStyle("::-webkit-file-upload-button", {
 	WebkitAppearance: "button" /* 1 */,
 	font: "inherit" /* 2 */,
-})
+});
 
 /* Interactive
    ========================================================================== */
@@ -356,7 +356,7 @@ globalStyle("::-webkit-file-upload-button", {
 
 globalStyle("details", {
 	display: "block",
-})
+});
 
 /*
  * Add the correct display in all browsers.
@@ -364,7 +364,7 @@ globalStyle("details", {
 
 globalStyle("summary", {
 	display: "list-item",
-})
+});
 
 /* Misc
    ========================================================================== */
@@ -375,7 +375,7 @@ globalStyle("summary", {
 
 globalStyle("template", {
 	display: "none",
-})
+});
 
 /**
  * Add the correct display in IE 10.
@@ -383,4 +383,4 @@ globalStyle("template", {
 
 globalStyle("[hidden]", {
 	display: "none",
-})
+});

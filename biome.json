@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.2.5/schema.json",
 	"vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
 	"files": {
 		"includes": [
@@ -8,16 +8,23 @@
 			"!dist",
 			"!.astro",
 			"!.netlify",
-			"!package.json",
-			"!yarn.lock",
-			"!package-lock.json",
 			"!public/*",
 			"!src/assets",
 			"!infra",
 			"!reportWebVitals.ts",
 			"!*.yml",
-			"!*.md"
+			"!*.md",
+			"!.cache",
+			"!.husky",
+			"!.vscode",
+			"!.idea",
+			"!.pnpm-store"
 		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"lineWidth": 100
 	},
 	"linter": {
 		"enabled": true,
@@ -25,27 +32,27 @@
 			"recommended": true
 		}
 	},
-	"javascript": {
-		"formatter": {
-			"quoteProperties": "asNeeded",
-			"trailingCommas": "es5",
-			"semicolons": "asNeeded",
-			"arrowParentheses": "always",
-			"bracketSameLine": false,
-			"attributePosition": "auto",
-			"bracketSpacing": true
-		}
-	},
-	"html": {
-		"formatter": {
-			"selfCloseVoidElements": "always"
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
 		}
 	},
 	"overrides": [
 		{
 			"includes": ["**/*.astro"],
+			"formatter": {
+				"indentStyle": "tab",
+				"lineWidth": 100
+			},
 			"linter": {
 				"rules": {
+					"style": {
+						"useConst": "on",
+						"useImportType": "on"
+					},
 					"correctness": {
 						"noUnusedImports": "off",
 						"noUnusedVariables": "off"
@@ -65,7 +72,11 @@
 			"includes": ["**/*.ts", "**/*.tsx"],
 			"linter": {
 				"rules": {
-					"recommended": true
+					"recommended": true,
+					"correctness": {
+						"noUnusedImports": "on",
+						"noUnusedVariables": "on"
+					}
 				}
 			}
 		}

@@ -1,1 +1,1 @@
-export { default as Scorecard } from "./Scorecard.astro"
+export { default as Scorecard } from "./Scorecard.astro";

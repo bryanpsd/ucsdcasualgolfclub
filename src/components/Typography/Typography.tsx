@@ -1,18 +1,13 @@
-import { type ElementType, forwardRef } from "react"
+import { type ElementType, forwardRef } from "react";
 
-import type {
-	PolymorphicComponentPropWithRef,
-	PolymorphicRef,
-} from "~types/PolymorphicComponent"
-import { concatClasses } from "~utils/concatClasses"
+import type { PolymorphicComponentPropWithRef, PolymorphicRef } from "~types/PolymorphicComponent";
+import { concatClasses } from "~utils/concatClasses";
 
-import { type TypographyVariants, typography } from "./Typography.css"
+import { type TypographyVariants, typography } from "./Typography.css";
 
-export type VariantNames = NonNullable<
-	NonNullable<TypographyVariants>["variant"]
->
+export type VariantNames = NonNullable<NonNullable<TypographyVariants>["variant"]>;
 
-const defaultElement: ElementType = "p"
+const defaultElement: ElementType = "p";
 
 export type TypographyProps<
 	C extends ElementType = typeof defaultElement,
@@ -20,52 +15,51 @@ export type TypographyProps<
 > = PolymorphicComponentPropWithRef<
 	C,
 	TypographyVariants & {
-		variant?: V
-		className?: string
+		variant?: V;
+		className?: string;
 	}
->
+>;
 
-export const Typography = forwardRef<
-	HTMLParagraphElement,
-	TypographyProps<ElementType>
->(function TypographyComponent<C extends ElementType = typeof defaultElement>(
-	{
-		as: asComponent,
-		align,
-		className,
-		color,
-		display,
-		noWrap = false,
-		variant = "bodyMd",
-		children,
-		fontWeight,
-		decoration,
-		...rest
-	}: TypographyProps<C>,
-	ref: PolymorphicRef<C>
-) {
-	const Component = asComponent ?? defaultElement
+export const Typography = forwardRef<HTMLParagraphElement, TypographyProps<ElementType>>(
+	function TypographyComponent<C extends ElementType = typeof defaultElement>(
+		{
+			as: asComponent,
+			align,
+			className,
+			color,
+			display,
+			noWrap = false,
+			variant = "bodyMd",
+			children,
+			fontWeight,
+			decoration,
+			...rest
+		}: TypographyProps<C>,
+		ref: PolymorphicRef<C>,
+	) {
+		const Component = asComponent ?? defaultElement;
 
-	return (
-		<Component
-			className={concatClasses([
-				className,
-				typography({
-					variant,
-					color,
-					display,
-					noWrap,
-					align,
-					fontWeight,
-					decoration,
-				}),
-			])}
-			ref={ref}
-			{...rest}
-		>
-			{children}
-		</Component>
-	)
-})
+		return (
+			<Component
+				className={concatClasses([
+					className,
+					typography({
+						variant,
+						color,
+						display,
+						noWrap,
+						align,
+						fontWeight,
+						decoration,
+					}),
+				])}
+				ref={ref}
+				{...rest}
+			>
+				{children}
+			</Component>
+		);
+	},
+);
 
-Typography.displayName = "Typography"
+Typography.displayName = "Typography";

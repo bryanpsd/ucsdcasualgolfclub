@@ -1,21 +1,21 @@
 ---
-import "~/styles/globals/global.css"
-import "~/styles/globals/reset.css"
-import "~/styles/globals/theme.css"
+import "~/styles/globals/global.css";
+import "~/styles/globals/reset.css";
+import "~/styles/globals/theme.css";
 
-import { Hero } from "~components/Hero"
-import { TournamentResults } from "~components/TournamentResults"
+import { Hero } from "~components/Hero";
+import { TournamentResults } from "~components/TournamentResults";
 
-import Layout from "~layouts/Layout.astro"
-import { contentfulClient } from "~services/contentful/contentful"
+import Layout from "~layouts/Layout.astro";
+import { contentfulClient } from "~services/contentful/contentful";
 
-import * as styles from "~styles/globals/common.css"
-import type { TypeLeadersSkeleton } from "~types/contentful"
+import * as styles from "~styles/globals/common.css";
+import type { TypeLeadersSkeleton } from "~types/contentful";
 
 const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
 	content_type: "leaders",
 	include: 3,
-})
+});
 
 const players = entries.items
 	.map((entry) => ({
@@ -31,21 +31,17 @@ const players = entries.items
 						: null,
 				gross: "fields" in result ? (result.fields?.gross ?? null) : null,
 				flight: "fields" in result ? (result.fields?.flight ?? null) : null,
-				courseHandicap:
-					"fields" in result ? (result.fields?.courseHandicap ?? null) : null,
+				courseHandicap: "fields" in result ? (result.fields?.courseHandicap ?? null) : null,
 				net: "fields" in result ? (result.fields?.net ?? null) : null,
 				putts: "fields" in result ? (result.fields?.putts ?? null) : null,
-				closestTo:
-					"fields" in result ? (result.fields?.closestTo ?? null) : null,
-				longDrive:
-					"fields" in result ? (result.fields?.longDrive ?? null) : null,
+				closestTo: "fields" in result ? (result.fields?.closestTo ?? null) : null,
+				longDrive: "fields" in result ? (result.fields?.longDrive ?? null) : null,
 				course:
 					"fields" in result && result.fields?.course
 						? {
 								name:
 									"fields" in result.fields.course
-										? result.fields.course.fields?.courseName ||
-											"Unknown Course"
+										? result.fields.course.fields?.courseName || "Unknown Course"
 										: "Unknown Course",
 								slug:
 									"fields" in result.fields.course
@@ -55,10 +51,10 @@ const players = entries.items
 						: null,
 			})) ?? [],
 	}))
-	.filter((player) => player.playerName !== "Unknown Player") // <-- filter out
+	.filter((player) => player.playerName !== "Unknown Player"); // <-- filter out
 
-const url = new URL(Astro.request.url)
-const selectedPlayer = url.searchParams.get("playerName") || ""
+const url = new URL(Astro.request.url);
+const selectedPlayer = url.searchParams.get("playerName") || "";
 ---
 
 <Layout

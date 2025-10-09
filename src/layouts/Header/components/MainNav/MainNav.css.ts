@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css"
-import { color, tokens } from "~styles"
+import { style } from "@vanilla-extract/css";
+import { color, tokens } from "~styles";
 
 export const mainNavRoot = style([
 	tokens({
@@ -12,14 +12,14 @@ export const mainNavRoot = style([
 		position: "relative",
 		transitionProperty: "height, padding",
 	},
-])
+]);
 
 export const mainNavList = style([
 	tokens({
 		display: "flex",
 		height: "col-12",
 	}),
-])
+]);
 
 export const mainNavTrigger = style({
 	display: "flex",
@@ -29,7 +29,7 @@ export const mainNavTrigger = style({
 	cursor: "pointer",
 	alignItems: "center",
 	position: "relative",
-})
+});
 
 export const mainNavItem = style([
 	tokens({
@@ -42,7 +42,7 @@ export const mainNavItem = style([
 		border: "none",
 		borderLeft: `1px solid ${color.brand.black}`,
 	},
-])
+]);
 
 export const mainNavContent = style([
 	{
@@ -62,7 +62,7 @@ export const mainNavContent = style([
 		zIndex: 500,
 		top: "100%",
 	},
-])
+]);
 
 export const mainNavSubItem = style([
 	tokens({
@@ -81,7 +81,7 @@ export const mainNavSubItem = style([
 			},
 		},
 	},
-])
+]);
 
 export const arrow = style({
 	position: "relative",
@@ -91,4 +91,4 @@ export const arrow = style({
 	height: "10px",
 	transform: "rotate(45deg)",
 	borderTopLeftRadius: "2px",
-})
+});

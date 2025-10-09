@@ -1,36 +1,36 @@
 ---
-import { ResponsiveHeadline } from "~components/ResponsiveHeadline"
-import { Table } from "~components/Table"
-import * as styles from "./FlightCard.css"
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { Table } from "~components/Table";
+import * as styles from "./FlightCard.css";
 
 interface FlightCardProps {
-	courseChampionship?: boolean
-	lowestPuttsOverall?: number
-	lowestGrossOverall?: number
-	title: string
+	courseChampionship?: boolean;
+	lowestPuttsOverall?: number;
+	lowestGrossOverall?: number;
+	title: string;
 	flight: Array<{
-		playerName: string
-		handicapIndex?: number
-		guest?: string[]
+		playerName: string;
+		handicapIndex?: number;
+		guest?: string[];
 		results?: Array<{
-			gross?: number
-			courseHandicap?: number
-			index?: number
-			net?: number
-			course?: { fields: { course: string } }
-			longDrive?: string
-			putts?: number
-			closestTo?: string[]
-			date?: string
-		}>
+			gross?: number;
+			courseHandicap?: number;
+			index?: number;
+			net?: number;
+			course?: { fields: { course: string } };
+			longDrive?: string;
+			putts?: number;
+			closestTo?: string[];
+			date?: string;
+		}>;
 		yearlyStats?: Array<{
-			year?: number
-			gross?: number
-			net?: number
-		}>
-	}>
-	currentCourse: string
-	tournamentDate: string
+			year?: number;
+			gross?: number;
+			net?: number;
+		}>;
+	}>;
+	currentCourse: string;
+	tournamentDate: string;
 }
 
 const {
@@ -41,28 +41,25 @@ const {
 	lowestPuttsOverall,
 	lowestGrossOverall,
 	courseChampionship,
-} = Astro.props as FlightCardProps
+} = Astro.props as FlightCardProps;
 
-const getYearFromDate = (date?: string) =>
-	date ? new Date(date).getFullYear() : undefined
+const getYearFromDate = (date?: string) => (date ? new Date(date).getFullYear() : undefined);
 
-const tournamentYear = getYearFromDate(tournamentDate)
+const tournamentYear = getYearFromDate(tournamentDate);
 
 const filteredResults = flight.map((player) => ({
 	...player,
 	results: player.results?.filter((result) => {
-		const resultYear = getYearFromDate(result.date)
-		const isSameYear = resultYear === tournamentYear
-		const isSameCourse = result.course?.fields.course === currentCourse
-		return isSameYear && isSameCourse
+		const resultYear = getYearFromDate(result.date);
+		const isSameYear = resultYear === tournamentYear;
+		const isSameCourse = result.course?.fields.course === currentCourse;
+		return isSameYear && isSameCourse;
 	}),
-}))
+}));
 
 const hasResultsForCurrentCourse = filteredResults.some((player) =>
-	player.results?.some(
-		(result) => result.course?.fields.course === currentCourse
-	)
-)
+	player.results?.some((result) => result.course?.fields.course === currentCourse),
+);
 
 const lowestYearlyGrossForTournament = Math.min(
 	...flight
@@ -70,10 +67,10 @@ const lowestYearlyGrossForTournament = Math.min(
 			(player) =>
 				player.yearlyStats
 					?.filter((stats) => stats.year === tournamentYear)
-					.map((stats) => stats.gross) || []
+					.map((stats) => stats.gross) || [],
 		)
-		.filter((gross) => gross !== undefined && gross !== null)
-)
+		.filter((gross) => gross !== undefined && gross !== null),
+);
 
 const lowestYearlyNetForTournament = Math.min(
 	...flight
@@ -81,27 +78,19 @@ const lowestYearlyNetForTournament = Math.min(
 			(player) =>
 				player.yearlyStats
 					?.filter((stats) => stats.year === tournamentYear)
-					.map((stats) => stats.net) || []
+					.map((stats) => stats.net) || [],
 		)
-		.filter((net) => net !== undefined && net !== null)
-)
+		.filter((net) => net !== undefined && net !== null),
+);
 
 const tableHeaders = [
 	"Player",
 	...(hasResultsForCurrentCourse ? [] : ["Index"]),
 	...(hasResultsForCurrentCourse
-		? [
-				"Index",
-				"Gross",
-				"Course Handicap",
-				"Net",
-				"Putts",
-				"Closest To",
-				"Long Drive",
-			]
+		? ["Index", "Gross", "Course Handicap", "Net", "Putts", "Closest To", "Long Drive"]
 		: []),
 	...(courseChampionship ? ["Final Gross", "Final Net"] : []),
-]
+];
 ---
 
 <div class={styles.flightCardWrapper}>

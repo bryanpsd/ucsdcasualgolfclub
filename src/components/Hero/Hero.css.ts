@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css"
-import { color, tokens } from "~styles"
+import { style } from "@vanilla-extract/css";
+import { color, tokens } from "~styles";
 
 export const heroWrapper = style([
 	tokens({
@@ -14,11 +14,11 @@ export const heroWrapper = style([
 		backgroundColor: color.brand.blue,
 		color: color.brand.white,
 	},
-])
+]);
 
 export const heroHeadline = style({
 	color: color.brand.white,
-})
+});
 
 export const heroBackground = style([
 	tokens({
@@ -32,7 +32,7 @@ export const heroBackground = style([
 		backgroundSize: "cover",
 		backgroundPosition: "center",
 	},
-])
+]);
 
 export const heroColLeft = style([
 	tokens({
@@ -45,7 +45,7 @@ export const heroColLeft = style([
 		paddingY: 24,
 		height: { "xs-min": 100, "lg-min": 150 },
 	}),
-])
+]);
 
 export const heroColRight = style([
 	tokens({
@@ -55,4 +55,4 @@ export const heroColRight = style([
 		justifyContent: "center",
 		width: { "xs-min": "col-12", "md-min": "col-6" },
 	}),
-])
+]);

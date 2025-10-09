@@ -1,1 +1,1 @@
-export * from "./GoogleMap.tsx"
+export * from "./GoogleMap.tsx";

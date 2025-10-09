@@ -4,13 +4,13 @@
 
 export const fontFamily = {
 	base: ["Roboto", "Arial", "sans-serif"].join(", "),
-}
+};
 export const fontWeight = {
 	fontWeight300: "300",
 	fontWeight400: "400",
 	fontWeight500: "500",
 	fontWeight700: "700",
-} as const
+} as const;
 export const fontSize = {
 	sizeFont1: "10px",
 	sizeFont2: "12px",
@@ -28,7 +28,7 @@ export const fontSize = {
 	sizeFont14: "64px",
 	sizeFont15: "90px",
 	sizeFont16: "96px",
-} as const
+} as const;
 export const lineHeight = {
 	sizeLineHeight1: "12px",
 	sizeLineHeight2: "16px",
@@ -46,4 +46,4 @@ export const lineHeight = {
 	sizeLineHeight14: "80px",
 	sizeLineHeight15: "96px",
 	sizeLineHeight16: "120px",
-} as const
+} as const;
