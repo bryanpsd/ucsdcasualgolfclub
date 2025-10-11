@@ -52,6 +52,7 @@ export const dateTimeTypeWrapper = style([
 		alignItems: "center",
 		justifyContent: "center",
 		gap: 2,
+		fontSize: "sizeFont5",
 	}),
 	{
 		color: color.brand.yellow,

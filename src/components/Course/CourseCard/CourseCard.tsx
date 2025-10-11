@@ -50,13 +50,13 @@ export const CourseCard = (props: CourseCardProps) => {
 						variant: isSpecialEvent ? "special" : isWednesday ? "secondary" : "default",
 					})}
 				>
-					<Typography color={isSpecialEvent ? "primary" : "inverse"}>
+					<Typography variant="bodyLg" color={isSpecialEvent ? "primary" : "inverse"}>
 						{format(date, "MMM")}
 					</Typography>
 					<Typography color={isSpecialEvent ? "primary" : "inverse"} variant="headlineLg">
 						{format(date, "d")}
 					</Typography>
-					<Typography color={isSpecialEvent ? "primary" : "inverse"}>
+					<Typography variant="bodyLg" color={isSpecialEvent ? "primary" : "inverse"}>
 						{format(date, "E")}
 					</Typography>
 				</div>

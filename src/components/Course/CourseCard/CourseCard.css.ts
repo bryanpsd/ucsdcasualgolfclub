@@ -69,6 +69,7 @@ export const courseCardTimeType = style([
 		display: "flex",
 		alignItems: "center",
 		gap: 4,
+		fontSize: "sizeFont5",
 	}),
 ]);
 

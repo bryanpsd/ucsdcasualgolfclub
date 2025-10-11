@@ -45,6 +45,7 @@ export const courseCardListItem = recipe({
 			paddingX: 4,
 			alignItems: "center",
 			gap: 4,
+			fontSize: "sizeFont5",
 		}),
 		{
 			selectors: {

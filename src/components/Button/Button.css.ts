@@ -14,13 +14,13 @@ export const baseButton = style([
 		cursor: { hover: "pointer", disabled: "not-allowed" },
 		fontFamily: "base",
 		borderStyle: "solid",
+		borderRadius: "sm",
 	}),
 	{
 		boxSizing: "border-box",
-		transitionProperty: "background, border-color",
-		transitionDuration: "250ms",
-		transitionTimingFunction: "ease-in",
-		outlineOffset: ".2rem",
+		transitionProperty: "background-color, border-color, color, box-shadow",
+		transitionTimingFunction: "ease-in-out",
+		outlineOffset: "0.2rem",
 	},
 ]);
 
@@ -38,20 +38,21 @@ export const button = recipe({
 				fontSize: "sizeFont4",
 				lineHeight: "sizeLineHeight4",
 				gap: 4,
-				padding: 4,
+				paddingY: 6,
+				paddingX: 4,
 			}),
 			medium: tokens({
-				fontSize: "sizeFont16",
-				lineHeight: "sizeLineHeight16",
+				fontSize: "sizeFont5",
+				lineHeight: "sizeLineHeight5",
 				gap: 16,
 				paddingY: 11,
 				paddingX: 10,
 			}),
 			large: tokens({
-				fontSize: "sizeFont16",
-				lineHeight: "sizeLineHeight16",
+				fontSize: "sizeFont6",
+				lineHeight: "sizeLineHeight6",
 				gap: 16,
-				paddingY: 18,
+				paddingY: 24,
 				paddingX: 16,
 			}),
 		},
@@ -63,8 +64,8 @@ export const button = recipe({
 			default: "", // neutral coloring naming comes from MUI, TODO: rename to neutral
 		},
 		variant: {
-			outlined: tokens({ minWidth: 96 }),
-			contained: tokens({ minWidth: 96 }),
+			outlined: tokens({ minWidth: 64 }),
+			contained: tokens({ minWidth: 64 }),
 			text: tokens({ minWidth: "none" }),
 		},
 	},
@@ -77,11 +78,17 @@ export const button = recipe({
 				color: "primary",
 				variant: "contained",
 			},
-			style: tokens({
-				color: { default: "yellow", hover: "white", disabled: "gray" },
-				borderColor: { default: "navy", hover: "navy", disabled: "gray" },
-				backgroundColor: { default: "navy", hover: "navy", disabled: "gray" },
-			}),
+			style: [
+				tokens({
+					color: { default: "yellow", hover: "navy", disabled: "gray" },
+					borderColor: { default: "navy", hover: "navy", disabled: "gray" },
+					backgroundColor: { default: "navy", hover: "yellow", disabled: "gray" },
+				}),
+				{
+					boxShadow: "0 6px 20px rgba(0,0,0,0.12)",
+				},
+				tokens({ transitionDuration: "short" }),
+			],
 		},
 
 		// *******************************************************************
@@ -92,30 +99,28 @@ export const button = recipe({
 				color: "primary",
 				variant: "outlined",
 			},
-			style: tokens({
-				color: { default: "yellow", hover: "white", disabled: "gray" },
-				borderColor: { default: "navy", disabled: "gray" },
-				backgroundColor: {
-					default: "transparent",
-					hover: "navy",
-					disabled: "gray",
-				},
-			}),
+			style: [
+				tokens({
+					color: { default: "yellow", hover: "navy", disabled: "gray" },
+					borderColor: { default: "navy", disabled: "gray" },
+					backgroundColor: { default: "transparent", hover: "yellow", disabled: "gray" },
+				}),
+				tokens({ transitionDuration: "short" }),
+			],
 		},
 		{
 			variants: {
 				color: "secondary",
 				variant: "outlined",
 			},
-			style: tokens({
-				color: { default: "yellow", hover: "white", disabled: "gray" },
-				borderColor: { default: "yellow", disabled: "gray" },
-				backgroundColor: {
-					default: "transparent",
-					hover: "navy",
-					disabled: "gray",
-				},
-			}),
+			style: [
+				tokens({
+					color: { default: "yellow", hover: "navy", disabled: "gray" },
+					borderColor: { default: "yellow", disabled: "gray" },
+					backgroundColor: { default: "transparent", hover: "yellow", disabled: "gray" },
+				}),
+				tokens({ transitionDuration: "short" }),
+			],
 		},
 		// *******************************************************************
 		// Text
@@ -169,9 +174,9 @@ export const buttonIcon = recipe({
 			start: "",
 		},
 		size: {
-			small: [tokens({ fontSize: 16 }), {}],
-			medium: [tokens({ fontSize: 20 }), {}],
-			large: [tokens({ fontSize: 22 }), {}],
+			small: tokens({ fontSize: 16 }),
+			medium: tokens({ fontSize: 20 }),
+			large: tokens({ fontSize: 22 }),
 		},
 	},
 	compoundVariants: [
