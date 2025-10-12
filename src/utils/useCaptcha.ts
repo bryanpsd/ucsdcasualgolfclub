@@ -1,55 +1,150 @@
 import { actions } from "astro:actions";
 import { useEffect, useState } from "react";
-import { getInstance, load, type ReCaptchaInstance } from "recaptcha-v3";
 
-let CACHED_CONFIG = { SITE_KEY: "", USE_ENTERPRISE: true };
+let CONFIG_CACHE: { SITE_KEY?: string; USE_ENTERPRISE?: boolean } = {};
 
-async function getConfig() {
-	if (CACHED_CONFIG.SITE_KEY) return CACHED_CONFIG;
-	const { error, data } = await actions.getCaptchaConfig();
-
-	if (error || !data) {
-		throw new Error("Unable to get Captcha Config");
+async function retry<T>(fn: () => Promise<T>, attempts = 2, delayMs = 250): Promise<T> {
+	let lastError: unknown;
+	for (let i = 0; i < attempts; i++) {
+		try {
+			return await fn();
+		} catch (err) {
+			lastError = err;
+			if (i < attempts - 1) await new Promise((r) => setTimeout(r, delayMs));
+		}
 	}
-
-	CACHED_CONFIG = data;
-
-	return CACHED_CONFIG;
+	throw lastError;
 }
 
-type CaptchaConfig = Awaited<ReturnType<typeof getConfig>>;
+async function fetchConfig() {
+	if (CONFIG_CACHE.SITE_KEY) return CONFIG_CACHE;
+	const res = (await retry(() => actions.getCaptchaConfig())) as {
+		data?: { SITE_KEY?: string; USE_ENTERPRISE?: boolean };
+	};
+	CONFIG_CACHE = res?.data ?? {};
+	return CONFIG_CACHE;
+}
+
+type GrecaptchaLike = {
+	ready?: (cb: () => void) => void;
+	execute?: ((...args: unknown[]) => Promise<string> | string) | undefined;
+	enterprise?:
+		| { execute?: ((...args: unknown[]) => Promise<string> | string) | undefined }
+		| undefined;
+};
 
 export const useCaptcha = () => {
-	const [captcha, setCaptcha] = useState<ReCaptchaInstance>(getInstance());
-	const [config, setConfig] = useState<CaptchaConfig>();
+	const [ready, setReady] = useState(false);
+	const [siteKey, setSiteKey] = useState<string | undefined>(undefined);
+	const [useEnterprise, setUseEnterprise] = useState<boolean>(false);
 
 	useEffect(() => {
-		async function loadConfig() {
-			const config = await getConfig();
-			setConfig(config);
-		}
-		loadConfig();
+		let mounted = true;
+
+		(async () => {
+			try {
+				const cfg = await fetchConfig();
+				const key = cfg.SITE_KEY;
+				const ue = !!cfg.USE_ENTERPRISE;
+				if (!mounted) return;
+				setSiteKey(key);
+				setUseEnterprise(ue);
+				if (!key) return;
+
+				const scriptSrc = ue
+					? `https://www.google.com/recaptcha/enterprise.js?render=${key}`
+					: `https://www.google.com/recaptcha/api.js?render=${key}`;
+
+				if (!document.querySelector(`script[src="${scriptSrc}"]`)) {
+					const s = document.createElement("script");
+					s.src = scriptSrc;
+					s.async = true;
+					s.setAttribute("data-ucsd-recaptcha", "1");
+					document.head.appendChild(s);
+				}
+
+				const waitForGre = async (timeoutMs = 7000) => {
+					const start = Date.now();
+					while (Date.now() - start < timeoutMs) {
+						const w = window as unknown as Window & {
+							grecaptcha?: GrecaptchaLike;
+							___grecaptcha?: GrecaptchaLike;
+						};
+						const gre = w.grecaptcha ?? w.___grecaptcha;
+						if (gre && typeof gre === "object") return gre as GrecaptchaLike;
+						await new Promise((r) => setTimeout(r, 200));
+					}
+					return null;
+				};
+
+				const gre = await waitForGre();
+				if (!mounted) return;
+				if (!gre) {
+					if (import.meta.env.DEV)
+						console.warn("useCaptcha: grecaptcha not found after script inject");
+					return;
+				}
+
+				try {
+					// persist a reference so client-side navigation that mutates
+					// globals won't remove our ability to access the library.
+					try {
+						const w = window as unknown as Window & { ___grecaptcha?: GrecaptchaLike };
+						w.___grecaptcha = gre;
+					} catch {
+						/* ignore */
+					}
+
+					if (typeof gre.ready === "function") {
+						gre.ready(() => {
+							if (!mounted) return;
+							setReady(true);
+						});
+					} else {
+						setReady(true);
+					}
+				} catch (e) {
+					if (import.meta.env.DEV) console.warn("useCaptcha: gre.ready threw", e);
+					setReady(true);
+				}
+			} catch (e) {
+				console.error("useCaptcha: failed to initialize", e);
+			}
+		})();
+
+		return () => {
+			mounted = false;
+		};
 	}, []);
 
-	useEffect(() => {
-		if (config) {
-			const { SITE_KEY } = config;
-			if (captcha) {
-				// Page transitions unload the captcha container.
-				// We need to check if it exists and re-render
-				const current = document.getElementsByClassName("grecaptcha-badge");
-				if (current.length === 0 && SITE_KEY) {
-					window.grecaptcha.enterprise.render({ sitekey: SITE_KEY });
-				}
-			} else {
-				const loadCaptcha = async () => {
-					const captchaInstance = await load(SITE_KEY);
-					setCaptcha(captchaInstance);
-				};
-				loadCaptcha();
-			}
-		}
-	}, [config, captcha]);
+	const execute = async (action = "submit") => {
+		try {
+			const w = window as unknown as Window & {
+				grecaptcha?: GrecaptchaLike;
+				___grecaptcha?: GrecaptchaLike;
+			};
+			const gre = w.grecaptcha ?? w.___grecaptcha;
+			if (!gre) return "";
+			const execTarget = useEnterprise && gre.enterprise ? gre.enterprise : gre;
+			if (!execTarget || typeof execTarget.execute !== "function") return "";
 
-	return captcha;
+			// prefer (siteKey, { action }) signature if available
+			const execFn = execTarget.execute as (...args: unknown[]) => Promise<string> | string;
+			const argCount = (execFn as unknown as { length?: number }).length ?? 0;
+			type ExecFn = (...args: unknown[]) => Promise<string> | string;
+			const callable = execFn as ExecFn;
+			if (siteKey && argCount > 1) {
+				const maybe = callable(siteKey, { action });
+				return String(await Promise.resolve(maybe));
+			}
+
+			const maybe = callable(action);
+			return String(await Promise.resolve(maybe));
+		} catch (e) {
+			console.error("useCaptcha execute failed", e);
+			return "";
+		}
+	};
+
+	return { execute, ready } as { execute: (action?: string) => Promise<string>; ready: boolean };
 };
