@@ -42,8 +42,8 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
 
 					// map string keys to actual icon components
 					if (item.icon === "mail") {
+						// icon is decorative when hideLabel is used; do not set title when aria-hidden
 						iconNode = createElement(FaRegEnvelope, {
-							title: item.label,
 							"aria-hidden": true,
 							className: `${itemStyles.navIcon} ${itemStyles.reactIcon}`,
 						});

@@ -34,7 +34,12 @@ export const BackToTopButton = () => {
 			aria-label="Back to top"
 			onClick={scrollToTop}
 		>
-			<FiArrowUp size={48} className={styles.backToTopButtonIcon} />
+			<FiArrowUp
+				size={48}
+				className={styles.backToTopButtonIcon}
+				aria-hidden="true"
+				focusable="false"
+			/>
 		</Button>
 	);
 };

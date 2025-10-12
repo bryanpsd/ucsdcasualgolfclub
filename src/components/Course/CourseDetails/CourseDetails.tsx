@@ -45,6 +45,8 @@ export const CourseDetails = (props: Props) => {
 						className={styles.icons({
 							variant: isMiniCard ? "secondary" : "default",
 						})}
+						aria-hidden="true"
+						focusable="false"
 					/>
 					{players}
 				</li>
