@@ -215,7 +215,7 @@ const flights = [
   description={`Explore the ${tournamentYear} tournament at ${course}. View details, results, and more.`}
 >
   <Hero
-    course={course}
+		course={`${course} Tournament ${tournamentYear}`}
     courseImage={courseImage}
     subHeadline={tournaments[0]?.clubChampionship && 'Club Championship'}
   />
