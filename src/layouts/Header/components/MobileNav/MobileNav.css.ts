@@ -26,6 +26,7 @@ export const mobileNavItem = style([
 		textDecoration: "none",
 		height: "col-12",
 		fontFamily: "base",
+		fontSize: "sizeFont8",
 	}),
 	{
 		paddingLeft: 0,
