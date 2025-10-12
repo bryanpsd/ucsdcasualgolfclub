@@ -75,8 +75,26 @@ export const courseCardTimeType = style([
 
 export const courseCardTimeIcon = style([
 	tokens({
-		fontSize: "sizeFont6",
+		fontSize: "sizeFont5",
 	}),
+]);
+
+export const resultsIconWrapper = style([
+	{
+		display: "inline-flex",
+		alignItems: "center",
+	},
+]);
+
+export const resultsIcon = style([
+	tokens({
+		fontSize: "sizeFont5",
+	}),
+	{
+		marginRight: 4,
+		display: "inline-flex",
+		alignItems: "center",
+	},
 ]);
 
 export const courseCardList = style([

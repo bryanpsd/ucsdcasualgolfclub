@@ -1,5 +1,6 @@
 ---
 import { format } from "date-fns";
+import { FaFilePdf } from "react-icons/fa";
 import { Button } from "~components/Button";
 import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
 import { CourseDetails } from "../CourseDetails";
@@ -90,7 +91,10 @@ const validDate = date && !Number.isNaN(Date.parse(date)) ? new Date(date) : nul
           rel="noopener noreferrer"
           href={results.fields.file.url}
         >
-          Results
+          <span class={styles.resultsIconWrapper}>
+            <FaFilePdf className={styles.resultsIcon} aria-hidden="true" />
+            <span>Results</span>
+          </span>
         </Button>
       ) : (
         <Button

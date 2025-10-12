@@ -69,3 +69,21 @@ export const dateTimeWrapper = style([
 		gap: 2,
 	}),
 ]);
+
+export const resultsIconWrapper = style([
+	{
+		display: "inline-flex",
+		alignItems: "center",
+	},
+]);
+
+export const resultsIcon = style([
+	tokens({
+		fontSize: "sizeFont5",
+	}),
+	{
+		marginRight: 4,
+		display: "inline-flex",
+		alignItems: "center",
+	},
+]);

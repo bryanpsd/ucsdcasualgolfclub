@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { FaRegClock } from "react-icons/fa";
+import { FaFilePdf, FaRegClock } from "react-icons/fa";
 import { Button } from "~components/Button/Button";
 import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
 import { Typography } from "~components/Typography";
@@ -144,7 +144,10 @@ export const CourseCard = (props: CourseCardProps) => {
 							rel="noopener noreferrer"
 							href={results}
 						>
-							Results
+							<span className={styles.resultsIconWrapper}>
+								<FaFilePdf className={styles.resultsIcon} aria-hidden="true" />
+								<span>Results</span>
+							</span>
 						</Button>
 					)}
 				</div>
