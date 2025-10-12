@@ -85,6 +85,11 @@ export const coursePrice = recipe({
 });
 
 export const icons = recipe({
+	base: [
+		tokens({
+			fontSize: 22,
+		}),
+	],
 	variants: {
 		variant: {
 			default: {

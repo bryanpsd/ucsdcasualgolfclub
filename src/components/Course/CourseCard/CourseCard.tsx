@@ -1,8 +1,8 @@
 import { format } from "date-fns";
+import { FaRegClock } from "react-icons/fa";
 import { Button } from "~components/Button/Button";
 import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
 import { Typography } from "~components/Typography";
-import Clock from "~icons/clock.svg?react";
 import type { TypeCourseProps } from "~types/contentful";
 import { CourseDetails } from "../CourseDetails";
 
@@ -103,7 +103,7 @@ export const CourseCard = (props: CourseCardProps) => {
 						)}
 					</div>
 					<div className={styles.courseCardTimeType}>
-						<Clock height={30} width={30} aria-hidden="true" />
+						<FaRegClock className={styles.courseCardTimeIcon} aria-hidden="true" />
 						{date && format(date, "h:mmaaa")}{" "}
 						{type && (
 							<Typography color="text" variant="bodyLg">

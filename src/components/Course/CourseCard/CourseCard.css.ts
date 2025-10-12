@@ -73,6 +73,12 @@ export const courseCardTimeType = style([
 	}),
 ]);
 
+export const courseCardTimeIcon = style([
+	tokens({
+		fontSize: "sizeFont6",
+	}),
+]);
+
 export const courseCardList = style([
 	tokens({
 		display: "flex",

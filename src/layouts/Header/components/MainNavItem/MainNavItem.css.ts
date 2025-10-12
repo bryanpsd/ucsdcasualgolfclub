@@ -70,52 +70,70 @@ export const iconWrapper = style([
 ]);
 
 export const navIcon = style({
-	width: "1.75rem",
-	height: "1.75rem",
+	width: "1.5rem",
+	height: "1.5rem",
 });
 
-globalStyle(`${navIcon}, ${navIcon} *`, {
-	stroke: color.brand.white,
-	fill: "none",
-});
+export const reactIcon = style({});
 
 globalStyle(
 	`${mainNavItem}:hover ${navIcon}, ${mainNavItemRoot}:hover ${navIcon}, ${mainNavItem}:focus ${navIcon}, ${mainNavItemRoot}:focus ${navIcon}, ${mainNavItem}:hover ${navIcon} *, ${mainNavItemRoot}:hover ${navIcon} *, ${mainNavItem}:focus ${navIcon} *, ${mainNavItemRoot}:focus ${navIcon} *`,
 	{
-		stroke: color.brand.navy,
-		fill: "none",
+		stroke: "currentColor",
+		fill: "currentColor",
+	},
+);
+
+globalStyle(
+	`${mainNavItem}:hover ${reactIcon}, ${mainNavItemRoot}:hover ${reactIcon}, ${mainNavItem}:focus ${reactIcon}, ${mainNavItemRoot}:focus ${reactIcon}, ${mainNavItem}:hover ${reactIcon} *, ${mainNavItemRoot}:hover ${reactIcon} *, ${mainNavItem}:focus ${reactIcon} *, ${mainNavItemRoot}:focus ${reactIcon} *`,
+	{
+		stroke: "currentColor",
+		fill: "currentColor",
 	},
 );
 
 globalStyle(
 	`${mainNavItem}[data-active] ${navIcon}, ${mainNavItemRoot}[data-active] ${navIcon}, ${mainNavItem}[data-active] ${navIcon} *, ${mainNavItemRoot}[data-active] ${navIcon} *`,
 	{
-		stroke: color.brand.navy,
-		fill: "none",
+		stroke: "currentColor",
+		fill: "currentColor",
 	},
 );
 
 globalStyle(
-	`${mainNavItem}[data-key="contact"][data-active] ${navIcon}, ${mainNavItemRoot}[data-key="contact"][data-active] ${navIcon}, ${mainNavItem}[data-key="contact"][data-active] ${navIcon} *, ${mainNavItemRoot}[data-key="contact"][data-active] ${navIcon} *`,
+	`${mainNavItem}[data-active] ${reactIcon}, ${mainNavItemRoot}[data-active] ${reactIcon}, ${mainNavItem}[data-active] ${reactIcon} *, ${mainNavItemRoot}[data-active] ${reactIcon} *`,
 	{
-		stroke: color.brand.navy,
-		fill: color.brand.white,
+		stroke: color.brand.yellow,
+		fill: color.brand.yellow,
+	},
+);
+
+globalStyle(`${mainNavItem}[data-active]:hover, ${mainNavItemRoot}[data-active]:hover`, {
+	stroke: "currentColor",
+	fill: "currentColor",
+});
+
+globalStyle(
+	`${mainNavItem}[data-active]:focus, ${mainNavItemRoot}[data-active]:focus, ${mainNavItem}[data-active]:focus-visible, ${mainNavItemRoot}[data-active]:focus-visible`,
+	{
+		stroke: "currentColor",
+		fill: "currentColor",
 	},
 );
 
 globalStyle(
 	`${mainNavItem}[data-active]:hover ${navIcon}, ${mainNavItemRoot}[data-active]:hover ${navIcon}, ${mainNavItem}[data-active]:hover ${navIcon} *, ${mainNavItemRoot}[data-active]:hover ${navIcon} *`,
 	{
-		stroke: color.brand.navy,
-		fill: "none",
+		stroke: "currentColor",
+		fill: "currentColor",
 	},
 );
 
 globalStyle(
 	`${mainNavItem}[data-active]:focus ${navIcon}, ${mainNavItemRoot}[data-active]:focus ${navIcon}, ${mainNavItem}[data-active]:focus ${navIcon} *, ${mainNavItemRoot}[data-active]:focus ${navIcon} *, ${mainNavItem}[data-active]:focus-visible ${navIcon}, ${mainNavItemRoot}[data-active]:focus-visible ${navIcon}, ${mainNavItem}[data-active]:focus-visible ${navIcon} *, ${mainNavItemRoot}[data-active]:focus-visible ${navIcon} *`,
 	{
-		stroke: color.brand.navy,
-		fill: "none",
+		stroke: "currentColor",
+		fill: "currentColor",
 	},
 );
 

@@ -1,7 +1,7 @@
 import * as NavMenu from "@radix-ui/react-navigation-menu";
 
 import { createElement, type PointerEventHandler, type ReactNode, useState } from "react";
-import Mail from "~icons/mail.svg?react";
+import { FaRegEnvelope } from "react-icons/fa";
 import { MainNavItem } from "../MainNavItem/MainNavItem";
 import * as itemStyles from "../MainNavItem/MainNavItem.css";
 
@@ -42,10 +42,10 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
 
 					// map string keys to actual icon components
 					if (item.icon === "mail") {
-						iconNode = createElement(Mail, {
+						iconNode = createElement(FaRegEnvelope, {
 							title: item.label,
 							"aria-hidden": true,
-							className: itemStyles.navIcon,
+							className: `${itemStyles.navIcon} ${itemStyles.reactIcon}`,
 						});
 					}
 

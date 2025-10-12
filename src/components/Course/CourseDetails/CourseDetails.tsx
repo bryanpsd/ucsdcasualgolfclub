@@ -1,4 +1,4 @@
-import Players from "~icons/players.svg?react";
+import { PiUsersFourFill } from "react-icons/pi";
 import { concatClasses } from "~utils/concatClasses";
 import { CourseInclusions } from "../CourseInclusions";
 
@@ -41,12 +41,10 @@ export const CourseDetails = (props: Props) => {
 						variant: isMiniCard ? "secondary" : "default",
 					})}
 				>
-					<Players
+					<PiUsersFourFill
 						className={styles.icons({
 							variant: isMiniCard ? "secondary" : "default",
 						})}
-						height={30}
-						width={30}
 					/>
 					{players}
 				</li>
