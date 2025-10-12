@@ -1,7 +1,6 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 import { color, tokens } from "~styles";
 import { breakpointQuery } from "~styles/utilities/designTokens.css";
-// import the desktop/main nav item class so we can respond to hover on either
 import { mainNavItem as mainNavItemRoot } from "../MainNav/MainNav.css";
 
 export const mainNavItem = style([
@@ -31,10 +30,15 @@ export const mainNavItem = style([
 ]);
 
 export const mainNavItemArrow = style([
+	tokens({
+		fontSize: { "xs-min": "sizeFont12", "sm-min": "sizeFont6" },
+	}),
 	{
 		transition: "transform",
 		transitionDuration: "0.3s",
 		fill: color.brand.navy,
+		width: "1em",
+		height: "1em",
 		"@media": {
 			[breakpointQuery["sm-min"]]: {
 				fill: color.brand.white,

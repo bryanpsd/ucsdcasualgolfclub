@@ -56,7 +56,7 @@ export const MainNavItem = forwardRef(function MainNavItem<C extends ElementType
 				{label}
 			</Typography>
 
-			{!hideCaret && !rest.href ? <Caret height={20} className={styles.mainNavItemArrow} /> : null}
+			{!hideCaret && !rest.href ? <Caret className={styles.mainNavItemArrow} /> : null}
 		</Component>
 	);
 });
