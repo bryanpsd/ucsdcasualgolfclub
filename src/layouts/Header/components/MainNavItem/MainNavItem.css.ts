@@ -1,12 +1,14 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { color, tokens } from "~styles";
 import { breakpointQuery } from "~styles/utilities/designTokens.css";
+// import the desktop/main nav item class so we can respond to hover on either
+import { mainNavItem as mainNavItemRoot } from "../MainNav/MainNav.css";
 
 export const mainNavItem = style([
 	tokens({
 		display: "flex",
 		alignItems: "center",
-		paddingX: 16,
+		paddingX: 12,
 		height: "col-12",
 	}),
 	{
@@ -58,6 +60,64 @@ export const mainNavItemArrow = style([
 		},
 	},
 ]);
+
+export const iconWrapper = style([
+	tokens({
+		display: "inline-flex",
+		alignItems: "center",
+		justifyContent: "center",
+	}),
+]);
+
+export const navIcon = style({
+	width: "1.75rem",
+	height: "1.75rem",
+});
+
+globalStyle(`${navIcon}, ${navIcon} *`, {
+	stroke: color.brand.white,
+	fill: "none",
+});
+
+globalStyle(
+	`${mainNavItem}:hover ${navIcon}, ${mainNavItemRoot}:hover ${navIcon}, ${mainNavItem}:focus ${navIcon}, ${mainNavItemRoot}:focus ${navIcon}, ${mainNavItem}:hover ${navIcon} *, ${mainNavItemRoot}:hover ${navIcon} *, ${mainNavItem}:focus ${navIcon} *, ${mainNavItemRoot}:focus ${navIcon} *`,
+	{
+		stroke: color.brand.navy,
+		fill: "none",
+	},
+);
+
+globalStyle(
+	`${mainNavItem}[data-active] ${navIcon}, ${mainNavItemRoot}[data-active] ${navIcon}, ${mainNavItem}[data-active] ${navIcon} *, ${mainNavItemRoot}[data-active] ${navIcon} *`,
+	{
+		stroke: color.brand.navy,
+		fill: "none",
+	},
+);
+
+globalStyle(
+	`${mainNavItem}[data-key="contact"][data-active] ${navIcon}, ${mainNavItemRoot}[data-key="contact"][data-active] ${navIcon}, ${mainNavItem}[data-key="contact"][data-active] ${navIcon} *, ${mainNavItemRoot}[data-key="contact"][data-active] ${navIcon} *`,
+	{
+		stroke: color.brand.navy,
+		fill: color.brand.white,
+	},
+);
+
+globalStyle(
+	`${mainNavItem}[data-active]:hover ${navIcon}, ${mainNavItemRoot}[data-active]:hover ${navIcon}, ${mainNavItem}[data-active]:hover ${navIcon} *, ${mainNavItemRoot}[data-active]:hover ${navIcon} *`,
+	{
+		stroke: color.brand.navy,
+		fill: "none",
+	},
+);
+
+globalStyle(
+	`${mainNavItem}[data-active]:focus ${navIcon}, ${mainNavItemRoot}[data-active]:focus ${navIcon}, ${mainNavItem}[data-active]:focus ${navIcon} *, ${mainNavItemRoot}[data-active]:focus ${navIcon} *, ${mainNavItem}[data-active]:focus-visible ${navIcon}, ${mainNavItemRoot}[data-active]:focus-visible ${navIcon}, ${mainNavItem}[data-active]:focus-visible ${navIcon} *, ${mainNavItemRoot}[data-active]:focus-visible ${navIcon} *`,
+	{
+		stroke: color.brand.navy,
+		fill: "none",
+	},
+);
 
 export const hideBelowDesktop = style({
 	position: "absolute",

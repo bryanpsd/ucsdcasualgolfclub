@@ -1,7 +1,9 @@
 import * as NavMenu from "@radix-ui/react-navigation-menu";
 
-import { type PointerEventHandler, useState } from "react";
+import { createElement, type PointerEventHandler, type ReactNode, useState } from "react";
+import Mail from "~icons/mail.svg?react";
 import { MainNavItem } from "../MainNavItem/MainNavItem";
+import * as itemStyles from "../MainNavItem/MainNavItem.css";
 
 import * as styles from "./MainNav.css";
 
@@ -10,6 +12,8 @@ type NavigationLink = {
 	href?: string;
 	target?: string;
 	links?: NavigationLink[];
+	icon?: ReactNode;
+	hideLabel?: boolean;
 };
 
 export type MainNavProps = {
@@ -33,44 +37,65 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
 			onValueChange={(val) => setActive(val)}
 		>
 			<NavMenu.List className={styles.mainNavList}>
-				{items.menuItems.map((item) => (
-					<NavMenu.Item className={styles.mainNavItem} key={item.label}>
-						{"href" in item ? (
-							<NavMenu.Link asChild active={!!(item.href && currentPath.startsWith(item.href))}>
-								<MainNavItem target={item.target} href={item.href} label={item.label} as="a" />
-							</NavMenu.Link>
-						) : (
-							<>
-								<NavMenu.Trigger
-									className={styles.mainNavTrigger}
-									onPointerMove={disableHoverInteraction}
-									onPointerLeave={disableHoverInteraction}
-									asChild
-									style={{
-										textDecoration: currentPath.startsWith("/seasons") ? "underline" : "none",
-									}}
-								>
-									<MainNavItem label={item.label} />
-								</NavMenu.Trigger>
-								<NavMenu.Content asChild>
-									<ul className={styles.mainNavContent}>
-										{item.links?.map((subItem) => (
-											<li key={subItem.label}>
-												<NavMenu.Link
-													className={styles.mainNavSubItem}
-													href={subItem.href}
-													active={subItem.href === currentPath}
-												>
-													{subItem.label}
-												</NavMenu.Link>
-											</li>
-										))}
-									</ul>
-								</NavMenu.Content>
-							</>
-						)}
-					</NavMenu.Item>
-				))}
+				{items.menuItems.map((item) => {
+					let iconNode = item.icon as ReactNode | undefined;
+
+					// map string keys to actual icon components
+					if (item.icon === "mail") {
+						iconNode = createElement(Mail, {
+							title: item.label,
+							"aria-hidden": true,
+							className: itemStyles.navIcon,
+						});
+					}
+
+					return (
+						<NavMenu.Item className={styles.mainNavItem} key={item.label}>
+							{"href" in item ? (
+								<NavMenu.Link asChild active={!!(item.href && currentPath.startsWith(item.href))}>
+									<MainNavItem
+										target={item.target}
+										href={item.href}
+										label={item.label}
+										icon={iconNode}
+										hideLabel={item.hideLabel}
+										as="a"
+										data-key={item.href === "/contact" ? "contact" : undefined}
+									/>
+								</NavMenu.Link>
+							) : (
+								<>
+									<NavMenu.Trigger
+										className={styles.mainNavTrigger}
+										onPointerMove={disableHoverInteraction}
+										onPointerLeave={disableHoverInteraction}
+										asChild
+										style={{
+											textDecoration: currentPath.startsWith("/seasons") ? "underline" : "none",
+										}}
+									>
+										<MainNavItem label={item.label} icon={iconNode} hideLabel={item.hideLabel} />
+									</NavMenu.Trigger>
+									<NavMenu.Content asChild>
+										<ul className={styles.mainNavContent}>
+											{item.links?.map((subItem) => (
+												<li key={subItem.label}>
+													<NavMenu.Link
+														className={styles.mainNavSubItem}
+														href={subItem.href}
+														active={subItem.href === currentPath}
+													>
+														{subItem.label}
+													</NavMenu.Link>
+												</li>
+											))}
+										</ul>
+									</NavMenu.Content>
+								</>
+							)}
+						</NavMenu.Item>
+					);
+				})}
 			</NavMenu.List>
 		</NavMenu.Root>
 	);

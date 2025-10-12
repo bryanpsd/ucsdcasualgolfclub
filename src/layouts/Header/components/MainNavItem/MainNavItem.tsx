@@ -1,4 +1,4 @@
-import { type ElementType, forwardRef, type ReactNode } from "react";
+import { createElement, type ElementType, forwardRef, type ReactNode } from "react";
 import { Typography } from "~components/Typography";
 import Caret from "~icons/caretDown.svg?react";
 import type { PolymorphicComponentPropWithRef, PolymorphicRef } from "~types/PolymorphicComponent";
@@ -13,6 +13,7 @@ type MainNavItemProps<Element extends ElementType> = PolymorphicComponentPropWit
 		label?: string;
 		icon?: ReactNode;
 		hideLabelBelowDesktop?: boolean;
+		hideLabel?: boolean;
 		hideCaret?: boolean;
 		isActive?: boolean;
 	}
@@ -24,6 +25,7 @@ export const MainNavItem = forwardRef(function MainNavItem<C extends ElementType
 		icon,
 		as: asComponent,
 		hideLabelBelowDesktop,
+		hideLabel = false,
 		className,
 		hideCaret = false,
 		...rest
@@ -31,15 +33,25 @@ export const MainNavItem = forwardRef(function MainNavItem<C extends ElementType
 	ref: PolymorphicRef<C>,
 ) {
 	const Component = asComponent || "button";
+
+	type ComponentProps = Record<string, unknown>;
 	return (
 		<Component ref={ref} {...rest} className={concatClasses([className, styles.mainNavItem])}>
-			{icon}
+			{icon ? (
+				<span className={styles.iconWrapper}>
+					{typeof icon === "function"
+						? createElement(icon as React.ComponentType<ComponentProps>, {
+								"aria-hidden": hideLabel ? true : undefined,
+							})
+						: icon}
+				</span>
+			) : null}
 			<Typography
 				as="span"
 				fontWeight={500}
 				color="inherit"
 				variant="inherit"
-				className={hideLabelBelowDesktop ? styles.hideBelowDesktop : ""}
+				className={hideLabel ? "sr-only" : hideLabelBelowDesktop ? styles.hideBelowDesktop : ""}
 			>
 				{label}
 			</Typography>

@@ -76,6 +76,12 @@ export const menuItems: MainNavProps["items"] = {
 			href: "/about",
 		},
 		{
+			label: "Contact",
+			href: "/contact",
+			icon: "mail",
+			hideLabel: true,
+		},
+		{
 			label: "Join the Club",
 			href: "https://membership.scga.org/start/join/?cid=885",
 			target: "_blank",
