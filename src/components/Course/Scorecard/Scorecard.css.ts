@@ -49,11 +49,15 @@ export const th = style([
 
 export const tr = style({
 	borderBottom: `1px solid ${color.tableBorder}`,
-	selectors: {
-		"&:hover": {
-			backgroundColor: color.brand.gray,
-		},
-	},
+});
+
+export const handicapRow = style({
+  backgroundColor:  color.brand.blue,
+  color: color.brand.white,
+});
+
+export const parRow = style({
+  backgroundColor:  color.brand.gray,
 });
 
 export const td = style([
