@@ -30,5 +30,6 @@ export const tournamentRightCol = style([
 		display: "flex",
 		flexDirection: "column",
 		gap: 12,
+		marginBottom: 12,
 	}),
 ]);
