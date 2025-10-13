@@ -1,6 +1,6 @@
 import { createElement, type ElementType, forwardRef, type ReactNode } from "react";
+import { FaChevronDown } from "react-icons/fa6";
 import { Typography } from "~components/Typography";
-import Caret from "~icons/caretDown.svg?react";
 import type { PolymorphicComponentPropWithRef, PolymorphicRef } from "~types/PolymorphicComponent";
 
 import { concatClasses } from "~utils/concatClasses";
@@ -56,7 +56,7 @@ export const MainNavItem = forwardRef(function MainNavItem<C extends ElementType
 				{label}
 			</Typography>
 
-			{!hideCaret && !rest.href ? <Caret className={styles.mainNavItemArrow} /> : null}
+			{!hideCaret && !rest.href ? <FaChevronDown className={styles.mainNavItemArrow} /> : null}
 		</Component>
 	);
 });

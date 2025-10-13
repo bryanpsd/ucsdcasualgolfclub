@@ -9,6 +9,7 @@ export const mainNavItem = style([
 		alignItems: "center",
 		paddingX: 12,
 		height: "col-12",
+		gap: 2,
 	}),
 	{
 		color: color.brand.white,
@@ -31,7 +32,7 @@ export const mainNavItem = style([
 
 export const mainNavItemArrow = style([
 	tokens({
-		fontSize: { "xs-min": "sizeFont12", "sm-min": "sizeFont6" },
+		fontSize: { "xs-min": "sizeFont8", "sm-min": "sizeFont4" },
 	}),
 	{
 		transition: "transform",

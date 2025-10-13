@@ -1,19 +1,12 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import type { ReactNode } from "react";
+import { CgClose } from "react-icons/cg";
 import { Button } from "~components/Button";
-
-import { SvgIcon } from "~components/SvgIcon";
 import { Typography } from "~components/Typography";
-import CloseCancelIcon from "~icons/close_cancel.svg?react";
 
 import * as styles from "./Sheet.css";
 
 export interface SheetProps extends Pick<Dialog.DialogProps, "open" | "onOpenChange"> {
-	/** Element that opens modal.
-	 *
-	 * **Note:** This element **needs** to be able to accept a `ref` prop so focus can be
-	 * returned to this element when the modal is closed for accessibility.
-	 */
 	trigger: ReactNode;
 	onConfirm?: () => void;
 	children: ReactNode;
@@ -33,9 +26,7 @@ export const Sheet = ({ open, trigger, onOpenChange, children, title }: SheetPro
 							<Button color="default" variant="text" size="small">
 								<Typography>
 									<span className="sr-only">Close</span>
-									<SvgIcon>
-										<CloseCancelIcon />
-									</SvgIcon>
+									<CgClose className={styles.closeIcon} />
 								</Typography>
 							</Button>
 						</Dialog.Close>

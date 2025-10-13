@@ -1,9 +1,8 @@
 import type React from "react";
+import { FaWalking } from "react-icons/fa";
 import { GiGolfTee } from "react-icons/gi";
 import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
-// golf ball svgs removed in favor of GiGolfTee
 import Cart from "~icons/golf_cart.svg?react";
-import WalkingIcon from "~icons/walking.svg?react";
 import * as styles from "./CourseInclusions.css";
 
 interface Tournament {
@@ -20,7 +19,7 @@ export const CourseInclusions = ({
 	const inclusionIcons: Record<string, React.ElementType> = {
 		Cart: Cart,
 		"Range Balls": GiGolfTee,
-		Walking: WalkingIcon,
+		Walking: FaWalking,
 	};
 
 	return (
@@ -56,8 +55,8 @@ export const CourseInclusions = ({
 						>
 							{Icon ? (
 								<>
-									{Icon === GiGolfTee ? (
-										<GiGolfTee
+									{Icon === GiGolfTee || Icon === FaWalking ? (
+										<Icon
 											size={28}
 											className={styles.courseInclusionsIcon({
 												variant: isMiniCard ? "secondary" : "default",

@@ -15,6 +15,8 @@ export const mobileNavIcon = style({
 	selectors: {
 		"&:hover,&:focus": {
 			backgroundColor: "transparent",
+			color: color.brand.white,
+			outline: "none",
 		},
 	},
 });
@@ -27,12 +29,10 @@ export const mobileNavItem = style([
 		height: "col-12",
 		fontFamily: "base",
 		fontSize: "sizeFont8",
+		paddingY: 4,
+		paddingX: 0,
 	}),
 	{
-		paddingLeft: 0,
-		paddingRight: 0,
-		paddingTop: 16,
-		paddingBottom: 16,
 		color: color.brand.navy,
 		cursor: "pointer",
 		border: "none",
@@ -51,6 +51,8 @@ export const mobileNavItem = style([
 export const menuIcon = style({
 	fill: color.navigationText,
 	padding: 0,
+	color: "inherit",
+	display: "inline-block",
 });
 
 export const trigger = style([

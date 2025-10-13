@@ -1,7 +1,7 @@
 import * as NavMenu from "@radix-ui/react-navigation-menu";
 import { useState } from "react";
+import { IoMenu } from "react-icons/io5";
 import { Sheet } from "~components/Sheet/Sheet";
-import Menu from "~icons/menu.svg?react";
 import { disableHover } from "~layouts/Header/utils/disableHover";
 import type { MainNavProps } from "../MainNav";
 import { MainNavItem } from "./../MainNavItem/MainNavItem";
@@ -30,7 +30,7 @@ export const MobileNav = ({ items }: MobileNavProps) => {
 									as="button"
 									label="Navigation Menu"
 									onClick={() => setOpen(true)}
-									icon={<Menu className={styles.menuIcon} height={28} />}
+									icon={<IoMenu className={styles.menuIcon} size={28} />}
 									hideLabelBelowDesktop
 									hideCaret
 									className={styles.mobileNavIcon}

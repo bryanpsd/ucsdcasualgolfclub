@@ -62,3 +62,9 @@ export const modalCloseContainer = style([
 		justifyContent: "flex-end",
 	}),
 ]);
+
+export const closeIcon = style([
+	tokens({
+		fontSize: "sizeFont10",
+	}),
+]);
