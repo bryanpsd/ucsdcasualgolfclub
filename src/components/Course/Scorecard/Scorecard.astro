@@ -46,15 +46,24 @@ const { courseScorecard } = Astro.props;
             </tr>
           </thead>
           <tbody>
-            {courseScorecard.map(
-              (row: {
-                [x: string]: unknown;
-                Hole: unknown;
-                Out: unknown;
-                In: unknown;
-                Total: unknown;
-              }) => (
-                <tr class={styles.tr}>
+            {courseScorecard.map((row: {
+              [x: string]: unknown;
+              Hole: unknown;
+              Out: unknown;
+              In: unknown;
+              Total: unknown;
+            }) => {
+              const holeLabel = String(row.Hole ?? "").toLowerCase();
+              const isHandicap = holeLabel.startsWith("handicap");
+              const isPar = holeLabel === "par" || holeLabel.startsWith("par ");
+              return (
+                   <tr
+                  class={concatClasses([
+                    styles.tr,
+                    isHandicap ? styles.handicapRow : "",
+                    isPar ? styles.parRow : "",
+                  ])}
+                >
                   <th
                     scope="row"
                     class={concatClasses([styles.th, styles.boldColumn])}
@@ -89,8 +98,8 @@ const { courseScorecard } = Astro.props;
                     {row.Total}
                   </td>
                 </tr>
-              ),
-            )}
+              );
+            })}
           </tbody>
         </table>
       </div>
