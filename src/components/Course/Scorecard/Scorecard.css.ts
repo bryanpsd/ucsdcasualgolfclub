@@ -52,12 +52,12 @@ export const tr = style({
 });
 
 export const handicapRow = style({
-  backgroundColor:  color.brand.blue,
-  color: color.brand.white,
+	backgroundColor: color.brand.blue,
+	color: color.brand.white,
 });
 
 export const parRow = style({
-  backgroundColor:  color.brand.gray,
+	backgroundColor: color.brand.gray,
 });
 
 export const td = style([

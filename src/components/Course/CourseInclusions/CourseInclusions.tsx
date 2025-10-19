@@ -29,7 +29,7 @@ export const CourseInclusions = ({
 			})}
 		>
 			<ResponsiveHeadline
-				size={1}
+				size={4}
 				as="h3"
 				className={styles.courseInclusionsWrapper({
 					variant: isMiniCard ? "secondary" : "default",

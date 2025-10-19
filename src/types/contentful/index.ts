@@ -24,6 +24,12 @@ export type {
 } from "./TypeLeaders";
 export { isTypeLeaders } from "./TypeLeaders";
 export type {
+	TypeLink,
+	TypeLinkFields,
+	TypeLinkSkeleton,
+} from "./TypeLink";
+export { isTypeLink } from "./TypeLink";
+export type {
 	TypeMessageBox,
 	TypeMessageBoxFields,
 	TypeMessageBoxSkeleton,

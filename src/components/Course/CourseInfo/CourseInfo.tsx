@@ -12,7 +12,7 @@ export const CourseInfo = (props: Props) => {
 
 	return (
 		<div className={styles.courseCardInfo}>
-			<ResponsiveHeadline className={styles.courseCardInfoTitle} size={1} as="h2">
+			<ResponsiveHeadline className={styles.courseCardInfoTitle} size={4} as="h2">
 				Information
 			</ResponsiveHeadline>
 			<div className={styles.courseCardInfoListWrapper}>

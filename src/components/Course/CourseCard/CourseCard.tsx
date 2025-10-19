@@ -63,20 +63,20 @@ export const CourseCard = (props: CourseCardProps) => {
 			)}
 			{hideCourseInfo ? (
 				<div className={styles.courseCardNameWrapper}>
-					<ResponsiveHeadline size={2} as="h2">
+					<ResponsiveHeadline size={3} as="h2">
 						{course}
 					</ResponsiveHeadline>
 					{tournamentNotes && tournamentNotes.length > 0 && (
 						<div>
 							{tournamentNotes.map((note) => (
-								<ResponsiveHeadline className={styles.courseNote} key={note} size={1} as="h3">
+								<ResponsiveHeadline className={styles.courseNote} key={note} size={4} as="h3">
 									{note}
 								</ResponsiveHeadline>
 							))}
 						</div>
 					)}
 					{clubChampionship && (
-						<ResponsiveHeadline className={styles.courseNote} size={1} as="h2">
+						<ResponsiveHeadline className={styles.courseNote} size={4} as="h2">
 							Club Championship
 						</ResponsiveHeadline>
 					)}
@@ -84,20 +84,20 @@ export const CourseCard = (props: CourseCardProps) => {
 			) : (
 				<div className={styles.courseCardInfo}>
 					<div>
-						<ResponsiveHeadline size={2} as="h2">
+						<ResponsiveHeadline size={3} as="h2">
 							{course}
 						</ResponsiveHeadline>
 						{tournamentNotes && tournamentNotes.length > 0 && (
 							<div>
 								{tournamentNotes.map((note) => (
-									<ResponsiveHeadline className={styles.courseNote} key={note} size={1} as="h3">
+									<ResponsiveHeadline className={styles.courseNote} key={note} size={4} as="h3">
 										{note}
 									</ResponsiveHeadline>
 								))}
 							</div>
 						)}
 						{clubChampionship && (
-							<ResponsiveHeadline className={styles.courseNote} size={1} as="h2">
+							<ResponsiveHeadline className={styles.courseNote} size={4} as="h2">
 								Club Championship
 							</ResponsiveHeadline>
 						)}

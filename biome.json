@@ -8,12 +8,6 @@
 			"!dist",
 			"!.astro",
 			"!.netlify",
-			"!public/*",
-			"!src/assets",
-			"!infra",
-			"!reportWebVitals.ts",
-			"!*.yml",
-			"!*.md",
 			"!.cache",
 			"!.husky",
 			"!.vscode",
@@ -26,57 +20,53 @@
 		"indentStyle": "tab",
 		"lineWidth": 100
 	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double",
+			"jsxQuoteStyle": "double",
+			"semicolons": "always"
+		}
+	},
 	"linter": {
 		"enabled": true,
-		"rules": {
-			"recommended": true
-		}
+		"rules": { "recommended": true }
 	},
 	"assist": {
 		"enabled": true,
-		"actions": {
-			"source": {
-				"organizeImports": "on"
-			}
-		}
+		"actions": { "source": { "organizeImports": "on" } }
 	},
 	"overrides": [
 		{
 			"includes": ["**/*.astro"],
-			"formatter": {
-				"indentStyle": "tab",
-				"lineWidth": 100
-			},
+			"formatter": { "indentStyle": "tab", "lineWidth": 100 },
 			"linter": {
 				"rules": {
-					"style": {
-						"useConst": "on",
-						"useImportType": "on"
-					},
-					"correctness": {
-						"noUnusedImports": "off",
-						"noUnusedVariables": "off"
-					}
+					"style": { "useConst": "on", "useImportType": "on" },
+					"correctness": { "noUnusedImports": "off", "noUnusedVariables": "off" }
 				}
 			}
 		},
 		{
 			"includes": ["**/*.css.ts"],
+			"linter": { "rules": { "recommended": true } }
+		},
+		{
+			"includes": ["**/*.ts", "**/*.tsx"],
+			"formatter": { "enabled": true },
 			"linter": {
 				"rules": {
-					"recommended": true
+					"recommended": true,
+					"correctness": { "noUnusedImports": "on", "noUnusedVariables": "on" },
+					"style": { "useConst": "on", "useImportType": "on" }
 				}
 			}
 		},
 		{
-			"includes": ["**/*.ts", "**/*.tsx"],
+			"includes": ["src/types/contentful/**/*.ts"],
 			"linter": {
 				"rules": {
 					"recommended": true,
-					"correctness": {
-						"noUnusedImports": "on",
-						"noUnusedVariables": "on"
-					}
+					"correctness": { "noUnusedImports": "off", "noUnusedVariables": "off" }
 				}
 			}
 		}

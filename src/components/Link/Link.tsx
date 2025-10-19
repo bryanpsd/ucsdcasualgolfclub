@@ -7,13 +7,12 @@ export type LinkProps = ComponentPropsWithRef<"a"> & {
 };
 
 export const Link = forwardRef(
-	({ className, children, jumpLink, ...rest }: LinkProps, ref?: LinkProps["ref"]) => {
+	(
+		{ className, children, jumpLink, ...rest }: LinkProps,
+		ref?: LinkProps["ref"],
+	) => {
 		return (
-			<a
-				className={concatClasses([className, jumpLink ? jumpLinkClass : link])}
-				ref={ref}
-				{...rest}
-			>
+			<a className={concatClasses([className, jumpLink ? jumpLinkClass : link])} ref={ref} {...rest}>
 				{children}
 			</a>
 		);

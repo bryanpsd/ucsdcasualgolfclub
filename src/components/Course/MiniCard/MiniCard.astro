@@ -28,18 +28,18 @@ const validDate = date && !Number.isNaN(Date.parse(date)) ? new Date(date) : nul
 ---
 
 <div class={styles.miniCardWrapper}>
-  <ResponsiveHeadline className={styles.miniCardTitle} size={1} as="h2"
+  <ResponsiveHeadline className={styles.miniCardTitle} size={4} as="h2"
     >{title}</ResponsiveHeadline
   >
   <div class={styles.miniCard}>
-    <ResponsiveHeadline className={styles.miniCardCourse} size={1} as="h3">
+    <ResponsiveHeadline className={styles.miniCardCourse} size={4} as="h3">
       {course}
     </ResponsiveHeadline>
     {
       tournamentNotes && tournamentNotes.length > 0 && (
         <div class={styles.tournamentNotes}>
           {tournamentNotes.map((note: string) => (
-            <ResponsiveHeadline size={1} as="h4">
+            <ResponsiveHeadline size={4} as="h4">
               {note}
             </ResponsiveHeadline>
           ))}
