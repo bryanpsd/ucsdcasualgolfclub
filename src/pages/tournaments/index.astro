@@ -37,10 +37,13 @@ const getTournaments = entries.items
 							type: tournament.fields.type,
 							tournamentNotes: tournament.fields.tournamentNotes,
 							results:
-								tournament.fields.results && "fields" in tournament.fields.results
-									? (tournament.fields.results.fields.file?.url ?? null)
+								tournament.fields.results &&
+								"fields" in tournament.fields.results
+									? (tournament.fields.results.fields.file
+											?.url ?? null)
 									: null,
-							clubChampionship: tournament.fields.clubChampionship ?? false,
+							clubChampionship:
+								tournament.fields.clubChampionship ?? false,
 						},
 					],
 				};
@@ -62,25 +65,25 @@ const getCurrentYear = new Date().getFullYear();
 	title={`${getCurrentYear} Tournaments | UCSD Golf Club San Diego`}
 	description={`See all UCSD Casual Golf Club tournaments for ${getCurrentYear}. Find dates, results, and more.`}
 >
-  <Hero title={`${getCurrentYear} Tournament Schedule`} />
-  <div class={styles.subPageWrapper}>
-    {
-      getTournaments.map((item) => (
-        <CourseCard
-          client:load
-          date={item?.tournaments[0].date}
-          clubChampionship={item?.tournaments[0].clubChampionship}
-          course={item?.course}
-          type={item?.tournaments[0].type}
-          tournamentNotes={item?.tournaments[0].tournamentNotes}
-          prices={item?.tournaments[0].prices}
-          players={item?.tournaments[0].players}
-          slug={item?.slug}
-          results={item?.tournaments[0].results}
-          inclusions={item?.tournaments[0].inclusions}
-          tees={item?.tournaments[0].tees}
-        />
-      ))
-    }
-  </div>
+	<Hero title={`${getCurrentYear} Tournament Schedule`} />
+	<div class={styles.subPageWrapper}>
+		{
+			getTournaments.map((item) => (
+				<CourseCard
+					client:load
+					date={item?.tournaments[0].date}
+					clubChampionship={item?.tournaments[0].clubChampionship}
+					course={item?.course}
+					type={item?.tournaments[0].type}
+					tournamentNotes={item?.tournaments[0].tournamentNotes}
+					prices={item?.tournaments[0].prices}
+					players={item?.tournaments[0].players}
+					slug={item?.slug}
+					results={item?.tournaments[0].results}
+					inclusions={item?.tournaments[0].inclusions}
+					tees={item?.tournaments[0].tees}
+				/>
+			))
+		}
+	</div>
 </Layout>

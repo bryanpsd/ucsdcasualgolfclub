@@ -38,7 +38,9 @@ export async function getStaticPaths() {
 							return null;
 						})
 						.filter(Boolean) ?? [],
-				years: entries.items.map((entry) => entry.fields.year?.toString() ?? "N/A"),
+				years: entries.items.map(
+					(entry) => entry.fields.year?.toString() ?? "N/A",
+				),
 			},
 		};
 	});
@@ -53,25 +55,25 @@ const { year, players = [] } = Astro.props;
 	title={`${year} Roster | UCSD Golf Club Members`}
 	description={`See the ${year} UCSD Casual Golf Club roster. View player names and handicap indexes for the season.`}
 >
-  <Hero title={`${year} Roster`} />
-  <div class={styles.subPageWrapper}>
-    <div style="overflow-x: auto;">
-      <Table
-        client:load
-        thead={['Player', 'Index']}
-        tbody={players
-          .map((player) => {
-            return player?.guest?.includes('Yes')
-              ? null
-              : [
-                  player?.playerName,
-                  player?.handicapIndex === undefined
-                    ? 'NH'
-                    : String(player.handicapIndex),
-                ];
-          })
-          .filter((row) => row !== null) as string[][]}
-      />
-    </div>
-  </div>
+	<Hero title={`${year} Roster`} />
+	<div class={styles.subPageWrapper}>
+		<div style="overflow-x: auto;">
+			<Table
+				client:load
+				thead={["Player", "Index"]}
+				tbody={players
+					.map((player) => {
+						return player?.guest?.includes("Yes")
+							? null
+							: [
+									player?.playerName,
+									player?.handicapIndex === undefined
+										? "NH"
+										: String(player.handicapIndex),
+								];
+					})
+					.filter((row) => row !== null) as string[][]}
+			/>
+		</div>
+	</div>
 </Layout>

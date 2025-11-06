@@ -46,60 +46,63 @@ const { courseScorecard } = Astro.props;
             </tr>
           </thead>
           <tbody>
-            {courseScorecard.map((row: {
-              [x: string]: unknown;
-              Hole: unknown;
-              Out: unknown;
-              In: unknown;
-              Total: unknown;
-            }) => {
-              const holeLabel = String(row.Hole ?? "").toLowerCase();
-              const isHandicap = holeLabel.startsWith("handicap");
-              const isPar = holeLabel === "par" || holeLabel.startsWith("par ");
-              return (
-                   <tr
-                  class={concatClasses([
-                    styles.tr,
-                    isHandicap ? styles.handicapRow : "",
-                    isPar ? styles.parRow : "",
-                  ])}
-                >
-                  <th
-                    scope="row"
-                    class={concatClasses([styles.th, styles.boldColumn])}
+            {courseScorecard.map(
+              (row: {
+                [x: string]: unknown;
+                Hole: unknown;
+                Out: unknown;
+                In: unknown;
+                Total: unknown;
+              }) => {
+                const holeLabel = String(row.Hole ?? "").toLowerCase();
+                const isHandicap = holeLabel.startsWith("handicap");
+                const isPar =
+                  holeLabel === "par" || holeLabel.startsWith("par ");
+                return (
+                  <tr
+                    class={concatClasses([
+                      styles.tr,
+                      isHandicap ? styles.handicapRow : "",
+                      isPar ? styles.parRow : "",
+                    ])}
                   >
-                    {row.Hole}
-                  </th>
-                  <td class={styles.td}>{row['1']}</td>
-                  <td class={styles.td}>{row['2']}</td>
-                  <td class={styles.td}>{row['3']}</td>
-                  <td class={styles.td}>{row['4']}</td>
-                  <td class={styles.td}>{row['5']}</td>
-                  <td class={styles.td}>{row['6']}</td>
-                  <td class={styles.td}>{row['7']}</td>
-                  <td class={styles.td}>{row['8']}</td>
-                  <td class={styles.td}>{row['9']}</td>
-                  <td class={concatClasses([styles.td, styles.boldColumn])}>
-                    {row.Out}
-                  </td>
-                  <td class={styles.td}>{row['10']}</td>
-                  <td class={styles.td}>{row['11']}</td>
-                  <td class={styles.td}>{row['12']}</td>
-                  <td class={styles.td}>{row['13']}</td>
-                  <td class={styles.td}>{row['14']}</td>
-                  <td class={styles.td}>{row['15']}</td>
-                  <td class={styles.td}>{row['16']}</td>
-                  <td class={styles.td}>{row['17']}</td>
-                  <td class={styles.td}>{row['18']}</td>
-                  <td class={concatClasses([styles.td, styles.boldColumn])}>
-                    {row.In}
-                  </td>
-                  <td class={concatClasses([styles.td, styles.boldColumn])}>
-                    {row.Total}
-                  </td>
-                </tr>
-              );
-            })}
+                    <th
+                      scope="row"
+                      class={concatClasses([styles.th, styles.boldColumn])}
+                    >
+                      {row.Hole}
+                    </th>
+                    <td class={styles.td}>{row["1"]}</td>
+                    <td class={styles.td}>{row["2"]}</td>
+                    <td class={styles.td}>{row["3"]}</td>
+                    <td class={styles.td}>{row["4"]}</td>
+                    <td class={styles.td}>{row["5"]}</td>
+                    <td class={styles.td}>{row["6"]}</td>
+                    <td class={styles.td}>{row["7"]}</td>
+                    <td class={styles.td}>{row["8"]}</td>
+                    <td class={styles.td}>{row["9"]}</td>
+                    <td class={concatClasses([styles.td, styles.boldColumn])}>
+                      {row.Out}
+                    </td>
+                    <td class={styles.td}>{row["10"]}</td>
+                    <td class={styles.td}>{row["11"]}</td>
+                    <td class={styles.td}>{row["12"]}</td>
+                    <td class={styles.td}>{row["13"]}</td>
+                    <td class={styles.td}>{row["14"]}</td>
+                    <td class={styles.td}>{row["15"]}</td>
+                    <td class={styles.td}>{row["16"]}</td>
+                    <td class={styles.td}>{row["17"]}</td>
+                    <td class={styles.td}>{row["18"]}</td>
+                    <td class={concatClasses([styles.td, styles.boldColumn])}>
+                      {row.In}
+                    </td>
+                    <td class={concatClasses([styles.td, styles.boldColumn])}>
+                      {row.Total}
+                    </td>
+                  </tr>
+                );
+              },
+            )}
           </tbody>
         </table>
       </div>

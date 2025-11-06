@@ -3,10 +3,9 @@
 	"compilerOptions": {
 		"target": "ES2022",
 		"lib": ["dom", "dom.iterable", "ESNext"],
-		"allowJs": true,
+		"allowJs": false,
 		"skipLibCheck": true,
 		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
 		"strict": true,
 		"forceConsistentCasingInFileNames": true,
 		"noFallthroughCasesInSwitch": true,
@@ -19,13 +18,11 @@
 		"baseUrl": "./src",
 		"noEmit": true,
 		"paths": {
-			"@fonts": ["assets/fonts/*"],
+			"~styles/*": ["styles/*"],
 			"~/*": ["*"],
-			"~*": ["*"],
-			"~styles": ["styles/index.ts"],
-			"~styles/*": ["styles/*"]
+			"~*": ["*"]
 		}
 	},
-	"include": ["src", "astro-env.d.ts", ".astro/types.d.ts"],
+	"include": ["src", ".astro/types.d.ts"],
 	"exclude": ["dist", "node_modules"]
 }

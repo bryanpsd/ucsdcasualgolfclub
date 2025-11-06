@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.2.5/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.3.0/schema.json",
 	"vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
 	"files": {
 		"includes": [
@@ -19,6 +19,12 @@
 		"enabled": true,
 		"indentStyle": "tab",
 		"lineWidth": 100
+	},
+	"html": {
+		"experimentalFullSupportEnabled": true,
+		"formatter": {
+			"indentScriptAndStyle": true
+		}
 	},
 	"javascript": {
 		"formatter": {
@@ -41,8 +47,17 @@
 			"formatter": { "indentStyle": "tab", "lineWidth": 100 },
 			"linter": {
 				"rules": {
-					"style": { "useConst": "on", "useImportType": "on" },
-					"correctness": { "noUnusedImports": "off", "noUnusedVariables": "off" }
+					"recommended": false,
+					"style": { "useConst": "off", "useImportType": "off" },
+					"correctness": { "noUnusedImports": "off", "noUnusedVariables": "off" },
+					"a11y": {
+						"recommended": true,
+						"useAltText": "warn",
+						"useValidAnchor": "warn",
+						"noRedundantAlt": "warn",
+						"noStaticElementInteractions": "warn",
+						"useValidLang": "warn"
+					}
 				}
 			}
 		},
@@ -51,8 +66,7 @@
 			"linter": { "rules": { "recommended": true } }
 		},
 		{
-			"includes": ["**/*.ts", "**/*.tsx"],
-			"formatter": { "enabled": true },
+			"includes": ["**/*.ts"],
 			"linter": {
 				"rules": {
 					"recommended": true,
@@ -62,11 +76,18 @@
 			}
 		},
 		{
-			"includes": ["src/types/contentful/**/*.ts"],
+			"includes": ["**/*.tsx"],
 			"linter": {
 				"rules": {
 					"recommended": true,
-					"correctness": { "noUnusedImports": "off", "noUnusedVariables": "off" }
+					"correctness": { "noUnusedImports": "on", "noUnusedVariables": "on" },
+					"style": { "useConst": "on", "useImportType": "on" },
+					"a11y": {
+						"recommended": true,
+						"useAltText": "error",
+						"useValidAnchor": "warn",
+						"noStaticElementInteractions": "error"
+					}
 				}
 			}
 		}

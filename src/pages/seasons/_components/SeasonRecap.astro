@@ -11,10 +11,12 @@ import * as styles from "./SeasonRecap.css";
 const { year } = Astro.props;
 
 const response = await contentfulClient.getEntries<TypeSeasonRecapSkeleton>({
-	content_type: "seasonRecap",
+  content_type: "seasonRecap",
 });
 
-const seasonRecap = response.items.find((item) => item.fields.title?.includes(year))?.fields;
+const seasonRecap = response.items.find((item) =>
+  item.fields.title?.includes(year),
+)?.fields;
 ---
 
 {
@@ -29,22 +31,30 @@ const seasonRecap = response.items.find((item) => item.fields.title?.includes(ye
                 client:load
                 className={styles.seasonRecapImage}
                 src={
-                  winner && 'fields' in winner
-                    ? winner.fields.file?.url || ''
-                    : ''
+                  winner && "fields" in winner
+                    ? winner.fields.file?.url || ""
+                    : ""
                 }
                 alt={
-                  winner && 'fields' in winner
-                    ? winner.fields.title && winner.fields.title.trim() !== ''
+                  winner && "fields" in winner
+                    ? winner.fields.title && winner.fields.title.trim() !== ""
                       ? winner.fields.title
-                      : 'Winner image'
-                    : 'Winner image'
+                      : "Winner image"
+                    : "Winner image"
                 }
-                width={winner && 'fields' in winner ? winner.fields.file?.details?.image?.width : undefined}
-                height={winner && 'fields' in winner ? winner.fields.file?.details?.image?.height : undefined}
+                width={
+                  winner && "fields" in winner
+                    ? winner.fields.file?.details?.image?.width
+                    : undefined
+                }
+                height={
+                  winner && "fields" in winner
+                    ? winner.fields.file?.details?.image?.height
+                    : undefined
+                }
               />
               <ResponsiveHeadline size={4} as="h3">
-                {winner && 'fields' in winner ? winner.fields.title : ''}
+                {winner && "fields" in winner ? winner.fields.title : ""}
               </ResponsiveHeadline>
             </li>
           ))}

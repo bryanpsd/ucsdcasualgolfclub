@@ -12,8 +12,8 @@ import * as styles from "~styles/globals/common.css";
 import type { TypeSimplePageSkeleton } from "~types/contentful";
 
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-	content_type: "simplePage",
-	"fields.slug": "about",
+  content_type: "simplePage",
+  "fields.slug": "about",
 });
 ---
 

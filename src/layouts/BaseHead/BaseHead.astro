@@ -6,29 +6,29 @@
  */
 import { GoogleAnalytics } from "~layouts/GoogleAnalytics";
 export interface Props {
-	title: string;
-	description?: string;
+    title: string;
+    description?: string;
 }
 
 const canonicalURL = Astro.url.href;
 
 const schema = {
-	"@context": "https://schema.org",
-	"@type": "SportsTeam",
-	name: "UCSD Casual Golf Club",
-	sport: "Golf",
-	url: "https://ucsdcasualgolfclub.com",
-	logo: "https://ucsdcasualgolfclub.com/ucsd-icon.png",
-	memberOf: {
-		"@type": "SportsOrganization",
-		name: "University of California, San Diego",
-	},
-	address: {
-		"@type": "PostalAddress",
-		addressLocality: "San Diego",
-		addressRegion: "CA",
-		addressCountry: "US",
-	},
+    "@context": "https://schema.org",
+    "@type": "SportsTeam",
+    name: "UCSD Casual Golf Club",
+    sport: "Golf",
+    url: "https://ucsdcasualgolfclub.com",
+    logo: "https://ucsdcasualgolfclub.com/ucsd-icon.png",
+    memberOf: {
+        "@type": "SportsOrganization",
+        name: "University of California, San Diego",
+    },
+    address: {
+        "@type": "PostalAddress",
+        addressLocality: "San Diego",
+        addressRegion: "CA",
+        addressCountry: "US",
+    },
 };
 
 import { ClientRouter } from "astro:transitions";
@@ -107,7 +107,11 @@ const { title = "UCSD Casual Golf Club", description = "" } = Astro.props;
     />
     <meta name="twitter:image" content="/ucsd-icon.png" />
 
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script
+        is:inline
+        type="application/ld+json"
+        set:html={JSON.stringify(schema)}
+    />
 </head>
 
 <ClientRouter />

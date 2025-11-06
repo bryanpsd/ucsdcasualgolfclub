@@ -9,22 +9,23 @@ import { CourseInclusions } from "../CourseInclusions";
 import * as styles from "./MiniCard.css";
 
 const {
-	title,
-	course,
-	prices,
-	players,
-	date,
-	isCoursePage,
-	courseWebsite,
-	label,
-	slug,
-	results,
-	inclusions,
-	type,
-	tournamentNotes,
+  title,
+  course,
+  prices,
+  players,
+  date,
+  isCoursePage,
+  courseWebsite,
+  label,
+  slug,
+  results,
+  inclusions,
+  type,
+  tournamentNotes,
 } = Astro.props;
 
-const validDate = date && !Number.isNaN(Date.parse(date)) ? new Date(date) : null;
+const validDate =
+  date && !Number.isNaN(Date.parse(date)) ? new Date(date) : null;
 ---
 
 <div class={styles.miniCardWrapper}>
@@ -51,8 +52,8 @@ const validDate = date && !Number.isNaN(Date.parse(date)) ? new Date(date) : nul
         validDate ? (
           <>
             <div class={styles.dateTimeWrapper}>
-              <span>{format(date, 'E M/d/yy')}</span>@
-              <span>{format(date, 'h:mmaaa')}</span>
+              <span>{format(date, "E M/d/yy")}</span>@
+              <span>{format(date, "h:mmaaa")}</span>
             </div>
             {type && <div>{type}</div>}
           </>
@@ -81,7 +82,7 @@ const validDate = date && !Number.isNaN(Date.parse(date)) ? new Date(date) : nul
       )
     }
     {
-      results && typeof results === 'object' && results?.fields?.file?.url ? (
+      results && typeof results === "object" && results?.fields?.file?.url ? (
         <Button
           as="a"
           variant="outlined"
@@ -102,12 +103,12 @@ const validDate = date && !Number.isNaN(Date.parse(date)) ? new Date(date) : nul
           color="secondary"
           as="a"
           size="small"
-          rel={isCoursePage ? 'noopener noreferrer' : ''}
-          target={isCoursePage ? '_blank' : '_self'}
+          rel={isCoursePage ? "noopener noreferrer" : ""}
+          target={isCoursePage ? "_blank" : "_self"}
           href={
             isCoursePage
               ? courseWebsite
-              : `/tournaments/${format(new Date(date as string), 'yyyy')}/${slug}`
+              : `/tournaments/${format(new Date(date as string), "yyyy")}/${slug}`
           }
         >
           {label}

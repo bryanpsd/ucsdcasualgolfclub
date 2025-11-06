@@ -16,10 +16,6 @@ const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
 	content_type: "roster",
 });
 
-// const rosterYears = Array.from(
-//   new Set(entries.items.map((item) => item.fields.year?.toString()))
-// ).filter((year): year is string => Boolean(year))
-
 const currentRosterPlayers = entries.items
 	.filter((item) => item.fields.title?.includes("Current")) // Filter by title
 	.flatMap((item) =>
@@ -36,7 +32,10 @@ const currentRosterPlayers = entries.items
 	)
 	.filter((player) => player !== null) // Remove null values
 	.filter((player) => !player?.guest?.includes("Yes")) // Exclude guests
-	.sort((a, b) => (a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity));
+	.sort(
+		(a, b) =>
+			(a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity),
+	);
 
 const lastUpdated = entries.items
 	.map((item) => new Date(item.sys.updatedAt))
@@ -52,21 +51,21 @@ const lastUpdated = entries.items
 	title="Club Roster | UCSD Casual Golf Club Members List"
 	description="Meet the members of the UCSD Casual Golf Club. View our roster and connect with fellow San Diego golf enthusiasts."
 >
-  <Hero title="UCSD Casual Golf Club Roster" />
-  <div class={commonStyles.subPageWrapper}>
-    <div style="overflow-x: auto;">
-      <Table
-        client:load
-        thead={['Player', `Index (as of: ${lastUpdated ?? 'Unknown'})`]}
-        tbody={currentRosterPlayers.map((player) => [
-          player?.playerName
-            ? `<a href="/results?playerName=${encodeURIComponent(player.playerName)}" class="${styles.rosterLink}">${player.playerName}</a>`
-            : 'Unknown',
-          player?.handicapIndex === undefined
-            ? 'NH'
-            : String(player.handicapIndex),
-        ])}
-      />
-    </div>
-  </div>
+	<Hero title="UCSD Casual Golf Club Roster" />
+	<div class={commonStyles.subPageWrapper}>
+		<div style="overflow-x: auto;">
+			<Table
+				client:load
+				thead={["Player", `Index (as of: ${lastUpdated ?? "Unknown"})`]}
+				tbody={currentRosterPlayers.map((player) => [
+					player?.playerName
+						? `<a href="/results?playerName=${encodeURIComponent(player.playerName)}" class="${styles.rosterLink}">${player.playerName}</a>`
+						: "Unknown",
+					player?.handicapIndex === undefined
+						? "NH"
+						: String(player.handicapIndex),
+				])}
+			/>
+		</div>
+	</div>
 </Layout>
