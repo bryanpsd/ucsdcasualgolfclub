@@ -22,7 +22,7 @@ import * as styles from "./_style/tournament.css";
 export async function getStaticPaths() {
 	const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
 		content_type: "course",
-		include: 3,
+		include: 4,
 	});
 
 	const pages = entries.items
@@ -412,6 +412,7 @@ const flights = [
 					isCoursePage
 					label="Course Website"
 					course={course}
+					address={address}
 					courseWebsite={courseWebsite}
 					type={tournaments[0]?.type}
 					tournamentNotes={tournaments[0]?.tournamentNotes}
