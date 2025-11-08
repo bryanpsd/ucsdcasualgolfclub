@@ -15,6 +15,8 @@ const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
 	content_type: "course",
 });
 
+const cutoffDate = new Date("2025-12-05");
+
 const getTournaments = entries.items
 	.flatMap((item) => {
 		return item.fields.tournaments?.map((tournament) => {
@@ -22,7 +24,7 @@ const getTournaments = entries.items
 				tournament &&
 				"fields" in tournament &&
 				tournament.fields.date &&
-				new Date(tournament.fields.date) > new Date("2024-12-05")
+				new Date(tournament.fields.date) > cutoffDate
 			) {
 				return {
 					...item.fields,
@@ -58,7 +60,8 @@ const getTournaments = entries.items
 			new Date(b?.tournaments?.[0]?.date ?? 0).getTime(),
 	);
 
-const getCurrentYear = new Date().getFullYear();
+// Display year should be one ahead of the cutoff date's year
+const getCurrentYear = cutoffDate.getFullYear() + 1;
 ---
 
 <Layout

@@ -39,22 +39,23 @@ const getAvailableSeasons = async () => {
 	return uniqueYears.sort((a, b) => b - a);
 };
 
-const generatePastSeasonsLinks = async () => {
+const generateSeasonsLinks = async () => {
 	const availableSeasons = await getAvailableSeasons();
-
-	// Get the current year
 	const currentYear = new Date().getFullYear();
 
-	// Filter out the current year
-	const filteredSeasons = availableSeasons.filter((year) => year !== currentYear);
+	// Ensure current year is included even if no tournaments yet
+	const unique = Array.from(new Set([...availableSeasons, currentYear]));
 
-	return filteredSeasons.map((year) => ({
-		label: year.toString(),
-		href: `/seasons/${year}`,
-	}));
+	// Only include current and past years (exclude future years like 2026)
+	const past = unique.filter((y) => y < currentYear).sort((a, b) => b - a);
+
+	// Desired order: current year first, then past years descending
+	const ordered = [currentYear, ...past];
+
+	return ordered.map((year) => ({ label: year.toString(), href: `/seasons/${year}` }));
 };
 
-const pastSeasonsLinks = await generatePastSeasonsLinks();
+const pastSeasonsLinks = await generateSeasonsLinks();
 
 export const menuItems: MainNavProps["items"] = {
 	label: "Main",

@@ -26,29 +26,43 @@ const lastUpdatedDate = entries.items.reduce((latest, item) => {
       ? ["Net Leaders First Flight"]
       : ["Net Leaders Second Flight"]}
   colSpan={2}
-  tbody={entries.items
-    .filter((item) => item.fields.onCurrentRoster)
-    .map((item) => {
-      if (gross && item.fields.roundsCheck && item.fields.gross !== undefined) {
-        return [item.fields.playerName, item.fields.gross];
-      } else if (
-        firstFlight &&
-        net &&
-        item.fields.net !== undefined &&
-        item.fields.roundsCheck &&
-        item.fields.flight === "First Flight"
-      ) {
-        return [item.fields.playerName, item.fields.net];
-      } else if (
-        secondFlight &&
-        net &&
-        item.fields.net !== undefined &&
-        item.fields.roundsCheck &&
-        item.fields.flight === "Second Flight"
-      ) {
-        return [item.fields.playerName, item.fields.net];
-      }
-    })
-    .filter((row) => row !== undefined) as string[][]}
+  tbody={(() => {
+    const rows = entries.items
+      .filter((item) => item.fields.onCurrentRoster)
+      .map((item) => {
+        if (
+          gross &&
+          item.fields.roundsCheck &&
+          item.fields.gross !== undefined
+        ) {
+          return [item.fields.playerName, item.fields.gross];
+        } else if (
+          firstFlight &&
+          net &&
+          item.fields.net !== undefined &&
+          item.fields.roundsCheck &&
+          item.fields.flight === "First Flight"
+        ) {
+          return [item.fields.playerName, item.fields.net];
+        } else if (
+          secondFlight &&
+          net &&
+          item.fields.net !== undefined &&
+          item.fields.roundsCheck &&
+          item.fields.flight === "Second Flight"
+        ) {
+          return [item.fields.playerName, item.fields.net];
+        }
+      })
+      .filter((row) => row !== undefined) as (string | number)[][];
+
+    // Sort ascending by score (column index 1) converting to number
+    rows.sort((a, b) => Number(a[1]) - Number(b[1]));
+    // Cast back to string[][] for Table component
+    return rows.map(([name, score]) => [
+      String(name),
+      String(score),
+    ]) as string[][];
+  })()}
   tfoot={[`Last updated: ${format(new Date(lastUpdatedDate), "M/d/yy")}`]}
 />

@@ -65,7 +65,7 @@ const staticHref = hasStaticAddress
       : `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`)
   : "#";
 
-const mapsApiKey = import.meta.env.PUBLIC_GOOGLE_MAPS_API_KEY || "";
+const mapsApiKey = import.meta.env.GOOGLE_MAPS_API_KEY || "";
 ---
 <div class={styles.miniCardWrapper} data-has-address={hasStaticAddress}>
   <ResponsiveHeadline className={styles.miniCardTitle} size={4} as="h2">
