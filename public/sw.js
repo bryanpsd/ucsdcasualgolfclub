@@ -1,10 +1,10 @@
 // Minimal service worker for Astro PWA
-self.addEventListener("install", () => {
+self.addEventListener("install", (event) => {
 	self.skipWaiting();
 });
-self.addEventListener("activate", () => {
+self.addEventListener("activate", (event) => {
 	self.clients.claim();
 });
-self.addEventListener("fetch", () => {
+self.addEventListener("fetch", (event) => {
 	// Default: just pass through
 });

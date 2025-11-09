@@ -1,26 +1,24 @@
 ---
-const props = Astro.props as { measurementId: string };
+type Props = { measurementId: string };
+const props = Astro.props as Props;
 const measurementId = props.measurementId;
 ---
 
 <script
   type="text/partytown"
-  is:inline
   src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script>
 <script
   type="text/partytown"
-  is:inline
-  id="ga-init"
   data-ga-measurement-id={measurementId}
+  id="ga-init"
 >
-  {
-    `(function(){
-  const el = document.getElementById('ga-init');
-  const id = el && el.getAttribute && el.getAttribute('data-ga-measurement-id');
+  const measurementId = document
+    .getElementById("ga-init")
+    .getAttribute("data-ga-measurement-id");
   window.dataLayer = window.dataLayer || [];
-  function gtag(){ window.dataLayer.push(arguments); }
-  gtag('js', new Date());
-  if (id) gtag('config', id);
-})();`;
+  function gtag() {
+    dataLayer.push(arguments); // eslint-disable-line
   }
+  gtag("js", new Date());
+  gtag("config", measurementId);
 </script>
