@@ -35,7 +35,7 @@ const { pathname } = Astro.url;
         UCSD Casual Golf Club
       </a>
     </div>
-    <MainNav items={menuItems} currentPath={pathname} client:load />
-    <MobileNav items={menuItems} currentPath={pathname} client:load />
+    <MainNav items={menuItems} currentPath={pathname} client:idle />
+    <MobileNav items={menuItems} currentPath={pathname} client:idle />
   </div>
 </header>
