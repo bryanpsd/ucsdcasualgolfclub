@@ -13,9 +13,6 @@ export default defineConfig({
 	site: "https://ucsdcasualgolfclub.com",
 	adapter: netlify(),
 	output: "server",
-	server: {
-		open: true,
-	},
 	integrations: [
 		react(),
 		icon(),
