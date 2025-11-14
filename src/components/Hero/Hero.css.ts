@@ -5,7 +5,6 @@ export const heroWrapper = style([
 	tokens({
 		display: "flex",
 		flexDirection: { "xs-min": "column", "md-min": "row" },
-		alignItems: "center",
 		justifyContent: "center",
 		width: "col-12",
 		height: { "xs-min": "auto", "lg-min": 150 },
@@ -38,7 +37,7 @@ export const heroColLeft = style([
 	tokens({
 		display: "flex",
 		flexDirection: "column",
-		alignItems: "center",
+		alignItems: { "xs-min": "center", "md-min": "center", "lg-min": "center" },
 		justifyContent: "center",
 		width: { "xs-min": "col-12", "md-min": "col-6" },
 		paddingX: { "xs-min": 16, "md-min": 24, "lg-min": 48 },
