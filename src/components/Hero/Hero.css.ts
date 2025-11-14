@@ -15,9 +15,16 @@ export const heroWrapper = style([
 	},
 ]);
 
-export const heroHeadline = style({
-	color: color.brand.white,
-});
+export const heroHeadline = style([
+	tokens({
+	textAlign: { "xs-min": "center", "md-min": "center" },
+	}),
+	{
+
+		color: color.brand.white,
+	},
+]);
+
 
 export const heroBackground = style([
 	tokens({
@@ -37,7 +44,7 @@ export const heroColLeft = style([
 	tokens({
 		display: "flex",
 		flexDirection: "column",
-		alignItems: { "xs-min": "center", "md-min": "center", "lg-min": "center" },
+		alignItems: "center",
 		justifyContent: "center",
 		width: { "xs-min": "col-12", "md-min": "col-6" },
 		paddingX: { "xs-min": 16, "md-min": 24, "lg-min": 48 },

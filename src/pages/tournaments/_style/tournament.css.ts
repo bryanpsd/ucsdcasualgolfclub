@@ -11,7 +11,7 @@ export const tournamentWrapper = style([
 
 export const tournamentLeftCol = style([
 	tokens({
-		width: { "xs-min": "col-12", "md-min": "col-8" },
+		width: { "xs-min": "col-12", "md-min": "col-7", "lg-min": "col-8" },
 		gap: 12,
 		display: "flex",
 		flexDirection: "column",
@@ -26,7 +26,7 @@ export const summary = style([
 
 export const tournamentRightCol = style([
 	tokens({
-		width: { "xs-min": "col-12", "md-min": "col-4" },
+		width: { "xs-min": "col-12", "md-min": "col-5", "lg-min": "col-4" },
 		display: "flex",
 		flexDirection: "column",
 		gap: 12,
