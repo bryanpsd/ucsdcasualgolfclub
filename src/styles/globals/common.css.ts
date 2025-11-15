@@ -20,7 +20,7 @@ export const pageMaxWidth = style([
 
 export const contentPadding = style([
 	tokens({
-		paddingX: { "xs-min": 12, "md-min": 16, "lg-min": 24 },
+		paddingX: { "xs-min": 12, "md-min": 16, "xl-min": 0 },
 	}),
 ]);
 
