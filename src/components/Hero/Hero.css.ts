@@ -5,7 +5,6 @@ export const heroWrapper = style([
 	tokens({
 		display: "flex",
 		flexDirection: { "xs-min": "column", "md-min": "row" },
-		alignItems: "center",
 		justifyContent: "center",
 		width: "col-12",
 		height: { "xs-min": "auto", "lg-min": 150 },
@@ -16,9 +15,16 @@ export const heroWrapper = style([
 	},
 ]);
 
-export const heroHeadline = style({
-	color: color.brand.white,
-});
+export const heroHeadline = style([
+	tokens({
+	textAlign: { "xs-min": "center", "md-min": "center" },
+	}),
+	{
+
+		color: color.brand.white,
+	},
+]);
+
 
 export const heroBackground = style([
 	tokens({
