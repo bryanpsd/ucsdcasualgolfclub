@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 import { color } from "~styles";
 import { contentPadding } from "~styles/globals/common.css";
 
@@ -26,4 +26,14 @@ export const bannerLink = style({
 			textDecoration: "underline",
 		},
 	},
+});
+
+globalStyle(`${bannerWrapper} a`, {
+	color: color.brand.white,
+	textDecoration: "underline",
+});
+
+globalStyle(`${bannerWrapper} a:hover, ${bannerWrapper} a:focus, ${bannerWrapper} a:active, ${bannerWrapper} a:visited`, {
+	color: color.brand.white,
+	textDecoration: "underline",
 });
