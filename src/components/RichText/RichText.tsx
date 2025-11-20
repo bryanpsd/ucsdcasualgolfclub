@@ -174,70 +174,78 @@ const options: Options = {
 				const nameFallback = (fields as unknown as Record<string, unknown>).name as
 					| string
 					| undefined;
-				const label = String(fields.label ?? nameFallback ?? "");
-				const href = fields.ctaLink ? String(fields.ctaLink) : undefined;
-				const typeValues = Array.isArray(fields.type) ? (fields.type as unknown as string[]) : [];
-				const openInNewWindow = Boolean(fields.openInNewWindow);
-				if (!href) return null;
+			const label = String(fields.label ?? nameFallback ?? "");
+			const href = fields.ctaLink ? String(fields.ctaLink) : undefined;
+			const typeValues = Array.isArray(fields.type) ? (fields.type as unknown as string[]) : [];
+			const openInNewWindow = Boolean(fields.openInNewWindow);
+			if (!href) return null;
 
-				const isButton = typeValues.includes("button");
-				const isIcon = typeValues.includes("icon");
-				const isPlainLink = typeValues.includes("link") || (!isButton && !isIcon);
+			const isButton = typeValues.includes("button");
+			const isIcon = typeValues.includes("icon");
+			const isPlainLink = typeValues.includes("link") || (!isButton && !isIcon);
 
-				if (isButton) {
-					return (
-						<Button
-							as="a"
-							href={href}
-							size="small"
-							color="primary"
-							variant="contained"
-							target={openInNewWindow ? "_blank" : undefined}
-							rel={openInNewWindow ? "noopener noreferrer" : undefined}
-						>
-							{label}
-						</Button>
-					);
-				}
-
-				if (isIcon) {
-					const Icon = iconMap[label];
-					return (
-						<Button
-							as="a"
-							href={href}
-							size="small"
-							color="primary"
-							variant="round"
-							target={openInNewWindow ? "_blank" : undefined}
-							rel={openInNewWindow ? "noopener noreferrer" : undefined}
-						>
-							{Icon ? (
-								<>
-									<Icon aria-hidden="true" focusable="false" />
-									<span className="sr-only">{label}</span>
-								</>
-							) : (
-								label
-							)}
-						</Button>
-					);
-				}
-
-				if (isPlainLink) {
-					return (
-						<Link
-							href={href}
-							target={openInNewWindow ? "_blank" : undefined}
-							rel={openInNewWindow ? "noopener noreferrer" : undefined}
-						>
-							{label}
-						</Link>
-					);
-				}
+			if (isButton) {
+				return (
+					<Button
+						as="a"
+						href={href}
+						size="small"
+						color="primary"
+						variant="contained"
+						target={openInNewWindow ? "_blank" : undefined}
+						rel={openInNewWindow ? "noopener noreferrer" : undefined}
+						track={true}
+						trackLabel={label}
+						trackCategory="rich_text_button"
+					>
+						{label}
+					</Button>
+				);
 			}
 
-			if (
+			if (isIcon) {
+				const Icon = iconMap[label];
+				return (
+					<Button
+						as="a"
+						href={href}
+						size="small"
+						color="primary"
+						variant="round"
+						target={openInNewWindow ? "_blank" : undefined}
+						rel={openInNewWindow ? "noopener noreferrer" : undefined}
+						track={true}
+						trackLabel={label}
+						trackCategory="rich_text_icon_button"
+					>
+						{Icon ? (
+							<>
+								<Icon aria-hidden="true" focusable="false" />
+								<span className="sr-only">{label}</span>
+							</>
+						) : (
+							label
+						)}
+					</Button>
+				);
+			}
+
+			if (isPlainLink) {
+				return (
+					<Link
+						href={href}
+						target={openInNewWindow ? "_blank" : undefined}
+						rel={openInNewWindow ? "noopener noreferrer" : undefined}
+						track={true}
+						trackLabel={label}
+						trackCategory="rich_text_link"
+						variant="blue"
+					>
+						{label}
+					</Link>
+				);
+			}
+		}			if (
 				isEntryOf<SeasonRecapFields>(target, "seasonRecap") &&
 				(target as MinimalEntry<SeasonRecapFields>).fields
 			) {
@@ -298,6 +306,9 @@ const options: Options = {
 							variant="contained"
 							target={openInNewWindow ? "_blank" : undefined}
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
+							track={true}
+							trackLabel={label}
+							trackCategory="rich_text_inline_button"
 						>
 							{label}
 						</Button>
@@ -315,6 +326,9 @@ const options: Options = {
 							variant="round"
 							target={openInNewWindow ? "_blank" : undefined}
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
+							track={true}
+							trackLabel={label}
+							trackCategory="rich_text_inline_icon_button"
 						>
 							{Icon ? (
 								<>
@@ -334,6 +348,10 @@ const options: Options = {
 							href={href}
 							target={openInNewWindow ? "_blank" : undefined}
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
+							track={true}
+							trackLabel={label}
+							trackCategory="rich_text_inline_link"
+							variant="blue"
 						>
 							{label}
 						</Link>
@@ -347,7 +365,7 @@ const options: Options = {
 			const uri = (node?.data as { uri?: string } | undefined)?.uri || "";
 			if (uri.startsWith("https://")) {
 				return (
-					<Link target="_blank" rel="noopener noreferrer" href={uri}>
+					<Link variant="blue" target="_blank" rel="noopener noreferrer" href={uri}>
 						{children}
 					</Link>
 				);

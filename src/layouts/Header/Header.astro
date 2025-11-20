@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import logo from "~/assets/brand-logo.png";
 import { server } from "~actions";
+import { Link } from "~/components/Link";
 import { Banner } from "./components/Banner";
 import { MainNav } from "./components/MainNav";
 import { MobileNav } from "./components/MobileNav/MobileNav";
@@ -13,9 +14,12 @@ const banners = await Astro.callAction(server.getHeaderBanners, null);
 const { pathname } = Astro.url;
 ---
 
-<a class={`sr-only ${styles.mainContentJumpLink}`} href="#main-content"
-  >Jump to main content</a
+<a 
+  class={`sr-only ${styles.mainContentJumpLink}`} 
+  href="#main-content"
 >
+  Jump to main content
+</a>
 {
   banners.data && (
     <Banner banner={banners.data} currentPath={pathname} client:load />
@@ -24,7 +28,17 @@ const { pathname } = Astro.url;
 <header class={styles.headerWrapper}>
   <div class={styles.header}>
     <div class={styles.logoWrapper}>
-      <a class={styles.logoLink} href="/">
+      <Link 
+        className={styles.logoLink} 
+        href="/"
+        track={true}
+        trackLabel="Logo - Home"
+        trackCategory="navigation"
+        client:load
+        variant="white"
+        underline="none"
+        size="medium"
+      >
         <Image
           src={logo}
           alt="UCSD Casual Golf Club"
@@ -33,7 +47,7 @@ const { pathname } = Astro.url;
           aria-hidden="true"
         />
         UCSD Casual Golf Club
-      </a>
+      </Link>
     </div>
     <MainNav items={menuItems} currentPath={pathname} client:idle />
     <MobileNav items={menuItems} currentPath={pathname} client:idle />

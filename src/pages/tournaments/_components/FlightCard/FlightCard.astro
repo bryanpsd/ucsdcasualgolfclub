@@ -132,17 +132,29 @@ const tableHeaders = [
         const hasLongDrive = player.results?.[0]?.longDrive !== undefined;
         const hasClosestTo = player.results?.[0]?.closestTo !== undefined;
 
-        const playerNameHtml = `<a class="${styles.flightCardLink}" href="/results?playerName=${encodeURIComponent(player.playerName)}">
-          ${
-            player.guest?.includes("Yes")
-              ? `${player.playerName} (Guest)`
-              : player.playerName || "Unknown"
-          }
-        </a>`;
+        const playerDisplayName = player.guest?.includes("Yes")
+          ? `${player.playerName} (Guest)`
+          : player.playerName || "Unknown";
+
+        const playerNameLink = {
+          value: playerDisplayName,
+          href: `/results?playerName=${encodeURIComponent(player.playerName)}`,
+          isLink: true,
+          linkProps: {
+            track: true,
+            trackLabel: player.playerName,
+            trackCategory: "tournament_results",
+            trackParams: { 
+              course: currentCourse,
+              tournament_date: tournamentDate,
+            },
+            variant: "navy" as const,
+          },
+        };
 
         if (!player.results || player.results.length === 0) {
           return [
-            playerNameHtml,
+            playerNameLink,
             player.handicapIndex !== undefined
               ? String(player.handicapIndex)
               : "NH",
@@ -161,7 +173,7 @@ const tableHeaders = [
             statsForYear?.net === lowestYearlyNetForTournament;
 
           return [
-            playerNameHtml,
+            playerNameLink,
             String(player.results?.[0]?.index ?? "NH"),
             {
               value: String(player.results?.[0]?.gross ?? ""),

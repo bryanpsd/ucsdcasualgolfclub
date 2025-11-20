@@ -1,5 +1,4 @@
 import netlify from "@astrojs/netlify";
-import partytown from "@astrojs/partytown";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
@@ -16,7 +15,6 @@ export default defineConfig({
 	integrations: [
 		react(),
 		icon(),
-		partytown({ config: { forward: ["dataLayer.push"] } }),
 		sitemap(),
 		robotsTxt(),
 	],

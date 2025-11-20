@@ -130,6 +130,9 @@ export const CourseCard = (props: CourseCardProps) => {
 							size="small"
 							variant="contained"
 							href={`/tournaments/${format(date, "yyyy")}/${slug}`}
+							track={true}
+							trackLabel={`Details - ${course}`}
+							trackCategory="course_card"
 						>
 							Details
 						</Button>
@@ -143,6 +146,9 @@ export const CourseCard = (props: CourseCardProps) => {
 							target="_blank"
 							rel="noopener noreferrer"
 							href={results}
+							track={true}
+							trackLabel={`Results PDF - ${course}`}
+							trackCategory="course_card"
 						>
 							<span className={styles.resultsIconWrapper}>
 								<FaFilePdf className={styles.resultsIcon} aria-hidden="true" />

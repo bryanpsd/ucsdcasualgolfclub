@@ -28,6 +28,8 @@ export const BackToTopButton = () => {
 	return (
 		<Button
 			type="button"
+			track
+			trackLabel="Back to Top Button"
 			color="primary"
 			variant="round"
 			className={styles.backToTopButton}

@@ -29,6 +29,7 @@ function getStableUniqueRowKey(result: Result, playerName: string, idx: number) 
 
 import { useId, useState } from "react";
 import { Table } from "~components/Table";
+import { Link } from "~components/Link";
 
 import * as styles from "./TournamentResults.css";
 
@@ -209,13 +210,13 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 													: null,
 												result.longDrive !== null ? result.longDrive : null,
 												tournamentUrl ? (
-													<a
+													<Link
 														key={tournamentUrl || result.date || result.title || Math.random()}
-														className={styles.resultsLink}
 														href={tournamentUrl}
+														variant="navy"
 													>
 														Results
-													</a>
+													</Link>
 												) : (
 													"N/A"
 												),
