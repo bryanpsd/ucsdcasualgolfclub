@@ -4,11 +4,12 @@ import type { MainNavProps } from "../components/MainNav";
 
 const getAvailableSeasons = async () => {
 	const entries = await contentfulCache.cached(
-		async () => contentfulClient.getEntries({
-			content_type: "course",
-			include: 1,
-			limit: 100,
-		}),
+		async () =>
+			contentfulClient.getEntries({
+				content_type: "course",
+				include: 1,
+				limit: 100,
+			}),
 		{ content_type: "course", query: "menu_seasons" },
 		10 * 60 * 1000, // 10 minutes cache
 	);
@@ -17,8 +18,8 @@ const getAvailableSeasons = async () => {
 		.flatMap((item) =>
 			Array.isArray(item.fields.tournaments)
 				? item.fields.tournaments.filter(
-					(tournament) => typeof tournament === "object" && tournament !== null,
-				)
+						(tournament) => typeof tournament === "object" && tournament !== null,
+					)
 				: [],
 		)
 		.filter((tournament) => tournament !== undefined && tournament !== null);

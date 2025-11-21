@@ -9,8 +9,6 @@ export const getResults = defineAction({
 			async () =>
 				contentfulClient.withoutUnresolvableLinks.getEntries<TypeResultsSkeleton>({
 					content_type: "results",
-					select:
-						"fields.title,fields.course,fields.date,fields.flight,fields.gross,fields.net,fields.putts",
 					limit: 1000,
 				}),
 			{ content_type: "results" },

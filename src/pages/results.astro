@@ -9,55 +9,23 @@ import { TournamentResults } from "~components/TournamentResults";
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
 import { contentfulCache } from "~utils/contentfulCache";
+import { transformPlayerResults } from "~utils/contentfulTransformers";
 
 import * as styles from "~styles/globals/common.css";
 import type { TypeLeadersSkeleton } from "~types/contentful";
 
 const entries = await contentfulCache.cached(
-	async () => contentfulClient.getEntries<TypeLeadersSkeleton>({
-		content_type: "leaders",
-		include: 2,
-		limit: 1000,
-	}),
+	async () =>
+		contentfulClient.getEntries<TypeLeadersSkeleton>({
+			content_type: "leaders",
+			include: 2,
+			limit: 1000,
+		}),
 	{ content_type: "leaders", page: "results" },
 	10 * 60 * 1000, // 10 minutes cache
 );
 
-const players = entries.items
-	.map((entry) => ({
-		playerName: entry.fields.playerName || "Unknown Player",
-		results:
-			entry.fields.results?.map((result) => ({
-				title: "fields" in result ? (result.fields?.title ?? null) : null,
-				date:
-					"fields" in result && result.fields?.date
-						? Number.isNaN(Date.parse(result.fields.date))
-							? null
-							: new Date(result.fields.date).toISOString()
-						: null,
-				gross: "fields" in result ? (result.fields?.gross ?? null) : null,
-				flight: "fields" in result ? (result.fields?.flight ?? null) : null,
-				courseHandicap: "fields" in result ? (result.fields?.courseHandicap ?? null) : null,
-				net: "fields" in result ? (result.fields?.net ?? null) : null,
-				putts: "fields" in result ? (result.fields?.putts ?? null) : null,
-				closestTo: "fields" in result ? (result.fields?.closestTo ?? null) : null,
-				longDrive: "fields" in result ? (result.fields?.longDrive ?? null) : null,
-				course:
-					"fields" in result && result.fields?.course
-						? {
-								name:
-									"fields" in result.fields.course
-										? result.fields.course.fields?.courseName || "Unknown Course"
-										: "Unknown Course",
-								slug:
-									"fields" in result.fields.course
-										? result.fields.course.fields?.slug || "unknown-course"
-										: "unknown-course",
-							}
-						: null,
-			})) ?? [],
-	}))
-	.filter((player) => player.playerName !== "Unknown Player"); // <-- filter out
+const players = transformPlayerResults(entries.items);
 
 const url = new URL(Astro.request.url);
 const selectedPlayer = url.searchParams.get("playerName") || "";

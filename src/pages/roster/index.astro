@@ -9,34 +9,20 @@ import { Table } from "~components/Table";
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
 import { contentfulCache } from "~utils/contentfulCache";
+import { transformRosterPlayers } from "~utils/contentfulTransformers";
 import * as commonStyles from "~styles/globals/common.css";
 import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster";
 
 const entries = await contentfulCache.cached(
-	async () => contentfulClient.getEntries<TypeRosterSkeleton>({
-		content_type: "roster",
-		include: 2,
-	}),
+	async () =>
+		contentfulClient.getEntries<TypeRosterSkeleton>({
+			content_type: "roster",
+			include: 2,
+		}),
 	{ content_type: "roster", page: "index" },
 );
 
-const currentRosterPlayers = entries.items
-	.filter((item) => item.fields.title?.includes("Current"))
-	.flatMap((item) =>
-		item.fields.players?.map((player) => {
-			if (player && "fields" in player) {
-				return {
-					playerName: player.fields.playerName,
-					handicapIndex: player.fields.handicapIndex,
-					guest: player.fields.guest,
-				};
-			}
-			return null;
-		}),
-	)
-	.filter((player) => player !== null)
-	.filter((player) => !player?.guest?.includes("Yes"))
-	.sort((a, b) => (a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity));
+const currentRosterPlayers = transformRosterPlayers(entries.items);
 
 const lastUpdated = entries.items
 	.map((item) => new Date(item.sys.updatedAt))

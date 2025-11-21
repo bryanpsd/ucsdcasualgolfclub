@@ -9,60 +9,24 @@ import { Hero } from "~components/Hero";
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
 import { contentfulCache } from "~utils/contentfulCache";
+import { filterUpcomingTournaments } from "~utils/contentfulTransformers";
 import * as styles from "~styles/globals/common.css";
 import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse";
 
 const entries = await contentfulCache.cached(
-	async () => contentfulClient.getEntries<TypeCourseSkeleton>({
-		content_type: "course",
-		include: 1,
-		limit: 100,
-	}),
+	async () =>
+		contentfulClient.getEntries<TypeCourseSkeleton>({
+			content_type: "course",
+			include: 1,
+			limit: 100,
+		}),
 	{ content_type: "course", page: "tournaments" },
 	10 * 60 * 1000, // 10 minutes cache
 );
 
 const cutoffDate = new Date("2025-12-05");
 
-const getTournaments = entries.items
-	.flatMap((item) => {
-		return item.fields.tournaments?.map((tournament) => {
-			if (
-				tournament &&
-				"fields" in tournament &&
-				tournament.fields.date &&
-				new Date(tournament.fields.date) > cutoffDate
-			) {
-				return {
-					...item.fields,
-					coursePar: item.fields.coursePar,
-					tournaments: [
-						{
-							prices: tournament.fields.prices,
-							date: tournament.fields.date,
-							players: tournament.fields.players,
-							inclusions: tournament.fields.inclusions,
-							tees: tournament.fields.tees,
-							type: tournament.fields.type,
-							tournamentNotes: tournament.fields.tournamentNotes,
-							results:
-								tournament.fields.results && "fields" in tournament.fields.results
-									? (tournament.fields.results.fields.file?.url ?? null)
-									: null,
-							clubChampionship: tournament.fields.clubChampionship ?? false,
-						},
-					],
-				};
-			}
-			return null;
-		});
-	})
-	.filter(Boolean)
-	.sort(
-		(a, b) =>
-			new Date(a?.tournaments?.[0]?.date ?? 0).getTime() -
-			new Date(b?.tournaments?.[0]?.date ?? 0).getTime(),
-	);
+const getTournaments = filterUpcomingTournaments(entries.items, cutoffDate);
 
 // Display year should be one ahead of the cutoff date's year
 const getCurrentYear = cutoffDate.getFullYear() + 1;

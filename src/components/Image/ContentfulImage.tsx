@@ -1,4 +1,5 @@
 import type { ComponentPropsWithRef, CSSProperties } from "react";
+import { getContentfulProxyUrl, isContentfulImage } from "~/utils/contentfulTransformers";
 
 export interface ContentfulImageProps {
 	id?: string;
@@ -19,17 +20,6 @@ export interface ContentfulImageProps {
 	/** Props that will be passed to the underlying "img" element. */
 	imgProps?: Omit<ComponentPropsWithRef<"img">, "src" | "alt" | "width" | "height" | "style">;
 }
-
-const isContentfulSrc = (src = "") => src.startsWith("//images.ctfassets.net");
-
-const getProxySrc = (src = "", imgFormat = "") => {
-	if (!src) {
-		return "";
-	}
-
-	const format = imgFormat ? imgFormat : src.split(".").pop();
-	return `/api/contentful-image?url=${encodeURIComponent(`${src}?fm=${format}`)}`;
-};
 
 /**
  * Renders a "picture" element with optimizations for images from Contentful.
@@ -52,8 +42,8 @@ export const ContentfulImage = ({
 	objectPosition,
 	imgProps = {},
 }: ContentfulImageProps) => {
-	const isContentfulImage = isContentfulSrc(src);
-	const defaultImgSrc = isContentfulImage ? getProxySrc(src) : src;
+	const isContentful = isContentfulImage(src);
+	const defaultImgSrc = isContentful ? getContentfulProxyUrl(src) : src;
 
 	// Compose the style for the <img> element
 	const imgStyle: CSSProperties = {
@@ -65,10 +55,10 @@ export const ContentfulImage = ({
 
 	return (
 		<picture id={id} className={className} style={style}>
-			{isContentfulImage && (
+			{isContentful && (
 				<>
-					<source srcSet={getProxySrc(src, "avif")} type="image/avif" />
-					<source srcSet={getProxySrc(src, "webp")} type="image/webp" />
+					<source srcSet={getContentfulProxyUrl(src, "avif")} type="image/avif" />
+					<source srcSet={getContentfulProxyUrl(src, "webp")} type="image/webp" />
 				</>
 			)}
 			<img
