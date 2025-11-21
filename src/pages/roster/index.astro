@@ -20,6 +20,7 @@ const entries = await contentfulCache.cached(
 			include: 2,
 		}),
 	{ content_type: "roster", page: "index" },
+	10 * 60 * 1000, // 10 minutes cache
 );
 
 const currentRosterPlayers = transformRosterPlayers(entries.items);

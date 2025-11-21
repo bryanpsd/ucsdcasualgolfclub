@@ -15,29 +15,41 @@ import type { TypeTournamentSkeleton } from "~types/contentful/TypeTournament";
 
 import * as styles from "./HomePage.css";
 
-// Fetch simplePage entries
-const entries = await contentfulCache.cached(
-	async () =>
-		contentfulClient.getEntries<TypeSimplePageSkeleton>({
-			content_type: "simplePage",
-			"fields.title": "Home",
-			limit: 1,
-		}),
-	{ content_type: "simplePage", title: "Home" },
-	15 * 60 * 1000, // 15 minutes cache for static home content
-);
-
-// Fetch course and tournament data
-const courseEntries = await contentfulCache.cached(
-	async () =>
-		contentfulClient.getEntries<TypeCourseSkeleton>({
-			content_type: "course",
-			include: 2,
-			limit: 100,
-		}),
-	{ content_type: "course", page: "home" },
-	10 * 60 * 1000, // 10 minutes cache
-);
+// Fetch all data in parallel for faster initial load
+const [entries, courseEntries, leaders] = await Promise.all([
+	// Fetch simplePage entries
+	contentfulCache.cached(
+		async () =>
+			contentfulClient.getEntries<TypeSimplePageSkeleton>({
+				content_type: "simplePage",
+				"fields.title": "Home",
+				limit: 1,
+			}),
+		{ content_type: "simplePage", title: "Home" },
+		15 * 60 * 1000, // 15 minutes cache for static home content
+	),
+	// Fetch course and tournament data
+	contentfulCache.cached(
+		async () =>
+			contentfulClient.getEntries<TypeCourseSkeleton>({
+				content_type: "course",
+				include: 2,
+				limit: 100,
+			}),
+		{ content_type: "course", page: "home" },
+		10 * 60 * 1000, // 10 minutes cache
+	),
+	// Fetch leaders data
+	contentfulCache.cached(
+		async () =>
+			contentfulClient.getEntries<TypeLeadersSkeleton>({
+				content_type: "leaders",
+				limit: 300,
+			}),
+		{ content_type: "leaders", page: "home" },
+		10 * 60 * 1000, // 10 minutes cache
+	),
+]);
 
 const today = new Date();
 today.setHours(0, 0, 0, 0); // Set time to 00:00:00
@@ -69,17 +81,6 @@ const courseName =
 const courseSlug = courseEntries.items.find((course) =>
 	course.fields.tournaments?.some((tournament) => tournament === upcomingTournament),
 )?.fields.slug;
-
-// Fetch leaders once and share with all leaderboards
-const leaders = await contentfulCache.cached(
-	async () =>
-		contentfulClient.getEntries<TypeLeadersSkeleton>({
-			content_type: "leaders",
-			limit: 300,
-		}),
-	{ content_type: "leaders", page: "home" },
-	10 * 60 * 1000, // 10 minutes cache
-);
 
 const leaderItems = leaders.items;
 ---

@@ -9,6 +9,7 @@ import { CourseCard } from "~components/Course/CourseCard";
 import { Hero } from "~components/Hero";
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
+import { contentfulCache } from "~utils/contentfulCache";
 import * as styles from "~styles/globals/common.css";
 import type { TypeCourseSkeleton } from "~types/contentful/TypeCourse";
 import SeasonRecap from "./_components/SeasonRecap.astro";
@@ -21,9 +22,15 @@ export function getStaticPaths() {
 	return years.map((year) => ({ params: { slug: year.toString() } }));
 }
 
-const entries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-	content_type: "course",
-});
+const entries = await contentfulCache.cached(
+	async () => contentfulClient.getEntries<TypeCourseSkeleton>({
+		content_type: "course",
+		include: 3,
+		limit: 100,
+	}),
+	{ content_type: "course", page: "seasons" },
+	15 * 60 * 1000, // 15 minutes cache for historical seasons
+);
 
 const { slug } = Astro.params;
 

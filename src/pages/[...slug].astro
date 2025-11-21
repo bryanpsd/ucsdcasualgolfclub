@@ -8,6 +8,7 @@ import { RichText } from "~components/RichText";
 
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
+import { contentfulCache } from "~utils/contentfulCache";
 import * as styles from "~styles/globals/common.css";
 import type { TypeSimplePageSkeleton } from "~types/contentful";
 
@@ -15,11 +16,15 @@ import type { TypeSimplePageSkeleton } from "~types/contentful";
 const { slug = "" } = Astro.params;
 
 // Fetch the entry matching the slug
-const entry = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-	content_type: "simplePage",
-	"fields.slug": slug,
-	limit: 1,
-});
+const entry = await contentfulCache.cached(
+	async () => contentfulClient.getEntries<TypeSimplePageSkeleton>({
+		content_type: "simplePage",
+		"fields.slug": slug,
+		limit: 1,
+	}),
+	{ content_type: "simplePage", slug },
+	15 * 60 * 1000, // 15 minutes cache for simple pages
+);
 
 // Handle cases where no entry is found
 if (!slug || !entry.items || entry.items.length === 0) {
