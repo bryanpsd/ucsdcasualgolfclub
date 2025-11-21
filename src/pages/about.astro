@@ -8,13 +8,19 @@ import { RichText } from "~components/RichText";
 
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
+import { contentfulCache } from "~utils/contentfulCache";
 import * as styles from "~styles/globals/common.css";
 import type { TypeSimplePageSkeleton } from "~types/contentful";
 
-const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-	content_type: "simplePage",
-	"fields.slug": "about",
-});
+const entries = await contentfulCache.cached(
+  async () => contentfulClient.getEntries<TypeSimplePageSkeleton>({
+    content_type: "simplePage",
+    "fields.slug": "about",
+    limit: 1,
+  }),
+  { content_type: "simplePage", slug: "about" },
+  15 * 60 * 1000, // 15 minutes cache for static content
+);
 ---
 
 <Layout

@@ -8,14 +8,20 @@ import { TournamentResults } from "~components/TournamentResults";
 
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
+import { contentfulCache } from "~utils/contentfulCache";
 
 import * as styles from "~styles/globals/common.css";
 import type { TypeLeadersSkeleton } from "~types/contentful";
 
-const entries = await contentfulClient.getEntries<TypeLeadersSkeleton>({
-	content_type: "leaders",
-	include: 3,
-});
+const entries = await contentfulCache.cached(
+	async () => contentfulClient.getEntries<TypeLeadersSkeleton>({
+		content_type: "leaders",
+		include: 2,
+		limit: 1000,
+	}),
+	{ content_type: "leaders", page: "results" },
+	10 * 60 * 1000, // 10 minutes cache
+);
 
 const players = entries.items
 	.map((entry) => ({

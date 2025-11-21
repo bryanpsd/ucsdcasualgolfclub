@@ -31,7 +31,8 @@ export const getCoursePage = defineAction({
 			{
 				content_type: "course",
 				"fields.slug": slug.toLowerCase(),
-				include: 10,
+				include: 3, // Reduced from 10 to 3 for better performance
+				limit: 1,
 			},
 		);
 

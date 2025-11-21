@@ -8,12 +8,17 @@ import { Table } from "~components/Table";
 
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
+import { contentfulCache } from "~utils/contentfulCache";
 import * as commonStyles from "~styles/globals/common.css";
 import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster";
 
-const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
-	content_type: "roster",
-});
+const entries = await contentfulCache.cached(
+	async () => contentfulClient.getEntries<TypeRosterSkeleton>({
+		content_type: "roster",
+		include: 2,
+	}),
+	{ content_type: "roster", page: "index" },
+);
 
 const currentRosterPlayers = entries.items
 	.filter((item) => item.fields.title?.includes("Current"))
