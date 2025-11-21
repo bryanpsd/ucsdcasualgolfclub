@@ -8,55 +8,88 @@ const year = currentDate.getFullYear();
 ---
 
 <footer class={styles.footer}>
-  <div class={styles.footerContent}>
-    <nav>
-      <ul class={styles.footerList}>
-        <li class={styles.footerListItem}>
-          <Link className={styles.footerLink} href="/tournaments" track={true} trackCategory="footer" client:load variant="navy">Tournaments</Link>
-        </li>
+	<div class={styles.footerContent}>
+		<nav>
+			<ul class={styles.footerList}>
+				<li class={styles.footerListItem}>
+					<Link
+						className={styles.footerLink}
+						href="/tournaments"
+						track={true}
+						trackCategory="footer"
+						client:load
+						variant="navy"
+					>
+						Tournaments
+					</Link>
+				</li>
+				<li class={styles.footerListItem}>
+					<Link
+						className={styles.footerLink}
+						href="/roster"
+						track={true}
+						trackCategory="footer"
+						client:load
+						variant="navy"
+					>
+						Roster
+					</Link>
+				</li>
+				<li class={styles.footerListItem}>
+					<Link
+						className={styles.footerLink}
+						href="/about"
+						track={true}
+						trackCategory="footer"
+						client:load
+						variant="navy"
+					>
+						About
+					</Link>
+				</li>
+				<li class={styles.footerListItem}>
+					<Link
+						className={styles.footerLink}
+						href="/contact"
+						track={true}
+						trackCategory="footer"
+						client:load
+						variant="navy"
+					>
+						Contact
+					</Link>
+				</li>
+				<li class={styles.footerListItem}>
+					<Link
+						className={styles.footerLink}
+						href="https://membership.scga.org/start/join/?cid=885"
+						target="_blank"
+						track={true}
+						trackCategory="footer"
+						trackLabel="Join the Club"
+						client:load
+						variant="navy"
+					>
+						Join the Club
+					</Link>
+				</li>
+				<li class={styles.footerListItem}>
+					<Link
+						className={styles.footerLink}
+						href="https://www.instagram.com/ucsdcasualgolfclub/"
+						target="_blank"
+						track={true}
+						trackCategory="footer"
+						trackLabel="Instagram"
+						client:load
+						variant="navy"
+					>
+						Instagram
+					</Link>
+				</li>
+			</ul>
+		</nav>
 
-        <li class={styles.footerListItem}>
-          <Link className={styles.footerLink} href="/roster" track={true} trackCategory="footer" client:load variant="navy">Roster</Link>
-        </li>
-        <li class={styles.footerListItem}>
-          <Link className={styles.footerLink} href="/about" track={true} trackCategory="footer" client:load variant="navy">About</Link>
-        </li>
-        <li class={styles.footerListItem}>
-          <Link className={styles.footerLink} href="/contact" track={true} trackCategory="footer" client:load variant="navy">Contact</Link>
-        </li>
-        <li class={styles.footerListItem}>
-          <Link
-            className={styles.footerLink}
-            href="https://membership.scga.org/start/join/?cid=885"
-            target="_blank"
-            track={true}
-            trackCategory="footer"
-            trackLabel="Join the Club"
-            client:load
-            variant="navy"
-          >
-            Join the Club
-          </Link>
-        </li>
-        <li class={styles.footerListItem}>
-          <Link
-            className={styles.footerLink}
-            href="https://www.instagram.com/ucsdcasualgolfclub/"
-            target="_blank"
-            track={true}
-            trackCategory="footer"
-            trackLabel="Instagram"
-            client:load
-            variant="navy"
-          >
-            Instagram
-          </Link>
-        </li>
-      </ul>
-    </nav>
-
-    <Typography className={styles.footerCopyright}
-      >&copy;{year} UCSD Casual Golf Club</Typography
-    >
-  </div>
+		<Typography className={styles.footerCopyright}>&copy;{year} UCSD Casual Golf Club</Typography>
+	</div>
 </footer>

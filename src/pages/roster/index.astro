@@ -12,74 +12,73 @@ import * as commonStyles from "~styles/globals/common.css";
 import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster";
 
 const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
-    content_type: "roster",
+	content_type: "roster",
 });
 
 const currentRosterPlayers = entries.items
-    .filter((item) => item.fields.title?.includes("Current"))
-    .flatMap((item) =>
-        item.fields.players?.map((player) => {
-            if (player && "fields" in player) {
-                return {
-                    playerName: player.fields.playerName,
-                    handicapIndex: player.fields.handicapIndex,
-                    guest: player.fields.guest,
-                };
-            }
-            return null;
-        }),
-    )
-    .filter((player) => player !== null)
-    .filter((player) => !player?.guest?.includes("Yes"))
-    .sort(
-        (a, b) =>
-            (a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity),
-    );
+	.filter((item) => item.fields.title?.includes("Current"))
+	.flatMap((item) =>
+		item.fields.players?.map((player) => {
+			if (player && "fields" in player) {
+				return {
+					playerName: player.fields.playerName,
+					handicapIndex: player.fields.handicapIndex,
+					guest: player.fields.guest,
+				};
+			}
+			return null;
+		}),
+	)
+	.filter((player) => player !== null)
+	.filter((player) => !player?.guest?.includes("Yes"))
+	.sort((a, b) => (a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity));
 
 const lastUpdated = entries.items
-    .map((item) => new Date(item.sys.updatedAt))
-    .sort((a, b) => b.getTime() - a.getTime())[0]
-    ?.toLocaleDateString("en-US", {
-        year: "2-digit",
-        month: "2-digit",
-        day: "2-digit",
-    });
+	.map((item) => new Date(item.sys.updatedAt))
+	.sort((a, b) => b.getTime() - a.getTime())[0]
+	?.toLocaleDateString("en-US", {
+		year: "2-digit",
+		month: "2-digit",
+		day: "2-digit",
+	});
 
 // Create table data with serializable link configuration
 const tableData = currentRosterPlayers.map((player) => [
-    {
-        value: player?.playerName || "Unknown",
-        href: `/results?playerName=${encodeURIComponent(player?.playerName || "")}`,
-        isLink: true,
-        linkProps: {
-            track: true,
-            trackLabel: player?.playerName || "Unknown",
-            trackCategory: "roster",
-            trackParams: { player_handicap: player?.handicapIndex ?? 0 },
-            variant: "navy" as const,
-        },
-    },
-    player?.handicapIndex === undefined
-        ? "NH"
-        : String(player.handicapIndex),
+	{
+		value: player?.playerName || "Unknown",
+		href: `/results?playerName=${encodeURIComponent(player?.playerName || "")}`,
+		isLink: true,
+		linkProps: {
+			track: true,
+			trackLabel: player?.playerName || "Unknown",
+			trackCategory: "roster",
+			trackParams: { player_handicap: player?.handicapIndex ?? 0 },
+			variant: "navy" as const,
+		},
+	},
+	player?.handicapIndex === undefined ? "NH" : String(player.handicapIndex),
 ]);
 ---
 
 <Layout
-    title="Club Roster | UCSD Casual Golf Club Members List"
-    description="Meet the members of the UCSD Casual Golf Club. View our roster and connect with fellow San Diego golf enthusiasts."
+	title="Club Roster | UCSD Casual Golf Club Members List"
+	description="Meet the members of the UCSD Casual Golf Club. View our roster and connect with fellow San Diego golf enthusiasts."
 >
-    <Hero title="UCSD Casual Golf Club Roster" />
-    <div class={commonStyles.subPageWrapper}>
-        <div style="overflow-x: auto;">
-            <Table
-                client:load
-                thead={["Player", `Index (as of: ${lastUpdated ?? "Unknown"})`]}
-                tbody={tableData}
-                track={true}
-                trackLabel="Roster Table"
-                trackCategory="roster"
-            />
-        </div>
-    </div>
+	<Hero title="UCSD Casual Golf Club Roster" />
+	<div class={commonStyles.subPageWrapper}>
+		<div style="overflow-x: auto;">
+			<Table
+				client:load
+				thead={[
+					"Player",
+					`Index (as of: ${lastUpdated ?? "Unknown"}
+				)`,
+				]}
+				tbody={tableData}
+				track={true}
+				trackLabel="Roster Table"
+				trackCategory="roster"
+			/>
+		</div>
+	</div>
 </Layout>

@@ -135,11 +135,11 @@ async function processTournament(tournament, courseName, course) {
 				console.log(`Switching to Flight: ${currentFlight}`);
 			}
 
-			const index = row.Index ? parseFloat(row.Index) : null;
-			const gross = row.Gross ? parseFloat(row.Gross) : null;
-			const courseHandicap = row["Crs Hcp"] ? parseFloat(row["Crs Hcp"]) : null;
-			const net = row.Net ? parseFloat(row.Net) : null;
-			const putts = row.Putts ? parseInt(row.Putts, 10) : null;
+			const index = row.Index ? Number.parseFloat(row.Index) : null;
+			const gross = row.Gross ? Number.parseFloat(row.Gross) : null;
+			const courseHandicap = row["Crs Hcp"] ? Number.parseFloat(row["Crs Hcp"]) : null;
+			const net = row.Net ? Number.parseFloat(row.Net) : null;
+			const putts = row.Putts ? Number.parseInt(row.Putts, 10) : null;
 
 			// Convert closestTo to an array and handle "Closest To" text
 			const closestToRaw = row["Closest To"] ? String(row["Closest To"]).trim() : null;

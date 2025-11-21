@@ -75,7 +75,11 @@ const textBlockSectionOptions: Options = {
 		[INLINES.HYPERLINK]: (node, children) => {
 			const isJumpLink = node.data.uri.startsWith("#");
 			return (
-				<Link className={styles.link} href={node.data.uri} jumpLink={isJumpLink}>
+				<Link
+					className={styles.link}
+					href={node.data.uri}
+					variant={isJumpLink ? "navy" : "default"}
+				>
 					{children}
 				</Link>
 			);

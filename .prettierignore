@@ -1,0 +1,13 @@
+# Biome handles these files
+**/*.ts
+**/*.tsx
+**/*.js
+**/*.jsx
+**/*.json
+**/*.css.ts
+*.config.{js,ts,mjs}
+
+# Dependencies and build output
+node_modules/
+dist/
+.astro/

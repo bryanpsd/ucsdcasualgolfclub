@@ -9,9 +9,13 @@
 		"check": "astro check",
 		"preview": "astro preview",
 		"astro": "astro",
-		"format": "pnpm exec -- biome format --write .",
-		"lint": "pnpm exec -- biome check .",
-		"lint:fix": "pnpm exec -- biome format --write . && pnpm exec -- biome check .",
+		"format": "pnpm format:prettier && pnpm format:biome",
+		"format:biome": "biome format --write .",
+		"format:prettier": "prettier --write \"**/*.astro\"",
+		"lint": "pnpm lint:biome && pnpm lint:eslint",
+		"lint:biome": "biome lint .",
+		"lint:eslint": "eslint \"src/**/*.astro\"",
+		"lint:fix": "pnpm lint:biome --write && pnpm lint:eslint --fix",
 		"cf-export": "contentful space export --config src/services/contentful/export-config.json --management-token $CONTENTFUL_DELIVERY_TOKEN --space-id $CONTENTFUL_SPACE_ID",
 		"cf-generate-types": "cf-content-types-generator src/services/contentful/export.json --v10 --typeguard --out src/types/contentful",
 		"preinstall": "npx only-allow pnpm"
@@ -19,7 +23,6 @@
 	"dependencies": {
 		"@astrojs/check": "^0.9.5",
 		"@astrojs/netlify": "^6.6.0",
-		"@astrojs/partytown": "^2.1.4",
 		"@astrojs/react": "^4.4.2",
 		"@astrojs/sitemap": "^3.6.0",
 		"@contentful/rich-text-html-renderer": "^17.0.0",
@@ -54,11 +57,17 @@
 		"xlsx": "^0.18.5"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.3.0",
+		"@biomejs/biome": "^2.3.7",
 		"@svgr/plugin-svgo": "^8.1.0",
+		"@typescript-eslint/eslint-plugin": "^8.47.0",
+		"@typescript-eslint/parser": "^8.47.0",
 		"@vanilla-extract/vite-plugin": "^3.9.5",
 		"axe-core": "^4.10.3",
 		"cf-content-types-generator": "^2.15.5",
+		"eslint": "^9.39.1",
+		"eslint-plugin-astro": "^1.5.0",
+		"prettier": "^3.6.2",
+		"prettier-plugin-astro": "^0.14.1",
 		"typescript": "^5.8.3",
 		"vite-plugin-svgr": "^4.3.0"
 	}

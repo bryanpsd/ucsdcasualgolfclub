@@ -12,12 +12,7 @@ export default defineConfig({
 	site: "https://ucsdcasualgolfclub.com",
 	adapter: netlify(),
 	output: "server",
-	integrations: [
-		react(),
-		icon(),
-		sitemap(),
-		robotsTxt(),
-	],
+	integrations: [react(), icon(), sitemap(), robotsTxt()],
 	vite: {
 		plugins: [viteTsconfigPaths(), vanillaExtractPlugin(), svgr()],
 		assetsInclude: ["**/*.ttf"], // Ensure .ttf files are included as assets

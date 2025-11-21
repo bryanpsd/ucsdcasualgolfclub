@@ -33,7 +33,10 @@ globalStyle(`${bannerWrapper} a`, {
 	textDecoration: "underline",
 });
 
-globalStyle(`${bannerWrapper} a:hover, ${bannerWrapper} a:focus, ${bannerWrapper} a:active, ${bannerWrapper} a:visited`, {
-	color: color.brand.white,
-	textDecoration: "underline",
-});
+globalStyle(
+	`${bannerWrapper} a:hover, ${bannerWrapper} a:focus, ${bannerWrapper} a:active, ${bannerWrapper} a:visited`,
+	{
+		color: color.brand.white,
+		textDecoration: "underline",
+	},
+);

@@ -8,26 +8,17 @@ const gtagSrc = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
 ---
 
 <script is:inline async src={gtagSrc}></script>
-<script
-  is:inline
-  data-ga-measurement-id={measurementId}
-  data-ga-debug={String(debug)}
-  id="ga-init"
->
-  const measurementId = document
-    .getElementById("ga-init")
-    .getAttribute("data-ga-measurement-id");
-  const debugModeAttr = document
-    .getElementById("ga-init")
-    .getAttribute("data-ga-debug");
-  const debugMode = debugModeAttr === "true";
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments); // eslint-disable-line
-  }
-  // Expose gtag to window so it's accessible from other scripts
-  window.gtag = gtag;
-  gtag("js", new Date());
-  // Pass GA4 debug_mode to enable DebugView when desired
-  gtag("config", measurementId, { debug_mode: debugMode });
+<script is:inline data-ga-measurement-id={measurementId} data-ga-debug={String(debug)} id="ga-init">
+	const measurementId = document.getElementById("ga-init").getAttribute("data-ga-measurement-id");
+	const debugModeAttr = document.getElementById("ga-init").getAttribute("data-ga-debug");
+	const debugMode = debugModeAttr === "true";
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	// Expose gtag to window so it's accessible from other scripts
+	window.gtag = gtag;
+	gtag("js", new Date());
+	// Pass GA4 debug_mode to enable DebugView when desired
+	gtag("config", measurementId, { debug_mode: debugMode });
 </script>

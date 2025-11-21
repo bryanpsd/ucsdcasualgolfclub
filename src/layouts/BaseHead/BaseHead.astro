@@ -1,34 +1,29 @@
 ---
-/**
- * This is the base Layouts that all other layouts should be built from
- * It's purpose is to manage global layout props (i.e. page title), global data providers, as well
- * as global style imports.
- */
 import { GoogleAnalytics } from "~layouts/GoogleAnalytics";
 export interface Props {
-    title: string;
-    description?: string;
+	title: string;
+	description?: string;
 }
 
 const canonicalURL = Astro.url.href;
 
 const schema = {
-    "@context": "https://schema.org",
-    "@type": "SportsTeam",
-    name: "UCSD Casual Golf Club",
-    sport: "Golf",
-    url: "https://ucsdcasualgolfclub.com",
-    logo: "https://ucsdcasualgolfclub.com/ucsd-icon.png",
-    memberOf: {
-        "@type": "SportsOrganization",
-        name: "University of California, San Diego",
-    },
-    address: {
-        "@type": "PostalAddress",
-        addressLocality: "San Diego",
-        addressRegion: "CA",
-        addressCountry: "US",
-    },
+	"@context": "https://schema.org",
+	"@type": "SportsTeam",
+	name: "UCSD Casual Golf Club",
+	sport: "Golf",
+	url: "https://ucsdcasualgolfclub.com",
+	logo: "https://ucsdcasualgolfclub.com/ucsd-icon.png",
+	memberOf: {
+		"@type": "SportsOrganization",
+		name: "University of California, San Diego",
+	},
+	address: {
+		"@type": "PostalAddress",
+		addressLocality: "San Diego",
+		addressRegion: "CA",
+		addressCountry: "US",
+	},
 };
 
 import { ClientRouter } from "astro:transitions";
@@ -37,83 +32,56 @@ const { title = "UCSD Casual Golf Club", description = "" } = Astro.props;
 ---
 
 <head>
-    <meta charset="UTF-8" />
-    <title>{title}</title>
-    <meta name="description" content={description || "UCSD Casual Golf Club"} />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="theme-color" content="#002855" />
-    <meta name="generator" content={Astro.generator} />
-    <link rel="canonical" href={canonicalURL} />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+	<meta charset="UTF-8" />
+	<title>{title}</title>
+	<meta name="description" content={description || "UCSD Casual Golf Club"} />
+	<meta name="viewport" content="width=device-width" />
+	<meta name="theme-color" content="#002855" />
+	<meta name="generator" content={Astro.generator} />
+	<link rel="canonical" href={canonicalURL} />
+	<link rel="sitemap" href="/sitemap-index.xml" />
 
-    <link rel="preconnect" href="https://cdn.contentful.com" crossorigin />
+	<link rel="preconnect" href="https://cdn.contentful.com" crossorigin />
 
-    {/* Google Fonts: Preconnect & Preload */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-    />
+	{/* Google Fonts: Preconnect & Preload */}
+	<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+	/>
 
-    {/* Icons & Manifest */}
-    <link rel="icon" type="image/png" href="/ucsd-icon.png" sizes="256x256" />
-    <link
-        rel="icon"
-        type="image/png"
-        href="/ucsd-icon-96x96.png"
-        sizes="96x96"
-    />
-    <link rel="icon" type="image/svg+xml" href="/ucsd-icon.svg" />
-    <link rel="shortcut icon" href="/ucsd-icon.png" />
-    <link
-        rel="apple-touch-icon"
-        sizes="180x180"
-        href="/ucsd-icon-512x512.png"
-    />
-    <link
-        rel="apple-touch-icon"
-        sizes="192x192"
-        href="/ucsd-icon-192x192.png"
-    />
-    <link
-        rel="apple-touch-icon"
-        sizes="512x512"
-        href="/ucsd-icon-512x512.png"
-    />
-    <link rel="manifest" href="/site.webmanifest" />
+	{/* Icons & Manifest */}
+	<link rel="icon" type="image/png" href="/ucsd-icon.png" sizes="256x256" />
+	<link rel="icon" type="image/png" href="/ucsd-icon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/svg+xml" href="/ucsd-icon.svg" />
+	<link rel="shortcut icon" href="/ucsd-icon.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/ucsd-icon-512x512.png" />
+	<link rel="apple-touch-icon" sizes="192x192" href="/ucsd-icon-192x192.png" />
+	<link rel="apple-touch-icon" sizes="512x512" href="/ucsd-icon-512x512.png" />
+	<link rel="manifest" href="/site.webmanifest" />
 
-    {/* Robots & SEO */}
-    <meta
-        name="robots"
-        content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
-    />
+	{/* Robots & SEO */}
+	<meta
+		name="robots"
+		content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+	/>
 
-    {/* Open Graph / Facebook */}
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title} />
-    <meta
-        property="og:description"
-        content={description || "UCSD Casual Golf Club"}
-    />
-    <meta property="og:image" content="/ucsd-icon.png" />
+	{/* Open Graph / Facebook */}
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content={canonicalURL} />
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description || "UCSD Casual Golf Club"} />
+	<meta property="og:image" content="/ucsd-icon.png" />
 
-    {/* Twitter */}
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content={canonicalURL} />
-    <meta name="twitter:title" content={title} />
-    <meta
-        name="twitter:description"
-        content={description || "UCSD Casual Golf Club"}
-    />
-    <meta name="twitter:image" content="/ucsd-icon.png" />
+	{/* Twitter */}
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:url" content={canonicalURL} />
+	<meta name="twitter:title" content={title} />
+	<meta name="twitter:description" content={description || "UCSD Casual Golf Club"} />
+	<meta name="twitter:image" content="/ucsd-icon.png" />
 
-    <script
-        is:inline
-        type="application/ld+json"
-        set:html={JSON.stringify(schema)}
-    />
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
 </head>
 
 <ClientRouter />
@@ -125,10 +93,12 @@ const { title = "UCSD Casual Golf Club", description = "" } = Astro.props;
 			try {
 				// Unregister existing service workers to clear old config
 				const registrations = await navigator.serviceWorker.getRegistrations();
-				await Promise.all(registrations.map(reg => reg.unregister()));
-				
+				await Promise.all(registrations.map((reg) => reg.unregister()));
+
 				// Register fresh service worker
-				await navigator.serviceWorker.register("/sw.js", { scope: "/" });
+				await navigator.serviceWorker.register("/sw.js", {
+					scope: "/",
+				});
 			} catch (error) {
 				console.error("Service worker registration failed:", error);
 			}

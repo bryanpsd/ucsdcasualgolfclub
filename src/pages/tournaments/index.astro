@@ -39,13 +39,10 @@ const getTournaments = entries.items
 							type: tournament.fields.type,
 							tournamentNotes: tournament.fields.tournamentNotes,
 							results:
-								tournament.fields.results &&
-								"fields" in tournament.fields.results
-									? (tournament.fields.results.fields.file
-											?.url ?? null)
+								tournament.fields.results && "fields" in tournament.fields.results
+									? (tournament.fields.results.fields.file?.url ?? null)
 									: null,
-							clubChampionship:
-								tournament.fields.clubChampionship ?? false,
+							clubChampionship: tournament.fields.clubChampionship ?? false,
 						},
 					],
 				};
@@ -65,8 +62,21 @@ const getCurrentYear = cutoffDate.getFullYear() + 1;
 ---
 
 <Layout
-	title={`${getCurrentYear} Tournaments | UCSD Golf Club San Diego`}
-	description={`See all UCSD Casual Golf Club tournaments for ${getCurrentYear}. Find dates, results, and more.`}
+	title={`${getCurrentYear}
+	Tournaments
+	|
+	UCSD
+	Golf
+	Club
+	San
+	Diego`}
+	description={`See all UCSD Casual Golf Club tournaments for ${getCurrentYear}
+	.
+	Find
+	dates,
+	results,
+	and
+	more.`}
 >
 	<Hero title={`${getCurrentYear} Tournament Schedule`} />
 	<div class={styles.subPageWrapper}>

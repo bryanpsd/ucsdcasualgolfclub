@@ -1,9 +1,7 @@
 ---
 import defaultBackgroundImage from "~assets/admiral-baker-south-bg.webp";
 
-const defaultBackgroundImageSrc = (
-  defaultBackgroundImage as unknown as { src: string }
-).src;
+const defaultBackgroundImageSrc = (defaultBackgroundImage as unknown as { src: string }).src;
 
 import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
 
@@ -15,32 +13,27 @@ const headline = course || title;
 ---
 
 <section class={styles.heroWrapper}>
-  <div class={styles.heroColLeft}>
-    <ResponsiveHeadline
-      className={styles.heroHeadline}
-      size={2}
-      as="h1"
-      color="inverse"
-    >
-      {headline}</ResponsiveHeadline
-    >
-    {
-      subHeadline && (
-        <ResponsiveHeadline size={3} as="h2" color="inverse">
-          {subHeadline}
-        </ResponsiveHeadline>
-      )
-    }
-  </div>
-  <div class={styles.heroColRight}>
-    <div
-      class={styles.heroBackground}
-      style={{
-        backgroundImage: courseImage
-          ? `url('${courseImage}')`
-          : `url(${defaultBackgroundImageSrc})`,
-      }}
-    >
-    </div>
-  </div>
+	<div class={styles.heroColLeft}>
+		<ResponsiveHeadline className={styles.heroHeadline} size={2} as="h1" color="inverse">
+			{headline}
+		</ResponsiveHeadline>
+		{
+			subHeadline && (
+				<ResponsiveHeadline size={3} as="h2" color="inverse">
+					{subHeadline}
+				</ResponsiveHeadline>
+			)
+		}
+	</div>
+	<div class={styles.heroColRight}>
+		<div
+			class={styles.heroBackground}
+			style={{
+				backgroundImage: courseImage
+					? `url('${courseImage}')`
+					: `url(${defaultBackgroundImageSrc})`,
+			}}
+		>
+		</div>
+	</div>
 </section>

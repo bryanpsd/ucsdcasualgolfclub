@@ -38,9 +38,7 @@ export async function getStaticPaths() {
 							return null;
 						})
 						.filter(Boolean) ?? [],
-				years: entries.items.map(
-					(entry) => entry.fields.year?.toString() ?? "N/A",
-				),
+				years: entries.items.map((entry) => entry.fields.year?.toString() ?? "N/A"),
 			},
 		};
 	});
@@ -67,9 +65,7 @@ const { year, players = [] } = Astro.props;
 							? null
 							: [
 									player?.playerName,
-									player?.handicapIndex === undefined
-										? "NH"
-										: String(player.handicapIndex),
+									player?.handicapIndex === undefined ? "NH" : String(player.handicapIndex),
 								];
 					})
 					.filter((row) => row !== null) as string[][]}

@@ -12,25 +12,21 @@ import * as styles from "~styles/globals/common.css";
 import type { TypeSimplePageSkeleton } from "~types/contentful";
 
 const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-  content_type: "simplePage",
-  "fields.slug": "about",
+	content_type: "simplePage",
+	"fields.slug": "about",
 });
 ---
 
 <Layout
-  title="About the UCSD Casual Golf Club | San Diego Golf Community"
-  description="Discover the UCSD Casual Golf Club, our mission, values, and how we bring together golf enthusiasts at UC San Diego."
+	title="About the UCSD Casual Golf Club | San Diego Golf Community"
+	description="Discover the UCSD Casual Golf Club, our mission, values, and how we bring together golf enthusiasts at UC San Diego."
 >
-  <Hero title="About UCSD Casual Golf Club" />
-  <div class={styles.subPageWrapper}>
-    {
-      entries.items.map((item) => (
-        <div>
-          {item.fields.content && (
-            <RichText richText={item.fields.content} client:load />
-          )}
-        </div>
-      ))
-    }
-  </div>
+	<Hero title="About UCSD Casual Golf Club" />
+	<div class={styles.subPageWrapper}>
+		{
+			entries.items.map((item) => (
+				<div>{item.fields.content && <RichText richText={item.fields.content} client:load />}</div>
+			))
+		}
+	</div>
 </Layout>

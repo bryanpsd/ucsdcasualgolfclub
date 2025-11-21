@@ -103,3 +103,38 @@ export function isExternalUrl(url: string): boolean {
 		return false;
 	}
 }
+
+/**
+ * Track navigation clicks in main or mobile nav
+ * @param label - The navigation link text
+ * @param href - The link destination URL
+ * @param options - Navigation type and location
+ */
+export function trackNavClick(
+	label: string,
+	href?: string,
+	options?: {
+		navType?: "main" | "sub";
+		navLocation?: "desktop_main_nav" | "mobile_nav";
+	},
+): void {
+	trackEvent("navigation_click", {
+		event_category: "Navigation",
+		event_label: label,
+		nav_type: options?.navType || "main",
+		nav_location: options?.navLocation || "desktop_main_nav",
+		link_url: href,
+	});
+}
+
+/**
+ * Track player selection in Tournament Results
+ * @param playerName - The selected player's name
+ */
+export function trackPlayerSelect(playerName: string): void {
+	trackEvent("select_player", {
+		event_category: "Tournament Results",
+		event_label: playerName,
+		player_name: playerName,
+	});
+}

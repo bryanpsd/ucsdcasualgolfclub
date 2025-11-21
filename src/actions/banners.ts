@@ -6,15 +6,19 @@ let cachedBanners: ReturnType<typeof mapBannerFields> | null = null;
 let cacheTime = 0;
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
-function mapBannerFields(data: Awaited<ReturnType<typeof contentfulClient.withoutUnresolvableLinks.getEntries<TypeBannerSkeleton>>>) {
+function mapBannerFields(
+	data: Awaited<
+		ReturnType<typeof contentfulClient.withoutUnresolvableLinks.getEntries<TypeBannerSkeleton>>
+	>,
+) {
 	return data.items.map((banner) => banner.fields);
 }
 
 export const getHeaderBanners = defineAction({
 	handler: async () => {
 		const now = Date.now();
-		
-		if (cachedBanners && (now - cacheTime) < CACHE_TTL) {
+
+		if (cachedBanners && now - cacheTime < CACHE_TTL) {
 			return cachedBanners;
 		}
 
@@ -25,7 +29,7 @@ export const getHeaderBanners = defineAction({
 
 		cachedBanners = mapBannerFields(headerBannerData);
 		cacheTime = now;
-		
+
 		return cachedBanners;
 	},
 });
