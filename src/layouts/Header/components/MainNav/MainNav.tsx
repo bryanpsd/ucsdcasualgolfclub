@@ -1,7 +1,7 @@
 import * as NavMenu from "@radix-ui/react-navigation-menu";
-
 import { createElement, type PointerEventHandler, type ReactNode, useState } from "react";
 import { FaRegEnvelope } from "react-icons/fa";
+import { trackNavClick } from "~/utils/analytics";
 import { MainNavItem } from "../MainNavItem/MainNavItem";
 import * as itemStyles from "../MainNavItem/MainNavItem.css";
 
@@ -61,6 +61,12 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
 										hideLabel={item.hideLabel}
 										as="a"
 										data-key={item.href === "/contact" ? "contact" : undefined}
+										onClick={() =>
+											trackNavClick(item.label, item.href, {
+												navType: "main",
+												navLocation: "desktop_main_nav",
+											})
+										}
 									/>
 								</NavMenu.Link>
 							) : (
@@ -84,6 +90,12 @@ export const MainNav = ({ items, currentPath }: MainNavProps) => {
 														className={styles.mainNavSubItem}
 														href={subItem.href}
 														active={subItem.href === currentPath}
+														onClick={() =>
+															trackNavClick(subItem.label, subItem.href, {
+																navType: "sub",
+																navLocation: "desktop_main_nav",
+															})
+														}
 													>
 														{subItem.label}
 													</NavMenu.Link>

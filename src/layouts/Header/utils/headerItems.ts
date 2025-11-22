@@ -1,11 +1,18 @@
 import { contentfulClient } from "../../../services/contentful/contentful";
+import { contentfulCache } from "../../../utils/contentfulCache";
 import type { MainNavProps } from "../components/MainNav";
 
 const getAvailableSeasons = async () => {
-	const entries = await contentfulClient.getEntries({
-		content_type: "course",
-		include: 1,
-	});
+	const entries = await contentfulCache.cached(
+		async () =>
+			contentfulClient.getEntries({
+				content_type: "course",
+				include: 1,
+				limit: 100,
+			}),
+		{ content_type: "course", query: "menu_seasons" },
+		10 * 60 * 1000, // 10 minutes cache
+	);
 
 	const seasonsWithTournaments = entries.items
 		.flatMap((item) =>

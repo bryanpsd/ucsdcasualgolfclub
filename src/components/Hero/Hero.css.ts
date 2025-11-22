@@ -17,14 +17,12 @@ export const heroWrapper = style([
 
 export const heroHeadline = style([
 	tokens({
-	textAlign: { "xs-min": "center", "md-min": "center" },
+		textAlign: { "xs-min": "center", "md-min": "center" },
 	}),
 	{
-
 		color: color.brand.white,
 	},
 ]);
-
 
 export const heroBackground = style([
 	tokens({

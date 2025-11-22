@@ -1,5 +1,4 @@
 import netlify from "@astrojs/netlify";
-import partytown from "@astrojs/partytown";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
@@ -13,15 +12,12 @@ export default defineConfig({
 	site: "https://ucsdcasualgolfclub.com",
 	adapter: netlify(),
 	output: "server",
-	integrations: [
-		react(),
-		icon(),
-		partytown({ config: { forward: ["dataLayer.push"] } }),
-		sitemap(),
-		robotsTxt(),
-	],
+	integrations: [react(), icon(), sitemap(), robotsTxt()],
 	vite: {
 		plugins: [viteTsconfigPaths(), vanillaExtractPlugin(), svgr()],
-		assetsInclude: ["**/*.ttf"], // Ensure .ttf files are included as assets
+		optimizeDeps: {
+			// Pre-bundle these to speed up dev
+			include: ["react", "react-dom", "@radix-ui/react-navigation-menu", "@radix-ui/react-dialog"],
+		},
 	},
 });

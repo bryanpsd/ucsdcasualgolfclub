@@ -23,7 +23,14 @@ export const Sheet = ({ open, trigger, onOpenChange, children, title }: SheetPro
 					<Dialog.Title className="sr-only">{title}</Dialog.Title>
 					<div className={styles.modalCloseContainer}>
 						<Dialog.Close asChild>
-							<Button color="default" variant="text" size="small">
+							<Button
+								color="default"
+								variant="text"
+								size="small"
+								track={true}
+								trackLabel="Close Sheet"
+								trackCategory="modal_interaction"
+							>
 								<Typography>
 									<span className="sr-only">Close</span>
 									<CgClose className={styles.closeIcon} />

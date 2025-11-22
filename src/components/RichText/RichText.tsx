@@ -194,6 +194,9 @@ const options: Options = {
 							variant="contained"
 							target={openInNewWindow ? "_blank" : undefined}
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
+							track={true}
+							trackLabel={label}
+							trackCategory="content_interaction"
 						>
 							{label}
 						</Button>
@@ -211,6 +214,9 @@ const options: Options = {
 							variant="round"
 							target={openInNewWindow ? "_blank" : undefined}
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
+							track={true}
+							trackLabel={label}
+							trackCategory="content_interaction"
 						>
 							{Icon ? (
 								<>
@@ -230,13 +236,16 @@ const options: Options = {
 							href={href}
 							target={openInNewWindow ? "_blank" : undefined}
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
+							track={true}
+							trackLabel={label}
+							trackCategory="content_interaction"
+							variant="blue"
 						>
 							{label}
 						</Link>
 					);
 				}
 			}
-
 			if (
 				isEntryOf<SeasonRecapFields>(target, "seasonRecap") &&
 				(target as MinimalEntry<SeasonRecapFields>).fields
@@ -298,6 +307,9 @@ const options: Options = {
 							variant="contained"
 							target={openInNewWindow ? "_blank" : undefined}
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
+							track={true}
+							trackLabel={label}
+							trackCategory="content_interaction"
 						>
 							{label}
 						</Button>
@@ -315,6 +327,9 @@ const options: Options = {
 							variant="round"
 							target={openInNewWindow ? "_blank" : undefined}
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
+							track={true}
+							trackLabel={label}
+							trackCategory="content_interaction"
 						>
 							{Icon ? (
 								<>
@@ -334,6 +349,10 @@ const options: Options = {
 							href={href}
 							target={openInNewWindow ? "_blank" : undefined}
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
+							track={true}
+							trackLabel={label}
+							trackCategory="content_interaction"
+							variant="blue"
 						>
 							{label}
 						</Link>
@@ -347,7 +366,7 @@ const options: Options = {
 			const uri = (node?.data as { uri?: string } | undefined)?.uri || "";
 			if (uri.startsWith("https://")) {
 				return (
-					<Link target="_blank" rel="noopener noreferrer" href={uri}>
+					<Link variant="blue" target="_blank" rel="noopener noreferrer" href={uri}>
 						{children}
 					</Link>
 				);

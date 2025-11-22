@@ -2,67 +2,41 @@
 import { format } from "date-fns";
 import { Table } from "~components/Table";
 import { contentfulClient } from "~services/contentful/contentful";
+import { contentfulCache } from "~utils/contentfulCache";
+import {
+	getLatestUpdatedDate,
+	filterLeaderboardEntries,
+	formatLeaderboardRows,
+} from "~utils/contentfulTransformers";
 import type { TypeLeadersSkeleton } from "~types/contentful";
 
 const { gross, net, firstFlight, secondFlight, items } = Astro.props;
 const shouldFetch = !Array.isArray(items) || items.length === 0;
 const entries = shouldFetch
-  ? await contentfulClient.getEntries<TypeLeadersSkeleton>({
-      content_type: "leaders",
-      limit: 300,
-      order: (gross && "fields.gross") || (net && "fields.net"),
-    })
-  : { items };
-const lastUpdatedDate = entries.items.reduce((latest, item) => {
-  const updatedAt = new Date(item.sys.updatedAt).getTime();
-  return updatedAt > latest ? updatedAt : latest;
-}, 0);
+	? await contentfulCache.cached(
+			async () =>
+				contentfulClient.getEntries<TypeLeadersSkeleton>({
+					content_type: "leaders",
+					limit: 300,
+					order: (gross && "fields.gross") || (net && "fields.net"),
+				}),
+			{ content_type: "leaders", gross, net, firstFlight, secondFlight },
+			10 * 60 * 1000, // 10 minutes cache
+		)
+	: { items };
+const lastUpdatedDate = getLatestUpdatedDate(entries.items);
 ---
 
 <Table
-  thead={gross
-    ? ["Gross Leaders"]
-    : net && firstFlight
-      ? ["Net Leaders First Flight"]
-      : ["Net Leaders Second Flight"]}
-  colSpan={2}
-  tbody={(() => {
-    const rows = entries.items
-      .filter((item) => item.fields.onCurrentRoster)
-      .map((item) => {
-        if (
-          gross &&
-          item.fields.roundsCheck &&
-          item.fields.gross !== undefined
-        ) {
-          return [item.fields.playerName, item.fields.gross];
-        } else if (
-          firstFlight &&
-          net &&
-          item.fields.net !== undefined &&
-          item.fields.roundsCheck &&
-          item.fields.flight === "First Flight"
-        ) {
-          return [item.fields.playerName, item.fields.net];
-        } else if (
-          secondFlight &&
-          net &&
-          item.fields.net !== undefined &&
-          item.fields.roundsCheck &&
-          item.fields.flight === "Second Flight"
-        ) {
-          return [item.fields.playerName, item.fields.net];
-        }
-      })
-      .filter((row) => row !== undefined) as (string | number)[][];
-
-    // Sort ascending by score (column index 1) converting to number
-    rows.sort((a, b) => Number(a[1]) - Number(b[1]));
-    // Cast back to string[][] for Table component
-    return rows.map(([name, score]) => [
-      String(name),
-      String(score),
-    ]) as string[][];
-  })()}
-  tfoot={[`Last updated: ${format(new Date(lastUpdatedDate), "M/d/yy")}`]}
+	thead={gross
+		? ["Gross Leaders"]
+		: net && firstFlight
+			? ["Net Leaders First Flight"]
+			: ["Net Leaders Second Flight"]}
+	colSpan={2}
+	tbody={(() => {
+		const rows = filterLeaderboardEntries(entries.items, { gross, net, firstFlight, secondFlight });
+		return formatLeaderboardRows(rows);
+	})()}
+	tfoot={[`Last updated: ${format(new Date(lastUpdatedDate), "M/d/yy")}`]}
 />

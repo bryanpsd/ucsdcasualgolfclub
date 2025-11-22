@@ -8,34 +8,22 @@ import { Table } from "~components/Table";
 
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
+import { contentfulCache } from "~utils/contentfulCache";
+import { transformRosterPlayers } from "~utils/contentfulTransformers";
 import * as commonStyles from "~styles/globals/common.css";
 import type { TypeRosterSkeleton } from "~types/contentful/TypeRoster";
-import * as styles from "./_style/roster.css";
 
-const entries = await contentfulClient.getEntries<TypeRosterSkeleton>({
-	content_type: "roster",
-});
-
-const currentRosterPlayers = entries.items
-	.filter((item) => item.fields.title?.includes("Current")) // Filter by title
-	.flatMap((item) =>
-		item.fields.players?.map((player) => {
-			if (player && "fields" in player) {
-				return {
-					playerName: player.fields.playerName,
-					handicapIndex: player.fields.handicapIndex,
-					guest: player.fields.guest,
-				};
-			}
-			return null;
+const entries = await contentfulCache.cached(
+	async () =>
+		contentfulClient.getEntries<TypeRosterSkeleton>({
+			content_type: "roster",
+			include: 2,
 		}),
-	)
-	.filter((player) => player !== null) // Remove null values
-	.filter((player) => !player?.guest?.includes("Yes")) // Exclude guests
-	.sort(
-		(a, b) =>
-			(a?.handicapIndex ?? Infinity) - (b?.handicapIndex ?? Infinity),
-	);
+	{ content_type: "roster", page: "index" },
+	10 * 60 * 1000, // 10 minutes cache
+);
+
+const currentRosterPlayers = transformRosterPlayers(entries.items);
 
 const lastUpdated = entries.items
 	.map((item) => new Date(item.sys.updatedAt))
@@ -45,6 +33,23 @@ const lastUpdated = entries.items
 		month: "2-digit",
 		day: "2-digit",
 	});
+
+// Create table data with serializable link configuration
+const tableData = currentRosterPlayers.map((player) => [
+	{
+		value: player?.playerName || "Unknown",
+		href: `/results?playerName=${encodeURIComponent(player?.playerName || "")}`,
+		isLink: true,
+		linkProps: {
+			track: true,
+			trackLabel: player?.playerName || "Unknown",
+			trackCategory: "roster_interaction",
+			trackParams: { player_handicap: player?.handicapIndex ?? 0 },
+			variant: "navy" as const,
+		},
+	},
+	player?.handicapIndex === undefined ? "NH" : String(player.handicapIndex),
+]);
 ---
 
 <Layout
@@ -56,15 +61,15 @@ const lastUpdated = entries.items
 		<div style="overflow-x: auto;">
 			<Table
 				client:load
-				thead={["Player", `Index (as of: ${lastUpdated ?? "Unknown"})`]}
-				tbody={currentRosterPlayers.map((player) => [
-					player?.playerName
-						? `<a href="/results?playerName=${encodeURIComponent(player.playerName)}" class="${styles.rosterLink}">${player.playerName}</a>`
-						: "Unknown",
-					player?.handicapIndex === undefined
-						? "NH"
-						: String(player.handicapIndex),
-				])}
+				thead={[
+					"Player",
+					`Index (as of: ${lastUpdated ?? "Unknown"}
+				)`,
+				]}
+				tbody={tableData}
+				track={true}
+				trackLabel="Roster Table"
+				trackCategory="roster_interaction"
 			/>
 		</div>
 	</div>

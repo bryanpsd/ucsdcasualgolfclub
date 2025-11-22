@@ -1,8 +1,8 @@
 export const color = {
 	brand: {
 		navy: "#182B49",
-		blue: "#00629B",
-		yellow: "#FFCD00",
+		blue: "#004a76",
+		yellow: "#fbd84b",
 		gold: "#C69214",
 		gray: "#eeeeee",
 		white: "#FFFFFF",
@@ -45,7 +45,7 @@ export const color = {
 	backgroundPrimary: "#182B49",
 	backgroundPaper: "#ffffff",
 	backgroundSnackbar: "#2F3030",
-	link: "#00629B",
+	link: "#004a76",
 	navigationText: "#ffffff",
 	footerText: "#ffffff",
 	tableBorder: "#cccccc",

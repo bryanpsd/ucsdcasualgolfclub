@@ -1,3 +1,10 @@
+import { useId, useState } from "react";
+import { trackPlayerSelect } from "~/utils/analytics";
+import { Link } from "~components/Link";
+import { Table } from "~components/Table";
+
+import * as styles from "./TournamentResults.css";
+
 // Generate a globally unique key for each row using a composite key and a global counter
 function getStableUniqueRowKey(result: Result, playerName: string, idx: number) {
 	// Use a composite of all relevant fields and a hash for uniqueness
@@ -26,11 +33,6 @@ function getStableUniqueRowKey(result: Result, playerName: string, idx: number) 
 }
 
 // Generate a unique key by hashing all result properties (simple hash for uniqueness)
-
-import { useId, useState } from "react";
-import { Table } from "~components/Table";
-
-import * as styles from "./TournamentResults.css";
 
 export interface Result {
 	title: string | null;
@@ -68,7 +70,12 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 	const seenRowKeys = new Set<string>();
 
 	const handlePlayerChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedPlayer(event.target.value);
+		const playerName = event.target.value;
+		setSelectedPlayer(playerName);
+
+		if (playerName) {
+			trackPlayerSelect(playerName);
+		}
 	};
 
 	return (
@@ -135,7 +142,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 												selectedResults.length > 0
 													? Math.min(
 															...selectedResults.map((r) =>
-																typeof r.gross === "number" ? r.gross : Infinity,
+																typeof r.gross === "number" ? r.gross : Number.POSITIVE_INFINITY,
 															),
 														)
 													: null;
@@ -143,7 +150,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 												selectedResults.length > 0
 													? Math.min(
 															...selectedResults.map((r) =>
-																typeof r.net === "number" ? r.net : Infinity,
+																typeof r.net === "number" ? r.net : Number.POSITIVE_INFINITY,
 															),
 														)
 													: null;
@@ -151,7 +158,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 												selectedResults.length > 0
 													? Math.min(
 															...selectedResults.map((r) =>
-																typeof r.putts === "number" ? r.putts : Infinity,
+																typeof r.putts === "number" ? r.putts : Number.POSITIVE_INFINITY,
 															),
 														)
 													: null;
@@ -209,13 +216,13 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 													: null,
 												result.longDrive !== null ? result.longDrive : null,
 												tournamentUrl ? (
-													<a
+													<Link
 														key={tournamentUrl || result.date || result.title || Math.random()}
-														className={styles.resultsLink}
 														href={tournamentUrl}
+														variant="navy"
 													>
 														Results
-													</a>
+													</Link>
 												) : (
 													"N/A"
 												),

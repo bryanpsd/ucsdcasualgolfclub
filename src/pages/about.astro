@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import "~/styles/globals/global.css";
 import "~/styles/globals/reset.css";
 import "~/styles/globals/theme.css";
@@ -8,29 +10,32 @@ import { RichText } from "~components/RichText";
 
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
+import { contentfulCache } from "~utils/contentfulCache";
 import * as styles from "~styles/globals/common.css";
 import type { TypeSimplePageSkeleton } from "~types/contentful";
 
-const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-  content_type: "simplePage",
-  "fields.slug": "about",
-});
+const entries = await contentfulCache.cached(
+	async () =>
+		contentfulClient.getEntries<TypeSimplePageSkeleton>({
+			content_type: "simplePage",
+			"fields.slug": "about",
+			limit: 1,
+		}),
+	{ content_type: "simplePage", slug: "about" },
+	15 * 60 * 1000, // 15 minutes cache for static content
+);
 ---
 
 <Layout
-  title="About the UCSD Casual Golf Club | San Diego Golf Community"
-  description="Discover the UCSD Casual Golf Club, our mission, values, and how we bring together golf enthusiasts at UC San Diego."
+	title="About the UCSD Casual Golf Club | San Diego Golf Community"
+	description="Discover the UCSD Casual Golf Club, our mission, values, and how we bring together golf enthusiasts at UC San Diego."
 >
-  <Hero title="About UCSD Casual Golf Club" />
-  <div class={styles.subPageWrapper}>
-    {
-      entries.items.map((item) => (
-        <div>
-          {item.fields.content && (
-            <RichText richText={item.fields.content} client:load />
-          )}
-        </div>
-      ))
-    }
-  </div>
+	<Hero title="About UCSD Casual Golf Club" />
+	<div class={styles.subPageWrapper}>
+		{
+			entries.items.map((item) => (
+				<div>{item.fields.content && <RichText richText={item.fields.content} client:load />}</div>
+			))
+		}
+	</div>
 </Layout>

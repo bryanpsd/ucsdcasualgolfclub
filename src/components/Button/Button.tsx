@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import React, { type ElementType, forwardRef, type MouseEventHandler, type ReactNode } from "react";
 import type { PolymorphicComponentPropWithRef, PolymorphicRef } from "~types/PolymorphicComponent";
+import { trackButtonClick } from "~utils/analytics";
 import { concatClasses } from "~utils/concatClasses";
 import { type ButtonVariants, button, buttonIcon, buttonLabel } from "./Button.css";
 
@@ -21,6 +22,11 @@ export type ButtonProps<C extends ElementType = "button"> = PolymorphicComponent
 			endIcon: string;
 		}>;
 		round?: boolean;
+		// Analytics props
+		track?: boolean;
+		trackLabel?: string;
+		trackCategory?: string;
+		trackParams?: Record<string, unknown>;
 	}
 >;
 
@@ -68,11 +74,32 @@ export const Button = forwardRef(
 			variant,
 			startIcon,
 			endIcon,
+			track = false,
+			trackLabel,
+			trackCategory,
+			trackParams,
+			href,
 			...rest
 		}: ButtonProps<C>,
 		ref: PolymorphicRef<C>,
 	) => {
 		const handleClick: MouseEventHandler = (e) => {
+			// Track button click if enabled
+			if (track) {
+				const label =
+					trackLabel ||
+					(typeof children === "string" ? children : href ? String(href) : "button_click");
+
+				trackButtonClick(label, {
+					event_category: trackCategory || "button_interaction",
+					button_variant: variant,
+					button_color: color,
+					button_size: size,
+					...(href && { link_url: href }),
+					...trackParams,
+				});
+			}
+
 			onClick?.(e as React.MouseEvent<HTMLButtonElement>);
 		};
 
@@ -86,6 +113,7 @@ export const Button = forwardRef(
 				className={concatClasses([className, classes?.root, button({ color, size, variant })])}
 				ref={ref}
 				tabIndex={rest.disabled ? -1 : rest.tabIndex}
+				href={href}
 			>
 				<Children startIcon={startIcon} endIcon={endIcon} size={size} classes={classes}>
 					{children}
@@ -94,3 +122,5 @@ export const Button = forwardRef(
 		);
 	},
 );
+
+Button.displayName = "Button";

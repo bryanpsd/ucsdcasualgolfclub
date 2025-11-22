@@ -5,45 +5,68 @@ import { Leaderboard } from "~components/Leaderboard";
 import { RichText } from "~components/RichText";
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
+import { contentfulCache } from "~utils/contentfulCache";
 import type {
-  TypeCourseSkeleton,
-  TypeLeadersSkeleton,
-  TypeSimplePageSkeleton,
+	TypeCourseSkeleton,
+	TypeLeadersSkeleton,
+	TypeSimplePageSkeleton,
 } from "~types/contentful";
 import type { TypeTournamentSkeleton } from "~types/contentful/TypeTournament";
 
 import * as styles from "./HomePage.css";
 
-// Fetch simplePage entries
-const entries = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
-  content_type: "simplePage",
-  "fields.title": "Home",
-});
-
-// Fetch course and tournament data
-const courseEntries = await contentfulClient.getEntries<TypeCourseSkeleton>({
-  content_type: "course",
-});
+// Fetch all data in parallel for faster initial load
+const [entries, courseEntries, leaders] = await Promise.all([
+	// Fetch simplePage entries
+	contentfulCache.cached(
+		async () =>
+			contentfulClient.getEntries<TypeSimplePageSkeleton>({
+				content_type: "simplePage",
+				"fields.title": "Home",
+				limit: 1,
+			}),
+		{ content_type: "simplePage", title: "Home" },
+		15 * 60 * 1000, // 15 minutes cache for static home content
+	),
+	// Fetch course and tournament data
+	contentfulCache.cached(
+		async () =>
+			contentfulClient.getEntries<TypeCourseSkeleton>({
+				content_type: "course",
+				include: 2,
+				limit: 100,
+			}),
+		{ content_type: "course", page: "home" },
+		10 * 60 * 1000, // 10 minutes cache
+	),
+	// Fetch leaders data
+	contentfulCache.cached(
+		async () =>
+			contentfulClient.getEntries<TypeLeadersSkeleton>({
+				content_type: "leaders",
+				limit: 300,
+			}),
+		{ content_type: "leaders", page: "home" },
+		10 * 60 * 1000, // 10 minutes cache
+	),
+]);
 
 const today = new Date();
 today.setHours(0, 0, 0, 0); // Set time to 00:00:00
 
 // Find the first upcoming tournament date
 const upcomingTournament = courseEntries.items
-  .flatMap((course) => course.fields.tournaments ?? []) // Flatten all tournaments
-  .filter(
-    (
-      tournament,
-    ): tournament is Entry<TypeTournamentSkeleton, undefined, string> =>
-      tournament &&
-      "fields" in tournament &&
-      tournament.fields.date &&
-      new Date(tournament.fields.date) >= today, // Compare with normalized date
-  )
-  .sort(
-    (a, b) =>
-      new Date(a.fields.date).getTime() - new Date(b.fields.date).getTime(), // Sort by date ascending
-  )[0]; // Get the earliest upcoming tournament
+	.flatMap((course) => course.fields.tournaments ?? []) // Flatten all tournaments
+	.filter(
+		(tournament): tournament is Entry<TypeTournamentSkeleton, undefined, string> =>
+			tournament &&
+			"fields" in tournament &&
+			tournament.fields.date &&
+			new Date(tournament.fields.date) >= today, // Compare with normalized date
+	)
+	.sort(
+		(a, b) => new Date(a.fields.date).getTime() - new Date(b.fields.date).getTime(), // Sort by date ascending
+	)[0]; // Get the earliest upcoming tournament
 
 // Extract relevant data
 const tournamentDate = upcomingTournament?.fields.date ?? "TBD";
@@ -51,58 +74,48 @@ const tournamentPrices = upcomingTournament?.fields.prices ?? [];
 const tournamentPlayers = upcomingTournament?.fields.players ?? "N/A";
 const tournamentInclusions = upcomingTournament?.fields.inclusions ?? [];
 const courseName =
-  courseEntries.items.find((course) =>
-    course.fields.tournaments?.some(
-      (tournament) => tournament === upcomingTournament,
-    ),
-  )?.fields.course ?? "Unknown Course";
+	courseEntries.items.find((course) =>
+		course.fields.tournaments?.some((tournament) => tournament === upcomingTournament),
+	)?.fields.course ?? "Unknown Course";
 
 const courseSlug = courseEntries.items.find((course) =>
-  course.fields.tournaments?.some(
-    (tournament) => tournament === upcomingTournament,
-  ),
+	course.fields.tournaments?.some((tournament) => tournament === upcomingTournament),
 )?.fields.slug;
-
-// Fetch leaders once and share with all leaderboards
-const leaders = await contentfulClient.getEntries<TypeLeadersSkeleton>({
-  content_type: "leaders",
-  limit: 300,
-});
 
 const leaderItems = leaders.items;
 ---
 
 <Layout
-  title="UCSD Casual Golf Club | San Diego Golf Tournaments & Community"
-  description="UCSD Casual Golf Club – monthly tournaments & camaraderie for UCSD faculty, staff, students, alumni & friends. All handicap levels welcome. Join today!"
+	title="UCSD Casual Golf Club | San Diego Golf Tournaments & Community"
+	description="UCSD Casual Golf Club – monthly tournaments & camaraderie for UCSD faculty, staff, students, alumni & friends. All handicap levels welcome. Join today!"
 >
-  <div class={styles.homeWrapper}>
-    <section class={styles.homeHero}>
-      <MiniCard
-        title={"Upcoming Tournament"}
-        date={tournamentDate}
-        prices={tournamentPrices}
-        players={tournamentPlayers}
-        inclusions={tournamentInclusions}
-        course={courseName}
-        isCoursePage={false}
-        slug={courseSlug}
-        label="Details"
-      />
-    </section>
-    <section class={styles.homeColWrapper}>
-      {
-        entries.items.map((item) => (
-          <section class={styles.leftCol}>
-            {item.fields.content && <RichText richText={item.fields.content} />}
-          </section>
-        ))
-      }
-      <section class={styles.rightCol}>
-        <Leaderboard items={leaderItems} gross />
-        <Leaderboard items={leaderItems} net firstFlight />
-        <Leaderboard items={leaderItems} net secondFlight />
-      </section>
-    </section>
-  </div>
+	<div class={styles.homeWrapper}>
+		<section class={styles.homeHero}>
+			<MiniCard
+				title={"Upcoming Tournament"}
+				date={tournamentDate}
+				prices={tournamentPrices}
+				players={tournamentPlayers}
+				inclusions={tournamentInclusions}
+				course={courseName}
+				isCoursePage={false}
+				slug={courseSlug}
+				label="Details"
+			/>
+		</section>
+		<section class={styles.homeColWrapper}>
+			{
+				entries.items.map((item) => (
+					<section class={styles.leftCol}>
+						{item.fields.content && <RichText richText={item.fields.content} />}
+					</section>
+				))
+			}
+			<section class={styles.rightCol}>
+				<Leaderboard items={leaderItems} gross />
+				<Leaderboard items={leaderItems} net firstFlight />
+				<Leaderboard items={leaderItems} net secondFlight />
+			</section>
+		</section>
+	</div>
 </Layout>

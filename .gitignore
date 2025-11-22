@@ -26,3 +26,5 @@ pnpm-debug.log*
 .netlify/
 
 .vscode/
+
+deno.lock

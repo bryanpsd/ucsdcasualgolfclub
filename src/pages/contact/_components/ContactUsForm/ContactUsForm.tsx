@@ -100,7 +100,15 @@ export const ContactUsForm = () => {
 			</div>
 
 			<div>
-				<Button type="submit" color="primary" size="small" variant="contained">
+				<Button
+					type="submit"
+					color="primary"
+					size="small"
+					variant="contained"
+					track={true}
+					trackLabel="Contact Form Submit"
+					trackCategory="contact_form"
+				>
 					Submit
 				</Button>
 			</div>

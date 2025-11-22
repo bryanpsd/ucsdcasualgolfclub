@@ -1,24 +1,24 @@
 ---
-type Props = { measurementId: string };
+type Props = { measurementId: string; debug?: boolean };
 const props = Astro.props as Props;
 const measurementId = props.measurementId;
+// Enable debug mode by default in development; can be overridden via prop
+const debug = props.debug ?? import.meta.env.DEV;
+const gtagSrc = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
 ---
 
-<script
-  type="text/partytown"
-  src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}></script>
-<script
-  type="text/partytown"
-  data-ga-measurement-id={measurementId}
-  id="ga-init"
->
-  const measurementId = document
-    .getElementById("ga-init")
-    .getAttribute("data-ga-measurement-id");
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments); // eslint-disable-line
-  }
-  gtag("js", new Date());
-  gtag("config", measurementId);
+<script is:inline async src={gtagSrc}></script>
+<script is:inline data-ga-measurement-id={measurementId} data-ga-debug={String(debug)} id="ga-init">
+	const measurementId = document.getElementById("ga-init").getAttribute("data-ga-measurement-id");
+	const debugModeAttr = document.getElementById("ga-init").getAttribute("data-ga-debug");
+	const debugMode = debugModeAttr === "true";
+	window.dataLayer = window.dataLayer || [];
+	function gtag() {
+		dataLayer.push(arguments);
+	}
+	// Expose gtag to window so it's accessible from other scripts
+	window.gtag = gtag;
+	gtag("js", new Date());
+	// Pass GA4 debug_mode to enable DebugView when desired
+	gtag("config", measurementId, { debug_mode: debugMode });
 </script>

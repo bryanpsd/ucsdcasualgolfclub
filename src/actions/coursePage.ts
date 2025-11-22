@@ -1,28 +1,8 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { contentfulClient } from "../services/contentful/contentful";
-import type { TypeCourseProps, TypeCourseSkeleton } from "../types/contentful/TypeCourse";
-
-const mapContentfulFields = (fields?: TypeCourseProps) => {
-	if (!fields) return null;
-
-	// Extract tournament year and generate slug
-	const tournamentYear = fields.tournaments
-		?.map((tournament) => {
-			if (tournament && "fields" in tournament && tournament.fields.date) {
-				return new Date(tournament.fields.date).getFullYear(); // Extract year
-			}
-			return null;
-		})
-		.filter(Boolean)[0]; // Get the first valid year
-
-	const slugWithYear = tournamentYear ? `/${tournamentYear}/${fields.slug}` : `/${fields.slug}`; // Combine year and slug
-
-	return {
-		...fields,
-		slug: slugWithYear, // Add the generated slug with year
-	};
-};
+import type { TypeCourseSkeleton } from "../types/contentful/TypeCourse";
+import { generateSlugWithYear } from "../utils/contentfulTransformers";
 
 export const getCoursePage = defineAction({
 	input: z.string(),
@@ -31,7 +11,8 @@ export const getCoursePage = defineAction({
 			{
 				content_type: "course",
 				"fields.slug": slug.toLowerCase(),
-				include: 10,
+				include: 3, // Reduced from 10 to 3 for better performance
+				limit: 1,
 			},
 		);
 
@@ -39,11 +20,17 @@ export const getCoursePage = defineAction({
 			return { error: true, data: null };
 		}
 
-		const mappedFields = mapContentfulFields(pageData.items[0]?.fields);
+		const fields = pageData.items[0]?.fields;
+		if (!fields) {
+			return { error: true, data: null };
+		}
 
 		return {
 			error: false,
-			data: mappedFields, // Return the mapped fields, including the generated slug
+			data: {
+				...fields,
+				slug: generateSlugWithYear(fields),
+			},
 		};
 	},
 });

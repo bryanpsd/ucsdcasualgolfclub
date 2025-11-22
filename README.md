@@ -8,6 +8,23 @@ This project uses pnpm as the preferred package manager (see `preinstall` in
 `package.json`). You can use npm or yarn, but pnpm is recommended for
 consistency.
 
+### Environment setup
+
+1. Copy the example environment file:
+```bash
+cp .env.example .env
+```
+
+2. Fill in your environment variables:
+	- **Contentful**: Get credentials from your Contentful space settings
+	- **Google reCAPTCHA**: Create a reCAPTCHA site at [Google reCAPTCHA Admin](https://www.google.com/recaptcha/admin)
+	- **Google Maps**: Get API key from [Google Cloud Console](https://console.cloud.google.com/)
+	- **GCP Credentials**: Service account JSON for reCAPTCHA Enterprise
+
+See `.env.example` for all required variables.
+
+### Install and run
+
 Install dependencies
 
 ```bash

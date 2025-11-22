@@ -1,6 +1,7 @@
 import * as NavMenu from "@radix-ui/react-navigation-menu";
 import { useState } from "react";
 import { IoMenu } from "react-icons/io5";
+import { trackNavClick } from "~/utils/analytics";
 import { Sheet } from "~components/Sheet/Sheet";
 import { disableHover } from "~layouts/Header/utils/disableHover";
 import type { MainNavProps } from "../MainNav";
@@ -67,6 +68,9 @@ function NavItem({ item }: { item: NavigationItem }) {
 						href={item.href}
 						as="a"
 						target={item.target}
+						onClick={() =>
+							trackNavClick(item.label, item.href, { navType: "main", navLocation: "mobile_nav" })
+						}
 					/>
 				</NavMenu.Link>
 			) : (
@@ -86,6 +90,12 @@ function NavItem({ item }: { item: NavigationItem }) {
 												className={styles.mobileNavItem}
 												label={l.label}
 												href={l.href}
+												onClick={() =>
+													trackNavClick(l.label, l.href, {
+														navType: "sub",
+														navLocation: "mobile_nav",
+													})
+												}
 											/>
 										</NavMenu.Link>
 									</li>

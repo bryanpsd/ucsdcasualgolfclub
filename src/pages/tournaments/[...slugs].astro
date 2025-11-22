@@ -28,11 +28,7 @@ export async function getStaticPaths() {
 	const pages = entries.items
 		.flatMap((item) => {
 			return item.fields.tournaments?.map((tournament) => {
-				if (
-					tournament &&
-					"fields" in tournament &&
-					tournament.fields.date
-				) {
+				if (tournament && "fields" in tournament && tournament.fields.date) {
 					const year = new Date(tournament.fields.date).getFullYear();
 
 					return {
@@ -47,113 +43,57 @@ export async function getStaticPaths() {
 							coursePar: item.fields.coursePar,
 							courseScorecard: item.fields.courseScorecard,
 							courseImage:
-								item.fields.courseImage &&
-								"fields" in item.fields.courseImage
-									? (item.fields.courseImage.fields.file
-											?.url ?? "")
+								item.fields.courseImage && "fields" in item.fields.courseImage
+									? (item.fields.courseImage.fields.file?.url ?? "")
 									: undefined,
 							tournaments: [
 								{
 									clubChampionship:
-										"fields" in tournament
-											? (tournament.fields
-													.clubChampionship ?? false)
-											: false,
+										"fields" in tournament ? (tournament.fields.clubChampionship ?? false) : false,
 									prices: tournament.fields.prices,
 									date: tournament.fields.date ?? "N/A",
 									players: tournament.fields.players,
-									inclusions:
-										tournament.fields.inclusions ?? [],
+									inclusions: tournament.fields.inclusions ?? [],
 									results: tournament.fields.results ?? [],
 									tees: tournament.fields.tees,
 									type: tournament.fields.type,
-									tournamentNotes:
-										tournament.fields.tournamentNotes,
+									tournamentNotes: tournament.fields.tournamentNotes,
 									firstFlight:
 										tournament.fields.firstFlight
 											?.map((player) => {
-												if (
-													player &&
-													"fields" in player
-												) {
+												if (player && "fields" in player) {
 													return {
-														playerName:
-															player.fields
-																.playerName,
-														handicapIndex:
-															player.fields
-																.handicapIndex,
-														guest: player.fields
-															.guest,
-														results:
-															player.fields.results?.map(
-																(result) => {
-																	if (
-																		result &&
-																		"fields" in
-																			result
-																	) {
-																		return {
-																			...result.fields,
-																			index: result
-																				.fields
-																				.index,
-																			date: result
-																				.fields
-																				.date,
-																			courseHandicap:
-																				result
-																					.fields
-																					.courseHandicap,
-																			gross: result
-																				.fields
-																				.gross,
-																			net: result
-																				.fields
-																				.net,
-																			course: result
-																				.fields
-																				.course,
-																			longDrive:
-																				result
-																					.fields
-																					.longDrive,
-																			putts: result
-																				.fields
-																				.putts,
-																			closestTo:
-																				result
-																					.fields
-																					.closestTo,
-																		};
-																	}
-																	return null;
-																},
-															),
-														yearlyStats:
-															player.fields.yearlyStats?.map(
-																(stats) => {
-																	if (
-																		stats &&
-																		"fields" in
-																			stats
-																	) {
-																		return {
-																			...stats.fields,
-																			year: stats
-																				.fields
-																				.year,
-																			gross: stats
-																				.fields
-																				.gross,
-																			net: stats
-																				.fields
-																				.net,
-																		};
-																	}
-																	return null;
-																},
-															),
+														playerName: player.fields.playerName,
+														handicapIndex: player.fields.handicapIndex,
+														guest: player.fields.guest,
+														results: player.fields.results?.map((result) => {
+															if (result && "fields" in result) {
+																return {
+																	...result.fields,
+																	index: result.fields.index,
+																	date: result.fields.date,
+																	courseHandicap: result.fields.courseHandicap,
+																	gross: result.fields.gross,
+																	net: result.fields.net,
+																	course: result.fields.course,
+																	longDrive: result.fields.longDrive,
+																	putts: result.fields.putts,
+																	closestTo: result.fields.closestTo,
+																};
+															}
+															return null;
+														}),
+														yearlyStats: player.fields.yearlyStats?.map((stats) => {
+															if (stats && "fields" in stats) {
+																return {
+																	...stats.fields,
+																	year: stats.fields.year,
+																	gross: stats.fields.gross,
+																	net: stats.fields.net,
+																};
+															}
+															return null;
+														}),
 													};
 												}
 												return null;
@@ -162,88 +102,39 @@ export async function getStaticPaths() {
 									secondFlight:
 										tournament.fields.secondFlight
 											?.map((player) => {
-												if (
-													player &&
-													"fields" in player
-												) {
+												if (player && "fields" in player) {
 													return {
-														playerName:
-															player.fields
-																.playerName,
-														handicapIndex:
-															player.fields
-																.handicapIndex,
-														guest: player.fields
-															.guest,
-														results:
-															player.fields.results?.map(
-																(result) => {
-																	if (
-																		result &&
-																		"fields" in
-																			result
-																	) {
-																		return {
-																			...result.fields,
-																			date: result
-																				.fields
-																				.date,
-																			index: result
-																				.fields
-																				.index,
-																			courseHandicap:
-																				result
-																					.fields
-																					.courseHandicap,
-																			gross: result
-																				.fields
-																				.gross,
-																			net: result
-																				.fields
-																				.net,
-																			course: result
-																				.fields
-																				.course,
-																			longDrive:
-																				result
-																					.fields
-																					.longDrive,
-																			putts: result
-																				.fields
-																				.putts,
-																			closestTo:
-																				result
-																					.fields
-																					.closestTo,
-																		};
-																	}
-																	return null;
-																},
-															),
-														yearlyStats:
-															player.fields.yearlyStats?.map(
-																(stats) => {
-																	if (
-																		stats &&
-																		"fields" in
-																			stats
-																	) {
-																		return {
-																			...stats.fields,
-																			year: stats
-																				.fields
-																				.year,
-																			gross: stats
-																				.fields
-																				.gross,
-																			net: stats
-																				.fields
-																				.net,
-																		};
-																	}
-																	return null;
-																},
-															),
+														playerName: player.fields.playerName,
+														handicapIndex: player.fields.handicapIndex,
+														guest: player.fields.guest,
+														results: player.fields.results?.map((result) => {
+															if (result && "fields" in result) {
+																return {
+																	...result.fields,
+																	date: result.fields.date,
+																	index: result.fields.index,
+																	courseHandicap: result.fields.courseHandicap,
+																	gross: result.fields.gross,
+																	net: result.fields.net,
+																	course: result.fields.course,
+																	longDrive: result.fields.longDrive,
+																	putts: result.fields.putts,
+																	closestTo: result.fields.closestTo,
+																};
+															}
+															return null;
+														}),
+														yearlyStats: player.fields.yearlyStats?.map((stats) => {
+															if (stats && "fields" in stats) {
+																return {
+																	...stats.fields,
+																	year: stats.fields.year,
+																	gross: stats.fields.gross,
+																	net: stats.fields.net,
+																};
+															}
+															return null;
+														}),
 													};
 												}
 												return null;
@@ -274,18 +165,12 @@ const {
 	courseScorecard,
 } = Astro.props;
 
-const tournamentYear = tournaments[0]?.date
-	? new Date(tournaments[0].date).getFullYear()
-	: "N/A";
+const tournamentYear = tournaments[0]?.date ? new Date(tournaments[0].date).getFullYear() : "N/A";
 const tournamentDate = tournaments[0]?.date;
 
 const allResults = [
-	...(tournaments[0]?.firstFlight || []).flatMap(
-		(player) => player?.results || [],
-	),
-	...(tournaments[0]?.secondFlight || []).flatMap(
-		(player) => player?.results || [],
-	),
+	...(tournaments[0]?.firstFlight || []).flatMap((player) => player?.results || []),
+	...(tournaments[0]?.secondFlight || []).flatMap((player) => player?.results || []),
 ];
 
 const validGross = allResults
@@ -297,9 +182,7 @@ const validGross = allResults
 			new Date(result.date).toISOString().split("T")[0] ===
 				new Date(tournamentDate).toISOString().split("T")[0];
 
-		return (
-			isSameDate && result?.gross !== undefined && result?.gross !== null
-		);
+		return isSameDate && result?.gross !== undefined && result?.gross !== null;
 	})
 	.map((result) => result?.gross ?? null)
 	.filter((gross): gross is number => gross !== null && !Number.isNaN(gross));
@@ -313,17 +196,13 @@ const validPutts = allResults
 			new Date(result.date).toISOString().split("T")[0] ===
 				new Date(tournamentDate).toISOString().split("T")[0];
 
-		return (
-			isSameDate && result?.putts !== undefined && result?.putts !== null
-		);
+		return isSameDate && result?.putts !== undefined && result?.putts !== null;
 	})
 	.map((result) => result?.putts ?? null)
 	.filter((putts): putts is number => putts !== null && !Number.isNaN(putts));
 
-const lowestGrossOverall =
-	validGross.length > 0 ? Math.min(...validGross) : null;
-const lowestPuttsOverall =
-	validPutts.length > 0 ? Math.min(...validPutts) : null;
+const lowestGrossOverall = validGross.length > 0 ? Math.min(...validGross) : null;
+const lowestPuttsOverall = validPutts.length > 0 ? Math.min(...validPutts) : null;
 
 const flights = [
 	{ title: "First Flight", data: tournaments[0]?.firstFlight || [] },
@@ -368,38 +247,29 @@ const flights = [
 									title={flight.title}
 									currentCourse={course}
 									tournamentDate={tournamentDate}
-									courseChampionship={
-										tournaments[0]?.clubChampionship
-									}
+									courseChampionship={tournaments[0]?.clubChampionship}
 									lowestGrossOverall={lowestGrossOverall}
 									lowestPuttsOverall={lowestPuttsOverall}
 									flight={flight.data.map((player) => ({
 										playerName: player?.playerName,
 										handicapIndex: player?.handicapIndex,
-										guest: player?.guest
-											? [player.guest[0]]
-											: undefined,
-										results: player?.results?.map(
-											(result) => ({
-												index: result?.index,
-												date: result?.date,
-												gross: result?.gross,
-												courseHandicap:
-													result?.courseHandicap,
-												net: result?.net,
-												course: result?.course,
-												longDrive: result?.longDrive,
-												putts: result?.putts,
-												closestTo: result?.closestTo,
-											}),
-										),
-										yearlyStats: player?.yearlyStats?.map(
-											(stats) => ({
-												year: stats?.year,
-												gross: stats?.gross,
-												net: stats?.net,
-											}),
-										),
+										guest: player?.guest ? [player.guest[0]] : undefined,
+										results: player?.results?.map((result) => ({
+											index: result?.index,
+											date: result?.date,
+											gross: result?.gross,
+											courseHandicap: result?.courseHandicap,
+											net: result?.net,
+											course: result?.course,
+											longDrive: result?.longDrive,
+											putts: result?.putts,
+											closestTo: result?.closestTo,
+										})),
+										yearlyStats: player?.yearlyStats?.map((stats) => ({
+											year: stats?.year,
+											gross: stats?.gross,
+											net: stats?.net,
+										})),
 									}))}
 								/>
 							),
@@ -423,10 +293,7 @@ const flights = [
 				/>
 				{
 					tournaments[0]?.tees !== undefined && (
-						<CourseInfo
-							coursePar={coursePar}
-							tees={tournaments[0]?.tees}
-						/>
+						<CourseInfo coursePar={coursePar} tees={tournaments[0]?.tees} />
 					)
 				}
 			</div>

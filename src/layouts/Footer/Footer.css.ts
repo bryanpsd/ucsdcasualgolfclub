@@ -59,7 +59,6 @@ export const footerLink = style([
 		fontFamily: "base",
 	}),
 	{
-		color: color.brand.black,
 		fontSize: fontSize.sizeFont4,
 	},
 ]);

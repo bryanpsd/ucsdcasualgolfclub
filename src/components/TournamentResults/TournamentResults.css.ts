@@ -1,10 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { color } from "~styles";
 
-export const resultsLink = style({
-	color: color.brand.navy,
-});
-
 export const intro = style({
 	marginTop: "1rem",
 });
