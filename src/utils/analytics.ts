@@ -119,7 +119,7 @@ export function trackNavClick(
 	},
 ): void {
 	trackEvent("navigation_click", {
-		event_category: "Navigation",
+		event_category: "navigation",
 		event_label: label,
 		nav_type: options?.navType || "main",
 		nav_location: options?.navLocation || "desktop_main_nav",
@@ -133,7 +133,7 @@ export function trackNavClick(
  */
 export function trackPlayerSelect(playerName: string): void {
 	trackEvent("select_player", {
-		event_category: "Tournament Results",
+		event_category: "tournament_interaction",
 		event_label: playerName,
 		player_name: playerName,
 	});

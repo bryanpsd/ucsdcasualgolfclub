@@ -43,7 +43,7 @@ const tableData = currentRosterPlayers.map((player) => [
 		linkProps: {
 			track: true,
 			trackLabel: player?.playerName || "Unknown",
-			trackCategory: "roster",
+			trackCategory: "roster_interaction",
 			trackParams: { player_handicap: player?.handicapIndex ?? 0 },
 			variant: "navy" as const,
 		},
@@ -69,7 +69,7 @@ const tableData = currentRosterPlayers.map((player) => [
 				tbody={tableData}
 				track={true}
 				trackLabel="Roster Table"
-				trackCategory="roster"
+				trackCategory="roster_interaction"
 			/>
 		</div>
 	</div>

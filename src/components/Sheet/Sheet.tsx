@@ -29,7 +29,7 @@ export const Sheet = ({ open, trigger, onOpenChange, children, title }: SheetPro
 								size="small"
 								track={true}
 								trackLabel="Close Sheet"
-								trackCategory="sheet"
+								trackCategory="modal_interaction"
 							>
 								<Typography>
 									<span className="sr-only">Close</span>

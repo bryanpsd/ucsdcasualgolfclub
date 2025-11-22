@@ -196,7 +196,7 @@ const options: Options = {
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
 							track={true}
 							trackLabel={label}
-							trackCategory="rich_text_button"
+							trackCategory="content_interaction"
 						>
 							{label}
 						</Button>
@@ -216,7 +216,7 @@ const options: Options = {
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
 							track={true}
 							trackLabel={label}
-							trackCategory="rich_text_icon_button"
+							trackCategory="content_interaction"
 						>
 							{Icon ? (
 								<>
@@ -238,7 +238,7 @@ const options: Options = {
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
 							track={true}
 							trackLabel={label}
-							trackCategory="rich_text_link"
+							trackCategory="content_interaction"
 							variant="blue"
 						>
 							{label}
@@ -309,7 +309,7 @@ const options: Options = {
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
 							track={true}
 							trackLabel={label}
-							trackCategory="rich_text_inline_button"
+							trackCategory="content_interaction"
 						>
 							{label}
 						</Button>
@@ -329,7 +329,7 @@ const options: Options = {
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
 							track={true}
 							trackLabel={label}
-							trackCategory="rich_text_inline_icon_button"
+							trackCategory="content_interaction"
 						>
 							{Icon ? (
 								<>
@@ -351,7 +351,7 @@ const options: Options = {
 							rel={openInNewWindow ? "noopener noreferrer" : undefined}
 							track={true}
 							trackLabel={label}
-							trackCategory="rich_text_inline_link"
+							trackCategory="content_interaction"
 							variant="blue"
 						>
 							{label}

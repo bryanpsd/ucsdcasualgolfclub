@@ -91,7 +91,7 @@ export const Button = forwardRef(
 					(typeof children === "string" ? children : href ? String(href) : "button_click");
 
 				trackButtonClick(label, {
-					event_category: trackCategory || "ui_interaction",
+					event_category: trackCategory || "button_interaction",
 					button_variant: variant,
 					button_color: color,
 					button_size: size,

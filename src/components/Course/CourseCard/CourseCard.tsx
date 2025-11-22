@@ -132,7 +132,7 @@ export const CourseCard = (props: CourseCardProps) => {
 							href={`/tournaments/${format(date, "yyyy")}/${slug}`}
 							track={true}
 							trackLabel={`Details - ${course}`}
-							trackCategory="course_card"
+							trackCategory="course_interaction"
 						>
 							Details
 						</Button>
@@ -148,7 +148,7 @@ export const CourseCard = (props: CourseCardProps) => {
 							href={results}
 							track={true}
 							trackLabel={`Results PDF - ${course}`}
-							trackCategory="course_card"
+							trackCategory="course_interaction"
 						>
 							<span className={styles.resultsIconWrapper}>
 								<FaFilePdf className={styles.resultsIcon} aria-hidden="true" />
