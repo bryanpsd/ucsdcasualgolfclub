@@ -15,6 +15,9 @@ export default defineConfig({
 	integrations: [react(), icon(), sitemap(), robotsTxt()],
 	vite: {
 		plugins: [viteTsconfigPaths(), vanillaExtractPlugin(), svgr()],
-		assetsInclude: ["**/*.ttf"], // Ensure .ttf files are included as assets
+		optimizeDeps: {
+			// Pre-bundle these to speed up dev
+			include: ["react", "react-dom", "@radix-ui/react-navigation-menu", "@radix-ui/react-dialog"],
+		},
 	},
 });

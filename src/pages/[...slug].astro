@@ -17,11 +17,12 @@ const { slug = "" } = Astro.params;
 
 // Fetch the entry matching the slug
 const entry = await contentfulCache.cached(
-	async () => contentfulClient.getEntries<TypeSimplePageSkeleton>({
-		content_type: "simplePage",
-		"fields.slug": slug,
-		limit: 1,
-	}),
+	async () =>
+		contentfulClient.getEntries<TypeSimplePageSkeleton>({
+			content_type: "simplePage",
+			"fields.slug": slug,
+			limit: 1,
+		}),
 	{ content_type: "simplePage", slug },
 	15 * 60 * 1000, // 15 minutes cache for simple pages
 );

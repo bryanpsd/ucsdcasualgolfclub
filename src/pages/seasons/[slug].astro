@@ -23,11 +23,12 @@ export function getStaticPaths() {
 }
 
 const entries = await contentfulCache.cached(
-	async () => contentfulClient.getEntries<TypeCourseSkeleton>({
-		content_type: "course",
-		include: 3,
-		limit: 100,
-	}),
+	async () =>
+		contentfulClient.getEntries<TypeCourseSkeleton>({
+			content_type: "course",
+			include: 3,
+			limit: 100,
+		}),
 	{ content_type: "course", page: "seasons" },
 	15 * 60 * 1000, // 15 minutes cache for historical seasons
 );

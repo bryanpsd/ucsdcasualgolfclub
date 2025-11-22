@@ -26,28 +26,20 @@ const entries = await contentfulCache.cached(
 
 const cutoffDate = new Date("2025-12-05");
 
-const getTournaments = filterUpcomingTournaments(entries.items, cutoffDate);
+const getTournaments = filterUpcomingTournaments(entries.items, cutoffDate).filter(
+	(item) =>
+		item?.tournaments?.[0]?.date &&
+		item?.course &&
+		(item?.tournaments?.[0]?.prices || item?.tournaments?.[0]?.players),
+);
 
 // Display year should be one ahead of the cutoff date's year
 const getCurrentYear = cutoffDate.getFullYear() + 1;
 ---
 
 <Layout
-	title={`${getCurrentYear}
-	Tournaments
-	|
-	UCSD
-	Golf
-	Club
-	San
-	Diego`}
-	description={`See all UCSD Casual Golf Club tournaments for ${getCurrentYear}
-	.
-	Find
-	dates,
-	results,
-	and
-	more.`}
+	title={`${getCurrentYear} Tournaments | UCSD Golf Club San Diego`}
+	description={`See all UCSD Casual Golf Club tournaments for ${getCurrentYear}. Find dates, results, and more.`}
 >
 	<Hero title={`${getCurrentYear} Tournament Schedule`} />
 	<div class={styles.subPageWrapper}>

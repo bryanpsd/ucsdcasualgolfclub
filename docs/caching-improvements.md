@@ -58,8 +58,8 @@ await this.persistentStorage.set(key, freshData);
 
 ### Pages Now Cached
 
-| Page                         | Cache TTL | Status              |
-| ---------------------------- | --------- | ------------------- |
+| Page                         | Cache TTL | Status             |
+| ---------------------------- | --------- | ------------------ |
 | `/results`                   | 10 min    | ✅ Added            |
 | `/roster`                    | 10 min    | ✅ Added            |
 | `/tournaments/[year]/[slug]` | Static    | ✅ Prerendered      |
