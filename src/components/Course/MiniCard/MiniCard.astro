@@ -78,6 +78,9 @@ const validDate = date && !Number.isNaN(Date.parse(date)) ? new Date(date) : nul
 					target="_blank"
 					rel="noopener noreferrer"
 					href={results.fields.file.url}
+					track={true}
+					trackLabel={`Results PDF - ${course}`}
+					trackCategory="mini_card"
 				>
 					<span class={styles.resultsIconWrapper}>
 						<FaFilePdf className={styles.resultsIcon} aria-hidden="true" />
@@ -97,6 +100,9 @@ const validDate = date && !Number.isNaN(Date.parse(date)) ? new Date(date) : nul
 							? courseWebsite
 							: `/tournaments/${format(new Date(date as string), "yyyy")}/${slug}`
 					}
+					track={true}
+					trackLabel={label}
+					trackCategory="mini_card"
 				>
 					{label}
 				</Button>
