@@ -17,12 +17,26 @@ export const homeHero = style([
 		justifyContent: "center",
 	}),
 	{
-		backgroundImage: "url(../../assets/admiral-baker-south-bg.webp)",
-		backgroundSize: "cover",
-		backgroundPosition: "center",
+		position: "relative",
 		height: "300px",
+		overflow: "hidden",
 	},
 ]);
+
+export const heroImage = style({
+	position: "absolute",
+	inset: 0,
+	width: "100%",
+	height: "100%",
+	objectFit: "cover",
+	objectPosition: "center",
+	zIndex: 0,
+});
+
+export const heroContent = style({
+	position: "relative",
+	zIndex: 1,
+});
 
 export const homeColWrapper = style([
 	tokens({

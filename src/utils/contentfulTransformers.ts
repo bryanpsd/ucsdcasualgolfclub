@@ -318,12 +318,33 @@ export function isContentfulImage(src = ""): boolean {
 }
 
 /**
- * Generates a proxied Contentful image URL with format parameter.
+ * Generates a proxied Contentful image URL with format, width, and quality parameters.
  * Used for image optimization through the API proxy.
+ *
+ * @param src - The Contentful image URL
+ * @param format - Image format (avif, webp, jpg, png)
+ * @param width - Optional width in pixels for resizing
+ * @param quality - Optional quality (1-100, default 85)
  */
-export function getContentfulProxyUrl(src = "", format = ""): string {
+export function getContentfulProxyUrl(
+	src = "",
+	format = "",
+	width?: number,
+	quality = 85,
+): string {
 	if (!src) return "";
 
 	const imgFormat = format || src.split(".").pop();
-	return `/api/contentful-image?url=${encodeURIComponent(`${src}?fm=${imgFormat}`)}`;
+	const params = new URLSearchParams();
+	params.set("fm", imgFormat);
+
+	if (width) {
+		params.set("w", String(width));
+	}
+
+	if (quality && quality !== 85) {
+		params.set("q", String(quality));
+	}
+
+	return `/api/contentful-image?url=${encodeURIComponent(`${src}?${params.toString()}`)}`;
 }

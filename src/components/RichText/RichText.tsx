@@ -164,6 +164,8 @@ const options: Options = {
 					alt={fileName ?? ""}
 					width={width}
 					height={height}
+					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+					quality={90}
 				/>
 			);
 		},
@@ -266,6 +268,8 @@ const options: Options = {
 											alt={file.title}
 											width={hasImageDetails(file) ? file.details?.image?.width : undefined}
 											height={hasImageDetails(file) ? file.details?.image?.height : undefined}
+											sizes="(max-width: 768px) 100vw, 400px"
+											widths={[400, 800]}
 										/>
 										<ResponsiveHeadline size={4} as="h3">
 											{title}

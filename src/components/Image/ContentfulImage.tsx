@@ -17,6 +17,12 @@ export interface ContentfulImageProps {
 	objectFit?: CSSProperties["objectFit"];
 	/** How the image should be positioned within its container (CSS object-position). */
 	objectPosition?: CSSProperties["objectPosition"];
+	/** Responsive image widths for srcset. Defaults to [640, 1024, 1920] for Contentful images. */
+	widths?: number[];
+	/** Sizes attribute for responsive images. Defaults to "100vw". */
+	sizes?: string;
+	/** Image quality (1-100). Defaults to 85. */
+	quality?: number;
 	/** Props that will be passed to the underlying "img" element. */
 	imgProps?: Omit<ComponentPropsWithRef<"img">, "src" | "alt" | "width" | "height" | "style">;
 }
@@ -40,10 +46,21 @@ export const ContentfulImage = ({
 	height,
 	objectFit = "contain",
 	objectPosition,
+	widths = [640, 1024, 1920],
+	sizes = "100vw",
+	quality = 85,
 	imgProps = {},
 }: ContentfulImageProps) => {
 	const isContentful = isContentfulImage(src);
-	const defaultImgSrc = isContentful ? getContentfulProxyUrl(src) : src;
+	const defaultImgSrc = isContentful ? getContentfulProxyUrl(src, "", undefined, quality) : src;
+
+	// Generate srcset for responsive images
+	const generateSrcSet = (format: string) => {
+		if (!isContentful) return undefined;
+		return widths
+			.map((w) => `${getContentfulProxyUrl(src, format, w, quality)} ${w}w`)
+			.join(", ");
+	};
 
 	// Compose the style for the <img> element
 	const imgStyle: CSSProperties = {
@@ -57,8 +74,16 @@ export const ContentfulImage = ({
 		<picture id={id} className={className} style={style}>
 			{isContentful && (
 				<>
-					<source srcSet={getContentfulProxyUrl(src, "avif")} type="image/avif" />
-					<source srcSet={getContentfulProxyUrl(src, "webp")} type="image/webp" />
+					<source
+						srcSet={generateSrcSet("avif")}
+						type="image/avif"
+						sizes={sizes}
+					/>
+					<source
+						srcSet={generateSrcSet("webp")}
+						type="image/webp"
+						sizes={sizes}
+					/>
 				</>
 			)}
 			<img

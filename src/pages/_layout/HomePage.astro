@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import type { Entry } from "contentful";
 import { MiniCard } from "~components/Course/MiniCard";
 import { Leaderboard } from "~components/Leaderboard";
@@ -6,6 +7,7 @@ import { RichText } from "~components/RichText";
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
 import { contentfulCache } from "~utils/contentfulCache";
+import heroBg from "~/assets/admiral-baker-south-bg.webp";
 import type {
 	TypeCourseSkeleton,
 	TypeLeadersSkeleton,
@@ -91,17 +93,28 @@ const leaderItems = leaders.items;
 >
 	<div class={styles.homeWrapper}>
 		<section class={styles.homeHero}>
-			<MiniCard
-				title={"Upcoming Tournament"}
-				date={tournamentDate}
-				prices={tournamentPrices}
-				players={tournamentPlayers}
-				inclusions={tournamentInclusions}
-				course={courseName}
-				isCoursePage={false}
-				slug={courseSlug}
-				label="Details"
+			<Image
+				src={heroBg}
+				alt="Admiral Baker South Golf Course background"
+				class={styles.heroImage}
+				loading="eager"
+				fetchpriority="high"
+				widths={[640, 1024, 1920]}
+				sizes="100vw"
 			/>
+			<div class={styles.heroContent}>
+				<MiniCard
+					title={"Upcoming Tournament"}
+					date={tournamentDate}
+					prices={tournamentPrices}
+					players={tournamentPlayers}
+					inclusions={tournamentInclusions}
+					course={courseName}
+					isCoursePage={false}
+					slug={courseSlug}
+					label="Details"
+				/>
+			</div>
 		</section>
 		<section class={styles.homeColWrapper}>
 			{

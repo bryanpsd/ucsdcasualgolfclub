@@ -46,6 +46,8 @@ const seasonRecap = response.items.find((item) => item.fields.title?.includes(ye
 										? winner.fields.file?.details?.image?.height
 										: undefined
 								}
+								sizes="(max-width: 768px) 100vw, 400px"
+								widths={[400, 800]}
 							/>
 							<ResponsiveHeadline size={4} as="h3">
 								{winner && "fields" in winner ? winner.fields.title : ""}
