@@ -14,5 +14,6 @@ export const flightCardWrapper = style([
 
 export const highlighted = style({
 	backgroundColor: color.brand.yellow,
+	border: `1px solid ${color.brand.gold} !important`,
 	fontWeight: "bold",
 });
