@@ -268,8 +268,6 @@ const options: Options = {
 											alt={file.title}
 											width={hasImageDetails(file) ? file.details?.image?.width : undefined}
 											height={hasImageDetails(file) ? file.details?.image?.height : undefined}
-											sizes="(max-width: 768px) 100vw, 400px"
-											widths={[400, 800]}
 										/>
 										<ResponsiveHeadline size={4} as="h3">
 											{title}

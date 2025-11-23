@@ -19,11 +19,13 @@ export const seasonRecap = style([
 
 export const seasonRecapList = style([
 	tokens({
-		display: "flex",
-		flexDirection: { "xs-min": "column", "md-min": "row" },
+		display: "grid",
 		gap: 16,
-		marginX: "auto",
+		justifyContent: "center",
 	}),
+	{
+		gridTemplateColumns: "repeat(auto-fit, minmax(0, 200px))",
+	},
 ]);
 
 export const image = style({

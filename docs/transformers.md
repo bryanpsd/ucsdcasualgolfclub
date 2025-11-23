@@ -4,6 +4,76 @@
 
 The `contentfulTransformers.ts` module provides centralized, reusable utilities for transforming and normalizing data from Contentful API responses. These utilities eliminate code duplication and establish consistent data transformation patterns across the application.
 
+## Data Transformation Pipeline
+
+```mermaid
+flowchart LR
+    Raw["📦 Raw Contentful\nAPI Response"]
+    Extract["🔍 Extract Fields\n(extractFields)"] 
+    Validate["✅ Validate Data\n(parseContentfulDate)"] 
+    Transform["🔄 Transform\n(transformPlayerResults)"]
+    Sort["📊 Sort/Filter\n(sortByScore)"]
+    Format["💅 Format\n(formatLeaderboardRows)"]
+    Clean["✨ Clean UI Data"]
+    
+    Raw --> Extract
+    Extract --> Validate
+    Validate --> Transform
+    Transform --> Sort
+    Sort --> Format
+    Format --> Clean
+    
+    style Raw fill:#ffccbc
+    style Extract fill:#fff9c4
+    style Validate fill:#fff9c4
+    style Transform fill:#b3e5fc
+    style Sort fill:#b3e5fc
+    style Format fill:#c8e6c9
+    style Clean fill:#c8e6c9
+```
+
+## Utility Categories
+
+```mermaid
+graph TB
+    Root["🔧 Transformers Module"]
+    
+    Root --> Field["📋 Field Extraction"]
+    Root --> Date["📅 Date Handling"]
+    Root --> Course["⛳ Course & Tournaments"]
+    Root --> Player["👥 Player & Roster"]
+    Root --> Leader["🏆 Leaderboards"]
+    Root --> Image["🖼️ Image Optimization"]
+    
+    Field --> F1["extractFields()"]
+    
+    Date --> D1["parseContentfulDate()"]
+    Date --> D2["getLatestUpdatedDate()"]
+    
+    Course --> C1["extractCourseInfo()"]
+    Course --> C2["transformResultEntry()"]
+    Course --> C3["generateSlugWithYear()"]
+    Course --> C4["filterUpcomingTournaments()"]
+    
+    Player --> P1["transformPlayerResults()"]
+    Player --> P2["transformRosterPlayers()"]
+    
+    Leader --> L1["filterLeaderboardEntries()"]
+    Leader --> L2["sortByScore()"]
+    Leader --> L3["formatLeaderboardRows()"]
+    
+    Image --> I1["isContentfulImage()"]
+    Image --> I2["getContentfulProxyUrl()"]
+    
+    style Root fill:#e3f2fd
+    style Field fill:#fff9c4
+    style Date fill:#c8e6c9
+    style Course fill:#b3e5fc
+    style Player fill:#f8bbd0
+    style Leader fill:#ffccbc
+    style Image fill:#d1c4e9
+```
+
 ## Benefits
 
 - **Code Reusability**: Transform data once, use everywhere
@@ -267,12 +337,45 @@ const getTournaments = filterUpcomingTournaments(entries.items, cutoffDate);
 
 ## Code Quality Improvements
 
+```mermaid
+graph LR
+    subgraph "Before Refactor"
+        B1["~200 LOC"]
+        B2["High Duplication"]
+        B3["Manual Type Guards"]
+        B4["Scattered Logic"]
+    end
+    
+    subgraph "After Refactor"
+        A1["~50 LOC"]
+        A2["Zero Duplication"]
+        A3["Type-Safe Utilities"]
+        A4["Centralized Logic"]
+    end
+    
+    B1 -."75% reduction".-> A1
+    B2 -."100% reduction".-> A2
+    B3 -."Type safety".-> A3
+    B4 -."Single source".-> A4
+    
+    style B1 fill:#ffcdd2
+    style B2 fill:#ffcdd2
+    style B3 fill:#ffcdd2
+    style B4 fill:#ffcdd2
+    style A1 fill:#c8e6c9
+    style A2 fill:#c8e6c9
+    style A3 fill:#c8e6c9
+    style A4 fill:#c8e6c9
+```
+
+### Detailed Metrics
+
 | Metric                      | Before          | After             | Improvement            |
 | --------------------------- | --------------- | ----------------- | ---------------------- |
-| Lines of Code (transformed) | ~200            | ~50               | 75% reduction          |
-| Duplication                 | High            | None              | 100% reduction         |
-| Type Safety                 | Manual guards   | Utility functions | Better                 |
-| Maintainability             | Scattered logic | Centralized       | Significantly improved |
+| Lines of Code (transformed) | ~200            | ~50               | 🎯 75% reduction        |
+| Duplication                 | High            | None              | ✨ 100% elimination     |
+| Type Safety                 | Manual guards   | Utility functions | 🛡️ Significantly better |
+| Maintainability             | Scattered logic | Centralized       | 📈 Greatly improved     |
 
 ## Best Practices
 
