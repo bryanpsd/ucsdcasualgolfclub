@@ -35,7 +35,7 @@ async function processCourseTournaments(tournamentName) {
 			const tournaments = course.fields.tournaments?.["en-US"] || [];
 
 			if (!courseName) {
-				console.warn(`Course "${course.sys.id}" is missing a courseName.`);
+				console.warn(`⚠️  Course "${course.sys.id}" is missing a courseName.`);
 			}
 
 			for (const tournamentLink of tournaments) {
@@ -50,7 +50,7 @@ async function processCourseTournaments(tournamentName) {
 				}
 
 				if (tournament.sys.publishedVersion) {
-					console.log(`Processing published Tournament entry: ${tournamentTitle}`);
+					console.log(`🏌️  Processing published Tournament: ${tournamentTitle}`);
 					await processTournament(tournament, courseName, course);
 				}
 			}
@@ -67,23 +67,17 @@ async function processTournament(tournament, courseName, course) {
 
 		if (firstFlightPlayers.length > 0 && secondFlightPlayers.length > 0) {
 			console.log(
-				'Skipping Tournament "' +
-					tournament.fields.title?.["en-US"] +
-					'" as flights are already added.',
+				`⏭️  Skipping Tournament "${tournament.fields.title?.["en-US"]}" - flights already populated`,
 			);
 			return;
 		}
-
-		console.log("Tournament Fields:", tournament.fields);
 
 		const resultsExcelRef = tournament.fields.resultsExcel?.["en-US"];
 		const tournamentDate = tournament.fields.date?.["en-US"];
 
 		if (!resultsExcelRef) {
 			console.log(
-				'The Tournament "' +
-					tournament.fields.title?.["en-US"] +
-					'" does not have a resultsExcel field.',
+				`ℹ️  Tournament "${tournament.fields.title?.["en-US"]}" has no resultsExcel field - skipping`,
 			);
 			return;
 		}
@@ -95,9 +89,7 @@ async function processTournament(tournament, courseName, course) {
 
 		if (!resultsExcelUrl) {
 			console.log(
-				'The Tournament "' +
-					tournament.fields.title?.["en-US"] +
-					'" has an invalid resultsExcel asset (missing URL).',
+				`⚠️  Tournament "${tournament.fields.title?.["en-US"]}" has invalid resultsExcel asset (missing URL)`,
 			);
 			return;
 		}
@@ -114,8 +106,6 @@ async function processTournament(tournament, courseName, course) {
 		const sheet = workbook.Sheets[sheetName];
 		const jsonData = xlsx.utils.sheet_to_json(sheet);
 
-		console.log("Parsed Excel Data:", jsonData);
-
 		let currentFlight = null; // Track the current flight across rows
 
 		for (const row of jsonData) {
@@ -129,10 +119,10 @@ async function processTournament(tournament, courseName, course) {
 			// Update currentFlight based on the name
 			if (name === "1st Flight") {
 				currentFlight = "First Flight";
-				console.log(`Switching to Flight: ${currentFlight}`);
+				console.log(`📋 Switching to: ${currentFlight}`);
 			} else if (name === "2nd Flight") {
 				currentFlight = "Second Flight";
-				console.log(`Switching to Flight: ${currentFlight}`);
+				console.log(`📋 Switching to: ${currentFlight}`);
 			}
 
 			const index = row.Index ? Number.parseFloat(row.Index) : null;
@@ -181,7 +171,7 @@ async function processTournament(tournament, courseName, course) {
 				});
 
 				if (existingEntries.items.length > 0) {
-					console.log(`Result already exists for: ${resultData.title}. Skipping.`);
+					console.log(`⏭️  Result already exists: ${resultData.title} - skipping`);
 					continue;
 				}
 
@@ -233,7 +223,7 @@ async function processTournament(tournament, courseName, course) {
 					},
 				});
 
-				console.log(`Created draft entry for result: ${resultData.title}`);
+				console.log(`✅ Created draft entry: ${resultData.title}`);
 
 				// Add the results entry to the Player content type
 				const playerEntries = await environment.getEntries({
@@ -256,7 +246,7 @@ async function processTournament(tournament, courseName, course) {
 							},
 						},
 					});
-					console.log(`Created new Player entry for: ${name}`);
+					console.log(`➕ Created new Player: ${name}`);
 				}
 
 				const existingResults = player.fields.results?.["en-US"] || [];
@@ -277,7 +267,7 @@ async function processTournament(tournament, courseName, course) {
 
 				await player.update();
 
-				console.log(`Added result to Player: ${name}`);
+				console.log(`🔗 Linked result to Player: ${name}`);
 
 				// Add player to the appropriate flight if not already present
 				const playerLink = {
@@ -311,7 +301,7 @@ async function processTournament(tournament, courseName, course) {
 		};
 
 		await tournament.update();
-		console.log("Updated tournament with players in First Flight and Second Flight.");
+		console.log("✅ Updated tournament with First Flight and Second Flight players");
 	} catch (error) {
 		console.error("Error processing Tournament:", error);
 	}

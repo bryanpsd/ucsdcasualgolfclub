@@ -90,8 +90,8 @@ export const GoogleMap = ({
 					});
 				}
 			})
-			.catch((err) => {
-				console.error("Failed to load Google Maps script:", err);
+			.catch(() => {
+				// Silent failure - map is progressive enhancement
 			});
 
 		return () => {

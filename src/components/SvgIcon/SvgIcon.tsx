@@ -33,7 +33,11 @@ export const SvgIcon = forwardRef(
 		ref: PolymorphicRef<C>,
 	) => {
 		if (rest.component) {
-			console.error("`component` prop is deprecated. Use `as` instead");
+			if (import.meta.env.DEV) {
+				// Deprecation warning for development only
+				// eslint-disable-next-line no-console
+				console.error("`component` prop is deprecated. Use `as` instead");
+			}
 		}
 
 		const Component = asComponent || "svg";

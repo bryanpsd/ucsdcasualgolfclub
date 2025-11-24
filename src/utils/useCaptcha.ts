@@ -107,8 +107,9 @@ export const useCaptcha = () => {
 					if (import.meta.env.DEV) console.warn("useCaptcha: gre.ready threw", e);
 					setReady(true);
 				}
-			} catch (e) {
-				console.error("useCaptcha: failed to initialize", e);
+			} catch {
+				// Initialization failed - set ready to allow form to work without captcha
+				setReady(true);
 			}
 		})();
 
@@ -140,8 +141,8 @@ export const useCaptcha = () => {
 
 			const maybe = callable(action);
 			return String(await Promise.resolve(maybe));
-		} catch (e) {
-			console.error("useCaptcha execute failed", e);
+		} catch {
+			// reCAPTCHA execution failed - return empty string
 			return "";
 		}
 	};

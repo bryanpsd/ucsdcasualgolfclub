@@ -99,8 +99,8 @@ const { title = "UCSD Casual Golf Club", description = "" } = Astro.props;
 				await navigator.serviceWorker.register("/sw.js", {
 					scope: "/",
 				});
-			} catch (error) {
-				console.error("Service worker registration failed:", error);
+			} catch {
+				// Silent failure - service worker is progressive enhancement
 			}
 		});
 	}

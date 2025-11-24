@@ -17,7 +17,18 @@ export default defineConfig({
 		plugins: [viteTsconfigPaths(), vanillaExtractPlugin(), svgr()],
 		optimizeDeps: {
 			// Pre-bundle these to speed up dev
-			include: ["react", "react-dom", "@radix-ui/react-navigation-menu", "@radix-ui/react-dialog"],
+			include: [
+				"react",
+				"react-dom",
+				"react-dom/client",
+				"@radix-ui/react-navigation-menu",
+				"@radix-ui/react-dialog",
+				"@vanilla-extract/recipes",
+			],
+			exclude: ["@astrojs/react"],
+		},
+		ssr: {
+			noExternal: ["@vanilla-extract/css", "@vanilla-extract/recipes"],
 		},
 	},
 });
