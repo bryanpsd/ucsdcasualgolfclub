@@ -155,12 +155,10 @@ export const Table: React.FC<Props> = ({
 
 	// Guard against invalid data
 	if (!thead || !Array.isArray(thead)) {
-		console.error("Table: thead must be an array");
 		return null;
 	}
 
 	if (!tbody || !Array.isArray(tbody)) {
-		console.error("Table: tbody must be an array");
 		return null;
 	}
 

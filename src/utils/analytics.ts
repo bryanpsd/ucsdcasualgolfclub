@@ -23,14 +23,13 @@ declare global {
 export function trackEvent(eventName: string, params?: Record<string, unknown>): void {
 	if (typeof window === "undefined") return;
 	if (typeof window.gtag !== "function") {
-		console.warn("GA4 gtag not available. Event not tracked:", eventName, params);
 		return;
 	}
 
 	try {
 		window.gtag("event", eventName, params);
-	} catch (error) {
-		console.error("Failed to track GA4 event:", eventName, error);
+	} catch {
+		// Silent failure - analytics errors should not affect user experience
 	}
 }
 

@@ -165,17 +165,7 @@ export const TournamentResults: React.FC<TournamentResultsProps> = ({
 
 											// Make the first cell unique for Table row key, but only display course name
 											const uniqueRowKey = getStableUniqueRowKey(result, player.playerName, idx);
-											if (seenRowKeys.has(uniqueRowKey)) {
-												console.warn(
-													"DUPLICATE ROW KEY DETECTED:",
-													uniqueRowKey,
-													result,
-													player.playerName,
-													idx,
-												);
-											}
 											seenRowKeys.add(uniqueRowKey);
-
 											return [
 												{
 													value: result.course?.name || "N/A",

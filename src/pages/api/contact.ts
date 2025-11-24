@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { validateCaptcha } from "~actions/utils/captcha";
+import { log } from "~/utils/logger";
 
 export const CAPTCHA_THRESHOLD = Number(import.meta.env.RECAPTCHA_THRESHOLD) || 0.1;
 
@@ -60,18 +61,19 @@ export const POST: APIRoute = async ({ request }) => {
 				body: netlifyFormData.toString(),
 			});
 			netlifyText = await netlifyResponse.text();
-			console.log("Netlify response status:", netlifyResponse.status);
-			console.log("Netlify response body:", netlifyText);
 		} catch (err) {
 			lastError = err;
-			console.error("Netlify Forms POST error:", err);
+			log.error("Netlify Forms POST failed", err, {
+				url: netlifyUrl,
+				formName: "contact",
+			});
 		}
 
 		if (!netlifyResponse?.ok) {
-			console.error("Failed to submit to Netlify Forms:", {
+			log.error("Netlify Forms submission failed", lastError, {
 				status: netlifyResponse?.status,
-				body: netlifyText,
-				error: lastError ? String(lastError) : undefined,
+				body: netlifyText?.substring(0, 200), // Truncate long responses
+				formName: "contact",
 			});
 			return new Response(
 				JSON.stringify({
@@ -91,8 +93,8 @@ export const POST: APIRoute = async ({ request }) => {
 			status: 200,
 			headers: { "Content-Type": "application/json" },
 		});
-	} catch (err) {
-		console.error("Server error:", err);
+	} catch (error) {
+		log.error("Contact form server error", error);
 		return new Response(JSON.stringify({ error: "Server error. Please try again." }), {
 			status: 500,
 			headers: { "Content-Type": "application/json" },

@@ -241,6 +241,16 @@
 			}
 		},
 		{
+			"includes": ["**/utils/logger.ts", "**/utils/clientLogger.ts"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noConsole": "off"
+					}
+				}
+			}
+		},
+		{
 			"includes": ["*.config.{js,ts,mjs}", "**/*.config.{js,ts,mjs}"],
 			"linter": {
 				"rules": {

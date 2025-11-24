@@ -326,15 +326,10 @@ export function isContentfulImage(src = ""): boolean {
  * @param width - Optional width in pixels for resizing
  * @param quality - Optional quality (1-100, default 85)
  */
-export function getContentfulProxyUrl(
-	src = "",
-	format = "",
-	width?: number,
-	quality = 85,
-): string {
+export function getContentfulProxyUrl(src = "", format = "", width?: number, quality = 85): string {
 	if (!src) return "";
 
-	const imgFormat = format || src.split(".").pop();
+	const imgFormat = format || src.split(".").pop() || "jpg";
 	const params = new URLSearchParams();
 	params.set("fm", imgFormat);
 

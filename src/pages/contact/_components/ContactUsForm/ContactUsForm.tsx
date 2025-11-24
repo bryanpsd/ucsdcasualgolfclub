@@ -42,9 +42,8 @@ export const ContactUsForm = () => {
 				const { error } = await response.json();
 				toast.error(error || "There was a problem submitting the form.");
 			}
-		} catch (error) {
+		} catch {
 			toast.error("There was a problem submitting the form. Please try again.");
-			console.error("Error sending form:", error);
 		}
 	};
 

@@ -57,9 +57,7 @@ export const ContentfulImage = ({
 	// Generate srcset for responsive images
 	const generateSrcSet = (format: string) => {
 		if (!isContentful) return undefined;
-		return widths
-			.map((w) => `${getContentfulProxyUrl(src, format, w, quality)} ${w}w`)
-			.join(", ");
+		return widths.map((w) => `${getContentfulProxyUrl(src, format, w, quality)} ${w}w`).join(", ");
 	};
 
 	// Compose the style for the <img> element
@@ -74,16 +72,8 @@ export const ContentfulImage = ({
 		<picture id={id} className={className} style={style}>
 			{isContentful && (
 				<>
-					<source
-						srcSet={generateSrcSet("avif")}
-						type="image/avif"
-						sizes={sizes}
-					/>
-					<source
-						srcSet={generateSrcSet("webp")}
-						type="image/webp"
-						sizes={sizes}
-					/>
+					<source srcSet={generateSrcSet("avif")} type="image/avif" sizes={sizes} />
+					<source srcSet={generateSrcSet("webp")} type="image/webp" sizes={sizes} />
 				</>
 			)}
 			<img
