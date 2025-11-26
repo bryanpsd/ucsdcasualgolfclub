@@ -73,8 +73,8 @@ test.describe("Seasons Page", () => {
 		// Navigate to a specific season (e.g., 2024)
 		await page.goto("/seasons/2024");
 
-		// Should display season information
-		await expect(page.locator("h1, h2")).toBeVisible();
+		// Should display season information - check for h1 specifically
+		await expect(page.locator("h1").first()).toBeVisible();
 	});
 
 	test("should display course cards", async ({ page }) => {

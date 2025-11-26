@@ -10,15 +10,15 @@ test.describe("Contact Form", () => {
 		await expect(page.getByLabel(/name/i)).toBeVisible();
 		await expect(page.getByLabel(/email/i)).toBeVisible();
 		await expect(page.getByLabel(/message/i)).toBeVisible();
-		await expect(page.getByRole("button", { name: /send message/i })).toBeVisible();
+		await expect(page.getByRole("button", { name: /submit/i })).toBeVisible();
 	});
 
 	test("should show validation errors for empty required fields", async ({ page }) => {
-		await page.getByRole("button", { name: /send message/i }).click();
+		await page.getByRole("button", { name: /submit/i }).click();
 
 		// Wait for validation messages
-		await expect(page.getByText(/name is required/i)).toBeVisible();
-		await expect(page.getByText(/email is required/i)).toBeVisible();
+		await expect(page.getByText(/enter your name/i)).toBeVisible();
+		await expect(page.getByText(/enter a valid email/i)).toBeVisible();
 	});
 
 	test("should show validation error for invalid email", async ({ page }) => {
@@ -26,9 +26,9 @@ test.describe("Contact Form", () => {
 		await page.getByLabel(/email/i).fill("invalid-email");
 		await page.getByLabel(/message/i).fill("Test message");
 
-		await page.getByRole("button", { name: /send message/i }).click();
+		await page.getByRole("button", { name: /submit/i }).click();
 
-		await expect(page.getByText(/invalid email/i)).toBeVisible();
+		await expect(page.getByText(/enter a valid email/i)).toBeVisible();
 	});
 
 	test("should allow filling out the form", async ({ page }) => {
@@ -72,7 +72,7 @@ test.describe("Contact Form", () => {
 	});
 
 	test("should submit button be enabled when form is valid", async ({ page }) => {
-		const submitButton = page.getByRole("button", { name: /send message/i });
+		const submitButton = page.getByRole("button", { name: /submit/i });
 
 		// Initially enabled
 		await expect(submitButton).toBeEnabled();
