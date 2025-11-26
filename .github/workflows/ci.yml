@@ -44,10 +44,20 @@ jobs:
       - name: Run E2E tests
         run: pnpm test:e2e
         env:
-          # Add any required env vars for testing
+          # Contentful configuration
           CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_DELIVERY_TOKEN }}
+          CONTENTFUL_PREVIEW_TOKEN: ${{ secrets.CONTENTFUL_PREVIEW_TOKEN }}
           CONTENTFUL_ENVIRONMENT_ID: "master"
+          # Additional environment variables for E2E tests
+          RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
+          RECAPTCHA_PROJECT_ID: ${{ secrets.RECAPTCHA_PROJECT_ID }}
+          RECAPTCHA_USE_ENTERPRISE: "true"
+          DISABLE_CAPTCHA_VALIDATION: "true"
+          GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          PUBLIC_GOOGLE_MAP_ID_LIGHT: ${{ secrets.PUBLIC_GOOGLE_MAP_ID_LIGHT }}
+          PUBLIC_GOOGLE_MAP_ID_DARK: ${{ secrets.PUBLIC_GOOGLE_MAP_ID_DARK }}
 
       - name: Upload test results
         if: failure()
