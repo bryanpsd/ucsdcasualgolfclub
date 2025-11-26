@@ -28,3 +28,11 @@ pnpm-debug.log*
 .vscode/
 
 deno.lock
+
+# test coverage
+coverage/
+
+# playwright
+playwright-report/
+test-results/
+playwright/.cache/
