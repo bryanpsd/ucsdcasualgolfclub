@@ -17,7 +17,7 @@ export interface ContentfulImageProps {
 	objectFit?: CSSProperties["objectFit"];
 	/** How the image should be positioned within its container (CSS object-position). */
 	objectPosition?: CSSProperties["objectPosition"];
-	/** Responsive image widths for srcset. Defaults to [640, 1024, 1920] for Contentful images. */
+	/** Responsive image widths for srcset. Defaults to [768, 1920] for Contentful images. */
 	widths?: number[];
 	/** Sizes attribute for responsive images. Defaults to "100vw". */
 	sizes?: string;
@@ -46,17 +46,41 @@ export const ContentfulImage = ({
 	height,
 	objectFit = "contain",
 	objectPosition,
-	widths = [640, 1024, 1920],
+	widths = [768, 1920], // Reduced from 3 to 2 widths for fewer requests
 	sizes = "100vw",
 	quality = 85,
 	imgProps = {},
 }: ContentfulImageProps) => {
 	const isContentful = isContentfulImage(src);
-	const defaultImgSrc = isContentful ? getContentfulProxyUrl(src, "", undefined, quality) : src;
+	const isDev = import.meta.env.DEV;
+
+	// In development, use Contentful CDN directly to reduce proxy calls
+	const getImageUrl = (format: string, width?: number) => {
+		if (!isContentful) return src;
+		if (isDev && !format) {
+			// Dev mode: use Contentful directly for default src
+			return `https:${src}`;
+		}
+		return getContentfulProxyUrl(src, format, width, quality);
+	};
+
+	const defaultImgSrc = getImageUrl("");
 
 	// Generate srcset for responsive images
 	const generateSrcSet = (format: string) => {
 		if (!isContentful) return undefined;
+		if (isDev) {
+			// Dev mode: simpler srcset to reduce requests
+			return widths
+				.map((w) => {
+					const params = new URLSearchParams();
+					params.set("fm", format);
+					params.set("w", String(w));
+					if (quality !== 85) params.set("q", String(quality));
+					return `https:${src}?${params.toString()} ${w}w`;
+				})
+				.join(", ");
+		}
 		return widths.map((w) => `${getContentfulProxyUrl(src, format, w, quality)} ${w}w`).join(", ");
 	};
 
