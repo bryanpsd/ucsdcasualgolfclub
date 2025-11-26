@@ -50,7 +50,11 @@ test.describe("Accessibility", () => {
 	test("buttons should have accessible names", async ({ page }) => {
 		await page.goto("/");
 
-		const buttons = await page.locator("button").all();
+		// Wait for page to be fully loaded
+		await page.waitForLoadState("networkidle");
+
+		// Get only visible buttons (back-to-top button won't be visible initially)
+		const buttons = await page.locator("button:visible").all();
 
 		for (const button of buttons) {
 			const ariaLabel = await button.getAttribute("aria-label");

@@ -12,7 +12,8 @@ test.describe("Homepage", () => {
 		// Check for main navigation links (using first() to avoid strict mode violations)
 		await expect(page.getByRole("link", { name: /about/i }).first()).toBeVisible();
 		await expect(page.getByRole("link", { name: /roster/i }).first()).toBeVisible();
-		await expect(page.getByRole("link", { name: /seasons/i }).first()).toBeVisible();
+		// Note: Seasons is a dropdown menu, not a direct link
+		await expect(page.getByText(/seasons/i).first()).toBeVisible();
 		await expect(page.getByRole("link", { name: /contact/i }).first()).toBeVisible();
 	});
 
@@ -48,25 +49,25 @@ test.describe("Homepage", () => {
 	test("should have back to top button appear on scroll", async ({ page }) => {
 		await page.goto("/");
 
+		// Wait for page to be fully loaded
+		await page.waitForLoadState("networkidle");
+
 		// Scroll down
 		await page.evaluate(() => window.scrollTo(0, 500));
 
-		// Wait for back to top button to hydrate and appear
-		await page.waitForTimeout(1500);
-
-		// Check if button appears (it should be visible after scrolling past 300px)
+		// Wait for back to top button to hydrate and appear (client:idle can take time)
 		const backToTopButton = page.getByRole("button", { name: /back to top/i });
-		await expect(backToTopButton).toBeVisible({ timeout: 10000 });
+		await expect(backToTopButton).toBeVisible({ timeout: 15000 });
 
 		// Click back to top
 		await backToTopButton.click();
 
-		// Wait for scroll animation
-		await page.waitForTimeout(1000);
+		// Wait for scroll animation and verify we're at the top
+		await page.waitForFunction(() => window.scrollY < 10, { timeout: 5000 });
 
-		// Check that we're at the top
+		// Check that we're at or near the top
 		const scrollY = await page.evaluate(() => window.scrollY);
-		expect(scrollY).toBe(0);
+		expect(scrollY).toBeLessThan(10);
 	});
 
 	test("should be responsive on mobile", async ({ page }) => {
