@@ -12,6 +12,7 @@ export type LinkProps = ComponentPropsWithRef<"a"> &
 		trackLabel?: string;
 		trackCategory?: string;
 		trackParams?: Record<string, unknown>;
+		trackPriority?: "critical" | "standard" | "verbose";
 	};
 
 export const Link: FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps>(
@@ -25,6 +26,7 @@ export const Link: FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps>(
 			trackLabel,
 			trackCategory,
 			trackParams,
+			trackPriority = "verbose", // Links default to verbose
 			variant,
 			underline,
 			size,
@@ -39,12 +41,17 @@ export const Link: FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps>(
 				const label = trackLabel || (typeof children === "string" ? children : href);
 
 				if (isExternalUrl(href)) {
-					trackOutboundLink(href, label);
+					trackOutboundLink(href, label, trackPriority);
 				} else {
-					trackLinkClick(href, label, {
-						event_category: trackCategory || "navigation",
-						...trackParams,
-					});
+					trackLinkClick(
+						href,
+						label,
+						{
+							event_category: trackCategory || "navigation",
+							...trackParams,
+						},
+						trackPriority,
+					);
 				}
 			}
 

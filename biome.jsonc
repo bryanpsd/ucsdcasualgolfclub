@@ -221,7 +221,13 @@
 			}
 		},
 		{
-			"includes": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx", "**/test/setup.ts"],
+			"includes": [
+				"**/*.test.ts",
+				"**/*.test.tsx",
+				"**/*.spec.ts",
+				"**/*.spec.tsx",
+				"**/test/setup.ts"
+			],
 			"linter": {
 				"rules": {
 					"suspicious": {

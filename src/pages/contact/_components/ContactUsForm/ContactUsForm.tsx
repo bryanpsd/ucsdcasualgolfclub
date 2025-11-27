@@ -107,6 +107,7 @@ export const ContactUsForm = () => {
 					track={true}
 					trackLabel="Contact Form Submit"
 					trackCategory="contact_form"
+					trackPriority="critical"
 				>
 					Submit
 				</Button>
