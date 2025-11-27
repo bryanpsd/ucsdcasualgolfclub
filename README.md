@@ -17,6 +17,12 @@ cp .env.example .env
 
 2. Fill in your environment variables:
 	- **Contentful**: Get credentials from your Contentful space settings
+		- Set `CONTENTFUL_USE_PREVIEW=true` to see draft/unpublished content in local dev
+		- Set `CONTENTFUL_USE_PREVIEW=false` (or omit) to see only published content
+	- **Google Analytics**: Control event tracking verbosity
+		- Set `GA_TRACKING_MODE="minimal"` for only critical events (form submissions, conversions)
+		- Set `GA_TRACKING_MODE="all"` to track everything (all clicks, navigation, etc.)
+		- Set `GA_TRACKING_MODE="none"` to disable tracking entirely
 	- **Google reCAPTCHA**: Create a reCAPTCHA site at [Google reCAPTCHA Admin](https://www.google.com/recaptcha/admin)
 	- **Google Maps**: Get API key from [Google Cloud Console](https://console.cloud.google.com/)
 	- **GCP Credentials**: Service account JSON for reCAPTCHA Enterprise

@@ -49,6 +49,7 @@ jobs:
           CONTENTFUL_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_DELIVERY_TOKEN }}
           CONTENTFUL_PREVIEW_TOKEN: ${{ secrets.CONTENTFUL_PREVIEW_TOKEN || '' }}
           CONTENTFUL_ENVIRONMENT_ID: "master"
+          CONTENTFUL_USE_PREVIEW: "false"
           # Additional environment variables for E2E tests
           RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
           RECAPTCHA_PROJECT_ID: ${{ secrets.RECAPTCHA_PROJECT_ID }}
@@ -73,6 +74,7 @@ jobs:
           CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_DELIVERY_TOKEN }}
           CONTENTFUL_ENVIRONMENT_ID: "master"
+          CONTENTFUL_USE_PREVIEW: "false"
           RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
           RECAPTCHA_PROJECT_ID: ${{ secrets.RECAPTCHA_PROJECT_ID }}
           GCP_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}

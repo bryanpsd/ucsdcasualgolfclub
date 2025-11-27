@@ -27,6 +27,7 @@ export type ButtonProps<C extends ElementType = "button"> = PolymorphicComponent
 		trackLabel?: string;
 		trackCategory?: string;
 		trackParams?: Record<string, unknown>;
+		trackPriority?: "critical" | "standard" | "verbose";
 	}
 >;
 
@@ -78,6 +79,7 @@ export const Button = forwardRef(
 			trackLabel,
 			trackCategory,
 			trackParams,
+			trackPriority = "standard",
 			href,
 			...rest
 		}: ButtonProps<C>,
@@ -90,14 +92,18 @@ export const Button = forwardRef(
 					trackLabel ||
 					(typeof children === "string" ? children : href ? String(href) : "button_click");
 
-				trackButtonClick(label, {
-					event_category: trackCategory || "button_interaction",
-					button_variant: variant,
-					button_color: color,
-					button_size: size,
-					...(href && { link_url: href }),
-					...trackParams,
-				});
+				trackButtonClick(
+					label,
+					{
+						event_category: trackCategory || "button_interaction",
+						button_variant: variant,
+						button_color: color,
+						button_size: size,
+						...(href && { link_url: href }),
+						...trackParams,
+					},
+					trackPriority,
+				);
 			}
 
 			onClick?.(e as React.MouseEvent<HTMLButtonElement>);

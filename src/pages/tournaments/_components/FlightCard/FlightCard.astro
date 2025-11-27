@@ -91,10 +91,21 @@ const tableHeaders = [
 		: []),
 	...(courseChampionship ? ["Final Gross", "Final Net"] : []),
 ];
+
+// Create a slug from the title for the anchor ID
+const anchorId = title
+	.toLowerCase()
+	.replace(/\s+/g, "-")
+	.replace(/[^a-z0-9-]/g, "");
+// Use "results-link" only for the first flight (typically "First Flight")
+const shouldUseResultsLink = title.toLowerCase().includes("first");
+const headlineId = shouldUseResultsLink ? "results-link" : anchorId;
 ---
 
 <div class={styles.flightCardWrapper}>
-	<ResponsiveHeadline id="results-link" size={4} as="h2">{title}</ResponsiveHeadline>
+	<ResponsiveHeadline id={headlineId} size={4} as="h2">
+		{title}
+	</ResponsiveHeadline>
 	<div style="overflow-x: auto;">
 		<Table
 			client:load
@@ -205,3 +216,31 @@ const tableHeaders = [
 		/>
 	</div>
 </div>
+
+<script>
+	// Handle hash navigation for client-side routing and hydration
+	if (typeof window !== "undefined") {
+		// Function to scroll to hash target
+		const scrollToHash = () => {
+			const hash = window.location.hash;
+			if (hash) {
+				const target = document.querySelector(hash);
+				if (target) {
+					target.scrollIntoView({ behavior: "smooth", block: "start" });
+				}
+			}
+		};
+
+		// Scroll on page load (after hydration)
+		if (document.readyState === "complete") {
+			setTimeout(scrollToHash, 100);
+		} else {
+			window.addEventListener("load", () => {
+				setTimeout(scrollToHash, 100);
+			});
+		}
+
+		// Handle hash changes (for client-side navigation)
+		window.addEventListener("hashchange", scrollToHash);
+	}
+</script>

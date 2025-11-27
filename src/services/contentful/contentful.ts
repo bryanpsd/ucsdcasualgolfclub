@@ -11,13 +11,18 @@ export interface SimplePage {
 	};
 }
 
+// Determine if we should use preview mode
+const usePreview =
+	import.meta.env.CONTENTFUL_USE_PREVIEW === "true" ||
+	import.meta.env.CONTENTFUL_USE_PREVIEW === true;
+
+// In CI, always use delivery token. Otherwise, use preview if enabled
+const shouldUsePreview = !import.meta.env.CI && usePreview;
+
 export const contentfulClient = contentful.createClient({
 	space: import.meta.env.CONTENTFUL_SPACE_ID,
-	accessToken:
-		// In CI environments, always use delivery token even in dev mode
-		import.meta.env.CI || !import.meta.env.DEV
-			? import.meta.env.CONTENTFUL_DELIVERY_TOKEN
-			: import.meta.env.CONTENTFUL_PREVIEW_TOKEN,
-	host:
-		import.meta.env.CI || !import.meta.env.DEV ? "cdn.contentful.com" : "preview.contentful.com",
+	accessToken: shouldUsePreview
+		? import.meta.env.CONTENTFUL_PREVIEW_TOKEN
+		: import.meta.env.CONTENTFUL_DELIVERY_TOKEN,
+	host: shouldUsePreview ? "preview.contentful.com" : "cdn.contentful.com",
 });
