@@ -46,7 +46,7 @@ const getCurrentYear = cutoffDate.getFullYear() + 1;
 		{
 			getTournaments.map((item) => (
 				<CourseCard
-					client:load
+					client:visible
 					date={item?.tournaments[0].date}
 					clubChampionship={item?.tournaments[0].clubChampionship}
 					course={item?.course}

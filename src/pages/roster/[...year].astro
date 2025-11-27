@@ -57,7 +57,7 @@ const { year, players = [] } = Astro.props;
 	<div class={styles.subPageWrapper}>
 		<div style="overflow-x: auto;">
 			<Table
-				client:load
+				client:idle
 				thead={["Player", "Index"]}
 				tbody={players
 					.map((player) => {

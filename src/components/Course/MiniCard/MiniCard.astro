@@ -60,12 +60,12 @@ const validDate = date && !Number.isNaN(Date.parse(date)) ? new Date(date) : nul
 		</div>
 		{
 			(prices || players) && (
-				<CourseDetails client:load prices={prices} players={players} isMiniCard />
+				<CourseDetails client:visible prices={prices} players={players} isMiniCard />
 			)
 		}
 		{
 			isCoursePage && inclusions && inclusions.length > 0 && (
-				<CourseInclusions client:load tournament={{ inclusions: inclusions }} isMiniCard />
+				<CourseInclusions client:visible tournament={{ inclusions: inclusions }} isMiniCard />
 			)
 		}
 		{

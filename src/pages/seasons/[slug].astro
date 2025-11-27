@@ -158,7 +158,7 @@ if (currentYearTournaments.length > 0) {
 					const { tournament, course, slug } = item;
 					return (
 						<CourseCard
-							client:load
+							client:visible
 							hideCourseInfo
 							date={"fields" in tournament ? tournament.fields.date : undefined}
 							clubChampionship={

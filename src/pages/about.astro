@@ -34,7 +34,9 @@ const entries = await contentfulCache.cached(
 	<div class={styles.subPageWrapper}>
 		{
 			entries.items.map((item) => (
-				<div>{item.fields.content && <RichText richText={item.fields.content} client:load />}</div>
+				<div>
+					{item.fields.content && <RichText richText={item.fields.content} client:visible />}
+				</div>
 			))
 		}
 	</div>

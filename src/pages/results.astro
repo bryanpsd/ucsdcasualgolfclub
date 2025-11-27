@@ -37,6 +37,6 @@ const selectedPlayer = url.searchParams.get("playerName") || "";
 >
 	<Hero title="Results" />
 	<div class={styles.subPageWrapper}>
-		<TournamentResults players={players} client:load selectedPlayer={selectedPlayer} />
+		<TournamentResults players={players} client:idle selectedPlayer={selectedPlayer} />
 	</div>
 </Layout>

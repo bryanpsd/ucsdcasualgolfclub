@@ -60,7 +60,7 @@ const tableData = currentRosterPlayers.map((player) => [
 	<div class={commonStyles.subPageWrapper}>
 		<div style="overflow-x: auto;">
 			<Table
-				client:load
+				client:idle
 				thead={[
 					"Player",
 					`Index (as of: ${lastUpdated ?? "Unknown"}
