@@ -1,5 +1,5 @@
 import type { ReactElement, ReactNode } from "react";
-import { isValidElement } from "react";
+import { isValidElement, memo } from "react";
 import { Link } from "~/components/Link";
 import { trackEvent } from "~utils/analytics";
 import * as styles from "./Table.css";
@@ -40,7 +40,7 @@ type Props = {
 	sortableColumns?: number[]; // Array of column indices that are sortable
 };
 
-export const Table: React.FC<Props> = ({
+const TableComponent: React.FC<Props> = ({
 	thead,
 	tbody,
 	tfoot,
@@ -246,3 +246,5 @@ export const Table: React.FC<Props> = ({
 		</table>
 	);
 };
+
+export const Table = memo(TableComponent);

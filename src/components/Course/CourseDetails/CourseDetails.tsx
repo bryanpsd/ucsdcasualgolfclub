@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { PiUsersFourFill } from "react-icons/pi";
 import { concatClasses } from "~utils/concatClasses";
 import { CourseInclusions } from "../CourseInclusions";
@@ -12,7 +13,7 @@ interface Props {
 	tees?: string[];
 }
 
-export const CourseDetails = (props: Props) => {
+const CourseDetailsComponent = (props: Props) => {
 	const { prices, players, isMiniCard, inclusions } = props;
 
 	const formattedPrices = prices ? prices.map((price) => `$${price}`).join(" / ") : `$${prices}`;
@@ -55,3 +56,5 @@ export const CourseDetails = (props: Props) => {
 		</div>
 	);
 };
+
+export const CourseDetails = memo(CourseDetailsComponent);

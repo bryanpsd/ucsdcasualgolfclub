@@ -1,5 +1,5 @@
 import type { ComponentPropsWithRef, FC, MouseEvent } from "react";
-import { forwardRef } from "react";
+import { forwardRef, memo } from "react";
 import { isExternalUrl, trackLinkClick, trackOutboundLink } from "~utils/analytics";
 import { concatClasses } from "~utils/concatClasses";
 import type { LinkVariants } from "./Link.css";
@@ -15,7 +15,7 @@ export type LinkProps = ComponentPropsWithRef<"a"> &
 		trackPriority?: "critical" | "standard" | "verbose";
 	};
 
-export const Link: FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps>(
+const LinkComponent: FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps>(
 	(
 		{
 			children,
@@ -72,4 +72,6 @@ export const Link: FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps>(
 	},
 );
 
-Link.displayName = "Link";
+LinkComponent.displayName = "Link";
+
+export const Link = memo(LinkComponent);

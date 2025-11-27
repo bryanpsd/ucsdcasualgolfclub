@@ -1,4 +1,4 @@
-import { type ElementType, forwardRef } from "react";
+import { type ElementType, forwardRef, memo } from "react";
 
 import type { PolymorphicComponentPropWithRef, PolymorphicRef } from "~types/PolymorphicComponent";
 import { concatClasses } from "~utils/concatClasses";
@@ -20,7 +20,7 @@ export type TypographyProps<
 	}
 >;
 
-export const Typography = forwardRef<HTMLParagraphElement, TypographyProps<ElementType>>(
+const TypographyBase = forwardRef<HTMLParagraphElement, TypographyProps<ElementType>>(
 	function TypographyComponent<C extends ElementType = typeof defaultElement>(
 		{
 			as: asComponent,
@@ -62,4 +62,6 @@ export const Typography = forwardRef<HTMLParagraphElement, TypographyProps<Eleme
 	},
 );
 
-Typography.displayName = "Typography";
+TypographyBase.displayName = "Typography";
+
+export const Typography = memo(TypographyBase);

@@ -1,5 +1,11 @@
 import type { FC } from "react";
-import React, { type ElementType, forwardRef, type MouseEventHandler, type ReactNode } from "react";
+import React, {
+	type ElementType,
+	forwardRef,
+	type MouseEventHandler,
+	memo,
+	type ReactNode,
+} from "react";
 import type { PolymorphicComponentPropWithRef, PolymorphicRef } from "~types/PolymorphicComponent";
 import { trackButtonClick } from "~utils/analytics";
 import { concatClasses } from "~utils/concatClasses";
@@ -61,7 +67,7 @@ const Children: FC<ChildrenProps> = ({ startIcon, endIcon, size, classes, childr
 	</span>
 );
 
-export const Button = forwardRef(
+const ButtonComponent = forwardRef(
 	<C extends ElementType>(
 		{
 			as: asComponent,
@@ -129,4 +135,6 @@ export const Button = forwardRef(
 	},
 );
 
-Button.displayName = "Button";
+ButtonComponent.displayName = "Button";
+
+export const Button = memo(ButtonComponent);
