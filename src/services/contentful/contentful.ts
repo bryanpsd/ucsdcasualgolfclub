@@ -12,7 +12,7 @@ export interface SimplePage {
 }
 
 // Determine if we should use preview mode
-const usePreview =
+export const usePreview =
 	import.meta.env.CONTENTFUL_USE_PREVIEW === "true" ||
 	import.meta.env.CONTENTFUL_USE_PREVIEW === true;
 
@@ -26,3 +26,13 @@ export const contentfulClient = contentful.createClient({
 		: import.meta.env.CONTENTFUL_DELIVERY_TOKEN,
 	host: shouldUsePreview ? "preview.contentful.com" : "cdn.contentful.com",
 });
+
+// Simple fetch helper for pages; useful for bypassing cache in preview mode
+export async function fetchSimplePage(slug: string) {
+	const entries = await contentfulClient.getEntries({
+		content_type: "simplePage",
+		"fields.slug": slug,
+		limit: 1,
+	});
+	return entries;
+}

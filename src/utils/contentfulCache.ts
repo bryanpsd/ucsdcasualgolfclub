@@ -30,7 +30,7 @@ class ContentfulCache {
 	 * Generate a cache key from query parameters
 	 */
 	private generateKey(params: Record<string, unknown>): string {
-		return JSON.stringify(params);
+		return makeCacheKey(params);
 	}
 
 	/**
@@ -179,3 +179,36 @@ if (typeof process !== "undefined" && import.meta.env.PROD) {
 }
 
 export const contentfulCache = new ContentfulCache(storage);
+
+// Stable stringify that sorts object keys so cache keys are deterministic
+function sortObject<T>(value: T): T {
+	if (Array.isArray(value)) {
+		return value.map((v) => sortObject(v)) as unknown as T;
+	}
+
+	if (value && typeof value === "object") {
+		const obj = value as Record<string, unknown>;
+		const sorted: Record<string, unknown> = {};
+		Object.keys(obj)
+			.sort()
+			.forEach((key) => {
+				// cast through unknown to avoid using `any`
+				sorted[key] = sortObject(obj[key] as unknown);
+			});
+		return sorted as T;
+	}
+
+	return value;
+}
+
+export function makeCacheKey(params: Record<string, unknown>): string {
+	return JSON.stringify(sortObject(params));
+}
+
+export function makePageKey(content_type: string, slug: string) {
+	return makeCacheKey({ content_type, slug });
+}
+
+export function makeListKey(content_type: string) {
+	return makeCacheKey({ content_type });
+}

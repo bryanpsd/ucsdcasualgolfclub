@@ -7,7 +7,7 @@ import { Hero } from "~components/Hero";
 import { RichText } from "~components/RichText";
 
 import Layout from "~layouts/Layout.astro";
-import { contentfulClient } from "~services/contentful/contentful";
+import { contentfulClient, usePreview } from "~services/contentful/contentful";
 import { contentfulCache } from "~utils/contentfulCache";
 import * as styles from "~styles/globals/common.css";
 import type { TypeSimplePageSkeleton } from "~types/contentful";
@@ -16,16 +16,27 @@ import type { TypeSimplePageSkeleton } from "~types/contentful";
 const { slug = "" } = Astro.params;
 
 // Fetch the entry matching the slug
-const entry = await contentfulCache.cached(
-	async () =>
-		contentfulClient.getEntries<TypeSimplePageSkeleton>({
-			content_type: "simplePage",
-			"fields.slug": slug,
-			limit: 1,
-		}),
-	{ content_type: "simplePage", slug },
-	15 * 60 * 1000, // 15 minutes cache for simple pages
-);
+let entry;
+if (usePreview) {
+	// In preview mode we always fetch fresh data from Contentful
+	entry = await contentfulClient.getEntries<TypeSimplePageSkeleton>({
+		content_type: "simplePage",
+		"fields.slug": slug,
+		limit: 1,
+	});
+} else {
+	// In production/dev without preview, use cache for performance
+	entry = await contentfulCache.cached(
+		async () =>
+			contentfulClient.getEntries<TypeSimplePageSkeleton>({
+				content_type: "simplePage",
+				"fields.slug": slug,
+				limit: 1,
+			}),
+		{ content_type: "simplePage", slug },
+		15 * 60 * 1000, // 15 minutes cache for simple pages
+	);
+}
 
 // Handle cases where no entry is found
 if (!slug || !entry.items || entry.items.length === 0) {
