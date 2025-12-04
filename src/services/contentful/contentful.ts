@@ -1,5 +1,5 @@
 import type { EntryFieldTypes } from "contentful";
-import * as contentful from "contentful";
+import { createClient } from "contentful";
 
 export interface SimplePage {
 	contentTypeId: "simplePage";
@@ -11,7 +11,7 @@ export interface SimplePage {
 	};
 }
 
-// Determine if we should use preview mode
+// Export usePreview for backward compatibility
 export const usePreview =
 	import.meta.env.CONTENTFUL_USE_PREVIEW === "true" ||
 	import.meta.env.CONTENTFUL_USE_PREVIEW === true;
@@ -19,7 +19,11 @@ export const usePreview =
 // In CI, always use delivery token. Otherwise, use preview if enabled
 const shouldUsePreview = !import.meta.env.CI && usePreview;
 
-export const contentfulClient = contentful.createClient({
+/**
+ * Contentful client - uses direct API access to avoid circular dependency
+ * The proxy route at /api/contentful is available for webhook-based cache invalidation
+ */
+export const contentfulClient = createClient({
 	space: import.meta.env.CONTENTFUL_SPACE_ID,
 	accessToken: shouldUsePreview
 		? import.meta.env.CONTENTFUL_PREVIEW_TOKEN

@@ -5,6 +5,7 @@
 	"scripts": {
 		"start": "pnpm dev",
 		"dev": "astro dev --open",
+		"dev:preview": "CONTENTFUL_USE_PREVIEW=true astro dev --open",
 		"build": "astro build",
 		"check": "astro check",
 		"preview": "astro preview",
