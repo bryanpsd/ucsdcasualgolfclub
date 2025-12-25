@@ -136,7 +136,7 @@ const headlineId = shouldUseResultsLink ? "results-link" : anchorId;
 
 				const playerNameLink = {
 					value: playerDisplayName,
-					href: `/results?playerName=${encodeURIComponent(player.playerName)}`,
+					href: `/roster/player?playerName=${encodeURIComponent(player.playerName)}`,
 					isLink: true,
 					linkProps: {
 						track: true,

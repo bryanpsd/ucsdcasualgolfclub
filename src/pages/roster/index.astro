@@ -38,7 +38,7 @@ const lastUpdated = entries.items
 const tableData = currentRosterPlayers.map((player) => [
 	{
 		value: player?.playerName || "Unknown",
-		href: `/results?playerName=${encodeURIComponent(player?.playerName || "")}`,
+		href: `/roster/player?playerName=${encodeURIComponent(player?.playerName || "")}`,
 		isLink: true,
 		linkProps: {
 			track: true,
