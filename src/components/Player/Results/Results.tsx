@@ -63,6 +63,7 @@ export interface Player {
 	gross?: number;
 	net?: number;
 	flight?: "First Flight" | "Second Flight";
+	onCurrentRoster?: boolean;
 }
 
 type ResultsProps = {

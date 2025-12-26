@@ -19,13 +19,21 @@ export const statsCardWrapper = style([
 ]);
 
 export const statsCard = style([
-	{
-		backgroundColor: color.brand.navy,
-		color: color.brand.white,
-		padding: "1rem",
+	tokens({
 		display: "flex",
 		justifyContent: "space-between",
 		alignItems: "center",
 		flexDirection: "column",
+		padding: 12,
+	}),
+	{
+		backgroundColor: color.brand.navy,
+		color: color.brand.white,
 	},
+]);
+
+export const statValue = style([
+	tokens({
+		fontSize: "sizeFont6",
+	}),
 ]);

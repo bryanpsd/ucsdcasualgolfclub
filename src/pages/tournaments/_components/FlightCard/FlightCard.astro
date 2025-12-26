@@ -45,6 +45,12 @@ const {
 
 const getYearFromDate = (date?: string) => (date ? new Date(date).getFullYear() : undefined);
 
+// Helper function to build player URL
+const buildPlayerUrl = (playerName: string) => {
+	const params = new URLSearchParams({ playerName });
+	return `/roster/player?${params.toString()}`;
+};
+
 const tournamentYear = getYearFromDate(tournamentDate);
 
 const filteredResults = flight.map((player) => ({
@@ -136,7 +142,7 @@ const headlineId = shouldUseResultsLink ? "results-link" : anchorId;
 
 				const playerNameLink = {
 					value: playerDisplayName,
-					href: `/roster/player?playerName=${encodeURIComponent(player.playerName)}`,
+					href: buildPlayerUrl(player.playerName),
 					isLink: true,
 					linkProps: {
 						track: true,

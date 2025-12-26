@@ -29,13 +29,15 @@ const players = transformPlayerResults(entries.items);
 
 const url = new URL(Astro.request.url);
 const selectedPlayer = url.searchParams.get("playerName") || "";
+const currentPlayer = players.find((p) => p.playerName === selectedPlayer);
+const isOnCurrentRoster = currentPlayer?.onCurrentRoster ?? false;
 ---
 
 <Layout
-	title="Tournament Results | UCSD Casual Golf Club San Diego"
-	description="See the latest UCSD Casual Golf Club tournament results, scores, and highlights from our San Diego events."
+	title={`${selectedPlayer} ${isOnCurrentRoster ? "Stats & " : ""}Results | UCSD Casual Golf Club`}
+	description={`View ${selectedPlayer}'s tournament results, scores, and performance history with the UCSD Casual Golf Club.`}
 >
-	<Hero title="Player" />
+	<Hero title={`${selectedPlayer} ${isOnCurrentRoster ? "Stats & " : ""}Results`} />
 	<div class={styles.subPageWrapper}>
 		<PlayerComponent players={players} initialSelectedPlayer={selectedPlayer} client:idle />
 	</div>

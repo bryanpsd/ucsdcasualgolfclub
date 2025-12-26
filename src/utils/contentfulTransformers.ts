@@ -106,6 +106,7 @@ export function transformPlayerResults(
 			gross?: number;
 			net?: number;
 			flight?: "First Flight" | "Second Flight";
+			onCurrentRoster?: boolean;
 		};
 	}>,
 ) {
@@ -119,6 +120,7 @@ export function transformPlayerResults(
 			gross: entry.fields.gross,
 			net: entry.fields.net,
 			flight: entry.fields.flight,
+			onCurrentRoster: entry.fields.onCurrentRoster ?? false,
 		}))
 		.filter((player) => player.playerName !== "Unknown Player");
 }

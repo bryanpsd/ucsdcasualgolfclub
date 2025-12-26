@@ -15,15 +15,15 @@ export const Stats: React.FC<StatsProps> = ({ player }) => {
 			<dl className={styles.statsCardWrapper}>
 				<div className={styles.statsCard}>
 					<dt>Index</dt>
-					<dd>{player.handicapIndex ?? "N/A"}</dd>
+					<dd className={styles.statValue}>{player.handicapIndex ?? "N/A"}</dd>
 				</div>
 				<div className={styles.statsCard}>
 					<dt>Gross</dt>
-					<dd>{player.gross ?? "N/A"}</dd>
+					<dd className={styles.statValue}>{player.gross ?? "N/A"}</dd>
 				</div>
 				<div className={styles.statsCard}>
 					<dt>Net</dt>
-					<dd>{player.net ?? "N/A"}</dd>
+					<dd className={styles.statValue}>{player.net ?? "N/A"}</dd>
 				</div>
 			</dl>
 		</div>
