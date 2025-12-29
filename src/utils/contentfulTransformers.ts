@@ -107,6 +107,7 @@ export function transformPlayerResults(
 			net?: number;
 			flight?: "First Flight" | "Second Flight";
 			onCurrentRoster?: boolean;
+			yearlyStats?: unknown[];
 		};
 	}>,
 ) {
@@ -121,6 +122,18 @@ export function transformPlayerResults(
 			net: entry.fields.net,
 			flight: entry.fields.flight,
 			onCurrentRoster: entry.fields.onCurrentRoster ?? false,
+			yearlyStats: (entry.fields.yearlyStats || [])
+				.map((stat: any) => {
+					if (stat && "fields" in stat) {
+						return {
+							year: stat.fields.year ?? null,
+							gross: stat.fields.gross ?? null,
+							net: stat.fields.net ?? null,
+						};
+					}
+					return null;
+				})
+				.filter((stat): stat is NonNullable<typeof stat> => stat !== null),
 		}))
 		.filter((player) => player.playerName !== "Unknown Player");
 }

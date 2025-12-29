@@ -14,12 +14,14 @@ const banners = await Astro.callAction(server.getHeaderBanners, null);
 
 const { pathname } = Astro.url;
 
-// Show Christmas logo in December
-const currentMonth = new Date().getMonth();
-const isDecember = currentMonth === 11;
-const currentLogo = isDecember ? xmasLogo : logo;
-const logoHeight = isDecember ? 50 : 40;
-const logoWidth = isDecember ? 29 : 40;
+// Show Christmas logo only from December 1-25
+const currentDate = new Date();
+const currentMonth = currentDate.getMonth();
+const currentDay = currentDate.getDate();
+const isChristmasSeason = currentMonth === 11 && currentDay <= 25;
+const currentLogo = isChristmasSeason ? xmasLogo : logo;
+const logoHeight = isChristmasSeason ? 50 : 40;
+const logoWidth = isChristmasSeason ? 29 : 40;
 ---
 
 <a class={`sr-only ${styles.mainContentJumpLink}`} href="#main-content"> Jump to main content </a>

@@ -1,3 +1,4 @@
+import { ResponsiveHeadline } from "~/components/ResponsiveHeadline";
 import type { Player } from "../Results/Results";
 import * as styles from "./Stats.css";
 
@@ -17,6 +18,11 @@ export const Stats: React.FC<StatsProps> = ({ player }) => {
 					<dt>Index</dt>
 					<dd className={styles.statValue}>{player.handicapIndex ?? "N/A"}</dd>
 				</div>
+			</dl>
+			<ResponsiveHeadline size={3} as="h2">
+				Current Gross & Net
+			</ResponsiveHeadline>
+			<dl className={styles.statsCardWrapper}>
 				<div className={styles.statsCard}>
 					<dt>Gross</dt>
 					<dd className={styles.statValue}>{player.gross ?? "N/A"}</dd>

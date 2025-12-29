@@ -4,17 +4,18 @@ import { color, tokens } from "~styles";
 export const statsWrapper = style([
 	tokens({
 		display: "flex",
-		gap: 10,
 		flexDirection: "column",
+		width: "col-12",
+		gap: 16,
 	}),
 ]);
 
 export const statsCardWrapper = style([
 	tokens({
 		display: "flex",
-		flexDirection: { "xs-min": "column", "md-min": "row" },
+		flexDirection: { "xs-min": "column", "sm-min": "row" },
 		width: "col-12",
-		gap: 10,
+		gap: 16,
 	}),
 ]);
 
@@ -25,6 +26,7 @@ export const statsCard = style([
 		alignItems: "center",
 		flexDirection: "column",
 		padding: 12,
+		width: { "xs-min": "col-12", "sm-min": 60 },
 	}),
 	{
 		backgroundColor: color.brand.navy,

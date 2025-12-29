@@ -1,21 +1,28 @@
 import { style } from "@vanilla-extract/css";
-import { color } from "~styles";
+import { color, tokens } from "~styles";
 
-export const intro = style({
-	marginTop: "1rem",
-});
+export const totalWrapper = style([
+	tokens({
+		display: "inline-flex",
+		gap: 4,
+		paddingX: 4,
+		paddingY: 8,
+	}),
+	{
+		backgroundColor: color.brand.yellow,
+		color: color.brand.navy,
+		fontWeight: 600,
+	},
+]);
 
-export const select = style({
-	padding: "0.5rem",
-});
-
-export const resultTableWrapper = style({
-	marginTop: "1rem",
-	overflowX: "auto",
-	display: "flex",
-	flexDirection: "column",
-	gap: 12,
-});
+export const resultTableWrapper = style([
+	tokens({
+		overflowX: "auto",
+		display: "flex",
+		flexDirection: "column",
+		gap: 16,
+	}),
+]);
 
 export const highlighted = style({
 	backgroundColor: color.brand.yellow,

@@ -59,21 +59,22 @@ export const Player: React.FC<PlayerProps> = ({ players, initialSelectedPlayer =
 	};
 
 	return (
-		<div>
-			<select
-				id={selectId}
-				value={selectedPlayer}
-				onChange={handlePlayerChange}
-				className={styles.select}
-			>
-				<option value="">Select a Player</option>
-				{sortedPlayers.map((player) => (
-					<option key={player.playerName} value={player.playerName}>
-						{player.playerName}
-					</option>
-				))}
-			</select>
-
+		<div className={styles.playerWrapper}>
+			<div>
+				<select
+					id={selectId}
+					value={selectedPlayer}
+					onChange={handlePlayerChange}
+					className={styles.select}
+				>
+					<option value="">Select a Player</option>
+					{sortedPlayers.map((player) => (
+						<option key={player.playerName} value={player.playerName}>
+							{player.playerName}
+						</option>
+					))}
+				</select>
+			</div>
 			{selectedPlayer && currentPlayer && (
 				<div className={styles.playerWrapper}>
 					{currentPlayer.onCurrentRoster && <Stats player={currentPlayer} />}

@@ -1,12 +1,17 @@
 import { style } from "@vanilla-extract/css";
+import { tokens } from "~styles";
 
-export const playerWrapper = style({
-	display: "flex",
-	flexDirection: "column",
-	gap: 10,
-});
+export const playerWrapper = style([
+	tokens({
+		display: "flex",
+		flexDirection: "column",
+		gap: 16,
+	}),
+]);
 
-export const select = style({
-	padding: "0.5rem",
-	marginBottom: 20,
-});
+export const select = style([
+	tokens({
+		padding: 6,
+		width: "auto",
+	}),
+]);

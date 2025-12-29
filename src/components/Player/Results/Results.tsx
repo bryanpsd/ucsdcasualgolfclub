@@ -56,6 +56,12 @@ export interface Result {
 	} | null;
 }
 
+export interface YearlyStat {
+	year: number | null;
+	gross: number | null;
+	net: number | null;
+}
+
 export interface Player {
 	playerName: string;
 	results: Result[];
@@ -64,6 +70,7 @@ export interface Player {
 	net?: number;
 	flight?: "First Flight" | "Second Flight";
 	onCurrentRoster?: boolean;
+	yearlyStats?: YearlyStat[];
 }
 
 type ResultsProps = {
@@ -85,6 +92,21 @@ export const Results: React.FC<ResultsProps> = ({ players, selectedPlayer = "" }
 			return dateB - dateA;
 		});
 	}, [filteredPlayer]);
+
+	const resultsByYear = useMemo(() => {
+		if (!sortedResults.length) return new Map<number, Result[]>();
+
+		const yearMap = new Map<number, Result[]>();
+		for (const result of sortedResults) {
+			const year = result.date ? new Date(result.date).getFullYear() : 0;
+			const yearResults = yearMap.get(year) || [];
+			yearResults.push(result);
+			yearMap.set(year, yearResults);
+		}
+
+		// Sort years in descending order
+		return new Map([...yearMap.entries()].sort((a, b) => b[0] - a[0]));
+	}, [sortedResults]);
 
 	const lowestScores = useMemo(() => {
 		if (!filteredPlayer?.results?.length) {
@@ -111,7 +133,7 @@ export const Results: React.FC<ResultsProps> = ({ players, selectedPlayer = "" }
 	}, [filteredPlayer]);
 
 	if (!selectedPlayer || !filteredPlayer) {
-		return <p className={styles.intro}>Please select a player to view their results.</p>;
+		return <p>Please select a player to view their results.</p>;
 	}
 
 	if (sortedResults.length === 0) {
@@ -130,55 +152,77 @@ export const Results: React.FC<ResultsProps> = ({ players, selectedPlayer = "" }
 			<ResponsiveHeadline size={3} as="h2">
 				Results
 			</ResponsiveHeadline>
-			<Table
-				thead={[
-					"Course",
-					"Date",
-					"Flight",
-					"Gross",
-					"Course Handicap",
-					"Net",
-					"Putts",
-					"Closest To",
-					"Long Drive",
-					"Tournament Results",
-				]}
-				tbody={sortedResults.map((result, idx) => {
-					const tournamentUrl = buildTournamentUrl(result.date, result.course?.slug || null);
-					const uniqueRowKey = generateUniqueRowKey(result, filteredPlayer.playerName, idx);
+			{Array.from(resultsByYear.entries()).map(([year, yearResults]) => {
+				const yearStats = filteredPlayer.yearlyStats?.find((stat) => stat.year === year);
 
-					return [
-						{
-							value: result.course?.name || "N/A",
-							key: uniqueRowKey,
-						},
-						formatDate(result.date),
-						result.flight ?? "N/A",
-						{
-							value: result.gross?.toString() ?? "N/A",
-							className: result.gross === lowestScores.lowestGross ? styles.highlighted : undefined,
-						},
-						result.courseHandicap?.toString() ?? "N/A",
-						{
-							value: result.net?.toString() ?? "N/A",
-							className: result.net === lowestScores.lowestNet ? styles.highlighted : undefined,
-						},
-						{
-							value: result.putts?.toString() ?? "N/A",
-							className: result.putts === lowestScores.lowestPutts ? styles.highlighted : undefined,
-						},
-						result.closestTo?.length ? result.closestTo.join(", ") : null,
-						result.longDrive ?? null,
-						tournamentUrl ? (
-							<Link key={`link-${uniqueRowKey}`} href={tournamentUrl} variant="navy">
-								Results
-							</Link>
-						) : (
-							"N/A"
-						),
-					];
-				})}
-			/>
+				return (
+					<div key={`year-${year}`}>
+						<ResponsiveHeadline size={4} as="h3" style={{ marginBottom: 16 }}>
+							{year || "Unknown Year"}
+						</ResponsiveHeadline>
+						{yearStats && (
+							<dl className={styles.totalWrapper}>
+								<dt>Total Gross:</dt>
+								<dd>{yearStats.gross ?? "N/A"}</dd>
+								<dt>Total Net:</dt>
+								<dd>{yearStats.net ?? "N/A"}</dd>
+							</dl>
+						)}
+						<Table
+							thead={[
+								"Course",
+								"Date",
+								"Flight",
+								"Gross",
+								"Course Handicap",
+								"Net",
+								"Putts",
+								"Closest To",
+								"Long Drive",
+								"Tournament Results",
+							]}
+							tbody={yearResults.map((result, idx) => {
+								const tournamentUrl = buildTournamentUrl(result.date, result.course?.slug || null);
+								const uniqueRowKey = generateUniqueRowKey(result, filteredPlayer.playerName, idx);
+
+								return [
+									{
+										value: result.course?.name || "N/A",
+										key: uniqueRowKey,
+									},
+									formatDate(result.date),
+									result.flight ?? "N/A",
+									{
+										value: result.gross?.toString() ?? "N/A",
+										className:
+											result.gross === lowestScores.lowestGross ? styles.highlighted : undefined,
+									},
+									result.courseHandicap?.toString() ?? "N/A",
+									{
+										value: result.net?.toString() ?? "N/A",
+										className:
+											result.net === lowestScores.lowestNet ? styles.highlighted : undefined,
+									},
+									{
+										value: result.putts?.toString() ?? "N/A",
+										className:
+											result.putts === lowestScores.lowestPutts ? styles.highlighted : undefined,
+									},
+									result.closestTo?.length ? result.closestTo.join(", ") : null,
+									result.longDrive ?? null,
+									tournamentUrl ? (
+										<Link key={`link-${uniqueRowKey}`} href={tournamentUrl} variant="navy">
+											Results
+										</Link>
+									) : (
+										"N/A"
+									),
+								];
+							})}
+						/>
+					</div>
+				);
+			})}
 		</div>
 	);
 };
