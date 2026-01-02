@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import logo from "~/assets/brand-logo.webp";
+import xmasLogo from "~/assets/brand-logo-xmas.webp";
 import { server } from "~actions";
 import { Link } from "~/components/Link/Link";
 import { Banner } from "./components/Banner/Banner";
@@ -12,6 +13,15 @@ import { menuItems } from "./utils/headerItems";
 const banners = await Astro.callAction(server.getHeaderBanners, null);
 
 const { pathname } = Astro.url;
+
+// Show Christmas logo only from December 1-25
+const currentDate = new Date();
+const currentMonth = currentDate.getMonth();
+const currentDay = currentDate.getDate();
+const isChristmasSeason = currentMonth === 11 && currentDay <= 25;
+const currentLogo = isChristmasSeason ? xmasLogo : logo;
+const logoHeight = isChristmasSeason ? 50 : 40;
+const logoWidth = isChristmasSeason ? 29 : 40;
 ---
 
 <a class={`sr-only ${styles.mainContentJumpLink}`} href="#main-content"> Jump to main content </a>
@@ -30,7 +40,13 @@ const { pathname } = Astro.url;
 				underline="none"
 				size="medium"
 			>
-				<Image src={logo} alt="UCSD Casual Golf Club" height={30} width={30} aria-hidden="true" />
+				<Image
+					src={currentLogo}
+					alt="UCSD Casual Golf Club"
+					height={logoHeight}
+					width={logoWidth}
+					aria-hidden="true"
+				/>
 				UCSD Casual Golf Club
 			</Link>
 		</div>

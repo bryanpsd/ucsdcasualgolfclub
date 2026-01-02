@@ -15,29 +15,40 @@ interface PersistentStorage {
 
 class ContentfulCache {
 	private cache = new Map<string, CacheEntry<unknown>>();
-	private defaultTTL = 5 * 60 * 1000; // 5 minutes default
+	private defaultTTL: number;
 	private persistentStorage?: PersistentStorage;
+	private previewMode: boolean;
 
 	/**
 	 * Initialize with optional persistent storage backend
 	 * Can be Netlify Blobs, Redis, or filesystem
 	 */
-	constructor(storage?: PersistentStorage) {
+	constructor(storage?: PersistentStorage, previewMode = false) {
 		this.persistentStorage = storage;
+		this.previewMode = previewMode;
+
+		// In preview mode (dev with draft content), use 10 second cache or disable
+		// In production, use 5 minute cache
+		if (previewMode) {
+			this.defaultTTL = 10 * 1000; // 10 seconds in preview mode
+		} else {
+			this.defaultTTL = 5 * 60 * 1000; // 5 minutes in production
+		}
 	}
 
 	/**
 	 * Generate a cache key from query parameters
 	 */
 	private generateKey(params: Record<string, unknown>): string {
-		return JSON.stringify(params);
+		return makeCacheKey(params);
 	}
 
 	/**
 	 * Try to load from persistent storage if available
+	 * Skip persistent storage in preview mode for fresh content
 	 */
 	private async loadFromPersistent<T>(key: string, ttl: number): Promise<T | null> {
-		if (!this.persistentStorage) return null;
+		if (!this.persistentStorage || this.previewMode) return null;
 
 		try {
 			const stored = await this.persistentStorage.get(key);
@@ -58,9 +69,10 @@ class ContentfulCache {
 
 	/**
 	 * Save to persistent storage if available
+	 * Skip in preview mode to avoid caching draft content
 	 */
 	private async saveToPersistent<T>(key: string, data: T): Promise<void> {
-		if (!this.persistentStorage) return;
+		if (!this.persistentStorage || this.previewMode) return;
 
 		try {
 			const entry: CacheEntry<T> = {
@@ -148,10 +160,16 @@ class ContentfulCache {
 	}
 }
 
+// Check if we're in preview mode
+const isPreviewMode =
+	import.meta.env.CONTENTFUL_USE_PREVIEW === "true" ||
+	import.meta.env.CONTENTFUL_USE_PREVIEW === true;
+
 // Initialize with Netlify Blobs storage if available (server-side only)
+// Don't use persistent storage in preview mode
 let storage: PersistentStorage | undefined;
 
-if (typeof process !== "undefined" && import.meta.env.PROD) {
+if (typeof process !== "undefined" && import.meta.env.PROD && !isPreviewMode) {
 	try {
 		// Netlify Blobs storage adapter
 		const { getStore } = await import("@netlify/blobs");
@@ -178,4 +196,37 @@ if (typeof process !== "undefined" && import.meta.env.PROD) {
 	}
 }
 
-export const contentfulCache = new ContentfulCache(storage);
+export const contentfulCache = new ContentfulCache(storage, isPreviewMode);
+
+// Stable stringify that sorts object keys so cache keys are deterministic
+function sortObject<T>(value: T): T {
+	if (Array.isArray(value)) {
+		return value.map((v) => sortObject(v)) as unknown as T;
+	}
+
+	if (value && typeof value === "object") {
+		const obj = value as Record<string, unknown>;
+		const sorted: Record<string, unknown> = {};
+		Object.keys(obj)
+			.sort()
+			.forEach((key) => {
+				// cast through unknown to avoid using `any`
+				sorted[key] = sortObject(obj[key] as unknown);
+			});
+		return sorted as T;
+	}
+
+	return value;
+}
+
+export function makeCacheKey(params: Record<string, unknown>): string {
+	return JSON.stringify(sortObject(params));
+}
+
+export function makePageKey(content_type: string, slug: string) {
+	return makeCacheKey({ content_type, slug });
+}
+
+export function makeListKey(content_type: string) {
+	return makeCacheKey({ content_type });
+}

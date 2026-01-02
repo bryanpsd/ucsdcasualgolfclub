@@ -34,11 +34,17 @@ const lastUpdated = entries.items
 		day: "2-digit",
 	});
 
+// Helper function to build player URL
+const buildPlayerUrl = (playerName: string) => {
+	const params = new URLSearchParams({ playerName });
+	return `/roster/player?${params.toString()}`;
+};
+
 // Create table data with serializable link configuration
 const tableData = currentRosterPlayers.map((player) => [
 	{
 		value: player?.playerName || "Unknown",
-		href: `/results?playerName=${encodeURIComponent(player?.playerName || "")}`,
+		href: buildPlayerUrl(player?.playerName || ""),
 		isLink: true,
 		linkProps: {
 			track: true,

@@ -98,7 +98,18 @@ export function transformResultEntry(result: unknown) {
  * Filters out "Unknown Player" entries and normalizes all result data.
  */
 export function transformPlayerResults(
-	entries: Array<{ fields: { playerName?: string; results?: unknown[] } }>,
+	entries: Array<{
+		fields: {
+			playerName?: string;
+			results?: unknown[];
+			handicapIndex?: number;
+			gross?: number;
+			net?: number;
+			flight?: "First Flight" | "Second Flight";
+			onCurrentRoster?: boolean;
+			yearlyStats?: unknown[];
+		};
+	}>,
 ) {
 	return entries
 		.map((entry) => ({
@@ -106,6 +117,23 @@ export function transformPlayerResults(
 			results: (entry.fields.results || [])
 				.map(transformResultEntry)
 				.filter((result): result is NonNullable<typeof result> => result !== null),
+			handicapIndex: entry.fields.handicapIndex,
+			gross: entry.fields.gross,
+			net: entry.fields.net,
+			flight: entry.fields.flight,
+			onCurrentRoster: entry.fields.onCurrentRoster ?? false,
+			yearlyStats: (entry.fields.yearlyStats || [])
+				.map((stat: any) => {
+					if (stat && "fields" in stat) {
+						return {
+							year: stat.fields.year ?? null,
+							gross: stat.fields.gross ?? null,
+							net: stat.fields.net ?? null,
+						};
+					}
+					return null;
+				})
+				.filter((stat): stat is NonNullable<typeof stat> => stat !== null),
 		}))
 		.filter((player) => player.playerName !== "Unknown Player");
 }
