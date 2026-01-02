@@ -48,7 +48,14 @@ class ContentfulCache {
 	 * Skip persistent storage in preview mode for fresh content
 	 */
 	private async loadFromPersistent<T>(key: string, ttl: number): Promise<T | null> {
-		if (!this.persistentStorage || this.previewMode) return null;
+		if (this.previewMode) return null;
+
+		// Lazily initialize storage if not set
+		if (!this.persistentStorage) {
+			this.persistentStorage = await getStorage();
+		}
+
+		if (!this.persistentStorage) return null;
 
 		try {
 			const stored = await this.persistentStorage.get(key);
@@ -72,7 +79,14 @@ class ContentfulCache {
 	 * Skip in preview mode to avoid caching draft content
 	 */
 	private async saveToPersistent<T>(key: string, data: T): Promise<void> {
-		if (!this.persistentStorage || this.previewMode) return;
+		if (this.previewMode) return;
+
+		// Lazily initialize storage if not set
+		if (!this.persistentStorage) {
+			this.persistentStorage = await getStorage();
+		}
+
+		if (!this.persistentStorage) return;
 
 		try {
 			const entry: CacheEntry<T> = {
@@ -162,41 +176,53 @@ class ContentfulCache {
 
 // Check if we're in preview mode
 const isPreviewMode =
-	import.meta.env.CONTENTFUL_USE_PREVIEW === "true" ||
-	import.meta.env.CONTENTFUL_USE_PREVIEW === true;
+	process.env.CONTENTFUL_USE_PREVIEW === "true" || process.env.CONTENTFUL_USE_PREVIEW === "true";
 
-// Initialize with Netlify Blobs storage if available (server-side only)
-// Don't use persistent storage in preview mode
-let storage: PersistentStorage | undefined;
+// Lazy initialization function for Netlify Blobs storage
+let storagePromise: Promise<PersistentStorage | undefined> | undefined;
 
-if (typeof process !== "undefined" && import.meta.env.PROD && !isPreviewMode) {
-	try {
-		// Netlify Blobs storage adapter
-		const { getStore } = await import("@netlify/blobs");
-		const store = getStore("contentful-cache");
-
-		storage = {
-			async get(key: string) {
+async function getStorage(): Promise<PersistentStorage | undefined> {
+	if (!storagePromise) {
+		storagePromise = (async () => {
+			// Don't use persistent storage in preview mode
+			if (
+				typeof process !== "undefined" &&
+				process.env.NODE_ENV === "production" &&
+				!isPreviewMode
+			) {
 				try {
-					return await store.get(key, { type: "text" });
+					// Netlify Blobs storage adapter
+					const { getStore } = await import("@netlify/blobs");
+					const store = getStore("contentful-cache");
+
+					return {
+						async get(key: string) {
+							try {
+								return await store.get(key, { type: "text" });
+							} catch {
+								return null;
+							}
+						},
+						async set(key: string, value: string) {
+							try {
+								await store.set(key, value);
+							} catch {
+								// Silently fail
+							}
+						},
+					};
 				} catch {
-					return null;
+					// Netlify Blobs not available
+					return undefined;
 				}
-			},
-			async set(key: string, value: string) {
-				try {
-					await store.set(key, value);
-				} catch {
-					// Silently fail
-				}
-			},
-		};
-	} catch {
-		// Netlify Blobs not available
+			}
+			return undefined;
+		})();
 	}
+	return storagePromise;
 }
 
-export const contentfulCache = new ContentfulCache(storage, isPreviewMode);
+export const contentfulCache = new ContentfulCache(undefined, isPreviewMode);
 
 // Stable stringify that sorts object keys so cache keys are deterministic
 function sortObject<T>(value: T): T {
