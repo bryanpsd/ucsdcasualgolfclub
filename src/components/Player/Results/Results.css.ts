@@ -15,12 +15,17 @@ export const totalWrapper = style([
 	},
 ]);
 
-export const resultTableWrapper = style([
+export const resultWrapper = style([
 	tokens({
-		overflowX: "auto",
 		display: "flex",
 		flexDirection: "column",
 		gap: 16,
+	}),
+]);
+
+export const resultTableWrapper = style([
+	tokens({
+		overflowX: "auto",
 	}),
 ]);
 

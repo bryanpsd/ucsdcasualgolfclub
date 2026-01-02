@@ -138,7 +138,7 @@ export const Results: React.FC<ResultsProps> = ({ players, selectedPlayer = "" }
 
 	if (sortedResults.length === 0) {
 		return (
-			<div className={styles.resultTableWrapper}>
+			<div className={styles.resultWrapper}>
 				<ResponsiveHeadline size={3} as="h2">
 					Results
 				</ResponsiveHeadline>
@@ -148,7 +148,7 @@ export const Results: React.FC<ResultsProps> = ({ players, selectedPlayer = "" }
 	}
 
 	return (
-		<div className={styles.resultTableWrapper}>
+		<div className={styles.resultWrapper}>
 			<ResponsiveHeadline size={3} as="h2">
 				Results
 			</ResponsiveHeadline>
@@ -168,58 +168,63 @@ export const Results: React.FC<ResultsProps> = ({ players, selectedPlayer = "" }
 								<dd>{yearStats.net ?? "N/A"}</dd>
 							</dl>
 						)}
-						<Table
-							thead={[
-								"Course",
-								"Date",
-								"Flight",
-								"Gross",
-								"Course Handicap",
-								"Net",
-								"Putts",
-								"Closest To",
-								"Long Drive",
-								"Tournament Results",
-							]}
-							tbody={yearResults.map((result, idx) => {
-								const tournamentUrl = buildTournamentUrl(result.date, result.course?.slug || null);
-								const uniqueRowKey = generateUniqueRowKey(result, filteredPlayer.playerName, idx);
+						<div className={styles.resultTableWrapper}>
+							<Table
+								thead={[
+									"Course",
+									"Date",
+									"Flight",
+									"Gross",
+									"Course Handicap",
+									"Net",
+									"Putts",
+									"Closest To",
+									"Long Drive",
+									"Tournament Results",
+								]}
+								tbody={yearResults.map((result, idx) => {
+									const tournamentUrl = buildTournamentUrl(
+										result.date,
+										result.course?.slug || null,
+									);
+									const uniqueRowKey = generateUniqueRowKey(result, filteredPlayer.playerName, idx);
 
-								return [
-									{
-										value: result.course?.name || "N/A",
-										key: uniqueRowKey,
-									},
-									formatDate(result.date),
-									result.flight ?? "N/A",
-									{
-										value: result.gross?.toString() ?? "N/A",
-										className:
-											result.gross === lowestScores.lowestGross ? styles.highlighted : undefined,
-									},
-									result.courseHandicap?.toString() ?? "N/A",
-									{
-										value: result.net?.toString() ?? "N/A",
-										className:
-											result.net === lowestScores.lowestNet ? styles.highlighted : undefined,
-									},
-									{
-										value: result.putts?.toString() ?? "N/A",
-										className:
-											result.putts === lowestScores.lowestPutts ? styles.highlighted : undefined,
-									},
-									result.closestTo?.length ? result.closestTo.join(", ") : null,
-									result.longDrive ?? null,
-									tournamentUrl ? (
-										<Link key={`link-${uniqueRowKey}`} href={tournamentUrl} variant="navy">
-											Results
-										</Link>
-									) : (
-										"N/A"
-									),
-								];
-							})}
-						/>
+									return [
+										{
+											value: result.course?.name || "N/A",
+											key: uniqueRowKey,
+										},
+										formatDate(result.date),
+										result.flight ?? "N/A",
+										{
+											value: result.gross?.toString() ?? "N/A",
+											className:
+												result.gross === lowestScores.lowestGross ? styles.highlighted : undefined,
+										},
+										result.courseHandicap?.toString() ?? "N/A",
+										{
+											value: result.net?.toString() ?? "N/A",
+											className:
+												result.net === lowestScores.lowestNet ? styles.highlighted : undefined,
+										},
+										{
+											value: result.putts?.toString() ?? "N/A",
+											className:
+												result.putts === lowestScores.lowestPutts ? styles.highlighted : undefined,
+										},
+										result.closestTo?.length ? result.closestTo.join(", ") : null,
+										result.longDrive ?? null,
+										tournamentUrl ? (
+											<Link key={`link-${uniqueRowKey}`} href={tournamentUrl} variant="navy">
+												Results
+											</Link>
+										) : (
+											"N/A"
+										),
+									];
+								})}
+							/>
+						</div>
 					</div>
 				);
 			})}
