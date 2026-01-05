@@ -20,6 +20,7 @@ interface CourseCardProps extends TypeCourseProps {
 	tees?: string[];
 	type?: string;
 	tournamentNotes?: string[];
+	isFirstUpcoming?: boolean;
 }
 
 export const CourseCard = (props: CourseCardProps) => {
@@ -36,6 +37,7 @@ export const CourseCard = (props: CourseCardProps) => {
 		type,
 		clubChampionship,
 		tournamentNotes,
+		isFirstUpcoming,
 	} = props;
 
 	const isWednesday = date && new Date(date).getDay() === 3;
@@ -48,6 +50,7 @@ export const CourseCard = (props: CourseCardProps) => {
 				<div
 					className={styles.dateWrapper({
 						variant: isSpecialEvent ? "special" : isWednesday ? "secondary" : "default",
+						isUpcoming: isFirstUpcoming || undefined,
 					})}
 				>
 					<Typography variant="bodyLg" color={isSpecialEvent ? "primary" : "inverse"}>

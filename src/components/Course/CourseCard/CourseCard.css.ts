@@ -40,6 +40,11 @@ export const dateWrapper = recipe({
 				color: color.brand.navy,
 			},
 		},
+		isUpcoming: {
+			true: {
+				border: `4px solid ${color.brand.gold}`,
+			},
+		},
 	},
 });
 

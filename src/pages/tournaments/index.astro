@@ -33,6 +33,12 @@ const getTournaments = filterUpcomingTournaments(entries.items, cutoffDate).filt
 		(item?.tournaments?.[0]?.prices || item?.tournaments?.[0]?.players),
 );
 
+// Find the first upcoming tournament (one that hasn't happened yet)
+const now = new Date();
+const firstUpcomingIndex = getTournaments.findIndex(
+	(item) => item?.tournaments[0].date && new Date(item.tournaments[0].date) > now,
+);
+
 // Display year should be one ahead of the cutoff date's year
 const getCurrentYear = cutoffDate.getFullYear() + 1;
 ---
@@ -44,7 +50,7 @@ const getCurrentYear = cutoffDate.getFullYear() + 1;
 	<Hero title={`${getCurrentYear} Tournament Schedule`} />
 	<div class={styles.subPageWrapper}>
 		{
-			getTournaments.map((item) => (
+			getTournaments.map((item, index) => (
 				<CourseCard
 					client:visible
 					date={item?.tournaments[0].date}
@@ -58,6 +64,7 @@ const getCurrentYear = cutoffDate.getFullYear() + 1;
 					results={item?.tournaments[0].results}
 					inclusions={item?.tournaments[0].inclusions}
 					tees={item?.tournaments[0].tees}
+					isFirstUpcoming={index === firstUpcomingIndex}
 				/>
 			))
 		}
