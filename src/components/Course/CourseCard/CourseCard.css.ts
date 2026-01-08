@@ -20,7 +20,7 @@ export const dateWrapper = recipe({
 		tokens({
 			display: "flex",
 			flexDirection: "column",
-			width: { "xs-min": "col-12", "md-min": "col-2" },
+			width: { "xs-min": "col-12", "md-min": "col-3", "lg-min": "col-2" },
 			alignItems: "center",
 			justifyContent: "center",
 			paddingY: 10,
