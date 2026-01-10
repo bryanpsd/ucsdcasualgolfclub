@@ -36,7 +36,7 @@ const getTournaments = filterUpcomingTournaments(entries.items, cutoffDate).filt
 // Find the first upcoming tournament (one that hasn't happened yet)
 const now = new Date();
 const firstUpcomingIndex = getTournaments.findIndex(
-	(item) => item?.tournaments[0].date && new Date(item.tournaments[0].date) > now,
+	(item) => item?.tournaments[0].date && new Date(item.tournaments[0].date) >= now,
 );
 
 // Display year should be one ahead of the cutoff date's year
