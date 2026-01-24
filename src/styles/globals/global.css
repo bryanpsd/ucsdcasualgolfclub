@@ -12,6 +12,11 @@
 	scroll-behavior: smooth;
 }
 
+html {
+	container-type: scroll-state;
+	container-name: page;
+}
+
 body {
 	line-height: 1.5;
 	-webkit-font-smoothing: antialiased;

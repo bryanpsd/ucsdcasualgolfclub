@@ -4,35 +4,36 @@ import * as styles from "~/components/BackToTop/BackToTopButton.css";
 import { Button } from "~/components/Button";
 
 export const BackToTopButton = () => {
-	const [visible, setVisible] = useState(false);
+	// const [visible, setVisible] = useState(false);
 
-	useEffect(() => {
-		const handleScroll = () => {
-			setVisible(window.scrollY > 300);
-		};
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, []);
+	// useEffect(() => {
+	// 	const handleScroll = () => {
+	// 		setVisible(window.scrollY > 300);
+	// 	};
+	// 	window.addEventListener("scroll", handleScroll);
+	// 	return () => window.removeEventListener("scroll", handleScroll);
+	// }, []);
 
-	const scrollToTop = () => {
-		window.scrollTo({ top: 0, behavior: "smooth" });
-		if (window.location.hash) {
-			history.replaceState(null, "", window.location.pathname + window.location.search);
-		}
-	};
+	// const scrollToTop = () => {
+	// 	window.scrollTo({ top: 0, behavior: "smooth" });
+	// 	if (window.location.hash) {
+	// 		history.replaceState(null, "", window.location.pathname + window.location.search);
+	// 	}
+	// };
 
-	if (!visible) return null;
+	//if (!visible) return null;
 
 	return (
 		<Button
-			type="button"
+			as="a"
+			href="#top"
 			track
 			trackLabel="Back to Top Button"
 			color="primary"
 			variant="round"
 			className={styles.backToTopButton}
 			aria-label="Back to top"
-			onClick={scrollToTop}
+			//onClick={scrollToTop}
 		>
 			<FiArrowUp
 				size={48}
