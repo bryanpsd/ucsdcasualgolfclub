@@ -164,6 +164,7 @@ export function filterLeaderboardEntries(
 	entries: Array<{
 		fields: {
 			onCurrentRoster?: boolean;
+			threeRoundsCheck?: boolean;
 			roundsCheck?: boolean;
 			gross?: number;
 			net?: number;
