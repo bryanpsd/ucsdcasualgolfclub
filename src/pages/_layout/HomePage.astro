@@ -4,6 +4,8 @@ import type { Entry } from "contentful";
 import { MiniCard } from "~components/Course/MiniCard";
 import { Leaderboard } from "~components/Leaderboard";
 import { RichText } from "~components/RichText";
+import { ResponsiveHeadline } from "~components/ResponsiveHeadline";
+import { MdGolfCourse } from "react-icons/md";
 import Layout from "~layouts/Layout.astro";
 import { contentfulClient } from "~services/contentful/contentful";
 import { contentfulCache } from "~utils/contentfulCache";
@@ -85,6 +87,9 @@ const courseSlug = courseEntries.items.find((course) =>
 )?.fields.slug;
 
 const leaderItems = leaders.items;
+
+// Check if three rounds check is enabled (from Contentful field)
+const threeRoundsCheck = leaderItems.some((leader) => leader.fields.threeRoundsCheck === true);
 ---
 
 <Layout
@@ -125,9 +130,25 @@ const leaderItems = leaders.items;
 				))
 			}
 			<section class={styles.rightCol}>
-				<Leaderboard items={leaderItems} gross />
-				<Leaderboard items={leaderItems} net firstFlight />
-				<Leaderboard items={leaderItems} net secondFlight />
+				{
+					threeRoundsCheck ? (
+						<>
+							<Leaderboard items={leaderItems} gross />
+							<Leaderboard items={leaderItems} net firstFlight />
+							<Leaderboard items={leaderItems} net secondFlight />
+						</>
+					) : (
+						<div class={styles.rightColCard}>
+							<ResponsiveHeadline className={styles.rightColCardTitle} size={4} as="h2">
+								Leaderboards
+							</ResponsiveHeadline>
+							<div class={styles.rightColCardInfo}>
+								<MdGolfCourse size={48} />
+								<p>Will show when players complete 3 rounds.</p>
+							</div>
+						</div>
+					)
+				}
 			</section>
 		</section>
 	</div>

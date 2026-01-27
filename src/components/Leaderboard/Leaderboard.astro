@@ -40,6 +40,6 @@ const lastUpdatedDate = getLatestUpdatedDate(entries.items);
 	})()}
 	tfoot={[`Last updated: ${format(new Date(lastUpdatedDate), "M/d/yy")}`]}
 	emptyStateMessage={entries.items.some((item) => item.fields.onCurrentRoster)
-		? "Will show when players complete a minimum of 5 rounds."
+		? "Will show when players complete 3 rounds."
 		: "No data available"}
 />
