@@ -47,9 +47,6 @@ export const td = style([
 		paddingX: 4,
 		textAlign: "center",
 	}),
-	{
-		borderLeft: `1px solid ${color.tableBorder}`,
-	},
 ]);
 
 export const tfoot = style({

@@ -38,6 +38,8 @@ type Props = {
 	trackCategory?: string;
 	onSort?: (columnIndex: number) => void;
 	sortableColumns?: number[]; // Array of column indices that are sortable
+	// Custom empty state message
+	emptyStateMessage?: string;
 };
 
 const TableComponent: React.FC<Props> = ({
@@ -50,6 +52,7 @@ const TableComponent: React.FC<Props> = ({
 	trackCategory,
 	onSort,
 	sortableColumns = [],
+	emptyStateMessage,
 }) => {
 	const handleSort = (columnIndex: number) => {
 		if (onSort && sortableColumns.includes(columnIndex)) {
@@ -196,7 +199,7 @@ const TableComponent: React.FC<Props> = ({
 							className={styles.td}
 							style={{ textAlign: "center", padding: "2rem" }}
 						>
-							No data available
+							{emptyStateMessage || "No data available"}
 						</td>
 					</tr>
 				) : (
