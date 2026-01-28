@@ -123,12 +123,13 @@ export function transformPlayerResults(
 			flight: entry.fields.flight,
 			onCurrentRoster: entry.fields.onCurrentRoster ?? false,
 			yearlyStats: (entry.fields.yearlyStats || [])
-				.map((stat: any) => {
-					if (stat && "fields" in stat) {
+				.map((stat: unknown) => {
+					if (stat && typeof stat === "object" && "fields" in stat) {
+						const fields = stat.fields as Record<string, unknown>;
 						return {
-							year: stat.fields.year ?? null,
-							gross: stat.fields.gross ?? null,
-							net: stat.fields.net ?? null,
+							year: (fields.year as number) ?? null,
+							gross: (fields.gross as number) ?? null,
+							net: (fields.net as number) ?? null,
 						};
 					}
 					return null;
@@ -184,14 +185,14 @@ export function filterLeaderboardEntries(
 	const rows = entries
 		.filter((item) => item.fields.onCurrentRoster)
 		.map((item) => {
-			if (gross && item.fields.roundsCheck && item.fields.gross !== undefined) {
+			if (gross && item.fields.threeRoundsCheck && item.fields.gross !== undefined) {
 				return [item.fields.playerName, item.fields.gross] as [string, number];
 			}
 			if (
 				firstFlight &&
 				net &&
 				item.fields.net !== undefined &&
-				item.fields.roundsCheck &&
+				item.fields.threeRoundsCheck &&
 				item.fields.flight === "First Flight"
 			) {
 				return [item.fields.playerName, item.fields.net] as [string, number];
@@ -200,7 +201,7 @@ export function filterLeaderboardEntries(
 				secondFlight &&
 				net &&
 				item.fields.net !== undefined &&
-				item.fields.roundsCheck &&
+				item.fields.threeRoundsCheck &&
 				item.fields.flight === "Second Flight"
 			) {
 				return [item.fields.playerName, item.fields.net] as [string, number];
