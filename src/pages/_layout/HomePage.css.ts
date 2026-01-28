@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { tokens } from "~styles";
+import { color, tokens } from "~styles";
 import { contentPadding, pageMaxWidth } from "~styles/globals/common.css";
 
 export const homeWrapper = style([
@@ -64,4 +64,38 @@ export const rightCol = style([
 		width: { "xs-min": "col-12", "lg-min": "col-4" },
 		gap: 24,
 	}),
+]);
+
+export const rightColCard = style([
+	tokens({
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
+	}),
+	{
+		backgroundColor: color.brand.navy,
+		color: color.brand.white,
+	},
+]);
+
+export const rightColCardTitle = style([
+	tokens({
+		padding: 10,
+	}),
+]);
+
+export const rightColCardInfo = style([
+	tokens({
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
+		width: "col-12",
+		gap: 8,
+		padding: 10,
+	}),
+	{
+		borderTop: `1px solid ${color.brand.black}`,
+	},
 ]);

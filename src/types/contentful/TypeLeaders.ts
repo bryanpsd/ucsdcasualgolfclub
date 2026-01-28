@@ -14,6 +14,7 @@ export interface TypeLeadersFields {
 	gross?: EntryFieldTypes.Integer;
 	net?: EntryFieldTypes.Number;
 	flight?: EntryFieldTypes.Symbol<"First Flight" | "Second Flight">;
+	threeRoundsCheck?: EntryFieldTypes.Boolean;
 	roundsCheck?: EntryFieldTypes.Boolean;
 	guest?: EntryFieldTypes.Array<EntryFieldTypes.Symbol<"Yes">>;
 	onCurrentRoster?: EntryFieldTypes.Boolean;

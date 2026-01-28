@@ -39,4 +39,7 @@ const lastUpdatedDate = getLatestUpdatedDate(entries.items);
 		return formatLeaderboardRows(rows);
 	})()}
 	tfoot={[`Last updated: ${format(new Date(lastUpdatedDate), "M/d/yy")}`]}
+	emptyStateMessage={entries.items.some((item) => item.fields.onCurrentRoster)
+		? "Will show when players complete 3 rounds."
+		: "No data available"}
 />
