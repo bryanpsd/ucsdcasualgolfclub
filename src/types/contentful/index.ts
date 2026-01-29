@@ -65,3 +65,9 @@ export type {
 	TypeTournamentSkeleton,
 } from "./TypeTournament";
 export { isTypeTournament } from "./TypeTournament";
+export type {
+	TypeUpdateDate,
+	TypeUpdateDateFields,
+	TypeUpdateDateSkeleton,
+} from "./TypeUpdateDate";
+export { isTypeUpdateDate } from "./TypeUpdateDate";

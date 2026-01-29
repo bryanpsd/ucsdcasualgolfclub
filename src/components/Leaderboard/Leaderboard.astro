@@ -1,13 +1,8 @@
 ---
-import { format } from "date-fns";
 import { Table } from "~components/Table";
 import { contentfulClient } from "~services/contentful/contentful";
 import { contentfulCache } from "~utils/contentfulCache";
-import {
-	getLatestUpdatedDate,
-	filterLeaderboardEntries,
-	formatLeaderboardRows,
-} from "~utils/contentfulTransformers";
+import { filterLeaderboardEntries, formatLeaderboardRows } from "~utils/contentfulTransformers";
 import type { TypeLeadersSkeleton } from "~types/contentful";
 
 const { gross, net, firstFlight, secondFlight, items } = Astro.props;
@@ -24,7 +19,6 @@ const entries = shouldFetch
 			10 * 60 * 1000, // 10 minutes cache
 		)
 	: { items };
-const lastUpdatedDate = getLatestUpdatedDate(entries.items);
 ---
 
 <Table
@@ -38,8 +32,4 @@ const lastUpdatedDate = getLatestUpdatedDate(entries.items);
 		const rows = filterLeaderboardEntries(entries.items, { gross, net, firstFlight, secondFlight });
 		return formatLeaderboardRows(rows);
 	})()}
-	tfoot={[`Last updated: ${format(new Date(lastUpdatedDate), "M/d/yy")}`]}
-	emptyStateMessage={entries.items.some((item) => item.fields.onCurrentRoster)
-		? "Will show when players complete 3 rounds."
-		: "No data available"}
 />

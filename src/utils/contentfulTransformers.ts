@@ -179,14 +179,18 @@ export function filterLeaderboardEntries(
 		firstFlight?: boolean;
 		secondFlight?: boolean;
 	},
-): Array<[string, number]> {
+): Array<[string, number, boolean]> {
 	const { gross, net, firstFlight, secondFlight } = options;
 
 	const rows = entries
 		.filter((item) => item.fields.onCurrentRoster)
 		.map((item) => {
 			if (gross && item.fields.threeRoundsCheck && item.fields.gross !== undefined) {
-				return [item.fields.playerName, item.fields.gross] as [string, number];
+				return [item.fields.playerName, item.fields.gross, item.fields.roundsCheck ?? false] as [
+					string,
+					number,
+					boolean,
+				];
 			}
 			if (
 				firstFlight &&
@@ -195,7 +199,11 @@ export function filterLeaderboardEntries(
 				item.fields.threeRoundsCheck &&
 				item.fields.flight === "First Flight"
 			) {
-				return [item.fields.playerName, item.fields.net] as [string, number];
+				return [item.fields.playerName, item.fields.net, item.fields.roundsCheck ?? false] as [
+					string,
+					number,
+					boolean,
+				];
 			}
 			if (
 				secondFlight &&
@@ -204,11 +212,15 @@ export function filterLeaderboardEntries(
 				item.fields.threeRoundsCheck &&
 				item.fields.flight === "Second Flight"
 			) {
-				return [item.fields.playerName, item.fields.net] as [string, number];
+				return [item.fields.playerName, item.fields.net, item.fields.roundsCheck ?? false] as [
+					string,
+					number,
+					boolean,
+				];
 			}
 			return undefined;
 		})
-		.filter((row): row is [string, number] => row !== undefined);
+		.filter((row): row is [string, number, boolean] => row !== undefined);
 
 	// Sort ascending by score
 	return rows.sort((a, b) => a[1] - b[1]);
@@ -331,9 +343,13 @@ export function filterUpcomingTournaments(
 /**
  * Formats leaderboard rows for table display.
  * Converts score data to string format required by Table component.
+ * Adds asterisk (*) before player name if roundsCheck is not true.
  */
-export function formatLeaderboardRows(rows: Array<[string, number]>): string[][] {
-	return rows.map(([name, score]) => [String(name), String(score)]);
+export function formatLeaderboardRows(rows: Array<[string, number, boolean]>): string[][] {
+	return rows.map(([name, score, roundsCheck]) => [
+		roundsCheck ? String(name) : `${String(name)} *`,
+		String(score),
+	]);
 }
 
 /**

@@ -16,11 +16,12 @@ import type {
 	TypeSimplePageSkeleton,
 } from "~types/contentful";
 import type { TypeTournamentSkeleton } from "~types/contentful/TypeTournament";
+import type { TypeUpdateDateSkeleton } from "~types/contentful/TypeUpdateDate";
 
 import * as styles from "./HomePage.css";
 
 // Fetch all data in parallel for faster initial load
-const [entries, courseEntries, leaders] = await Promise.all([
+const [entries, courseEntries, leaders, updateDate] = await Promise.all([
 	// Fetch simplePage entries
 	contentfulCache.cached(
 		async () =>
@@ -51,6 +52,17 @@ const [entries, courseEntries, leaders] = await Promise.all([
 				limit: 300,
 			}),
 		{ content_type: "leaders", page: "home" },
+		10 * 60 * 1000, // 10 minutes cache
+	),
+	// Fetch update date for leaderboards
+	contentfulCache.cached(
+		async () =>
+			contentfulClient.getEntries<TypeUpdateDateSkeleton>({
+				content_type: "updateDate",
+				"fields.title": "Leaderboards",
+				limit: 1,
+			}),
+		{ content_type: "updateDate", title: "Leaderboards" },
 		10 * 60 * 1000, // 10 minutes cache
 	),
 ]);
@@ -90,6 +102,15 @@ const leaderItems = leaders.items;
 
 // Check if three rounds check is enabled (from Contentful field)
 const threeRoundsCheck = leaderItems.some((leader) => leader.fields.threeRoundsCheck === true);
+
+// Extract update date for leaderboards
+const leaderboardsUpdateDate = updateDate.items[0]?.fields.date
+	? (() => {
+			const dateStr = updateDate.items[0].fields.date;
+			const [year, month, day] = dateStr.split("-");
+			return `${parseInt(month)}/${parseInt(day)}/${year.slice(-2)}`;
+		})()
+	: null;
 ---
 
 <Layout
@@ -133,9 +154,15 @@ const threeRoundsCheck = leaderItems.some((leader) => leader.fields.threeRoundsC
 				{
 					threeRoundsCheck ? (
 						<>
+							<ResponsiveHeadline className={styles.rightColTitle} size={4} as="h2">
+								Leaderboards
+							</ResponsiveHeadline>
+							<p>Last Updated: {leaderboardsUpdateDate}</p>
 							<Leaderboard items={leaderItems} gross />
 							<Leaderboard items={leaderItems} net firstFlight />
 							<Leaderboard items={leaderItems} net secondFlight />
+
+							<p>* Has not played a minimum of 5 rounds</p>
 						</>
 					) : (
 						<div class={styles.rightColCard}>
