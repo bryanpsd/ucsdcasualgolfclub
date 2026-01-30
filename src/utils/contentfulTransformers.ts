@@ -158,19 +158,45 @@ export function generateSlugWithYear(fields: TypeCourseProps): string {
 }
 
 /**
+ * Gets current year results for a player (including December of previous year).
+ * Returns array of results within the qualifying date range.
+ */
+/**
+ * Counts results for a player within the current year including December of the previous year.
+ * Used to determine eligibility and whether to display asterisk.
+ */
+function countCurrentYearResults(results: unknown[]): number {
+	const now = new Date();
+	const currentYear = now.getFullYear();
+	const previousYear = currentYear - 1;
+	const cutoffDate = new Date(`${previousYear}-12-01`);
+	const endOfCurrentYear = new Date(`${currentYear}-11-30`);
+
+	return results.filter((result) => {
+		const resultFields = extractFields<{ date?: string }>(result);
+		if (!resultFields?.date) return false;
+
+		const resultDate = new Date(resultFields.date);
+		return resultDate >= cutoffDate && resultDate <= endOfCurrentYear;
+	}).length;
+}
+
+/**
  * Filters and transforms leaderboard entries for display.
  * Supports filtering by gross/net scoring and flight designation.
+ * Players must have minimum 3 results from current year + December of previous year to qualify.
+ * Players with fewer than 5 results will have an asterisk added to their name.
+ * Scores are displayed from the gross/net fields on the leader content type.
  */
 export function filterLeaderboardEntries(
 	entries: Array<{
 		fields: {
 			onCurrentRoster?: boolean;
-			threeRoundsCheck?: boolean;
-			roundsCheck?: boolean;
 			gross?: number;
 			net?: number;
 			flight?: string;
 			playerName?: string;
+			results?: unknown[];
 		};
 	}>,
 	options: {
@@ -185,45 +211,43 @@ export function filterLeaderboardEntries(
 	const rows = entries
 		.filter((item) => item.fields.onCurrentRoster)
 		.map((item) => {
-			if (gross && item.fields.threeRoundsCheck && item.fields.gross !== undefined) {
-				return [item.fields.playerName, item.fields.gross, item.fields.roundsCheck ?? false] as [
+			const resultCount = countCurrentYearResults(item.fields.results || []);
+			const hasFiveRounds = resultCount >= 5;
+			const hasMinimumRounds = resultCount >= 3;
+
+			if (!hasMinimumRounds) return undefined;
+
+			if (gross && item.fields.gross !== undefined && item.fields.gross !== null) {
+				return [item.fields.playerName, item.fields.gross, hasFiveRounds] as [
 					string,
 					number,
 					boolean,
 				];
 			}
-			if (
-				firstFlight &&
-				net &&
-				item.fields.net !== undefined &&
-				item.fields.threeRoundsCheck &&
-				item.fields.flight === "First Flight"
-			) {
-				return [item.fields.playerName, item.fields.net, item.fields.roundsCheck ?? false] as [
-					string,
-					number,
-					boolean,
-				];
+
+			if (net && item.fields.net !== undefined && item.fields.net !== null) {
+				if (firstFlight && item.fields.flight === "First Flight") {
+					return [item.fields.playerName, item.fields.net, hasFiveRounds] as [
+						string,
+						number,
+						boolean,
+					];
+				}
+				if (secondFlight && item.fields.flight === "Second Flight") {
+					return [item.fields.playerName, item.fields.net, hasFiveRounds] as [
+						string,
+						number,
+						boolean,
+					];
+				}
 			}
-			if (
-				secondFlight &&
-				net &&
-				item.fields.net !== undefined &&
-				item.fields.threeRoundsCheck &&
-				item.fields.flight === "Second Flight"
-			) {
-				return [item.fields.playerName, item.fields.net, item.fields.roundsCheck ?? false] as [
-					string,
-					number,
-					boolean,
-				];
-			}
+
 			return undefined;
 		})
 		.filter((row): row is [string, number, boolean] => row !== undefined);
 
-	// Sort ascending by score
-	return rows.sort((a, b) => a[1] - b[1]);
+	// Sort ascending by score and limit to top 10
+	return rows.sort((a, b) => a[1] - b[1]).slice(0, 10);
 }
 
 /**
@@ -343,11 +367,11 @@ export function filterUpcomingTournaments(
 /**
  * Formats leaderboard rows for table display.
  * Converts score data to string format required by Table component.
- * Adds asterisk (*) before player name if roundsCheck is not true.
+ * Adds asterisk (*) after player name if they don't have at least 5 results.
  */
 export function formatLeaderboardRows(rows: Array<[string, number, boolean]>): string[][] {
-	return rows.map(([name, score, roundsCheck]) => [
-		roundsCheck ? String(name) : `${String(name)} *`,
+	return rows.map(([name, score, hasFiveRounds]) => [
+		hasFiveRounds ? String(name) : `${String(name)} *`,
 		String(score),
 	]);
 }

@@ -44,11 +44,12 @@ const [entries, courseEntries, leaders, updateDate] = await Promise.all([
 		{ content_type: "course", page: "home" },
 		10 * 60 * 1000, // 10 minutes cache
 	),
-	// Fetch leaders data
+	// Fetch leaders data with results for dynamic filtering
 	contentfulCache.cached(
 		async () =>
 			contentfulClient.getEntries<TypeLeadersSkeleton>({
 				content_type: "leaders",
+				include: 2, // Include results and nested data
 				limit: 300,
 			}),
 		{ content_type: "leaders", page: "home" },
@@ -100,8 +101,29 @@ const courseSlug = courseEntries.items.find((course) =>
 
 const leaderItems = leaders.items;
 
-// Check if three rounds check is enabled (from Contentful field)
-const threeRoundsCheck = leaderItems.some((leader) => leader.fields.threeRoundsCheck === true);
+// Check if any players qualify for leaderboards (3+ results from current year + Dec of previous year)
+const hasQualifyingPlayers = (() => {
+	const now = new Date();
+	const currentYear = now.getFullYear();
+	const previousYear = currentYear - 1;
+	const cutoffDate = new Date(`${previousYear}-12-01`);
+	const endOfCurrentYear = new Date(`${currentYear}-11-30`);
+
+	return leaderItems.some((leader) => {
+		if (!leader.fields.onCurrentRoster) return false;
+
+		const results = leader.fields.results || [];
+		const qualifyingResults = results.filter((result) => {
+			if (!result || !("fields" in result)) return false;
+			const date = result.fields.date;
+			if (!date) return false;
+			const resultDate = new Date(date);
+			return resultDate >= cutoffDate && resultDate <= endOfCurrentYear;
+		});
+
+		return qualifyingResults.length >= 3;
+	});
+})();
 
 // Extract update date for leaderboards
 const leaderboardsUpdateDate = updateDate.items[0]?.fields.date
@@ -152,7 +174,7 @@ const leaderboardsUpdateDate = updateDate.items[0]?.fields.date
 			}
 			<section class={styles.rightCol}>
 				{
-					threeRoundsCheck ? (
+					hasQualifyingPlayers ? (
 						<>
 							<ResponsiveHeadline className={styles.rightColTitle} size={4} as="h2">
 								Leaderboards
