@@ -62,7 +62,13 @@ export const rightCol = style([
 		display: "flex",
 		flexDirection: "column",
 		width: { "xs-min": "col-12", "lg-min": "col-4" },
-		gap: 24,
+		gap: 12,
+	}),
+]);
+
+export const rightColTitle = style([
+	tokens({
+		padding: 0,
 	}),
 ]);
 

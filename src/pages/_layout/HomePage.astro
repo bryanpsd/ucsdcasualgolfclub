@@ -16,11 +16,12 @@ import type {
 	TypeSimplePageSkeleton,
 } from "~types/contentful";
 import type { TypeTournamentSkeleton } from "~types/contentful/TypeTournament";
+import type { TypeUpdateDateSkeleton } from "~types/contentful/TypeUpdateDate";
 
 import * as styles from "./HomePage.css";
 
 // Fetch all data in parallel for faster initial load
-const [entries, courseEntries, leaders] = await Promise.all([
+const [entries, courseEntries, leaders, updateDate] = await Promise.all([
 	// Fetch simplePage entries
 	contentfulCache.cached(
 		async () =>
@@ -43,14 +44,26 @@ const [entries, courseEntries, leaders] = await Promise.all([
 		{ content_type: "course", page: "home" },
 		10 * 60 * 1000, // 10 minutes cache
 	),
-	// Fetch leaders data
+	// Fetch leaders data with results for dynamic filtering
 	contentfulCache.cached(
 		async () =>
 			contentfulClient.getEntries<TypeLeadersSkeleton>({
 				content_type: "leaders",
+				include: 2, // Include results and nested data
 				limit: 300,
 			}),
 		{ content_type: "leaders", page: "home" },
+		10 * 60 * 1000, // 10 minutes cache
+	),
+	// Fetch update date for leaderboards
+	contentfulCache.cached(
+		async () =>
+			contentfulClient.getEntries<TypeUpdateDateSkeleton>({
+				content_type: "updateDate",
+				"fields.title": "Leaderboards",
+				limit: 1,
+			}),
+		{ content_type: "updateDate", title: "Leaderboards" },
 		10 * 60 * 1000, // 10 minutes cache
 	),
 ]);
@@ -88,8 +101,38 @@ const courseSlug = courseEntries.items.find((course) =>
 
 const leaderItems = leaders.items;
 
-// Check if three rounds check is enabled (from Contentful field)
-const threeRoundsCheck = leaderItems.some((leader) => leader.fields.threeRoundsCheck === true);
+// Check if any players qualify for leaderboards (3+ results from current year + Dec of previous year)
+const hasQualifyingPlayers = (() => {
+	const now = new Date();
+	const currentYear = now.getFullYear();
+	const previousYear = currentYear - 1;
+	const cutoffDate = new Date(`${previousYear}-12-01`);
+	const endOfCurrentYear = new Date(`${currentYear}-11-30`);
+
+	return leaderItems.some((leader) => {
+		if (!leader.fields.onCurrentRoster) return false;
+
+		const results = leader.fields.results || [];
+		const qualifyingResults = results.filter((result) => {
+			if (!result || !("fields" in result)) return false;
+			const date = result.fields.date;
+			if (!date) return false;
+			const resultDate = new Date(date);
+			return resultDate >= cutoffDate && resultDate <= endOfCurrentYear;
+		});
+
+		return qualifyingResults.length >= 3;
+	});
+})();
+
+// Extract update date for leaderboards
+const leaderboardsUpdateDate = updateDate.items[0]?.fields.date
+	? (() => {
+			const dateStr = updateDate.items[0].fields.date;
+			const [year, month, day] = dateStr.split("-");
+			return `${parseInt(month)}/${parseInt(day)}/${year.slice(-2)}`;
+		})()
+	: null;
 ---
 
 <Layout
@@ -131,11 +174,17 @@ const threeRoundsCheck = leaderItems.some((leader) => leader.fields.threeRoundsC
 			}
 			<section class={styles.rightCol}>
 				{
-					threeRoundsCheck ? (
+					hasQualifyingPlayers ? (
 						<>
+							<ResponsiveHeadline className={styles.rightColTitle} size={4} as="h2">
+								Leaderboards
+							</ResponsiveHeadline>
+							<p>Last Updated: {leaderboardsUpdateDate}</p>
 							<Leaderboard items={leaderItems} gross />
 							<Leaderboard items={leaderItems} net firstFlight />
 							<Leaderboard items={leaderItems} net secondFlight />
+
+							<p>* Has not played a minimum of 5 rounds</p>
 						</>
 					) : (
 						<div class={styles.rightColCard}>
