@@ -1,6 +1,7 @@
 ---
 import { Link } from "~/components/Link/Link";
 import { Typography } from "~components/Typography";
+import { footerItems, pastSeasonsItems } from "./utils/footerItems";
 import * as styles from "./Footer.css";
 
 const currentDate = new Date();
@@ -9,87 +10,57 @@ const year = currentDate.getFullYear();
 
 <footer class={styles.footer}>
 	<div class={styles.footerContent}>
-		<nav>
-			<ul class={styles.footerList}>
-				<li class={styles.footerListItem}>
-					<Link
-						className={styles.footerLink}
-						href="/tournaments"
-						track={true}
-						trackCategory="footer"
-						client:visible
-						variant="navy"
-					>
-						Tournaments
-					</Link>
-				</li>
-				<li class={styles.footerListItem}>
-					<Link
-						className={styles.footerLink}
-						href="/roster"
-						track={true}
-						trackCategory="footer"
-						client:visible
-						variant="navy"
-					>
-						Roster
-					</Link>
-				</li>
-				<li class={styles.footerListItem}>
-					<Link
-						className={styles.footerLink}
-						href="/about"
-						track={true}
-						trackCategory="footer"
-						client:visible
-						variant="navy"
-					>
-						About
-					</Link>
-				</li>
-				<li class={styles.footerListItem}>
-					<Link
-						className={styles.footerLink}
-						href="/contact"
-						track={true}
-						trackCategory="footer"
-						client:visible
-						variant="navy"
-					>
-						Contact
-					</Link>
-				</li>
-				<li class={styles.footerListItem}>
-					<Link
-						className={styles.footerLink}
-						href="https://membership.scga.org/start/join/?cid=885"
-						target="_blank"
-						track={true}
-						trackCategory="footer"
-						trackLabel="Join the Club"
-						client:visible
-						variant="navy"
-					>
-						Join the Club
-					</Link>
-				</li>
-				<li class={styles.footerListItem}>
-					<Link
-						className={styles.footerLink}
-						href="https://www.instagram.com/ucsdcasualgolfclub/"
-						target="_blank"
-						track={true}
-						trackCategory="footer"
-						trackLabel="Instagram"
-						client:visible
-						variant="navy"
-					>
-						Instagram
-					</Link>
-				</li>
-			</ul>
+		<nav class={styles.footerNavigation}>
+			{
+				footerItems.map((section) => (
+					<div class={styles.footerSection}>
+						<Typography variant="headlineSm" as="h2">
+							{section.title}
+						</Typography>
+						<ul class={styles.footerSectionList}>
+							{section.links.map((link) => (
+								<li class={styles.footerSectionItem}>
+									<Link
+										className={styles.footerLink}
+										href={link.href}
+										target={link.target}
+										track={true}
+										trackCategory="footer"
+										trackLabel={link.label}
+										client:visible
+										variant="navy"
+									>
+										{link.label}
+									</Link>
+								</li>
+							))}
+						</ul>
+						{section.title === "Tournaments" && pastSeasonsItems.length > 0 && (
+							<div class={styles.footerSelectContainer}>
+								<label for="footer-past-seasons" class={styles.footerSelectLabel}>
+									Past Seasons
+								</label>
+								<select
+									id="footer-past-seasons"
+									class={styles.footerSelect}
+									onchange="if(this.value) window.location.href = this.value"
+								>
+									<option value="" selected disabled>
+										Select a year
+									</option>
+									{pastSeasonsItems.map((item) => (
+										<option value={item.href}>{item.label}</option>
+									))}
+								</select>
+							</div>
+						)}
+					</div>
+				))
+			}
 		</nav>
 
-		<Typography className={styles.footerCopyright}>&copy;{year} UCSD Casual Golf Club</Typography>
+		<div class={styles.footerBottom}>
+			<Typography className={styles.footerCopyright}>&copy;{year} UCSD Casual Golf Club</Typography>
+		</div>
 	</div>
 </footer>

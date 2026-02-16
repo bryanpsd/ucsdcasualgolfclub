@@ -19,6 +19,10 @@ export const mainNavItem = style([
 		transition: "background-color 0.2s",
 		backgroundColor: "transparent",
 		selectors: {
+			'&[data-mobile-nav-item="true"]': {
+				paddingLeft: 0,
+				paddingRight: 0,
+			},
 			"&:hover,&:focus": {
 				color: color.brand.navy,
 				backgroundColor: color.brand.yellow,
@@ -40,12 +44,10 @@ export const mainNavItemArrow = style([
 		fill: color.brand.navy,
 		width: "1em",
 		height: "1em",
-		"@media": {
-			[breakpointQuery["sm-min"]]: {
+		selectors: {
+			[`${mainNavItemRoot} &`]: {
 				fill: color.brand.white,
 			},
-		},
-		selectors: {
 			[`${mainNavItem}[data-state="open"] > &`]: {
 				transform: "rotate(-180deg)",
 				fill: color.brand.navy,

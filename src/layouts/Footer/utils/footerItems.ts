@@ -1,6 +1,5 @@
 import { contentfulClient } from "../../../services/contentful/contentful";
 import { contentfulCache } from "../../../utils/contentfulCache";
-import type { MainNavProps } from "../components/MainNav";
 
 const getAvailableSeasons = async () => {
 	const entries = await contentfulCache.cached(
@@ -54,53 +53,60 @@ const generateSeasonsLinks = async () => {
 	const unique = Array.from(new Set(availableSeasons));
 	const past = unique.filter((y) => y < currentYear).sort((a, b) => b - a);
 
-	return past.map((year) => ({ label: year.toString(), href: `/seasons/${year}` }));
+	return past.slice(0, 5).map((year) => ({ label: year.toString(), href: `/seasons/${year}` }));
 };
 
 const pastSeasonsLinks = await generateSeasonsLinks();
 
-export const menuItems: MainNavProps["items"] = {
-	label: "Main",
-	menuItems: [
-		{
-			label: "Club",
-			links: [
-				{ label: "About", href: "/about" },
-				{
-					label: "Roster",
-					href: "/roster",
-				},
-				{ label: "Club Champions", href: "/club-champions" },
-			],
-		},
-		{
-			label: "Tournaments",
-			links: [
-				{ label: `${new Date().getFullYear()} Tournaments`, href: "/tournaments" },
-				{
-					label: "Past Seasons",
-					isSelect: true,
-					links: pastSeasonsLinks,
-				},
-			],
-		},
-		{
-			label: "Contact",
-			href: "/contact",
-			icon: "mail",
-			hideLabel: true,
-		},
-		{
-			label: "Instagram",
-			href: "https://www.instagram.com/ucsdcasualgolfclub/",
-			target: "_blank",
-			icon: "instagram",
-			hideLabel: true,
-		},
-		{
-			label: "Join/Renew",
-			href: "https://membership.scga.org/start/join/?cid=885",
-			target: "_blank",
-		},
-	],
+type FooterLink = {
+	label: string;
+	href: string;
+	target?: string;
+	track?: boolean;
+	trackCategory?: string;
 };
+
+export type FooterSection = {
+	title: string;
+	links: FooterLink[];
+};
+
+export const footerItems: FooterSection[] = [
+	{
+		title: "Club",
+		links: [
+			{ label: "About", href: "/about" },
+			{ label: "Roster", href: "/roster" },
+			{ label: "Club Champions", href: "/club-champions" },
+		],
+	},
+	{
+		title: "Tournaments",
+		links: [{ label: `${new Date().getFullYear()} Tournaments`, href: "/tournaments" }],
+	},
+	{
+		title: "Membership",
+		links: [
+			{
+				label: "Join/Renew",
+				href: "https://membership.scga.org/start/join/?cid=885",
+				target: "_blank",
+			},
+		],
+	},
+	{
+		title: "Connect",
+		links: [
+			{
+				label: "Contact",
+				href: "/contact",
+			},
+			{
+				label: "Instagram",
+				href: "https://www.instagram.com/ucsdcasualgolfclub/",
+				target: "_blank",
+			},
+		],
+	},
+];
+export const pastSeasonsItems = pastSeasonsLinks;

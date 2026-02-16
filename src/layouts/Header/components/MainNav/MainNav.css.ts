@@ -83,6 +83,84 @@ export const mainNavSubItem = style([
 	},
 ]);
 
+export const mainNavSubsection = style({
+	display: "flex",
+	flexDirection: "column",
+	padding: "8px 0",
+	borderTop: `1px solid ${color.brand.gray}`,
+	selectors: {
+		"&:first-child": {
+			borderTop: "none",
+		},
+	},
+});
+
+export const mainNavSubsectionTitle = style([
+	tokens({
+		padding: 8,
+	}),
+	{
+		fontSize: "14px",
+		fontWeight: 600,
+		color: color.brand.navy,
+		textTransform: "uppercase",
+		letterSpacing: "0.5px",
+	},
+]);
+
+export const mainNavSelect = style([
+	tokens({
+		padding: 8,
+		marginLeft: 8,
+		marginRight: 8,
+	}),
+	{
+		fontSize: "14px",
+		color: color.brand.black,
+		backgroundColor: color.brand.white,
+		border: `1px solid ${color.brand.gray}`,
+		borderRadius: 4,
+		cursor: "pointer",
+		":hover": {
+			borderColor: color.brand.navy,
+		},
+		":focus": {
+			outline: "none",
+			borderColor: color.brand.navy,
+			boxShadow: `0 0 0 2px ${color.brand.yellow}`,
+		},
+	},
+]);
+
+export const mainNavSubList = style({
+	all: "unset",
+	display: "flex",
+	flexDirection: "column",
+	gap: 2,
+	listStyle: "none",
+	paddingLeft: 8,
+});
+
+export const mainNavNestedItem = style([
+	tokens({
+		display: "flex",
+		textDecoration: "none",
+		padding: 8,
+	}),
+	{
+		color: color.brand.black,
+		fontSize: "14px",
+		selectors: {
+			"&:hover": {
+				backgroundColor: color.brand.yellow,
+			},
+			"&[data-active]": {
+				textDecoration: "underline",
+			},
+		},
+	},
+]);
+
 export const arrow = style({
 	position: "relative",
 	top: "70%",

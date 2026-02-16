@@ -27,10 +27,10 @@ class ContentfulCache {
 		this.persistentStorage = storage;
 		this.previewMode = previewMode;
 
-		// In preview mode (dev with draft content), use 10 second cache or disable
+		// In preview mode (draft content), use 2 minute cache for balance between freshness and performance
 		// In production, use 5 minute cache
 		if (previewMode) {
-			this.defaultTTL = 10 * 1000; // 10 seconds in preview mode
+			this.defaultTTL = 2 * 60 * 1000; // 2 minutes in preview mode (was 10 seconds)
 		} else {
 			this.defaultTTL = 5 * 60 * 1000; // 5 minutes in production
 		}
@@ -45,10 +45,13 @@ class ContentfulCache {
 
 	/**
 	 * Try to load from persistent storage if available
-	 * Skip persistent storage in preview mode for fresh content
+	 * Skip persistent storage only in production preview mode to get fresh draft content
+	 * In development, always use persistent storage to survive server restarts
 	 */
 	private async loadFromPersistent<T>(key: string, ttl: number): Promise<T | null> {
-		if (this.previewMode) return null;
+		// Skip persistent storage only in production + preview mode (live preview)
+		const isProductionPreview = process.env.NODE_ENV === "production" && this.previewMode;
+		if (isProductionPreview) return null;
 
 		// Lazily initialize storage if not set
 		if (!this.persistentStorage) {
@@ -76,10 +79,13 @@ class ContentfulCache {
 
 	/**
 	 * Save to persistent storage if available
-	 * Skip in preview mode to avoid caching draft content
+	 * Skip in production preview mode to avoid caching stale draft content
+	 * In development, always save to persist cache across server restarts
 	 */
 	private async saveToPersistent<T>(key: string, data: T): Promise<void> {
-		if (this.previewMode) return;
+		// Skip persistent storage only in production + preview mode (live preview)
+		const isProductionPreview = process.env.NODE_ENV === "production" && this.previewMode;
+		if (isProductionPreview) return;
 
 		// Lazily initialize storage if not set
 		if (!this.persistentStorage) {
@@ -178,20 +184,58 @@ class ContentfulCache {
 const isPreviewMode =
 	process.env.CONTENTFUL_USE_PREVIEW === "true" || process.env.CONTENTFUL_USE_PREVIEW === "true";
 
-// Lazy initialization function for Netlify Blobs storage
+// Lazy initialization function for Netlify Blobs storage (with filesystem fallback)
 let storagePromise: Promise<PersistentStorage | undefined> | undefined;
+
+/**
+ * Create a filesystem-based storage adapter for development and fallback use
+ * Uses .cache/contentful directory to persist cache between server restarts
+ */
+async function getFilesystemStorage(): Promise<PersistentStorage | undefined> {
+	try {
+		const fs = await import("node:fs/promises");
+		const path = await import("node:path");
+
+		const cacheDir = path.join(process.cwd(), ".cache", "contentful");
+
+		// Ensure cache directory exists
+		try {
+			await fs.mkdir(cacheDir, { recursive: true });
+		} catch {
+			// Directory might already exist or we don't have permissions
+		}
+
+		return {
+			async get(key: string) {
+				try {
+					const filename = Buffer.from(key).toString("hex") + ".json";
+					const filePath = path.join(cacheDir, filename);
+					return await fs.readFile(filePath, "utf-8");
+				} catch {
+					return null;
+				}
+			},
+			async set(key: string, value: string) {
+				try {
+					const filename = Buffer.from(key).toString("hex") + ".json";
+					const filePath = path.join(cacheDir, filename);
+					await fs.writeFile(filePath, value, "utf-8");
+				} catch {
+					// Silently fail - filesystem cache is optional
+				}
+			},
+		};
+	} catch {
+		return undefined;
+	}
+}
 
 async function getStorage(): Promise<PersistentStorage | undefined> {
 	if (!storagePromise) {
 		storagePromise = (async () => {
-			// Don't use persistent storage in preview mode
-			if (
-				typeof process !== "undefined" &&
-				process.env.NODE_ENV === "production" &&
-				!isPreviewMode
-			) {
+			if (process.env.NODE_ENV === "production") {
+				// Production: try Netlify Blobs first, fall back to filesystem
 				try {
-					// Netlify Blobs storage adapter
 					const { getStore } = await import("@netlify/blobs");
 					const store = getStore("contentful-cache");
 
@@ -212,11 +256,13 @@ async function getStorage(): Promise<PersistentStorage | undefined> {
 						},
 					};
 				} catch {
-					// Netlify Blobs not available
-					return undefined;
+					// Netlify Blobs not available, fall back to filesystem
+					return await getFilesystemStorage();
 				}
+			} else {
+				// Development: use filesystem cache
+				return await getFilesystemStorage();
 			}
-			return undefined;
 		})();
 	}
 	return storagePromise;

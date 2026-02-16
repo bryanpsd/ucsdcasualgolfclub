@@ -30,6 +30,7 @@ export const MobileNav = ({ items }: MobileNavProps) => {
 								<MainNavItem
 									as="button"
 									label="Navigation Menu"
+									data-mobile-nav-item="true"
 									onClick={() => setOpen(true)}
 									icon={<IoMenu className={styles.menuIcon} size={28} />}
 									hideLabelBelowDesktop
@@ -64,6 +65,7 @@ function NavItem({ item }: { item: NavigationItem }) {
 				<NavMenu.Link asChild>
 					<MainNavItem
 						className={styles.mobileNavItem}
+						data-mobile-nav-item="true"
 						label={item.label}
 						href={item.href}
 						as="a"
@@ -76,20 +78,95 @@ function NavItem({ item }: { item: NavigationItem }) {
 			) : (
 				<>
 					<NavMenu.Trigger {...disableHover} asChild value={item.label} className={styles.trigger}>
-						<MainNavItem className={styles.mobileNavItem} label={item.label} />
+						<MainNavItem
+							className={styles.mobileNavItem}
+							data-mobile-nav-item="true"
+							label={item.label}
+						/>
 					</NavMenu.Trigger>
 
 					<NavMenu.Content {...disableHover} asChild>
 						<ul>
 							{item.links?.map((l) => {
+								// Handle select dropdown
+								if (l.isSelect && l.links) {
+									return (
+										<li key={l.label} className={styles.mobileNavSelectItem}>
+											<label htmlFor={`mobile-select-${l.label}`} className={styles.mobileNavLabel}>
+												{l.label}
+											</label>
+											<select
+												id={`mobile-select-${l.label}`}
+												className={styles.mobileNavSelect}
+												onChange={(e) => {
+													const selectedItem = l.links?.find(
+														(link) => link.href === e.target.value,
+													);
+													if (selectedItem) {
+														trackNavClick(selectedItem.label, selectedItem.href, {
+															navType: "sub",
+															navLocation: "mobile_nav",
+														});
+														window.location.href = e.target.value;
+													}
+												}}
+												defaultValue=""
+											>
+												<option value="" disabled>
+													Select a year
+												</option>
+												{l.links.map((nestedItem) => (
+													<option key={nestedItem.label} value={nestedItem.href}>
+														{nestedItem.label}
+													</option>
+												))}
+											</select>
+										</li>
+									);
+								}
+								// Handle nested links (non-select)
+								if (l.links) {
+									return (
+										<li key={l.label}>
+											<div className={styles.mobileNavSubsection}>
+												<span className={styles.mobileNavSubsectionTitle}>{l.label}</span>
+												<ul className={styles.mobileNavSubList}>
+													{l.links.map((nestedItem) => (
+														<li key={nestedItem.label}>
+															<NavMenu.Link asChild>
+																<MainNavItem
+																	as="a"
+																	className={styles.mobileNavNestedItem}
+																	data-mobile-nav-item="true"
+																	label={nestedItem.label}
+																	href={nestedItem.href}
+																	target={nestedItem.target}
+																	onClick={() =>
+																		trackNavClick(nestedItem.label, nestedItem.href, {
+																			navType: "sub",
+																			navLocation: "mobile_nav",
+																		})
+																	}
+																/>
+															</NavMenu.Link>
+														</li>
+													))}
+												</ul>
+											</div>
+										</li>
+									);
+								}
+								// Handle regular links
 								return (
 									<li key={l.label}>
 										<NavMenu.Link asChild>
 											<MainNavItem
 												as="a"
 												className={styles.mobileNavItem}
+												data-mobile-nav-item="true"
 												label={l.label}
 												href={l.href}
+												target={l.target}
 												onClick={() =>
 													trackNavClick(l.label, l.href, {
 														navType: "sub",

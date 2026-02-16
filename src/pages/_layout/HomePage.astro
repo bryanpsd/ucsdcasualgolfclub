@@ -20,6 +20,9 @@ import type { TypeUpdateDateSkeleton } from "~types/contentful/TypeUpdateDate";
 
 import * as styles from "./HomePage.css";
 
+// Enable static pre-rendering for faster initial page load
+export const prerender = true;
+
 // Fetch all data in parallel for faster initial load
 const [entries, courseEntries, leaders, updateDate] = await Promise.all([
 	// Fetch simplePage entries

@@ -87,18 +87,26 @@ const { title = "UCSD Casual Golf Club", description = "" } = Astro.props;
 <ClientRouter />
 
 <GoogleAnalytics measurementId={"G-2L08BXJE20"} />
-<script is:inline>
+<script is:inline define:vars={{ isDev: import.meta.env.DEV }}>
 	if ("serviceWorker" in navigator) {
 		window.addEventListener("load", async () => {
 			try {
-				// Unregister existing service workers to clear old config
-				const registrations = await navigator.serviceWorker.getRegistrations();
-				await Promise.all(registrations.map((reg) => reg.unregister()));
-
-				// Register fresh service worker
-				await navigator.serviceWorker.register("/sw.js", {
-					scope: "/",
-				});
+				if (isDev) {
+					// Unregister service worker in development to avoid caching issues
+					const registration = await navigator.serviceWorker.getRegistration("/");
+					if (registration) {
+						await registration.unregister();
+						console.log("Service worker unregistered for development");
+					}
+				} else {
+					// Only register in production
+					const registration = await navigator.serviceWorker.getRegistration("/");
+					if (!registration) {
+						await navigator.serviceWorker.register("/sw.js", {
+							scope: "/",
+						});
+					}
+				}
 			} catch {
 				// Silent failure - service worker is progressive enhancement
 			}
