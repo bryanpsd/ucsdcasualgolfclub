@@ -43,7 +43,8 @@ export const ALL: APIRoute = async ({ request, params }) => {
 		const response = await fetch(contentfulUrl, {
 			method: request.method,
 			headers,
-			body: request.method !== "GET" && request.method !== "HEAD" ? await request.text() : undefined,
+			body:
+				request.method !== "GET" && request.method !== "HEAD" ? await request.text() : undefined,
 		});
 
 		// Determine cache duration based on preview mode

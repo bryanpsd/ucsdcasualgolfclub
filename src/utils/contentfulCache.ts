@@ -208,7 +208,7 @@ async function getFilesystemStorage(): Promise<PersistentStorage | undefined> {
 		return {
 			async get(key: string) {
 				try {
-					const filename = Buffer.from(key).toString("hex") + ".json";
+					const filename = `${Buffer.from(key).toString("hex")}.json`;
 					const filePath = path.join(cacheDir, filename);
 					return await fs.readFile(filePath, "utf-8");
 				} catch {
@@ -217,7 +217,7 @@ async function getFilesystemStorage(): Promise<PersistentStorage | undefined> {
 			},
 			async set(key: string, value: string) {
 				try {
-					const filename = Buffer.from(key).toString("hex") + ".json";
+					const filename = `${Buffer.from(key).toString("hex")}.json`;
 					const filePath = path.join(cacheDir, filename);
 					await fs.writeFile(filePath, value, "utf-8");
 				} catch {
