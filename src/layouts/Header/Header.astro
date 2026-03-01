@@ -25,7 +25,7 @@ const logoWidth = isChristmasSeason ? 29 : 40;
 ---
 
 <a class={`sr-only ${styles.mainContentJumpLink}`} href="#main-content"> Jump to main content </a>
-{banners.data && <Banner banner={banners.data} currentPath={pathname} client:load />}
+{banners.data && <Banner banner={banners.data} currentPath={pathname} />}
 <header class={styles.headerWrapper}>
 	<div class={styles.header}>
 		<div class={styles.logoWrapper}>
