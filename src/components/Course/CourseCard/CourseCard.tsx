@@ -14,9 +14,8 @@ interface CourseCardProps extends TypeCourseProps {
 	players?: string;
 	prices?: string[];
 	inclusions?: string[];
-	results?: string | null | undefined;
+	results?: string | null;
 	clubChampionship?: boolean;
-	coursePar?: string;
 	tees?: string[];
 	type?: string;
 	tournamentNotes?: string[];
@@ -43,6 +42,29 @@ export const CourseCard = (props: CourseCardProps) => {
 	const isWednesday = date && new Date(date).getDay() === 3;
 	const isSaturday = date && new Date(date).getDay() === 6;
 	const isSpecialEvent = date && !isWednesday && !isSaturday;
+	const dateColor = isSpecialEvent ? "primary" : "inverse";
+
+	const courseHeading = (
+		<>
+			<ResponsiveHeadline size={3} as="h2">
+				{course}
+			</ResponsiveHeadline>
+			{tournamentNotes && tournamentNotes.length > 0 && (
+				<div>
+					{tournamentNotes.map((note) => (
+						<ResponsiveHeadline className={styles.courseNote} key={note} size={4} as="h3">
+							{note}
+						</ResponsiveHeadline>
+					))}
+				</div>
+			)}
+			{clubChampionship && (
+				<ResponsiveHeadline className={styles.courseNote} size={4} as="h2">
+					Club Championship
+				</ResponsiveHeadline>
+			)}
+		</>
+	);
 
 	return (
 		<section className={styles.courseCardWrapper}>
@@ -53,58 +75,22 @@ export const CourseCard = (props: CourseCardProps) => {
 						isUpcoming: isFirstUpcoming || undefined,
 					})}
 				>
-					<Typography variant="bodyLg" color={isSpecialEvent ? "primary" : "inverse"}>
+					<Typography variant="bodyLg" color={dateColor}>
 						{format(date, "MMM")}
 					</Typography>
-					<Typography color={isSpecialEvent ? "primary" : "inverse"} variant="headlineLg">
+					<Typography color={dateColor} variant="headlineLg">
 						{format(date, "d")}
 					</Typography>
-					<Typography variant="bodyLg" color={isSpecialEvent ? "primary" : "inverse"}>
+					<Typography variant="bodyLg" color={dateColor}>
 						{format(date, "E")}
 					</Typography>
 				</div>
 			)}
 			{hideCourseInfo ? (
-				<div className={styles.courseCardNameWrapper}>
-					<ResponsiveHeadline size={3} as="h2">
-						{course}
-					</ResponsiveHeadline>
-					{tournamentNotes && tournamentNotes.length > 0 && (
-						<div>
-							{tournamentNotes.map((note) => (
-								<ResponsiveHeadline className={styles.courseNote} key={note} size={4} as="h3">
-									{note}
-								</ResponsiveHeadline>
-							))}
-						</div>
-					)}
-					{clubChampionship && (
-						<ResponsiveHeadline className={styles.courseNote} size={4} as="h2">
-							Club Championship
-						</ResponsiveHeadline>
-					)}
-				</div>
+				<div className={styles.courseCardNameWrapper}>{courseHeading}</div>
 			) : (
 				<div className={styles.courseCardInfo}>
-					<div>
-						<ResponsiveHeadline size={3} as="h2">
-							{course}
-						</ResponsiveHeadline>
-						{tournamentNotes && tournamentNotes.length > 0 && (
-							<div>
-								{tournamentNotes.map((note) => (
-									<ResponsiveHeadline className={styles.courseNote} key={note} size={4} as="h3">
-										{note}
-									</ResponsiveHeadline>
-								))}
-							</div>
-						)}
-						{clubChampionship && (
-							<ResponsiveHeadline className={styles.courseNote} size={4} as="h2">
-								Club Championship
-							</ResponsiveHeadline>
-						)}
-					</div>
+					<div>{courseHeading}</div>
 					<div className={styles.courseCardTimeType}>
 						<FaRegClock className={styles.courseCardTimeIcon} aria-hidden="true" />
 						{date && format(date, "h:mmaaa")}{" "}
@@ -140,7 +126,7 @@ export const CourseCard = (props: CourseCardProps) => {
 							Details
 						</Button>
 					)}
-					{results && results !== null && results !== undefined && (
+					{results && (
 						<Button
 							as="a"
 							color="primary"
