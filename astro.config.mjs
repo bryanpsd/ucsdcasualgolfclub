@@ -38,8 +38,7 @@ export default defineConfig({
 				clientFiles: [
 					"./src/components/**/*.tsx",
 					"./src/layouts/**/*.astro",
-					"./src/pages/**/*.astro",
-				],
+					],
 			},
 		},
 	},
