@@ -66,9 +66,17 @@ export const ContactUsForm = () => {
 					className={styles.input}
 					id={nameId}
 					type="text"
-					{...register("name", { required: true })}
+					autoComplete="name"
+					aria-required="true"
+					aria-invalid={!!errors.name}
+					aria-describedby={errors.name ? `${nameId}-error` : undefined}
+					{...register("name", { required: "Enter a name." })}
 				/>
-				{errors.name && <span className={styles.error}>Enter a Name</span>}
+				{errors.name && (
+					<span id={`${nameId}-error`} className={styles.error} role="alert">
+						{errors.name.message}
+					</span>
+				)}
 			</div>
 
 			<div className={styles.formField}>
@@ -77,6 +85,10 @@ export const ContactUsForm = () => {
 					className={styles.input}
 					id={emailId}
 					type="email"
+					autoComplete="email"
+					aria-required="true"
+					aria-invalid={!!errors.email}
+					aria-describedby={errors.email ? `${emailId}-error` : undefined}
 					{...register("email", {
 						required: "Enter an Email address",
 						pattern: {
@@ -85,7 +97,11 @@ export const ContactUsForm = () => {
 						},
 					})}
 				/>
-				{errors.email && <span className={styles.error}>{errors.email.message}</span>}
+				{errors.email && (
+					<span id={`${emailId}-error`} className={styles.error} role="alert">
+						{errors.email.message}
+					</span>
+				)}
 			</div>
 
 			<div className={styles.formField}>
@@ -93,9 +109,16 @@ export const ContactUsForm = () => {
 				<textarea
 					className={styles.textarea}
 					id={messageId}
+					aria-required="true"
+					aria-invalid={!!errors.message}
+					aria-describedby={errors.message ? `${messageId}-error` : undefined}
 					{...register("message", { required: "Enter a message." })}
 				/>
-				{errors.message && <span className={styles.error}>{errors.message.message}</span>}
+				{errors.message && (
+					<span id={`${messageId}-error`} className={styles.error} role="alert">
+						{errors.message.message}
+					</span>
+				)}
 			</div>
 
 			<div>

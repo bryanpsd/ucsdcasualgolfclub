@@ -32,6 +32,9 @@ deno.lock
 # test coverage
 coverage/
 
+# cache directories
+.cache/
+
 # playwright
 playwright-report/
 test-results/

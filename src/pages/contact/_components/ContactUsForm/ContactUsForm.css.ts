@@ -23,7 +23,6 @@ export const formField = style([
 export const input = style([
 	tokens({
 		padding: 10,
-		outline: "none",
 	}),
 	{
 		borderRadius: 4,
@@ -32,6 +31,11 @@ export const input = style([
 		selectors: {
 			"&:focus": {
 				borderColor: "#0070f3",
+				outline: "2px solid #0070f3",
+				outlineOffset: 2,
+			},
+			"&:focus:not(:focus-visible)": {
+				outline: "none",
 			},
 		},
 	},
@@ -41,7 +45,6 @@ export const textarea = style([
 	tokens({
 		padding: 10,
 		minHeight: 80,
-		outline: "none",
 	}),
 	{
 		borderRadius: 4,
@@ -50,6 +53,11 @@ export const textarea = style([
 		selectors: {
 			"&:focus": {
 				borderColor: "#0070f3",
+				outline: "2px solid #0070f3",
+				outlineOffset: 2,
+			},
+			"&:focus:not(:focus-visible)": {
+				outline: "none",
 			},
 		},
 	},

@@ -26,7 +26,6 @@ const seasonRecap = response.items.find((item) => item.fields.title?.includes(ye
 					{seasonRecap.winners.map((winner) => (
 						<li>
 							<ContentfulImage
-								client:load
 								className={styles.seasonRecapImage}
 								src={winner && "fields" in winner ? winner.fields.file?.url || "" : ""}
 								alt={

@@ -26,9 +26,21 @@ export default defineConfig({
 				"@vanilla-extract/recipes",
 			],
 			exclude: ["@astrojs/react"],
+			// Force Vite to optimize deps on server start, not on-demand
+			force: false,
 		},
 		ssr: {
 			noExternal: ["@vanilla-extract/css", "@vanilla-extract/recipes"],
+		},
+		server: {
+			// Warm up frequently used modules
+			warmup: {
+				clientFiles: [
+					"./src/components/**/*.tsx",
+					"./src/layouts/**/*.astro",
+					"./src/pages/**/*.astro",
+				],
+			},
 		},
 	},
 });

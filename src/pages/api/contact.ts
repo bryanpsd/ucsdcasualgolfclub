@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { validateCaptcha } from "~actions/utils/captcha";
 import { log } from "~/utils/logger";
+import { validateCaptcha } from "~actions/utils/captcha";
 
 export const CAPTCHA_THRESHOLD = Number(import.meta.env.RECAPTCHA_THRESHOLD) || 0.1;
 

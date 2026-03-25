@@ -28,7 +28,6 @@ export type ButtonProps<C extends ElementType = "button"> = PolymorphicComponent
 			endIcon: string;
 		}>;
 		round?: boolean;
-		// Analytics props
 		track?: boolean;
 		trackLabel?: string;
 		trackCategory?: string;
@@ -92,7 +91,6 @@ const ButtonComponent = forwardRef(
 		ref: PolymorphicRef<C>,
 	) => {
 		const handleClick: MouseEventHandler = (e) => {
-			// Track button click if enabled
 			if (track) {
 				const label =
 					trackLabel ||
