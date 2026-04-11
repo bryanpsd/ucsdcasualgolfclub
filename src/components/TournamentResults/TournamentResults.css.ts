@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color } from "~styles";
+import { color } from "~/styles";
 
 export const intro = style({
 	marginTop: "1rem",

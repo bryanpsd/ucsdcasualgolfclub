@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { type RecipeVariants, recipe } from "@vanilla-extract/recipes";
-import { tokens } from "~styles";
+import { tokens } from "~/styles";
 
 export const svgIcon = recipe({
 	base: style([

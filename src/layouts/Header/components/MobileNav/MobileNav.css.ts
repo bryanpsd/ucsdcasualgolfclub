@@ -1,5 +1,5 @@
 import { keyframes, style } from "@vanilla-extract/css";
-import { color, tokens } from "~styles";
+import { color, tokens } from "~/styles";
 
 export const mobileNavRoot = style([
 	tokens({

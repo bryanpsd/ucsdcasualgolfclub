@@ -1,5 +1,5 @@
 import { type RecipeVariants, recipe } from "@vanilla-extract/recipes";
-import { color, fontSize, fontWeight, lineHeight, tokens } from "~styles";
+import { color, fontSize, fontWeight, lineHeight, tokens } from "~/styles";
 
 export const typography = recipe({
 	base: tokens({ margin: "none" }),

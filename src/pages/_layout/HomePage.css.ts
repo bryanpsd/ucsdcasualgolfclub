@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color, tokens } from "~styles";
+import { color, tokens } from "~/styles";
 import { contentPadding, pageMaxWidth } from "~styles/globals/common.css";
 
 export const homeWrapper = style([

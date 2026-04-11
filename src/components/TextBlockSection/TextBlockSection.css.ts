@@ -1,5 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
-import { color } from "~styles";
+import { color } from "~/styles";
 
 export const richTextContainer = style({});
 

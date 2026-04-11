@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { type RecipeVariants, recipe } from "@vanilla-extract/recipes";
-import { color, tokens } from "~styles";
+import { color, tokens } from "~/styles";
 
 export const baseLink = style([
 	tokens({

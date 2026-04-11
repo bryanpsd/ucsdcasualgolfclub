@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { tokens } from "~styles";
+import { tokens } from "~/styles";
 
 export const formWrapper = style([
 	tokens({
