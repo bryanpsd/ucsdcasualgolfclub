@@ -15,12 +15,12 @@
 		"isolatedModules": true,
 		"jsx": "react-jsx",
 		"jsxImportSource": "react",
-		"baseUrl": "./src",
 		"noEmit": true,
 		"paths": {
-			"~styles/*": ["styles/*"],
-			"~/*": ["*"],
-			"~*": ["*"]
+			"~styles": ["./src/styles"],
+			"~styles/*": ["./src/styles/*"],
+			"~/*": ["./src/*"],
+			"~*": ["./src/*"]
 		}
 	},
 	"include": ["src", ".astro/types.d.ts"],

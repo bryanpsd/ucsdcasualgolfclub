@@ -107,7 +107,7 @@ This project uses the `~` alias for `src` (configured in `tsconfig.json`).
 Examples:
 
 ```ts
-import { tokens } from "~styles";
+import { tokens } from "~/styles";
 import { Button } from "~components/Button";
 ```
 

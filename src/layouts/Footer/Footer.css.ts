@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color, fontSize, tokens } from "~styles";
+import { color, fontSize, tokens } from "~/styles";
 import { contentPadding, pageMaxWidth } from "~styles/globals/common.css";
 import { breakpointQuery } from "~styles/utilities/designTokens.css";
 

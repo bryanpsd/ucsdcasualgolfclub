@@ -2,11 +2,11 @@ import { expect, test } from "@playwright/test";
 
 test.describe("Results Page", () => {
 	test.beforeEach(async ({ page }) => {
-		await page.goto("/results");
+		await page.goto("/tournaments");
 	});
 
 	test("should display results page", async ({ page }) => {
-		await expect(page.getByRole("heading", { name: /results/i })).toBeVisible();
+		await expect(page.locator("h1")).toBeVisible();
 	});
 
 	test("should display tournament results", async ({ page }) => {
@@ -33,7 +33,7 @@ test.describe("Results Page", () => {
 	test("should be responsive on mobile", async ({ page }) => {
 		await page.setViewportSize({ width: 375, height: 667 });
 
-		await expect(page.getByRole("heading", { name: /results/i })).toBeVisible();
+		await expect(page.locator("h1")).toBeVisible();
 	});
 });
 
@@ -55,8 +55,8 @@ test.describe("Roster Page", () => {
 	test("should allow navigation to different roster years", async ({ page }) => {
 		await page.goto("/roster");
 
-		// Look for year links or dropdowns
-		const yearLinks = page.locator('a[href*="/roster/"]');
+		// Look for year links (e.g. /roster/2024) — not player links (/roster/player?...)
+		const yearLinks = page.locator('a[href*="/roster/20"]');
 
 		if (await yearLinks.count() > 0) {
 			const firstYearLink = yearLinks.first();

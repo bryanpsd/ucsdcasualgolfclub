@@ -15,6 +15,12 @@ export default defineConfig({
 	integrations: [react(), icon(), sitemap(), robotsTxt()],
 	vite: {
 		plugins: [viteTsconfigPaths(), vanillaExtractPlugin(), svgr()],
+		resolve: {
+			alias: {
+				"~styles": "/src/styles",
+				"~": "/src",
+			},
+		},
 		optimizeDeps: {
 			// Pre-bundle these to speed up dev
 			include: [

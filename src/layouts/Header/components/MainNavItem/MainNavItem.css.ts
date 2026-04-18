@@ -1,5 +1,5 @@
 import { globalStyle, style } from "@vanilla-extract/css";
-import { color, tokens } from "~styles";
+import { color, tokens } from "~/styles";
 import { breakpointQuery } from "~styles/utilities/designTokens.css";
 import { mainNavItem as mainNavItemRoot } from "../MainNav/MainNav.css";
 

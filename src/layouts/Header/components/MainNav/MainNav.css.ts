@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color, tokens } from "~styles";
+import { color, tokens } from "~/styles";
 
 export const mainNavRoot = style([
 	tokens({

@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color, fontSize, tokens } from "~styles";
+import { color, fontSize, tokens } from "~/styles";
 
 export const scorecardSectionWrapper = style([
 	tokens({

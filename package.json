@@ -83,6 +83,7 @@
 		"@vitejs/plugin-react": "^5.1.1",
 		"@vitest/ui": "^4.0.14",
 		"axe-core": "^4.10.3",
+		"baseline-browser-mapping": "^2.10.16",
 		"cf-content-types-generator": "^2.15.5",
 		"eslint": "^9.39.1",
 		"eslint-plugin-astro": "^1.5.0",

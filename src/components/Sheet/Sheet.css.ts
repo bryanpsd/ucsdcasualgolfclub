@@ -1,5 +1,5 @@
 import { keyframes, style } from "@vanilla-extract/css";
-import { color, tokens } from "~styles";
+import { color, tokens } from "~/styles";
 import { breakpointQuery } from "~styles/utilities/designTokens.css";
 
 export const modalOverlay = style([
