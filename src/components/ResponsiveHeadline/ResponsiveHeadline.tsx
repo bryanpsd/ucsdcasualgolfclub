@@ -1,5 +1,5 @@
 import type { ElementType } from "react";
-import type { PolymorphicComponentProp } from "types/PolymorphicComponent";
+import type { PolymorphicComponentProp } from "~types/PolymorphicComponent";
 import { concatClasses } from "~utils/concatClasses";
 import { responsiveHeadline } from "./ResponsiveHeadline.css";
 
