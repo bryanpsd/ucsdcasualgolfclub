@@ -18,6 +18,11 @@
     X-Robots-Tag = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
+    # 'unsafe-inline' is required for script-src and style-src because Astro's is:inline
+    # directive and Google Analytics inject inline scripts/styles at build time.
+    # Nonces are not viable with Netlify's static headers. All allowed external hosts
+    # are explicitly enumerated to limit the blast radius of any XSS that does occur.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://maps.googleapis.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://images.ctfassets.net https://maps.googleapis.com https://maps.gstatic.com https://www.google-analytics.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.googleapis.com https://cdn.contentful.com; frame-src https://www.google.com https://recaptcha.google.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 
 [context.production]
   # Ensure production explicitly serves the robots header. Keeps previews/branch deploys free to override.
